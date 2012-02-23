@@ -11,7 +11,7 @@ namespace ofxCvGui {
 			Pixels(ofPixels& pixels);
 			void update();
 		protected:
-			void drawPanel(const DrawArguments& arguments);
+			void drawImage(const DrawArguments& arguments);
 		private:
 			ofPixels& pixels;
 			ofTexture preview;

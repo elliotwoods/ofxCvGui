@@ -86,24 +86,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
+    <ClInclude Include="..\src\ofxCvGui\Assets.h" />
     <ClInclude Include="..\src\ofxCvGui\Controller.h" />
     <ClInclude Include="..\src\ofxCvGui\Element.h" />
     <ClInclude Include="..\src\ofxCvGui\ElementGroup.h" />
     <ClInclude Include="..\src\ofxCvGui\Builder.h" />
-    <ClInclude Include="..\src\ofxCvGui\Panels\BaseDraws.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Base.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\BaseImage.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\ofxCvGui\Assets.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Element.cpp" />
     <ClCompile Include="..\src\ofxCvGui\ElementGroup.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Base.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Panels\BaseDraws.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />

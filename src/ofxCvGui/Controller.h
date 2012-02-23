@@ -4,6 +4,7 @@
 #include "ofxCvGui/Panels/Groups/Base.h"
 #include "ofxCvGui/Panels/Base.h"
 #include "ofxCvGui/Types.h"
+#include "ofxCvGui/Assets.h"
 
 namespace ofxCvGui {
 	class Controller {

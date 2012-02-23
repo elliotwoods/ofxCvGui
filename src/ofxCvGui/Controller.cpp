@@ -1,6 +1,8 @@
 #include "ofxCvGui/Controller.h"
 
 namespace ofxCvGui {
+	extern Assets AssetRegister;
+
 	//----------
 	Controller::Controller() {
 		this->initialised = false;
@@ -17,6 +19,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents.keyPressed, this, &Controller::keyPressed);	
 		ofAddListener(ofEvents.windowResized, this, &Controller::windowResized);
 
+		AssetRegister.init();
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;
 		this->initialised = true;
@@ -75,7 +78,9 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::windowResized(ofResizeEventArgs &args) {
-		//currently bounds is set through draw
+		if (!initialised)
+			return;
+		rootGroup->setBounds(ofRectangle(0,0,ofGetWidth(), ofGetHeight()));
 	}
 
 	//----------
