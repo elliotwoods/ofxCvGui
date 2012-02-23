@@ -1,17 +1,16 @@
 #pragma once
 #include "ofMain.h"
 
+#include "ofxCvGui/Panels/Groups/Base.h"
 #include "ofxCvGui/Panels/Base.h"
 #include "ofxCvGui/Types.h"
-#include "ofxCvGui/ElementPtr.h"
 
 namespace ofxCvGui {
 	class Controller {
 	public:
 		Controller();
-		void init(PanelPtr& rootPanel);
-		void add(Panels::Base& panel);
-		void add(Panels::Base* panel);
+		void init(PanelGroupPtr rootGroup);
+		void add(PanelPtr& panel);
 	protected:
 		////
 		//actions
@@ -30,6 +29,6 @@ namespace ofxCvGui {
 
 		bool checkInitialised();
 		bool initialised;
-		PanelPtr baseElement;
+		PanelGroupPtr rootGroup;
 	};
 }

@@ -4,7 +4,7 @@ namespace ofxCvGui {
 	void Element::draw(const DrawArguments& arguments) {
 		ofPushMatrix();
 		ofTranslate(bounds.x, bounds.y);
-		this->customDraw(arguments);
+		this->drawElement(arguments);
 		ofPopMatrix();
 	}
 
@@ -13,6 +13,9 @@ namespace ofxCvGui {
 		if (this->bounds == bounds)
 			return;
 		this->bounds = bounds;
+		this->localBounds = bounds;
+		this->localBounds.x = 0;
+		this->localBounds.y = 0;
 		boundsChange();
 	}
 

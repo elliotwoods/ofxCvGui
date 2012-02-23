@@ -3,14 +3,13 @@
 namespace ofxCvGui {
 	//----------
 	void Builder::init() {
-		mainGrid = new Panels::Groups::Grid();
-		rootPanel = mainGrid;
-		controller.init(rootPanel);
+		PanelGroupPtr rootGroup(new Panels::Groups::Grid());
+		controller.init(rootGroup);
 	}
 
 	//----------
 	void Builder::add(ofBaseDraws& asset, string caption) {
-		Panels::Base* newPanel = new Panels::BaseDraws(asset);
+		PanelPtr newPanel(new Panels::BaseDraws(asset));
 		newPanel->setCaption(caption);
 		controller.add(newPanel);
 	}

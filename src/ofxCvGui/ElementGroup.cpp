@@ -3,7 +3,7 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::update() {
-		ElementIterator_ it;
+		vector<ofPtr<T>>::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).update();		
 	}
@@ -11,7 +11,7 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::mouseAction(const MouseArguments& mouse) {
-		ElementIterator_ it;
+		vector<ofPtr<T>>::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).mouseAction(MouseArguments(mouse, (**it).getBounds()));
 	}
@@ -19,16 +19,26 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::keyboardAction(const KeyboardArguments& keyboard) {
-		ElementIterator_ it;
+		vector<ofPtr<T>>::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).keyboardAction(keyboard);
 	}
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::customDraw(const DrawArguments& arguments) {
-		ElementIterator_ it;
+	void ElementGroup_<T>::add(ofPtr<T>& addition) {
+		this->elements.push_back(addition);
+		this->boundsChange();
+	}
+
+	//----------
+	template<typename T>
+	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
+		vector<ofPtr<T>>::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).draw(arguments);
 	}
+
+	template class ElementGroup_<Element>;
+	template class ElementGroup_<Panels::Base>;
 }

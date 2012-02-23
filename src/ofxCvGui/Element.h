@@ -16,9 +16,11 @@ namespace ofxCvGui {
 
 		void setCaption(string caption);
 	protected:
-		virtual void customDraw(const DrawArguments& arguments) = 0; ///<override here to draw something
+		virtual void drawElement(const DrawArguments& arguments) = 0; ///<override here to draw something
 		virtual void boundsChange() { }; ///<override here if you want to cache something based on element's bounds
-		ofRectangle bounds;
+		ofRectangle bounds; ///<bounds relative to parent
+		ofRectangle localBounds; ///<bounds for internal draw functions
 		string caption;
 	};
+	typedef ofPtr<Element> ElementPtr;
 }

@@ -25,7 +25,7 @@ namespace ofxCvGui {
 					bounds.x = iX * width;
 					bounds.y = iY * height;
 
-					(**it).setBounds(bounds);
+					(*it)->setBounds(bounds);
 				}
 			}
 		}

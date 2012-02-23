@@ -12,7 +12,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Pixels::customDraw(const DrawArguments& arguments) {
+		void Pixels::drawPanel(const DrawArguments& arguments) {
 			this->preview.draw(this->getBounds());
 		}
 	}

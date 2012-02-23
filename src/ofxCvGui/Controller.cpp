@@ -7,7 +7,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	void Controller::init(PanelPtr& rootPanel) {
+	void Controller::init(ofPtr<Panels::Groups::Base> rootGroup) {
 		ofAddListener(ofEvents.update, this, &Controller::update);
 		ofAddListener(ofEvents.draw, this, &Controller::draw);
 		ofAddListener(ofEvents.mouseMoved, this, &Controller::mouseMoved);
@@ -17,8 +17,14 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents.keyPressed, this, &Controller::keyPressed);	
 		ofAddListener(ofEvents.windowResized, this, &Controller::windowResized);
 
-		this->baseElement = rootPanel;
+		rootGroup->setBounds(ofGetCurrentViewport());
+		this->rootGroup = rootGroup;
 		this->initialised = true;
+	}
+	
+	//----------
+	void Controller::add(PanelPtr& panel) {
+		this->rootGroup->add(panel);
 	}
 
 	//----------
@@ -29,42 +35,42 @@ namespace ofxCvGui {
 	void Controller::draw(ofEventArgs& args) {
 		if (!initialised)
 			return;
-		(*baseElement).draw(DrawArguments(ofGetCurrentViewport(), true));
+		rootGroup->draw(DrawArguments(ofGetCurrentViewport(), true));
 	}
 
 	//----------
 	void Controller::mouseMoved(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		(*baseElement).mouseAction(MouseArguments(args, MouseMoved, (*baseElement).getBounds()));
+		rootGroup->mouseAction(MouseArguments(args, MouseMoved, rootGroup->getBounds()));
 	}
 	
 	//----------
 	void Controller::mousePressed(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		(*baseElement).mouseAction(MouseArguments(args, MousePressed, (*baseElement).getBounds()));
+		rootGroup->mouseAction(MouseArguments(args, MousePressed, rootGroup->getBounds()));
 	}
 	
 	//----------
 	void Controller::mouseReleased(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		(*baseElement).mouseAction(MouseArguments(args, MouseReleased, (*baseElement).getBounds()));
+		rootGroup->mouseAction(MouseArguments(args, MouseReleased, rootGroup->getBounds()));
 	}
 	
 	//----------
 	void Controller::mouseDragged(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		(*baseElement).mouseAction(MouseArguments(args, MouseDragged, (*baseElement).getBounds()));
+		rootGroup->mouseAction(MouseArguments(args, MouseDragged, rootGroup->getBounds()));
 	}
 	
 	//----------
 	void Controller::keyPressed(ofKeyEventArgs &args) {
 		if (!initialised)
 			return;
-		(*baseElement).keyboardAction(KeyboardArguments(args, KeyPressed));
+		rootGroup->keyboardAction(KeyboardArguments(args, KeyPressed));
 	}
 	
 	//----------

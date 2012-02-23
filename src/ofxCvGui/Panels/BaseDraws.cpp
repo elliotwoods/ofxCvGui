@@ -8,7 +8,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void BaseDraws::customDraw(const DrawArguments& arguments) {
+		void BaseDraws::drawPanel(const DrawArguments& arguments) {
 			this->draws.draw(this->getBounds());
 		}
 	}

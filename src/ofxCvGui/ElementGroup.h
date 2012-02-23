@@ -1,5 +1,7 @@
 #pragma once
-#include "ofxCvGui/ElementPtr.h"
+#include "ofxCvGui/Types.h"
+#include "ofxCvGui/Element.h"
+#include "ofxCvGui/Panels/Base.h"
 #include <vector>
 
 using namespace std;
@@ -12,16 +14,21 @@ namespace ofxCvGui {
 
 	template <typename T>
 	class ElementGroup_ : public T {
-		typedef vector<ElementPtr_<T>> ElementIterator_;
 	public:
 		void update();
 		void mouseAction(const MouseArguments& mouse);
 		void keyboardAction(const KeyboardArguments& keyboard);
+		void add(ofPtr<T>& addition);
+
 	protected:
-		void customDraw(const DrawArguments& arguments);
-		vector<ElementPtr_<T>> elements;
+		void drawSet(const DrawArguments& arguments);
+		vector<ofPtr<T>> elements;
 	};
 
-	typedef ElementGroup_<Element> ElementsGroup;
-	typedef ElementGroup_<Panels::Base> PanelGroup;
+	class ElementGroup : public ElementGroup_<Element> {
+	protected:
+		void drawElement(const DrawArguments& arguments) {
+			this->drawSet(arguments);
+		}
+	};
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include "ofRectangle.h"
 #include "ofEvents.h"
+#include "ofTypes.h"
+
 namespace ofxCvGui {
 	struct DrawArguments {
 		DrawArguments(const ofRectangle& parentBounds, bool chromeEnabled);
