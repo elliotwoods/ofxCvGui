@@ -1,16 +1,16 @@
 #pragma once
 #pragma once
-#include "ofxCvGui/Element.h"
+#include "ofxCvGui/Panels/Base.h"
 #include "ofPixels.h"
 #include "ofTexture.h"
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Pixels : public Element {
+		class Pixels : public Panels::Base {
 		public:
+			Pixels(ofPixels& pixels);
 			void update();
 		protected:
-			Pixels(ofPixels& pixels);
 			void customDraw(const DrawArguments& arguments);
 		private:
 			ofPixels& pixels;

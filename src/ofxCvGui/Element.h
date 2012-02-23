@@ -13,22 +13,12 @@ namespace ofxCvGui {
 
 		void setBounds(const ofRectangle& bounds);
 		const ofRectangle& getBounds();
+
+		void setCaption(string caption);
 	protected:
 		virtual void customDraw(const DrawArguments& arguments) = 0; ///<override here to draw something
 		virtual void boundsChange() { }; ///<override here if you want to cache something based on element's bounds
 		ofRectangle bounds;
-	};
-
-	struct ElementPtr {
-		ElementPtr();
-		ElementPtr(const ElementPtr& other);
-		~ElementPtr();
-
-		Element& operator*();
-		ElementPtr& operator=(Element* element);
-
-	private:
-		Element* element;
-		bool localAllocation;
+		string caption;
 	};
 }

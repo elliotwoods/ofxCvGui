@@ -1,29 +1,33 @@
 #include "ofxCvGui/ElementGroup.h"
 namespace ofxCvGui {
 	//----------
-	void ElementGroup::update() {
-		ElementIterator it;
+	template<typename T>
+	void ElementGroup_<T>::update() {
+		ElementIterator_ it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).update();		
 	}
 
 	//----------
-	void ElementGroup::mouseAction(const MouseArguments& mouse) {
-		ElementIterator it;
+	template<typename T>
+	void ElementGroup_<T>::mouseAction(const MouseArguments& mouse) {
+		ElementIterator_ it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).mouseAction(MouseArguments(mouse, (**it).getBounds()));
 	}
 
 	//----------
-	void ElementGroup::keyboardAction(const KeyboardArguments& keyboard) {
-		ElementIterator it;
+	template<typename T>
+	void ElementGroup_<T>::keyboardAction(const KeyboardArguments& keyboard) {
+		ElementIterator_ it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).keyboardAction(keyboard);
 	}
 
 	//----------
-	void ElementGroup::customDraw(const DrawArguments& arguments) {
-		ElementIterator it;
+	template<typename T>
+	void ElementGroup_<T>::customDraw(const DrawArguments& arguments) {
+		ElementIterator_ it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).draw(arguments);
 	}

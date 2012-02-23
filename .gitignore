@@ -12,6 +12,7 @@ build/
 !data/
 xcuserdata/
 
+ipch/
 *.suo
 *.opensdf
 *.vcxproj.user
@@ -23,4 +24,5 @@ xcuserdata/
 *.sdf
 *.pdb
 *.idb
+*.pch
 Debug/
