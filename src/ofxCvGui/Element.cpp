@@ -20,8 +20,18 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	const ofRectangle& Element::getBounds() {
+	const ofRectangle& Element::getBounds() const{
 		return this->bounds;
+	}
+
+	//-----------
+	float Element::getWidth() const {
+		return this->getBounds().width;;
+	}
+
+	//-----------
+	float Element::getHeight() const{
+		return this->getBounds().height;
 	}
 
 	//-----------

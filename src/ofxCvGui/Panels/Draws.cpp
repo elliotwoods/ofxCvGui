@@ -9,7 +9,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Draws::drawImage(const DrawArguments& arguments) {
-			this->draws.draw(this->getBounds());
+			this->draws.draw(0, 0, this->getWidth(), this->getHeight());
 		}
 	}
 }

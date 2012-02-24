@@ -12,7 +12,9 @@ namespace ofxCvGui {
 		virtual void keyboardAction(const KeyboardArguments& keyboard) { };
 
 		void setBounds(const ofRectangle& bounds);
-		const ofRectangle& getBounds();
+		const ofRectangle& getBounds() const;
+		float getWidth() const;
+		float getHeight() const;
 
 		void setCaption(string caption);
 	protected:
