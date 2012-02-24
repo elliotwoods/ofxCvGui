@@ -32,6 +32,9 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::update(ofEventArgs& args) {
+		if (!initialised)
+			return;
+		rootGroup->update();
 	}
 
 	//----------

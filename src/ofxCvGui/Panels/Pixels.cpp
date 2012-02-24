@@ -2,12 +2,14 @@
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
-		Pixels::Pixels(ofPixels& pixels) :
+		Pixels::Pixels(const ofPixels& pixels) :
 		pixels(pixels) {
 		}
 
 		//----------
 		void Pixels::update() {
+			if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
+				preview.allocate(pixels);
 			preview.loadData(pixels);
 		}
 

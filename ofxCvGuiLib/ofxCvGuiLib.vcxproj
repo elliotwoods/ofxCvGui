@@ -97,6 +97,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +111,7 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,18 +1,22 @@
 #pragma once
 #include "ofxCvGui/Panels/BaseImage.h"
+#include "ofTypes.h"
 #include "ofPixels.h"
 #include "ofTexture.h"
+#include <vector>
+using namespace std;
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Pixels : public Panels::BaseImage {
+		class PixelsVector : public Panels::BaseImage {
 		public:
-			Pixels(const ofPixels& pixels);
+			PixelsVector(const vector<ofPixels>& pixels);
 			void update();
 		protected:
 			void drawImage(const DrawArguments& arguments);
 		private:
-			const ofPixels& pixels;
+			const vector<ofPixels>& pixels;
+			ofPixels currentFrame;
 			ofTexture preview;
 		};
 	}
