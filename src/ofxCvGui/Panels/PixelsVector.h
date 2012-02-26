@@ -16,8 +16,9 @@ namespace ofxCvGui {
 			void drawImage(const DrawArguments& arguments);
 		private:
 			const vector<ofPixels>& pixels;
-			ofPixels currentFrame;
 			ofTexture preview;
+			int selection;
+			size_t lastCount;
 		};
 	}
 }

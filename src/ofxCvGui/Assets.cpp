@@ -23,6 +23,10 @@ namespace ofxCvGui {
 
 			ofLogNotice("ofxCvGui") << "Loaded image asset '" << name << "'" << endl;
 		}
+
+		blankImage.allocate(30, 30, OF_IMAGE_GRAYSCALE);
+		memset(blankImage.getPixels(), 0x46, 30*30);
+		blankImage.update();
 		//
 		////
 
@@ -43,7 +47,7 @@ namespace ofxCvGui {
 			this->fonts.insert(pair<string, ofTrueTypeFont>(name, ofTrueTypeFont()));
 			this->fonts[name].loadFont(filename, 14);
 
-			ofLogNotice("ofxCvGui") << "Loaded image asset '" << name << "'" << endl;
+			ofLogNotice("ofxCvGui") << "Loaded font asset '" << name << "'" << endl;
 		}
 		//
 		////
@@ -58,7 +62,7 @@ namespace ofxCvGui {
 	ofImage& Assets::getImage(const string& imageName) {
 		if (this->images.count(imageName) == 0) {
 			ofLogError("ofxCvGui") << "Image asset ['" << imageName << "'] not found";
-			return ofImage();
+			return this->blankImage;
 		}
 		return this->images[imageName];
 	}
@@ -73,24 +77,29 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	ofRectangle Assets::drawText(const string& text, float x, float y, const string &fontName, bool background, float minHeight) {
+	ofRectangle Assets::drawText(const string& text, float x, float y, const string &fontName, bool background, float minHeight, float minWidth) {
 		ofPushStyle();
 		ofSetColor(0x46);
 		ofFill();
 		bool useDefault = (fontName == "" || this->fonts.count(fontName) == 0);
-		ofRectangle bounds;
+		ofRectangle bounds(x, y, 0, 0);
 		if (this->fonts.size() > 0) {
 			ofTrueTypeFont& font(useDefault ? fonts.begin()->second : this->getFont(fontName));
-			bounds = font.getStringBoundingBox(text, x, y);
-			float rawHeight = bounds.height;
-			bounds.y += bounds.height;
-			bounds.height = MAX(bounds.height, minHeight);
-			bounds.width += font.getSize() * 2.0f;
+			float rawWidth = font.getStringBoundingBox(text, x, y).width;
+			float rawHeight = font.getStringBoundingBox("Hy", x, y).height;
+			bounds.x = x;
+			bounds.y = y;
+			bounds.width = rawWidth + font.getSize();
+			if (bounds.width < minWidth) {
+				x+= (minWidth - bounds.width) / 2.0f;
+				bounds.width = minWidth;
+			}
+			bounds.height = MAX(rawHeight, minHeight);
 			if (background)
 				ofRect(bounds);
 			ofPopStyle();
 			ofSetColor(255);
-			font.drawString(text, x + font.getSize(), y + (bounds.height + rawHeight) / 2.0f);
+			font.drawString(text, x + font.getSize() / 2, y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f);
 		} else {
 			bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
 			if (background)

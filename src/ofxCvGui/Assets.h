@@ -13,9 +13,11 @@ namespace ofxCvGui {
 		ofImage& getImage(const string& imageName);
 		ofTrueTypeFont& getFont(const string& fontName);
 
-		ofRectangle drawText(const string& text, float x, float y, const string& fontName="", bool background=true, float minHeight=15);
+		ofRectangle drawText(const string& text, float x, float y, const string& fontName="", bool background=true, float minHeight=15, float minWidth=0);
 	protected:
 		map<string, ofImage> images;
 		map<string, ofTrueTypeFont> fonts;
+
+		ofImage blankImage;
 	};
 }
