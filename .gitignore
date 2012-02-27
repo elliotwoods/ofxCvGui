@@ -26,3 +26,6 @@ ipch/
 *.idb
 *.pch
 Debug/
+Release/
+
+*~.xml

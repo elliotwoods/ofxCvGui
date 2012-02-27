@@ -6,7 +6,7 @@ namespace ofxCvGui {
 		//----------
 		PixelsVector::PixelsVector(const vector<ofPixels>& pixels) :
 			pixels(pixels) {
-			this->selection = 0;
+			this->selection = -1;
 			this->lastCount = 0;
 		}
 
@@ -17,7 +17,10 @@ namespace ofxCvGui {
 				lastCount = pixels.size();
 			}
 
-			if (pixels.size() > selection) {
+			if (selection > pixels.size())
+				selection = pixels.size() - 1;
+
+			if (selection >= 0) {
 				const ofPixels& pixels(this->pixels[selection]);
 				if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
 					preview.allocate(pixels);

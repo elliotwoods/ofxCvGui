@@ -12,6 +12,8 @@ namespace ofxCvGui {
 		Controller();
 		void init(PanelGroupPtr rootGroup);
 		void add(PanelPtr& panel);
+		void drop(PanelPtr& panel);
+
 	protected:
 		////
 		//actions

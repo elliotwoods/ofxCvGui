@@ -14,9 +14,11 @@ namespace ofxCvGui {
 	class Builder {
 	public:
 		void init();
-		void add(ofBaseDraws& asset, string caption="");
-		void add(const ofPixels& asset, string caption="");
-		void add(const vector<ofPixels>& asset, string caption="");
+		PanelPtr add(ofBaseDraws& asset, string caption="");
+		PanelPtr add(const ofPixels& asset, string caption="");
+		PanelPtr add(const vector<ofPixels>& asset, string caption="");
+
+		void drop(PanelPtr &panel);
 
 	protected:
 		Controller controller;

@@ -8,23 +8,31 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Builder::add(ofBaseDraws& asset, string caption) {
+	PanelPtr Builder::add(ofBaseDraws& asset, string caption) {
 		PanelPtr newPanel(new Panels::Draws(asset));
 		newPanel->setCaption(caption);
 		controller.add(newPanel);
+		return newPanel;
 	}
 
 	//----------
-	void Builder::add(const ofPixels& asset, string caption) {
+	PanelPtr Builder::add(const ofPixels& asset, string caption) {
 		PanelPtr newPanel(new Panels::Pixels(asset));
 		newPanel->setCaption(caption);
 		controller.add(newPanel);
+		return newPanel;
 	}
 
 	//----------
-	void Builder::add(const vector<ofPixels>& asset, string caption) {
+	PanelPtr Builder::add(const vector<ofPixels>& asset, string caption) {
 		PanelPtr newPanel(new Panels::PixelsVector(asset));
 		newPanel->setCaption(caption);
 		controller.add(newPanel);
+		return newPanel;
+	}
+
+	//----------
+	void Builder::drop(PanelPtr &panel) {
+		controller.drop(panel);
 	}
 }
