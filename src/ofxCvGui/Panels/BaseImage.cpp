@@ -1,9 +1,13 @@
 #include "ofxCvGui/Panels/BaseImage.h"
 
 namespace ofxCvGui {
-	extern Assets AssetRegister;
 	namespace Panels {
+		//----------
+		BaseImage::BaseImage() {
+			this->refreshPerFrame = true;
+		}
 
+		//----------
 		void BaseImage::drawPanel(const DrawArguments& arguments) {
 			this->drawImage(arguments);
 

@@ -1,13 +1,14 @@
 #include "ofxCvGui/Panels/PixelsVector.h"
 
 namespace ofxCvGui {
-	extern Assets AssetRegister;
 	namespace Panels {
 		//----------
 		PixelsVector::PixelsVector(const vector<ofPixels>& pixels) :
 			pixels(pixels) {
 			this->selection = -1;
+			this->lastSelection = -1;
 			this->lastCount = 0;
+			this->refreshPerFrame = false;
 		}
 
 		//----------
@@ -20,13 +21,16 @@ namespace ofxCvGui {
 			if (selection > pixels.size())
 				selection = pixels.size() - 1;
 
-			if (selection >= 0) {
-				const ofPixels& pixels(this->pixels[selection]);
-				if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
-					preview.allocate(pixels);
-				preview.loadData(pixels);
-			} else
-				preview.clear();
+			if (selection != lastSelection || refreshPerFrame) {
+				if (selection >= 0) {
+					const ofPixels& pixels(this->pixels[selection]);
+					if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
+						preview.allocate(pixels);
+					preview.loadData(pixels);
+					lastSelection = selection;
+				} else
+					preview.clear();
+			}
 		}
 
 		//----------

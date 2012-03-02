@@ -18,6 +18,7 @@ namespace ofxCvGui {
 			const vector<ofPixels>& pixels;
 			ofTexture preview;
 			int selection;
+			int lastSelection;
 			size_t lastCount;
 		};
 	}

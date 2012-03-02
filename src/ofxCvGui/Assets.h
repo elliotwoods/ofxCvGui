@@ -8,6 +8,7 @@ using namespace std;
 namespace ofxCvGui {
 	class Assets {
 	public:
+		Assets();
 		void init();
 		ofImage& operator[](const string& imageName);
 		ofImage& getImage(const string& imageName);
@@ -20,4 +21,6 @@ namespace ofxCvGui {
 
 		ofImage blankImage;
 	};
+
+	extern Assets AssetRegister;
 }

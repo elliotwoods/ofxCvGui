@@ -1,6 +1,11 @@
 #include "Assets.h"
 
 namespace ofxCvGui {
+	//----------
+	Assets::Assets() {
+	}
+
+	//----------
 	void Assets::init() {
 		string filename, name;
 		
@@ -83,7 +88,7 @@ namespace ofxCvGui {
 		ofFill();
 		bool useDefault = (fontName == "" || this->fonts.count(fontName) == 0);
 		ofRectangle bounds(x, y, 0, 0);
-		if (this->fonts.size() > 0) {
+		if (Assets::fonts.size() > 0) {
 			ofTrueTypeFont& font(useDefault ? fonts.begin()->second : this->getFont(fontName));
 			float rawWidth = font.getStringBoundingBox(text, x, y).width;
 			float rawHeight = font.getStringBoundingBox("Hy", x, y).height;
@@ -113,5 +118,6 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	Assets AssetRegister;
+	//-----------
+	Assets AssetRegister = Assets();
 }

@@ -1,8 +1,6 @@
 #include "ofxCvGui/Controller.h"
 
 namespace ofxCvGui {
-	extern Assets AssetRegister;
-
 	//----------
 	Controller::Controller() {
 		this->initialised = false;
@@ -23,6 +21,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents.windowResized, this, &Controller::windowResized);
 
 		AssetRegister.init();
+
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;
 		this->initialised = true;
@@ -86,6 +85,9 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::keyPressed(ofKeyEventArgs &args) {
+		if (args.key == 'f')
+			ofToggleFullscreen();
+
 		if (!initialised)
 			return;
 		rootGroup->keyboardAction(KeyboardArguments(args, KeyPressed));

@@ -9,6 +9,10 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="RemoteDebug|Win32">
+      <Configuration>RemoteDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -22,8 +26,10 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Instructions.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Text.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -36,8 +42,10 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Text.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -32,6 +32,13 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	PanelPtr Builder::addInstructions() {
+		PanelPtr newPanel(new Panels::Instructions());
+		controller.add(newPanel);
+		return newPanel;
+	}
+
+	//----------
 	void Builder::drop(PanelPtr &panel) {
 		controller.drop(panel);
 	}
