@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Text.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Base.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp">
+      <Filter>src\Panels\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Assets.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Builder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Controller.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Element.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\ElementGroup.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Types.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\ofxCvGui.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h">
+      <Filter>src\Panels\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\BaseImage.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Text.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Instructions.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Base.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h">
+      <Filter>src\Panels\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Types.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Assets.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Builder.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Controller.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Element.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\ElementGroup.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{da7a9fdc-8162-469b-8a83-c35217069c30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Panels">
+      <UniqueIdentifier>{39c0b6ba-50dc-44a4-8965-583f75e23ea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Panels\Groups">
+      <UniqueIdentifier>{224b59cb-2368-491d-b4c1-d52d8bcbfa53}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

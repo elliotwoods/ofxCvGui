@@ -6,7 +6,8 @@ namespace ofxCvGui {
 		Instructions::Instructions() {
 			this->caption = "Instructions";
 			ifstream file;
-			file.open(ofToDataPath("instructions.txt"));
+			string filePath = ofToDataPath("instructions.txt", true);
+			file.open(filePath);
 			this->text = string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
 		}
 	}

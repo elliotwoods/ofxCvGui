@@ -42,4 +42,9 @@ namespace ofxCvGui {
 	void Builder::drop(PanelPtr &panel) {
 		controller.drop(panel);
 	}
+
+	//----------
+	void Builder::clear() {
+		controller.clear();
+	}
 }

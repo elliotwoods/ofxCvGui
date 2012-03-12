@@ -22,6 +22,7 @@ namespace ofxCvGui {
 		PanelPtr add(const vector<ofPixels>& asset, string caption="");
 		PanelPtr addInstructions();
 
+		void clear();
 		void drop(PanelPtr &panel);
 
 	protected:

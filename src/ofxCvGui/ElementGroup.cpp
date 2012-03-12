@@ -46,6 +46,13 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
+	void ElementGroup_<T>::clear() {
+		this->elements.clear();
+		this->boundsChange();
+	}
+	
+	//----------
+	template<typename T>
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
 		vector<ofPtr<T>>::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)

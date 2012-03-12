@@ -20,6 +20,7 @@ namespace ofxCvGui {
 		void keyboardAction(const KeyboardArguments& keyboard);
 		void add(ofPtr<T>& addition);
 		void drop(ofPtr<T>& element);
+		void clear();
 
 	protected:
 		void drawSet(const DrawArguments& arguments);

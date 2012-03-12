@@ -9,11 +9,19 @@ namespace ofxCvGui {
 	void Assets::init() {
 		string filename, name;
 		
+		string dataPath = "ofxCvGui";
+		if (!ofDirectory::doesDirectoryExist(dataPath))
+			dataPath = "../../../../../addons/ofxCvGui2/data/ofxCvGui";
+		if (!ofDirectory::doesDirectoryExist(dataPath)) {
+			ofLogError("ofxCvGui") << "Assets data path cannot be found. Be sure to copy the ofxCvGui folder from ofxCvGui2/data to your data folder!";
+			return;
+		}
+
 		////
 		//images
 		////
 		//
-		string imageFolder = ofToDataPath("ofxCvGui/images/", true);
+		string imageFolder = ofToDataPath(dataPath + "/images/", true);
 		ofDirectory images;
 		images.listDir(imageFolder);
 		for (int i=0; i<images.size(); i++) {
@@ -40,7 +48,7 @@ namespace ofxCvGui {
 		//fonts
 		////
 		//
-		string fontFolder = ofToDataPath("ofxCvGui/fonts", true);
+		string fontFolder = ofToDataPath(dataPath + "/fonts", true);
 		ofDirectory fonts;
 		fonts.listDir(fontFolder);
 		for (int i=0; i<fonts.size(); i++) {
@@ -49,9 +57,13 @@ namespace ofxCvGui {
 				continue;
 
 			name = ofFilePath::getBaseName(filename);
-			this->fonts.insert(pair<string, ofTrueTypeFont>(name, ofTrueTypeFont()));
-			this->fonts[name].loadFont(filename, 14);
+			this->fonts.insert(pair<string, ofTrueTypeFont>(name + ":14", ofTrueTypeFont()));
+			this->fonts[name + ":14"].loadFont(filename, 14);
+			this->fonts.insert(pair<string, ofTrueTypeFont>(name + ":10", ofTrueTypeFont()));
+			this->fonts[name + ":10"].loadFont(filename, 10);
 
+			//set default font
+			this->fonts["!"] = this->fonts[name + ":14"];
 			ofLogNotice("ofxCvGui") << "Loaded font asset '" << name << "'" << endl;
 		}
 		//
@@ -67,6 +79,8 @@ namespace ofxCvGui {
 	ofImage& Assets::getImage(const string& imageName) {
 		if (this->images.count(imageName) == 0) {
 			ofLogError("ofxCvGui") << "Image asset ['" << imageName << "'] not found";
+			ofLogError("ofxCvGui") << "Image asset ['" << imageName << "'] will be instantiated with blank image";
+			this->images[imageName] = this->blankImage;
 			return this->blankImage;
 		}
 		return this->images[imageName];

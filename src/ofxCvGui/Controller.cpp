@@ -42,6 +42,13 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	void Controller::clear() {
+		if (!initialised)
+			return;
+		this->rootGroup->clear();
+	}
+
+	//----------
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised)
 			return;
