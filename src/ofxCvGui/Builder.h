@@ -13,6 +13,8 @@
 #include "ofxCvGui/Panels/Text.h"
 #include "ofxCvGui/Panels/Instructions.h"
 
+#include "ofxCvGui/Panels/Node.h"
+
 namespace ofxCvGui {
 	class Builder {
 	public:
@@ -20,6 +22,7 @@ namespace ofxCvGui {
 		PanelPtr add(ofBaseDraws& asset, string caption="");
 		PanelPtr add(const ofPixels& asset, string caption="");
 		PanelPtr add(const vector<ofPixels>& asset, string caption="");
+		PanelPtr add(ofNode & asset, string caption="");
 		PanelPtr addInstructions();
 
 		void clear();

@@ -43,6 +43,9 @@
     <ClCompile Include="..\src\ofxCvGui\Types.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Node.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -90,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\ElementGroup.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Node.h">
+      <Filter>src\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
