@@ -8,41 +8,41 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	PanelPtr Builder::add(ofBaseDraws& asset, string caption) {
-		PanelPtr newPanel( new Panels::Draws(asset) );
+	ofPtr<Panels::Draws> Builder::add(ofBaseDraws& asset, string caption) {
+		ofPtr<Panels::Draws> newPanel( new Panels::Draws(asset) );
 		newPanel->setCaption(caption);
-		controller.add(newPanel);
+		controller.add(PanelPtr(newPanel));
 		return newPanel;
 	}
 
 	//----------
-	PanelPtr Builder::add(const ofPixels& asset, string caption) {
-		PanelPtr newPanel( new Panels::Pixels(asset) );
+	ofPtr<Panels::Pixels> Builder::add(const ofPixels& asset, string caption) {
+		ofPtr<Panels::Pixels> newPanel( new Panels::Pixels(asset) );
 		newPanel->setCaption(caption);
-		controller.add(newPanel);
+		controller.add(PanelPtr(newPanel));
 		return newPanel;
 	}
 
 	//----------
-	PanelPtr Builder::add(const vector<ofPixels>& asset, string caption) {
-		PanelPtr newPanel( new Panels::PixelsVector(asset) );
+	ofPtr<Panels::PixelsVector> Builder::add(const vector<ofPixels>& asset, string caption) {
+		ofPtr<Panels::PixelsVector> newPanel;
 		newPanel->setCaption(caption);
-		controller.add(newPanel);
+		controller.add(PanelPtr(newPanel));
 		return newPanel;
 	}
 
 	//----------
-	PanelPtr Builder::add(ofNode & asset, string caption) {
-		PanelPtr newPanel( new Panels::Node(asset) );
+	ofPtr<Panels::Node> Builder::add(ofNode & asset, string caption) {
+		ofPtr<Panels::Node> newPanel( new Panels::Node(asset) );
 		newPanel->setCaption(caption);
-		controller.add(newPanel);
+		controller.add(PanelPtr(newPanel));
 		return newPanel;
 	}
 
 	//----------
-	PanelPtr Builder::addInstructions() {
-		PanelPtr newPanel( new Panels::Instructions() );
-		controller.add(newPanel);
+	ofPtr<Panels::Instructions> Builder::addInstructions() {
+		ofPtr<Panels::Instructions> newPanel( new Panels::Instructions() );
+		controller.add(PanelPtr(newPanel));
 		return newPanel;
 	}
 

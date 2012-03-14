@@ -4,11 +4,12 @@ namespace ofxCvGui {
 	//----------
 	Controller::Controller() {
 		this->initialised = false;
+		this->fullscreen = false;
 	}
 
 	//----------
 	void Controller::init(ofPtr<Panels::Groups::Base> rootGroup) {
-		ofBackground(100);
+		ofBackground(80);
 		ofSetVerticalSync(true);
 
 		ofAddListener(ofEvents.update, this, &Controller::update);
@@ -24,6 +25,7 @@ namespace ofxCvGui {
 
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;
+		this->currentPanel = PanelPtr();
 		this->initialised = true;
 	}
 	
@@ -49,6 +51,18 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	void Controller::toggleFullscreen() {
+		this->fullscreen ^= true;
+		ofSetFullscreen(this->fullscreen);
+	}
+	
+	//----------
+	void Controller::toggleFullscreen(PanelPtr panel) {
+		this->currentPanel = panel;
+		this->toggleFullscreen();
+	}
+
+	//----------
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised)
 			return;
@@ -59,21 +73,42 @@ namespace ofxCvGui {
 	void Controller::draw(ofEventArgs& args) {
 		if (!initialised)
 			return;
-		rootGroup->draw(DrawArguments(ofGetCurrentViewport(), true));
+		if (this->fullscreen) {
+			this->currentPanel->draw( DrawArguments(ofGetCurrentViewport(), true) );
+		} else {
+			if (currentPanel != PanelPtr()) {
+				ofPushStyle();
+				ofEnableAlphaBlending();
+				ofSetColor(100, 100, 100, 100);
+				ofRect(currentPanel->getBounds());
+				ofPopStyle();
+			}
+			rootGroup->draw(DrawArguments(ofGetCurrentViewport(), true));
+		}
 	}
 
 	//----------
 	void Controller::mouseMoved(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		rootGroup->mouseAction(MouseArguments(args, MouseMoved, rootGroup->getBounds()));
+		MouseArguments action(MouseArguments(args, MouseMoved, rootGroup->getBounds()));
+		if (this->fullscreen)
+			currentPanel->mouseAction(action);
+		else {
+			rootGroup->mouseAction(action);
+			this->currentPanel = PanelPtr(rootGroup->findScreen( ofVec2f(args.x, args.y) ));
+		}
 	}
 	
 	//----------
 	void Controller::mousePressed(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		rootGroup->mouseAction(MouseArguments(args, MousePressed, rootGroup->getBounds()));
+		MouseArguments action(MouseArguments(args, MousePressed, rootGroup->getBounds()));
+		if (this->fullscreen)
+			currentPanel->mouseAction(action);
+		else
+			rootGroup->mouseAction(action);
 	}
 	
 	//----------
@@ -93,18 +128,26 @@ namespace ofxCvGui {
 	//----------
 	void Controller::keyPressed(ofKeyEventArgs &args) {
 		if (args.key == 'f')
-			ofToggleFullscreen();
+			this->toggleFullscreen();
 
 		if (!initialised)
 			return;
-		rootGroup->keyboardAction(KeyboardArguments(args, KeyPressed));
+
+		KeyboardArguments action(args, KeyPressed);
+		if (this->fullscreen)
+			currentPanel->keyboardAction(action);
+		else
+			rootGroup->keyboardAction(action);
 	}
 	
 	//----------
 	void Controller::windowResized(ofResizeEventArgs &args) {
 		if (!initialised)
 			return;
-		rootGroup->setBounds(ofRectangle(0,0,ofGetWidth(), ofGetHeight()));
+		ofRectangle bounds(0,0,ofGetWidth(), ofGetHeight());
+		rootGroup->setBounds(bounds);
+		if (this->fullscreen)
+			currentPanel->setBounds(bounds);
 	}
 
 	//----------

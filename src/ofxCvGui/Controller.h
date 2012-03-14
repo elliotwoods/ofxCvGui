@@ -14,6 +14,8 @@ namespace ofxCvGui {
 		void add(PanelPtr& panel);
 		void drop(PanelPtr& panel);
 		void clear();
+		void toggleFullscreen();
+		void toggleFullscreen(PanelPtr panel);
 
 	protected:
 		////
@@ -34,5 +36,7 @@ namespace ofxCvGui {
 		bool checkInitialised();
 		bool initialised;
 		PanelGroupPtr rootGroup;
+		PanelPtr currentPanel;
+		bool fullscreen;
 	};
 }

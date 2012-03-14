@@ -9,10 +9,13 @@ namespace ofxCvGui {
 	namespace Panels {
 		class Node : public Panels::Base {
 		public:
+			Node() { }
 			Node(ofNode & node);
+			void setCursorEnabled(bool cursorEnabled=true);
+			void push(ofNode & node);
 		protected:
 			void drawPanel(const DrawArguments& arguments);
-			ofNode & node;
+			vector<ofNode*> nodes;
 			ofxGrabCam camera;
 		};
 	}
