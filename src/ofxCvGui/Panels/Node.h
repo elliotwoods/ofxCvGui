@@ -12,11 +12,13 @@ namespace ofxCvGui {
 			Node() { }
 			Node(ofNode & node);
 			void setCursorEnabled(bool cursorEnabled=true);
+			void setGridColor(const ofColor & gridColor);
 			void push(ofNode & node);
 		protected:
 			void drawPanel(const DrawArguments& arguments);
 			vector<ofNode*> nodes;
 			ofxGrabCam camera;
+			ofColor gridColor;
 		};
 	}
 }

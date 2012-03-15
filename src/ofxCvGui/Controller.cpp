@@ -9,7 +9,7 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::init(ofPtr<Panels::Groups::Base> rootGroup) {
-		ofBackground(80);
+		ofBackground(90);
 		ofSetVerticalSync(true);
 
 		ofAddListener(ofEvents.update, this, &Controller::update);
@@ -52,7 +52,10 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::toggleFullscreen() {
-		this->fullscreen ^= true;
+		if ( this->currentPanel != PanelPtr() )
+			this->fullscreen ^= true;
+		else
+			this->fullscreen = false;
 		ofSetFullscreen(this->fullscreen);
 	}
 	

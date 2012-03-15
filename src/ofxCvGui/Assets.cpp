@@ -102,15 +102,21 @@ namespace ofxCvGui {
 		ofFill();
 		bool useDefault = (fontName == "" || this->fonts.count(fontName) == 0);
 		ofRectangle bounds(x, y, 0, 0);
+		bool multiline = ofIsStringInString(text, "\n");
 		if (Assets::fonts.size() > 0) {
 			ofTrueTypeFont& font(useDefault ? fonts.begin()->second : this->getFont(fontName));
-			float rawWidth = font.getStringBoundingBox(text, x, y).width;
-			float rawHeight = font.getStringBoundingBox("Hy", x, y).height;
+			ofRectangle rawBounds = font.getStringBoundingBox(text, x, y);
+			float rawWidth = rawBounds.width;
+			float rawHeight;
+			if (!multiline)
+				rawHeight = font.getStringBoundingBox("Hy", x, y).height;
+			else
+				rawHeight = rawBounds.height + font.getLineHeight() * 0.5f;
 			bounds.x = x;
 			bounds.y = y;
 			bounds.width = rawWidth + font.getSize();
 			if (bounds.width < minWidth) {
-				x+= (minWidth - bounds.width) / 2.0f;
+				x += (minWidth - bounds.width) / 2.0f;
 				bounds.width = minWidth;
 			}
 			bounds.height = MAX(rawHeight, minHeight);
@@ -118,7 +124,12 @@ namespace ofxCvGui {
 				ofRect(bounds);
 			ofPopStyle();
 			ofSetColor(255);
-			font.drawString(text, x + font.getSize() / 2, y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f);
+			x = x + font.getSize() / 2;
+			if (!multiline)
+				y = y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f;
+			else
+				y = y + font.getLineHeight();
+			font.drawString(text, x, y);
 		} else {
 			bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
 			if (background)

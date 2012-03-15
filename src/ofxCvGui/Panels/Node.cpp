@@ -5,6 +5,7 @@ namespace ofxCvGui {
 		//----------
 		Node::Node(ofNode & node) {
 			this->push(node);
+			this->gridColor = ofColor(60, 50, 50);
 		}
 
 		//----------
@@ -12,7 +13,7 @@ namespace ofxCvGui {
 			this->camera.begin(this->getBounds());
 
 			ofPushStyle();
-			ofSetColor(200, 100, 100);
+			ofSetColor(this->gridColor);
 			ofDrawGrid(10.0f, 10.0f, true);
 			ofPopStyle();
 
@@ -26,6 +27,11 @@ namespace ofxCvGui {
 		//----------
 		void Node::setCursorEnabled(bool cursorEnabled) {
 			this->camera.setCursorDraw(cursorEnabled);
+		}
+
+		//----------
+		void Node::setGridColor(const ofColor & gridColor) {
+			this->gridColor = gridColor;
 		}
 
 		//----------

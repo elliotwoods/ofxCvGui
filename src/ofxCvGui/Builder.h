@@ -19,11 +19,16 @@ namespace ofxCvGui {
 	class Builder {
 	public:
 		void init();
+		//content
 		ofPtr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
 		ofPtr<Panels::Pixels> add(const ofPixels& asset, string caption="");
 		ofPtr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
 		ofPtr<Panels::Node> add(ofNode & asset, string caption="");
 		ofPtr<Panels::Instructions> addInstructions();
+
+		//groups
+		ofPtr<Panels::Groups::Grid> addGrid();
+		
 
 		void clear();
 		void drop(PanelPtr &panel);
