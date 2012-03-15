@@ -25,7 +25,7 @@ namespace ofxCvGui {
 
 	//----------
 	ofPtr<Panels::PixelsVector> Builder::add(const vector<ofPixels>& asset, string caption) {
-		ofPtr<Panels::PixelsVector> newPanel;
+		ofPtr<Panels::PixelsVector> newPanel(new Panels::PixelsVector(asset) );
 		newPanel->setCaption(caption);
 		controller.add( PanelPtr(newPanel) );
 		return newPanel;

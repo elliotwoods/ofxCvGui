@@ -6,16 +6,20 @@ namespace ofxCvGui {
 		Node::Node(ofNode & node) {
 			this->push(node);
 			this->gridColor = ofColor(60, 50, 50);
+			this->gridEnabled = true;
+			this->gridLabelsEnabled = true;
 		}
 
 		//----------
 		void Node::drawPanel(const DrawArguments& arguments) {
 			this->camera.begin(this->getBounds());
 
-			ofPushStyle();
-			ofSetColor(this->gridColor);
-			ofDrawGrid(10.0f, 10.0f, this->gridLabelsEnabled);
-			ofPopStyle();
+			if (this->gridEnabled) {
+				ofPushStyle();
+				ofSetColor(this->gridColor);
+				ofDrawGrid(10.0f, 10.0f, this->gridLabelsEnabled);
+				ofPopStyle();
+			}
 
 			vector<ofNode*>::iterator it;
 			for (it = this->nodes.begin(); it != this->nodes.end(); it++)
@@ -27,6 +31,11 @@ namespace ofxCvGui {
 		//----------
 		void Node::setCursorEnabled(bool cursorEnabled) {
 			this->camera.setCursorDraw(cursorEnabled);
+		}
+
+		//----------
+		void Node::setGridEnabled(bool gridEnabled) {
+			this->gridEnabled = gridEnabled;
 		}
 
 		//----------

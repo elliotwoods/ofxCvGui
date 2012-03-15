@@ -12,6 +12,7 @@ namespace ofxCvGui {
 			Node() { }
 			Node(ofNode & node);
 			void setCursorEnabled(bool cursorEnabled=true);
+			void setGridEnabled(bool gridEnabled);
 			void setGridColor(const ofColor & gridColor);
 			void setGridLabelsEnabled(bool ticksEnabled);
 			void push(ofNode & node);
@@ -21,6 +22,7 @@ namespace ofxCvGui {
 			ofxGrabCam camera;
 			ofColor gridColor;
 			bool gridLabelsEnabled;
+			bool gridEnabled;
 		};
 	}
 }
