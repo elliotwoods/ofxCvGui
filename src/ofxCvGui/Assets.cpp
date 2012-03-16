@@ -90,7 +90,7 @@ namespace ofxCvGui {
 	ofTrueTypeFont& Assets::getFont(const string& fontName) {
 		if (this->fonts.count(fontName) == 0) {
 			ofLogError("ofxCvGui") << "Font asset ['" << fontName << "'] not found";
-			return ofTrueTypeFont();
+			return this->blankFont;
 		}
 		return this->fonts[fontName];
 	}

@@ -20,6 +20,7 @@ namespace ofxCvGui {
 		map<string, ofTrueTypeFont> fonts;
 
 		ofImage blankImage;
+		ofTrueTypeFont blankFont;
 	};
 
 	extern Assets AssetRegister;

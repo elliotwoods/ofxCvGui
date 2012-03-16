@@ -29,6 +29,11 @@ namespace ofxCvGui {
 		}
 		
 		//----------
+		ofxGrabCam & Node::getCamera() {
+			return this->camera;
+		}
+
+		//----------
 		void Node::setCursorEnabled(bool cursorEnabled) {
 			this->camera.setCursorDraw(cursorEnabled);
 		}

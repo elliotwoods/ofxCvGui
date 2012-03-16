@@ -11,10 +11,14 @@ namespace ofxCvGui {
 		public:
 			Node() { }
 			Node(ofNode & node);
+			
+			//camera
+			ofxGrabCam & getCamera();
 			void setCursorEnabled(bool cursorEnabled=true);
 			void setGridEnabled(bool gridEnabled);
 			void setGridColor(const ofColor & gridColor);
 			void setGridLabelsEnabled(bool ticksEnabled);
+
 			void push(ofNode & node);
 		protected:
 			void drawPanel(const DrawArguments& arguments);
