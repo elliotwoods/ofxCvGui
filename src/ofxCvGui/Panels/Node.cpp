@@ -5,7 +5,7 @@ namespace ofxCvGui {
 		//----------
 		Node::Node(ofNode & node) {
 			this->push(node);
-			this->gridColor = ofColor(60, 50, 50);
+			this->gridColor = ofColor(90, 50, 50);
 			this->gridEnabled = true;
 			this->gridLabelsEnabled = true;
 		}

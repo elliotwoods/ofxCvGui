@@ -4,6 +4,7 @@ namespace ofxCvGui {
 	//----------
 	Controller::Controller() {
 		this->initialised = false;
+		this->maximised = false;
 		this->fullscreen = false;
 	}
 
@@ -51,11 +52,23 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	void Controller::toggleMaximised() {
+		//if we were fullscreen, move to simply maximised
+		if (this->fullscreen) {
+			if (this->fullscreen = false)
+				ofSetFullscreen(false);
+			this->maximised = true;
+		} else
+			this->maximised ^= true;
+	}
+
+	//----------
 	void Controller::toggleFullscreen() {
 		if ( this->currentPanel != PanelPtr() )
 			this->fullscreen ^= true;
 		else
 			this->fullscreen = false;
+		this->maximised = this->fullscreen;
 		ofSetFullscreen(this->fullscreen);
 	}
 	
@@ -76,7 +89,7 @@ namespace ofxCvGui {
 	void Controller::draw(ofEventArgs& args) {
 		if (!initialised)
 			return;
-		if (this->fullscreen) {
+		if (this->maximised) {
 			this->currentPanel->draw( DrawArguments(ofGetCurrentViewport(), true) );
 		} else {
 			if (currentPanel != PanelPtr()) {
@@ -95,7 +108,7 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 		MouseArguments action(MouseArguments(args, MouseMoved, rootGroup->getBounds()));
-		if (this->fullscreen)
+		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else {
 			rootGroup->mouseAction(action);
@@ -108,7 +121,7 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 		MouseArguments action(MouseArguments(args, MousePressed, rootGroup->getBounds()));
-		if (this->fullscreen)
+		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
 			rootGroup->mouseAction(action);
@@ -132,12 +145,14 @@ namespace ofxCvGui {
 	void Controller::keyPressed(ofKeyEventArgs &args) {
 		if (args.key == 'f')
 			this->toggleFullscreen();
+		if (args.key == 'm')
+			this->toggleMaximised();
 
 		if (!initialised)
 			return;
 
 		KeyboardArguments action(args, KeyPressed);
-		if (this->fullscreen)
+		if (this->maximised)
 			currentPanel->keyboardAction(action);
 		else
 			rootGroup->keyboardAction(action);
@@ -149,7 +164,7 @@ namespace ofxCvGui {
 			return;
 		ofRectangle bounds(0,0,ofGetWidth(), ofGetHeight());
 		rootGroup->setBounds(bounds);
-		if (this->fullscreen)
+		if (this->maximised)
 			currentPanel->setBounds(bounds);
 	}
 
