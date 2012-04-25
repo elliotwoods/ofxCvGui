@@ -13,14 +13,14 @@ namespace ofxCvGui {
 		ofBackground(90);
 		ofSetVerticalSync(true);
 
-		ofAddListener(ofEvents.update, this, &Controller::update);
-		ofAddListener(ofEvents.draw, this, &Controller::draw);
-		ofAddListener(ofEvents.mouseMoved, this, &Controller::mouseMoved);
-		ofAddListener(ofEvents.mousePressed, this, &Controller::mousePressed);
-		ofAddListener(ofEvents.mouseReleased, this, &Controller::mouseReleased);
-		ofAddListener(ofEvents.mouseDragged, this, &Controller::mouseDragged);
-		ofAddListener(ofEvents.keyPressed, this, &Controller::keyPressed);	
-		ofAddListener(ofEvents.windowResized, this, &Controller::windowResized);
+		ofAddListener(ofEvents().update, this, &Controller::update);
+		ofAddListener(ofEvents().draw, this, &Controller::draw);
+		ofAddListener(ofEvents().mouseMoved, this, &Controller::mouseMoved);
+		ofAddListener(ofEvents().mousePressed, this, &Controller::mousePressed);
+		ofAddListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
+		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
+		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
+		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 
 		AssetRegister.init();
 
