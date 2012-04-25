@@ -14,6 +14,7 @@ namespace ofxCvGui {
 		void add(PanelPtr& panel);
 		void drop(PanelPtr& panel);
 		void clear();
+		void toggleMaximised();
 		void toggleFullscreen();
 		void toggleFullscreen(PanelPtr panel);
 
@@ -37,6 +38,7 @@ namespace ofxCvGui {
 		bool initialised;
 		PanelGroupPtr rootGroup;
 		PanelPtr currentPanel;
+		bool maximised;
 		bool fullscreen;
 	};
 }
