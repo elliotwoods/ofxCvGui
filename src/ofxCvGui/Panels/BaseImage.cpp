@@ -3,17 +3,24 @@
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
+		void BaseImage::setAutoRefresh(bool autoRefresh) {
+			this->autoRefresh = autoRefresh;
+		}
+
+		//----------
 		BaseImage::BaseImage() {
-			this->refreshPerFrame = true;
+			this->autoRefresh = true;
 		}
 
 		//----------
 		void BaseImage::drawPanel(const DrawArguments& arguments) {
 			this->drawImage(arguments);
+		}
 
-			AssetRegister["zoom_in"].draw(20, 20);
-			AssetRegister["zoom_out"].draw(60, 20);
-			AssetRegister.drawText(this->caption, 100, 20, "", true, 30);
+		//----------
+		void BaseImage::drawToolbar(float x) {
+			AssetRegister["zoom_in"].draw(x, 20);
+			AssetRegister["zoom_out"].draw(x + 40, 20);
 		}
 	}
 }

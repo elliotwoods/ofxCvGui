@@ -5,11 +5,11 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Draws : public Panels::BaseImage {
+		class Draws : public Panels::Base {
 		public:
 			Draws(ofBaseDraws& pixels);
 		protected:
-			void drawImage(const DrawArguments& arguments);
+			void drawPanel(const DrawArguments& arguments);
 		private:
 			ofBaseDraws& draws;
 		};

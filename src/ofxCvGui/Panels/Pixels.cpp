@@ -4,16 +4,20 @@ namespace ofxCvGui {
 		//----------
 		Pixels::Pixels(const ofPixels& pixels) :
 		pixels(pixels) {
-			this->refreshPerFrame = true;
 		}
 
 		//----------
 		void Pixels::update() {
-			if (refreshPerFrame) {
-				if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
-					preview.allocate(pixels);
-				preview.loadData(pixels);
+			if (autoRefresh) {
+				refresh();
 			}
+		}
+
+		//----------
+		void Pixels::refresh() {
+			if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
+				preview.allocate(pixels);
+			preview.loadData(pixels);
 		}
 
 		//----------

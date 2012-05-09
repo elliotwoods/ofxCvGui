@@ -8,7 +8,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Draws::drawImage(const DrawArguments& arguments) {
+		void Draws::drawPanel(const DrawArguments& arguments) {
 			this->draws.draw(0, 0, this->getWidth(), this->getHeight());
 		}
 	}

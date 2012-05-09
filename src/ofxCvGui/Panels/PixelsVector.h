@@ -12,6 +12,7 @@ namespace ofxCvGui {
 		public:
 			PixelsVector(const vector<ofPixels>& pixels);
 			void update();
+			void refresh();
 		protected:
 			void drawImage(const DrawArguments& arguments);
 		private:

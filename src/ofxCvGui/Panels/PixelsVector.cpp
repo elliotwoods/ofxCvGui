@@ -8,7 +8,6 @@ namespace ofxCvGui {
 			this->selection = -1;
 			this->lastSelection = -1;
 			this->lastCount = 0;
-			this->refreshPerFrame = false;
 		}
 
 		//----------
@@ -21,16 +20,21 @@ namespace ofxCvGui {
 			if (selection > pixels.size())
 				selection = pixels.size() - 1;
 
-			if (selection != lastSelection || refreshPerFrame) {
-				if (selection >= 0) {
-					const ofPixels& pixels(this->pixels[selection]);
-					if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
-						preview.allocate(pixels);
-					preview.loadData(pixels);
-					lastSelection = selection;
-				} else
-					preview.clear();
+			if (selection != lastSelection || autoRefresh) {
+				refresh();
 			}
+		}
+
+		//----------
+		void PixelsVector::refresh() {
+			if (selection >= 0) {
+				const ofPixels& pixels(this->pixels[selection]);
+				if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
+					preview.allocate(pixels);
+				preview.loadData(pixels);
+				lastSelection = selection;
+			} else
+				preview.clear();
 		}
 
 		//----------

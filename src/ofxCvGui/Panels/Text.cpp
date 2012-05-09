@@ -9,7 +9,6 @@ namespace ofxCvGui {
 
 		//----------
 		void Text::drawPanel(const DrawArguments& arguments) {
-			AssetRegister.drawText(this->caption, 20, 20, "", true, 30);
 			AssetRegister.drawText(this->text, 10, 70, "", false);
 		}
 	}
