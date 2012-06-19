@@ -24,7 +24,7 @@ namespace ofxCvGui {
 
 	protected:
 		void drawSet(const DrawArguments& arguments);
-		vector<ofPtr<T>> elements;
+		vector<ofPtr<T> > elements;
 	};
 
 	class ElementGroup : public ElementGroup_<Element> {

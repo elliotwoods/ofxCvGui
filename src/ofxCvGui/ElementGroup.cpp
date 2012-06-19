@@ -3,7 +3,7 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::update() {
-		vector<ofPtr<T>>::iterator it;
+		typename vector<ofPtr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).update();		
 	}
@@ -11,7 +11,7 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::mouseAction(const MouseArguments& mouse) {
-		vector<ofPtr<T>>::iterator it;
+		typename vector<ofPtr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).mouseAction(MouseArguments(mouse, (**it).getBounds()));
 	}
@@ -19,7 +19,7 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::keyboardAction(const KeyboardArguments& keyboard) {
-		vector<ofPtr<T>>::iterator it;
+		typename vector<ofPtr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).keyboardAction(keyboard);
 	}
@@ -34,7 +34,7 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::drop(ofPtr<T>& element) {
-		vector<ofPtr<T>>::iterator it;
+		typename vector<ofPtr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			if (*it == element) {
 				elements.erase(it);
@@ -54,7 +54,7 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
-		vector<ofPtr<T>>::iterator it;
+		typename vector<ofPtr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).draw(arguments);
 	}
