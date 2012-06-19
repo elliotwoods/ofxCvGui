@@ -17,7 +17,7 @@ namespace ofxCvGui {
 			if (this->gridEnabled) {
 				ofPushStyle();
 				ofSetColor(this->gridColor);
-				ofDrawGrid(10.0f, 10.0f, this->gridLabelsEnabled);
+				ofDrawGrid(gridScale, 5.0f, this->gridLabelsEnabled);
 				ofPopStyle();
 			}
 
@@ -42,10 +42,15 @@ namespace ofxCvGui {
 		void Node::setGridEnabled(bool gridEnabled) {
 			this->gridEnabled = gridEnabled;
 		}
-
+		
 		//----------
 		void Node::setGridColor(const ofColor & gridColor) {
 			this->gridColor = gridColor;
+		}
+		
+		//----------
+		void Node::setGridScale(const float gridScale) {
+			this->gridScale = gridScale;
 		}
 
 		//----------
