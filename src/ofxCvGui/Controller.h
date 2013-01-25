@@ -40,5 +40,6 @@ namespace ofxCvGui {
 		PanelPtr currentPanel;
 		bool maximised;
 		bool fullscreen;
+        ofVec2f mouseCached;
 	};
 }

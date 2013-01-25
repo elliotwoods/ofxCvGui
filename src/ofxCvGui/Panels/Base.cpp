@@ -2,8 +2,14 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		void Base::drawElement(const DrawArguments& arguments) {
-			this->drawPanel(arguments);
-		}
+        //---------
+        Base::Base() {
+            ofAddListener(this->onDraw, this, &Base::drawContent);
+        }
+        
+        //---------
+        Base::~Base() {
+            ofRemoveListener(this->onDraw, this, &Base::drawContent);
+        }
 	}
 }

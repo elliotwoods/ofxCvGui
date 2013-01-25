@@ -4,6 +4,16 @@ namespace ofxCvGui {
 	namespace Panels {
 		namespace Groups {
 			//----------
+            Grid::Grid() {
+                ofAddListener(this->onBoundsChange, this, &Grid::boundsChange);
+            }
+            
+            //----------
+            Grid::~Grid() {
+                ofRemoveListener(this->onBoundsChange, this, &Grid::boundsChange);
+            }
+            
+			//----------
 			const PanelPtr Grid::findScreen(const ofVec2f & xy) {
 				unsigned int index = floor(xy.x / panelWidth) + xCount * floor(xy.y / panelHeight);
 				if (index < this->elements.size()) {
@@ -16,7 +26,7 @@ namespace ofxCvGui {
 			}
 
 			//----------
-			void Grid::boundsChange() {
+			void Grid::boundsChange(ofRectangle &) {
 				float count = this->elements.size();
 				xCount = ceil(sqrt(count));
 				yCount = ceil(count / xCount);

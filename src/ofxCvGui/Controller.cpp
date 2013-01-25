@@ -55,7 +55,7 @@ namespace ofxCvGui {
 	void Controller::toggleMaximised() {
 		//if we were fullscreen, move to simply maximised
 		if (this->fullscreen) {
-			if (this->fullscreen = false)
+			if (!this->fullscreen)
 				ofSetFullscreen(false);
 			this->maximised = true;
 		} else
@@ -90,7 +90,9 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 		if (this->maximised) {
-			this->currentPanel->draw( DrawArguments(ofGetCurrentViewport(), true) );
+            DrawArguments arg(ofGetCurrentViewport(), true);
+			this->currentPanel->draw(arg);
+            ofNotifyEvent(this->currentPanel->onDraw, arg, this);
 		} else {
 			if (currentPanel != PanelPtr()) {
 				ofPushStyle();
@@ -99,7 +101,9 @@ namespace ofxCvGui {
 				ofRect(currentPanel->getBounds());
 				ofPopStyle();
 			}
-			rootGroup->draw(DrawArguments(ofGetCurrentViewport(), true));
+            DrawArguments arg(ofGetCurrentViewport(), true);
+			rootGroup->draw(arg);
+            ofNotifyEvent(this->rootGroup->onDraw, arg, this);
 		}
 	}
 
@@ -107,7 +111,7 @@ namespace ofxCvGui {
 	void Controller::mouseMoved(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		MouseArguments action(MouseArguments(args, MouseMoved, rootGroup->getBounds()));
+		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), this->currentPanel));
 		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else {
@@ -120,25 +124,35 @@ namespace ofxCvGui {
 	void Controller::mousePressed(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		MouseArguments action(MouseArguments(args, MousePressed, rootGroup->getBounds()));
+		MouseArguments action(MouseArguments(args, MouseArguments::Pressed, rootGroup->getBounds(), this->currentPanel));
 		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
 			rootGroup->mouseAction(action);
+        this->mouseCached = action.global;
 	}
 	
 	//----------
 	void Controller::mouseReleased(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		rootGroup->mouseAction(MouseArguments(args, MouseReleased, rootGroup->getBounds()));
+		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), this->currentPanel);
+        if (this->maximised)
+			currentPanel->mouseAction(action);
+		else
+			rootGroup->mouseAction(action);
 	}
 	
 	//----------
 	void Controller::mouseDragged(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;
-		rootGroup->mouseAction(MouseArguments(args, MouseDragged, rootGroup->getBounds()));
+        MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), this->currentPanel, mouseCached);
+        if (this->maximised)
+			currentPanel->mouseAction(action);
+		else
+			rootGroup->mouseAction(action);
+        this->mouseCached = action.global;
 	}
 	
 	//----------
@@ -151,7 +165,7 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 
-		KeyboardArguments action(args, KeyPressed);
+		KeyboardArguments action(args, KeyboardArguments::Pressed, this->currentPanel);
 		if (this->maximised)
 			currentPanel->keyboardAction(action);
 		else

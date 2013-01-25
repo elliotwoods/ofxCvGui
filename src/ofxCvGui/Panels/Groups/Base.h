@@ -7,9 +7,10 @@ namespace ofxCvGui {
 		namespace Groups {
 			class Base : public ElementGroup_<Panels::Base> {
 			public:
-			virtual const PanelPtr findScreen(const ofVec2f & xy) { return PanelPtr(); }
+                virtual ~Base() { };
+                virtual const PanelPtr findScreen(const ofVec2f & xy) { return PanelPtr(); }
 			protected:
-				void drawPanel(const DrawArguments& arguments) {
+				void drawContent(DrawArguments& arguments) {
 					this->drawSet(arguments);
 				}
 			};

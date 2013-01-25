@@ -11,15 +11,20 @@ namespace ofxCvGui {
 		class PixelsVector : public Panels::BaseImage {
 		public:
 			PixelsVector(const vector<ofPixels>& pixels);
-			void update();
+            ~PixelsVector();
+			void update(UpdateArguments&);
 		protected:
-			void drawImage(const DrawArguments& arguments);
+			void drawImage(float width, float height);
+            void drawInfo(DrawArguments&);
+            float getImageWidth() const;
+            float getImageHeight() const;
 		private:
 			const vector<ofPixels>& pixels;
 			ofTexture preview;
 			int selection;
 			int lastSelection;
 			size_t lastCount;
+            bool refreshPerFrame;
 		};
 	}
 }

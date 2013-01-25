@@ -6,10 +6,10 @@ namespace ofxCvGui {
 	class Element {
 	public:
 		virtual ~Element() { }
-		virtual void update() { };
-		void draw(const DrawArguments& arguments); //override customDraw instead
-		virtual void mouseAction(const MouseArguments& mouse) { };
-		virtual void keyboardAction(const KeyboardArguments& keyboard) { };
+		void update();
+		void draw(const DrawArguments& arguments); //to set your draw, listen to the onDraw event
+		void mouseAction(const MouseArguments& mouse);
+		void keyboardAction(const KeyboardArguments& keyboard);
 
 		void setBounds(const ofRectangle& bounds);
 		const ofRectangle& getBounds() const;
@@ -17,11 +17,16 @@ namespace ofxCvGui {
 		float getHeight() const;
 
 		void setCaption(string caption);
+        
+        ofEvent<UpdateArguments> onUpdate;
+        ofEvent<DrawArguments> onDraw;
+        ofEvent<ofRectangle> onBoundsChange;
+        ofEvent<MouseArguments> onMouseAction;
+        ofEvent<KeyboardArguments> onKeyboardAction;
+        
 	protected:
-		virtual void drawElement(const DrawArguments& arguments) = 0; ///<override here to draw something
-		virtual void boundsChange() { }; ///<override here if you want to cache something based on element's bounds
 		ofRectangle bounds; ///<bounds relative to parent
-		ofRectangle localBounds; ///<bounds for internal draw functions
+		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0
 		string caption;
 	};
 	typedef ofPtr<Element> ElementPtr;

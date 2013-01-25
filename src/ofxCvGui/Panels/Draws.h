@@ -9,7 +9,9 @@ namespace ofxCvGui {
 		public:
 			Draws(ofBaseDraws& pixels);
 		protected:
-			void drawImage(const DrawArguments& arguments);
+			void drawImage(float width, float height);
+            float getImageWidth() const;
+            float getImageHeight() const;
 		private:
 			ofBaseDraws& draws;
 		};

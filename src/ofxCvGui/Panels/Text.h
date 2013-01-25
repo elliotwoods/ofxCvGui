@@ -9,8 +9,9 @@ namespace ofxCvGui {
 		class Text : public Panels::Base {
 		public:
 			Text(string text = "");
+            virtual ~Text() { }
 		protected:
-			void drawPanel(const DrawArguments& arguments);
+			void drawContent(DrawArguments& arguments);
 			string text;
 		};
 	}

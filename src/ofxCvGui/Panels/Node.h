@@ -3,7 +3,14 @@
 #include "ofxCvGui/Assets.h"
 
 #include "ofNode.h"
-#include "ofxGrabCam.h"
+
+#ifdef HAS_ADDON_OFXGRABCAM
+    #include "ofxGrabCam.h"
+    typedef ofxGrabCam CameraType;
+#else
+    #include "ofEasyCam.h"
+    typedef ofEasyCam CameraType;
+#endif
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -13,19 +20,23 @@ namespace ofxCvGui {
 			Node(ofNode & node);
 			
 			//camera
-			ofxGrabCam & getCamera();
-			void setCursorEnabled(bool cursorEnabled=true);
+			CameraType & getCamera() { return this->camera; };
+			void setCursorEnabled(bool cursorEnabled=true) {
+#ifdef HAS_ADDON_OFXGRABCAM
+                this->camera.setCursorDraw(cursorEnabled);
+#endif
+            }
+            
 			void setGridEnabled(bool gridEnabled);
 			void setGridColor(const ofColor & gridColor);
 			void setGridScale(const float gridScale);
 			void setGridLabelsEnabled(bool ticksEnabled);
 
-			
 			void push(ofNode & node);
 		protected:
-			void drawPanel(const DrawArguments& arguments);
+			void drawContent(DrawArguments& arguments);
 			vector<ofNode*> nodes;
-			ofxGrabCam camera;
+			CameraType camera;
 			ofColor gridColor;
 			float gridScale;
 			bool gridLabelsEnabled;

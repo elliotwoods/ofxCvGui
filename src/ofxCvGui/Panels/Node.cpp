@@ -11,7 +11,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Node::drawPanel(const DrawArguments& arguments) {
+		void Node::drawContent(DrawArguments& arguments) {
 			this->camera.begin(this->getBounds());
 
 			if (this->gridEnabled) {
@@ -26,16 +26,6 @@ namespace ofxCvGui {
 				(**it).draw();
 
 			this->camera.end();
-		}
-		
-		//----------
-		ofxGrabCam & Node::getCamera() {
-			return this->camera;
-		}
-
-		//----------
-		void Node::setCursorEnabled(bool cursorEnabled) {
-			this->camera.setCursorDraw(cursorEnabled);
 		}
 
 		//----------

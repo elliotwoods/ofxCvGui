@@ -7,6 +7,7 @@
 #include "ofxCvGui/Panels/Groups/Grid.h"
 
 #include "ofxCvGui/Panels/Draws.h"
+#include "ofxCvGui/Panels/Image.h"
 #include "ofxCvGui/Panels/Pixels.h"
 #include "ofxCvGui/Panels/PixelsVector.h"
 
@@ -21,6 +22,7 @@ namespace ofxCvGui {
 		void init();
 		//content
 		ofPtr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
+		ofPtr<Panels::Image> add(ofImage& asset, string caption="");
 		ofPtr<Panels::Pixels> add(const ofPixels& asset, string caption="");
 		ofPtr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
 		ofPtr<Panels::Node> add(ofNode & asset, string caption="");
@@ -29,7 +31,6 @@ namespace ofxCvGui {
 		//groups
 		ofPtr<Panels::Groups::Grid> addGrid();
 		
-
 		void clear();
 		void drop(PanelPtr &panel);
 

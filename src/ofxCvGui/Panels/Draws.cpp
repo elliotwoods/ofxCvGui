@@ -8,8 +8,18 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Draws::drawImage(const DrawArguments& arguments) {
-			this->draws.draw(0, 0, this->getWidth(), this->getHeight());
+		void Draws::drawImage(float width, float height) {
+            this->draws.draw(0, 0, width, height);
 		}
+        
+		//----------
+        float Draws::getImageWidth() const {
+            return this->draws.getWidth();
+        }
+        
+		//----------
+        float Draws::getImageHeight() const {
+            return this->draws.getHeight();
+        }
 	}
 }

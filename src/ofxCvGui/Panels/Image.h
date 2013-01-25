@@ -5,19 +5,17 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Pixels : public Panels::BaseImage {
+		class Image : public Panels::BaseImage {
 		public:
-			Pixels(const ofPixels& pixels);
-            ~Pixels();
-			void update(UpdateArguments&);
+			Image(ofImage& image);
+            virtual ~Image();
 		protected:
 			void drawImage(float width, float height);
+            void drawInfo(DrawArguments& arguments);
             float getImageWidth() const;
             float getImageHeight() const;
 		private:
-			const ofPixels& pixels;
-			ofTexture preview;
-            bool refreshPerFrame;
+			ofImage& image;
 		};
 	}
 }

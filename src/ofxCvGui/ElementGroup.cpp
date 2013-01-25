@@ -28,7 +28,8 @@ namespace ofxCvGui {
 	template<typename T>
 	void ElementGroup_<T>::add(ofPtr<T>& addition) {
 		this->elements.push_back(addition);
-		this->boundsChange();
+        ofRectangle bounds = this->getBounds();
+		ofNotifyEvent(this->onBoundsChange, bounds, this);
 	}
 
 	//----------
@@ -41,22 +42,26 @@ namespace ofxCvGui {
 				break;
 			}
 
-		this->boundsChange();
+        ofRectangle bounds = this->getBounds();
+		ofNotifyEvent(this->onBoundsChange, bounds, this);
 	}
 
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::clear() {
 		this->elements.clear();
-		this->boundsChange();
+        ofRectangle bounds;
+		ofNotifyEvent(this->onBoundsChange, bounds, this);
 	}
 	
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
 		typename vector<ofPtr<T> >::iterator it;
-		for (it = elements.begin(); it != elements.end(); it++)
-			(**it).draw(arguments);
+		for (it = elements.begin(); it != elements.end(); it++) {
+            DrawArguments localArgs((*it)->getBounds(), arguments.chromeEnabled);
+			(**it).draw(localArgs);
+        }
 	}
 
 	template class ElementGroup_<Element>;

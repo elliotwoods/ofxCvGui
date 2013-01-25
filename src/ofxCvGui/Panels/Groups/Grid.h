@@ -7,9 +7,11 @@ namespace ofxCvGui {
 		namespace Groups {
 			class Grid : public Groups::Base {
 			public:
+                Grid();
+                virtual ~Grid();
 				const PanelPtr findScreen(const ofVec2f & xy);
 			protected:
-				void boundsChange();
+				void boundsChange(ofRectangle & bounds);
 				float xCount, yCount;
 				float panelWidth, panelHeight;
 			};

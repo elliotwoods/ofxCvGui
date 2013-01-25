@@ -4,34 +4,58 @@
 #include "ofTypes.h"
 
 namespace ofxCvGui {
+	//----------
+    struct UpdateArguments {
+        
+    };
+    
+	//----------
 	struct DrawArguments {
 		DrawArguments(const ofRectangle& parentBounds, bool chromeEnabled);
+        
 		const ofRectangle parentBounds;
 		const bool chromeEnabled;
 	};
 
-	enum MouseActionType {
-		MousePressed, MouseReleased, MouseMoved, MouseDragged
-	};
-
-	struct MouseArguments {
-		MouseArguments(const ofMouseEventArgs& mouseArgs, MouseActionType action, const ofRectangle& rectangle); ///global
+	//----------
+    class InputArguments {
+    public:
+        InputArguments(const ofPtr<void>& currentPanel) : currentPanel(currentPanel) { }
+        const ofPtr<void> currentPanel;
+        
+        bool checkCurrentPanel(void * panel) {
+            return currentPanel.get() == panel;
+        }
+    };
+    
+	//----------
+	class MouseArguments : public InputArguments {
+    public:
+        enum Action {
+            Pressed, Released, Moved, Dragged
+        };
+        
+		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const ofPtr<void>& currentPanel, const ofVec2f& cached = ofVec2f()); ///global
 		MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds); ///local
 		
-		const MouseActionType action;
+		const Action action;
 		const int button;
 		const ofVec2f global;
 		const ofVec2f local;
 		const ofVec2f localNormalised; ///<Texture coordinates
+        const ofVec2f movement;
 	};
 
-	enum KeyboardActionType {
-		KeyPressed, KeyReleased
-	};
-
-	struct KeyboardArguments {
-		KeyboardArguments(const ofKeyEventArgs& keyboardArgs, KeyboardActionType action);
-		const KeyboardActionType action;
+	//----------
+	class KeyboardArguments : public InputArguments {
+    public:
+        enum Action {
+            Pressed, Released
+        };
+        
+		KeyboardArguments(const ofKeyEventArgs& keyboardArgs, Action action, ofPtr<void> currentPanel);
+        
+		const Action action;
 		const int key;
 	};
 }

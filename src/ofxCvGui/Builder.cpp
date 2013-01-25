@@ -17,6 +17,15 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	ofPtr<Panels::Image> Builder::add(ofImage& asset, string caption) {
+		ofPtr<Panels::Image> newPanel( new Panels::Image(asset) );
+		newPanel->setCaption(caption);
+		PanelPtr panel(newPanel);
+		controller.add(panel);
+		return newPanel;
+	}
+	
+    //----------
 	ofPtr<Panels::Pixels> Builder::add(const ofPixels& asset, string caption) {
 		ofPtr<Panels::Pixels> newPanel( new Panels::Pixels(asset) );
 		newPanel->setCaption(caption);
@@ -42,7 +51,7 @@ namespace ofxCvGui {
 		controller.add(panel);
 		return newPanel;
 	}
-
+    
 	//----------
 	ofPtr<Panels::Instructions> Builder::addInstructions() {
 		ofPtr<Panels::Instructions> newPanel( new Panels::Instructions() );
