@@ -90,10 +90,14 @@ namespace ofxCvGui {
                 
                 ofPushView();
                 ofViewport(this->getBounds());
-                ofSetupScreenOrtho(this->getWidth(), this->getHeight());
-                ofTranslate(scrollOffset);
+
+				ofSetupScreen(); // ideally this should be ofSetupScreenOrtho, but that function seems to have a bug as of May 2013
+				ofTranslate(0, this->getHeight(), 0);
+                //ofSetupScreenOrtho(this->getWidth(), this->getHeight());
+                
+				ofTranslate(scrollOffset);
                 this->drawImage(this->getImageWidth(), this->getImageHeight());
-                ofPopView();
+				ofPopView();
             
                 //only draw zoom box if we need to
                 if (needsZoom) {
