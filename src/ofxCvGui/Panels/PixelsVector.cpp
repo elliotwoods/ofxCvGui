@@ -31,7 +31,7 @@ namespace ofxCvGui {
 
 			if (selection != lastSelection || refreshPerFrame) {
 				if (selection >= 0) {
-					const ofPixels& pixels(this->pixels[selection]);
+					const ofPixels& pixels(this->getSelection());
 					if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
 						preview.allocate(pixels);
 					preview.loadData(pixels);
@@ -39,6 +39,11 @@ namespace ofxCvGui {
 				} else
 					preview.clear();
 			}
+		}
+
+		//----------
+		const ofPixels & PixelsVector::getSelection() const {
+			return this->pixels[selection];
 		}
 
 		//----------
@@ -68,6 +73,16 @@ namespace ofxCvGui {
 					y -= 40;
 				}
 			}
+		}
+
+		//----------
+		float PixelsVector::getImageWidth() const {
+			return this->getSelection().getWidth();
+		}
+
+		//----------
+		float PixelsVector::getImageHeight() const {
+			return this->getSelection().getHeight();
 		}
 	}
 }

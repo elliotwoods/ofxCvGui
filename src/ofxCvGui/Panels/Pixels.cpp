@@ -26,5 +26,15 @@ namespace ofxCvGui {
 		void Pixels::drawImage(float width, float height) {
 			this->preview.draw(0, 0, this->getWidth(), this->getHeight());
 		}
+
+		//----------
+		float Pixels::getImageWidth() const {
+			return this->pixels.getWidth();
+		}
+
+		//----------
+		float Pixels::getImageHeight() const {
+			return this->pixels.getHeight();
+		}
 	}
 }

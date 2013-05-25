@@ -13,6 +13,7 @@ namespace ofxCvGui {
 			PixelsVector(const vector<ofPixels>& pixels);
             ~PixelsVector();
 			void update(UpdateArguments&);
+			const ofPixels & getSelection() const;
 		protected:
 			void drawImage(float width, float height);
             void drawInfo(DrawArguments&);

@@ -46,7 +46,7 @@ namespace ofxCvGui {
                 }
             }
             
-            = MouseArguments::Released) {
+            if (mouse.action == MouseArguments::Released) {
                 this->dragSelection = DragNone;
             }
         }

@@ -36,7 +36,7 @@ namespace ofxCvGui {
 
 	protected:
 		Controller controller;
-		Panels::Groups::Grid* mainGrid;
+		Panels::Groups::Grid * mainGrid;
 		PanelPtr rootPanel;
 	};
 }
