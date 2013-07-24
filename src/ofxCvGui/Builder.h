@@ -20,6 +20,7 @@ namespace ofxCvGui {
 	class Builder {
 	public:
 		void init();
+		
 		//content
 		ofPtr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
 		ofPtr<Panels::Image> add(ofImage& asset, string caption="");
@@ -31,6 +32,7 @@ namespace ofxCvGui {
 		//groups
 		ofPtr<Panels::Groups::Grid> addGrid();
 		
+		Controller & getController() { return this->controller; }
 		void clear();
 		void drop(PanelPtr &panel);
 

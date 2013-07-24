@@ -16,8 +16,10 @@ namespace ofxCvGui {
 		void clear();
 		void toggleMaximised();
 		void toggleFullscreen();
-		void toggleFullscreen(PanelPtr panel);
-
+		void setFullscreen(PanelPtr panel);
+		void showChrome();
+		void hideChrome();
+		
 	protected:
 		////
 		//actions
@@ -41,5 +43,6 @@ namespace ofxCvGui {
 		bool maximised;
 		bool fullscreen;
         ofVec2f mouseCached;
+		bool chromeVisible;
 	};
 }

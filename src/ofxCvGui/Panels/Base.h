@@ -1,6 +1,6 @@
 #pragma once
 #include "ofxCvGui/Element.h"
-#include "ofxCvGui/Panels/WidgetsHost.h"
+#include "ofxCvGui/Panels/Utils/WidgetsHost.h"
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -9,6 +9,7 @@ namespace ofxCvGui {
             Base();
             virtual ~Base();
 			virtual const ofPtr<Panels::Base> findScreen(const ofVec2f & xy) { return ofPtr<Panels::Base>(); }
+			
 #ifdef OFXUI
             void setWidgets(ofxUICanvas & gui) {
                 this->widgets.set(gui, this);
@@ -21,7 +22,7 @@ namespace ofxCvGui {
 #ifdef OFXUI
             Utils::WidgetsHost widgets;
 #endif
-        virtual void drawContent(DrawArguments& arguments) = 0;
+			virtual void drawContent(DrawArguments& arguments) = 0;
 		};
 	}
 	typedef ofPtr<Panels::Base> PanelPtr;

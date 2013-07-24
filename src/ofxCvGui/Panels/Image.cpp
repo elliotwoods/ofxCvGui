@@ -19,6 +19,8 @@ namespace ofxCvGui {
 
         //----------
         void Image::drawInfo(ofxCvGui::DrawArguments & arguments) {
+			if (!arguments.chromeEnabled)
+				return;
             const ofPixels & pixels (image.getPixelsRef());
             
             stringstream ss;

@@ -6,6 +6,7 @@ namespace ofxCvGui {
 		this->initialised = false;
 		this->maximised = false;
 		this->fullscreen = false;
+		this->chromeVisible = true;
 	}
 
 	//----------
@@ -73,11 +74,23 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Controller::toggleFullscreen(PanelPtr panel) {
+	void Controller::setFullscreen(PanelPtr panel) {
 		this->currentPanel = panel;
-		this->toggleFullscreen();
+		this->fullscreen = true;
+		this->maximised = this->fullscreen;
+		ofSetFullscreen(this->fullscreen);
 	}
 
+	//----------
+	void Controller::showChrome() {
+		this->chromeVisible = true;
+	}
+	
+	//----------
+	void Controller::hideChrome() {
+		this->chromeVisible = false;
+	}
+	
 	//----------
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised)
@@ -90,7 +103,7 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 		if (this->maximised) {
-            DrawArguments arg(ofGetCurrentViewport(), true);
+            DrawArguments arg(ofGetCurrentViewport(), this->chromeVisible);
 			this->currentPanel->draw(arg);
             ofNotifyEvent(this->currentPanel->onDraw, arg, this);
 		} else {
@@ -101,7 +114,7 @@ namespace ofxCvGui {
 				ofRect(currentPanel->getBounds());
 				ofPopStyle();
 			}
-            DrawArguments arg(ofGetCurrentViewport(), true);
+            DrawArguments arg(ofGetCurrentViewport(), this->chromeVisible);
 			rootGroup->draw(arg);
             ofNotifyEvent(this->rootGroup->onDraw, arg, this);
 		}

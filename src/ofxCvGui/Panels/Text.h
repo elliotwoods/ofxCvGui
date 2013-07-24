@@ -10,6 +10,9 @@ namespace ofxCvGui {
 		public:
 			Text(string text = "");
             virtual ~Text() { }
+			
+			string & getText() { return this->text; }
+			
 		protected:
 			void drawContent(DrawArguments& arguments);
 			string text;

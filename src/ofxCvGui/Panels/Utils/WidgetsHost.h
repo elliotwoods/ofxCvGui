@@ -1,14 +1,34 @@
-//
-//  WidgetsHost.h
-//  test_2frames
-//
-//  Created by Elliot Woods on 24/07/2013.
-//
-//
+#pragma once
+#include "ofxCvGui/Element.h"
 
-#ifndef __test_2frames__WidgetsHost__
-#define __test_2frames__WidgetsHost__
+#ifndef OFXCVGUI_DONT_USE_OFXUI
+#define OFX_UI_NO_XML
+#include "ofxUI.h"
 
-#include <iostream>
+namespace ofxCvGui {
+	namespace Panels {
+        namespace Utils {
+            class WidgetsHost {
+            public:
+                WidgetsHost();
+                virtual ~WidgetsHost();
+                
+                void set(ofxUICanvas & widgets, Element * host);
+                void set(ofxUICanvas * widgets, Element * host);
+                void clear();
+                bool hasWidgets();
+        
+            protected:
+                ofxUICanvas * widgets;
+                Element * host;
+                
+                void update(UpdateArguments&);
+                void draw(DrawArguments& arguments);
+                void mouseAction(MouseArguments& mouse);
+                void boundsChange(ofRectangle & bounds);
+            };
+        }
+    }
+}
 
-#endif /* defined(__test_2frames__WidgetsHost__) */
+#endif

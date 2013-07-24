@@ -100,7 +100,7 @@ namespace ofxCvGui {
 				ofPopView();
             
                 //only draw zoom box if we need to
-                if (needsZoom) {
+                if (needsZoom && arguments.chromeEnabled) {
                     //update zoom box
                     zoomBox.height = this->getImageHeight() / this->getImageWidth() * zoomBox.width;
                     zoomBox.x = this->getWidth() - zoomBox.width - 20;
@@ -145,16 +145,18 @@ namespace ofxCvGui {
                 }
             }
 
-			AssetRegister["zoom_fit"].draw(buttonFitBounds);
-			AssetRegister["zoom_one"].draw(buttonOneBounds);
-			AssetRegister.drawText(this->caption, 100, 20, "", true, 30);
-            
-            ofPushStyle();
-            ofSetColor(150);
-            ofSetLineWidth(2.0f);
-            ofNoFill();
-            ofRect(this->zoom == ZoomFit ? buttonFitBounds : buttonOneBounds);
-            ofPopStyle();
+			if (arguments.chromeEnabled) {
+				AssetRegister["zoom_fit"].draw(buttonFitBounds);
+				AssetRegister["zoom_one"].draw(buttonOneBounds);
+				AssetRegister.drawText(this->caption, 100, 20, "", true, 30);
+				
+				ofPushStyle();
+				ofSetColor(150);
+				ofSetLineWidth(2.0f);
+				ofNoFill();
+				ofRect(this->zoom == ZoomFit ? buttonFitBounds : buttonOneBounds);
+				ofPopStyle();
+			}
 		}
         
 		//----------
