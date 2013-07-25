@@ -23,9 +23,9 @@ namespace ofxCvGui {
                 Element * host;
                 
                 void update(UpdateArguments&);
-                void draw(DrawArguments& arguments);
+                void draw();
                 void mouseAction(MouseArguments& mouse);
-                void boundsChange(ofRectangle & bounds);
+                void resize(const ofRectangle & bounds);
             };
         }
     }

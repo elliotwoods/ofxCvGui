@@ -9,18 +9,18 @@ namespace ofxCvGui {
 			this->lastSelection = -1;
 			this->lastCount = 0;
 			this->refreshPerFrame = false;
-            ofAddListener(this->onUpdate, this, &PixelsVector::update);
-            ofAddListener(this->onDraw, this, &PixelsVector::drawInfo);
+			this->onUpdate.addListener([this] (UpdateArguments&) { this->update(); }, this);
+			this->onDraw.addListener([this] (DrawArguments&) { this->drawInfo(); }, this);
 		}
 
         //----------
         PixelsVector::~PixelsVector() {
-            ofRemoveListener(this->onUpdate, this, &PixelsVector::update);
-            ofRemoveListener(this->onDraw, this, &PixelsVector::drawInfo);
+			this->onUpdate.removeListeners(this);
+			this->onDraw.removeListeners(this);
         }
         
 		//----------
-		void PixelsVector::update(UpdateArguments&) {
+		void PixelsVector::update() {
 			if (lastCount != pixels.size()) {
 				this->selection = pixels.size() - 1;
 				lastCount = pixels.size();
@@ -52,7 +52,7 @@ namespace ofxCvGui {
         }
         
 		//----------
-		void PixelsVector::drawInfo(DrawArguments& arguments) {
+		void PixelsVector::drawInfo() {
 			float x = 20;
 			float y = this->getHeight() - 50;
 			ofRectangle bounds;

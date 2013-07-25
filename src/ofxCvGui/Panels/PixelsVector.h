@@ -12,11 +12,11 @@ namespace ofxCvGui {
 		public:
 			PixelsVector(const vector<ofPixels>& pixels);
             ~PixelsVector();
-			void update(UpdateArguments&);
+			void update();
 			const ofPixels & getSelection() const;
 		protected:
 			void drawImage(float width, float height);
-            void drawInfo(DrawArguments&);
+            void drawInfo();
             float getImageWidth() const;
             float getImageHeight() const;
 		private:

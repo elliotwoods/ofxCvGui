@@ -7,8 +7,14 @@ namespace ofxCvGui {
         
         //----------
         BaseImage::BaseImage() {
-            ofAddListener(this->onMouseAction, this, &BaseImage::mouseAction);
-            ofAddListener(this->onKeyboardAction, this, &BaseImage::nudgeZoom);
+			this->onMouse.addListener([this] (MouseArguments& args) {
+				this->mouseAction(args);
+			}, this);
+			
+			this->onKeyboard.addListener([this] (KeyboardArguments& args) {
+				this->keyboardAction(args);
+			}, this);
+			
             this->zoom = ZoomFit;
             this->dragSelection = DragNone;
             this->buttonFitBounds = ofRectangle(20, 20, 30, 30);
@@ -18,8 +24,7 @@ namespace ofxCvGui {
         
         //----------
         BaseImage::~BaseImage() {
-            ofRemoveListener(this->onMouseAction, this, &BaseImage::mouseAction);
-            ofRemoveListener(this->onKeyboardAction, this, &BaseImage::nudgeZoom);
+			this->onMouse.removeListeners(this);
         }
         
 		//----------

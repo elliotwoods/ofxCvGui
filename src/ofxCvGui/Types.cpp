@@ -34,4 +34,9 @@ namespace ofxCvGui {
 		key(keyboardArgs.key),
         InputArguments(currentPanel)
 	{ }
+	
+	//----------
+	BoundsChangeArguments::BoundsChangeArguments(const ofRectangle & bounds) :
+		bounds(bounds)
+	{ }
 }

@@ -4,12 +4,14 @@ namespace ofxCvGui {
 		//----------
 		Image::Image(ofImage& image) :
 		image(image) {
-            ofAddListener(this->onDraw, this, &Image::drawInfo);
+			this->onDraw.addListener([this] (DrawArguments& args) {
+				this->drawInfo(args);
+			}, this);
 		}
         
 		//----------
         Image::~Image() {
-            ofRemoveListener(this->onDraw, this, &Image::drawInfo);
+			this->onDraw.removeListeners(this);
         }
 		
         //----------

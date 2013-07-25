@@ -58,4 +58,11 @@ namespace ofxCvGui {
 		const Action action;
 		const int key;
 	};
+	
+	//----------
+	class BoundsChangeArguments {
+	public:
+		BoundsChangeArguments(const ofRectangle & bounds);
+		const ofRectangle bounds;
+	};
 }

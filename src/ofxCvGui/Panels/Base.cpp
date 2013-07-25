@@ -4,12 +4,14 @@ namespace ofxCvGui {
 	namespace Panels {
         //---------
         Base::Base() {
-            ofAddListener(this->onDraw, this, &Base::drawContent);
+			this->onDraw.addListener([this] (DrawArguments& args) {
+				this->drawContent(args);
+			}, this);
         }
         
         //---------
         Base::~Base() {
-            ofRemoveListener(this->onDraw, this, &Base::drawContent);
+			this->onDraw.removeListeners(this);
         }
 	}
 }

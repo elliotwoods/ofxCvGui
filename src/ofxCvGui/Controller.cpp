@@ -105,7 +105,7 @@ namespace ofxCvGui {
 		if (this->maximised) {
             DrawArguments arg(ofGetCurrentViewport(), this->chromeVisible);
 			this->currentPanel->draw(arg);
-            ofNotifyEvent(this->currentPanel->onDraw, arg, this);
+			this->currentPanel->onDraw(arg);
 		} else {
 			if (currentPanel != PanelPtr()) {
 				ofPushStyle();
@@ -116,7 +116,7 @@ namespace ofxCvGui {
 			}
             DrawArguments arg(ofGetCurrentViewport(), this->chromeVisible);
 			rootGroup->draw(arg);
-            ofNotifyEvent(this->rootGroup->onDraw, arg, this);
+            this->rootGroup->onDraw(arg);
 		}
 	}
 

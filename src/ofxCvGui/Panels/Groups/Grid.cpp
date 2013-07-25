@@ -5,12 +5,14 @@ namespace ofxCvGui {
 		namespace Groups {
 			//----------
             Grid::Grid() {
-                ofAddListener(this->onBoundsChange, this, &Grid::boundsChange);
+				this->onBoundsChange.addListener([this] (BoundsChangeArguments& args) {
+					this->boundsChange(args);
+				}, this);
             }
             
             //----------
             Grid::~Grid() {
-                ofRemoveListener(this->onBoundsChange, this, &Grid::boundsChange);
+				onBoundsChange.removeListeners(this);
             }
             
 			//----------
@@ -26,7 +28,7 @@ namespace ofxCvGui {
 			}
 
 			//----------
-			void Grid::boundsChange(ofRectangle &) {
+			void Grid::boundsChange(BoundsChangeArguments &) {
 				float count = this->elements.size();
 				xCount = ceil(sqrt(count));
 				yCount = ceil(count / xCount);

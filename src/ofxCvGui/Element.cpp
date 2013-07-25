@@ -3,27 +3,25 @@ namespace ofxCvGui {
 	//-----------
 	void Element::update() {
         UpdateArguments args;
-        ofNotifyEvent(this->onUpdate, args, this);
+		onUpdate.notifyListeners(args);
     }
     
     //-----------
-	void Element::draw(const DrawArguments& arguments) {
+	void Element::draw(DrawArguments& arguments) {
 		ofPushMatrix();
 		ofTranslate(bounds.x, bounds.y);
-        
-		ofNotifyEvent(this->onDraw, const_cast<DrawArguments&>(arguments), this);
-		
+        this->onDraw(arguments);
         ofPopMatrix();
 	}
     
     //-----------
-    void Element::mouseAction(const MouseArguments &mouse) {
-        ofNotifyEvent(this->onMouseAction, const_cast<MouseArguments&>(mouse), this);
+    void Element::mouseAction(MouseArguments& arguments) {
+		this->onMouse(arguments);
     }
     
     //-----------
-    void Element::keyboardAction(const KeyboardArguments &key) {
-        ofNotifyEvent(this->onKeyboardAction, const_cast<KeyboardArguments&>(key), this);
+    void Element::keyboardAction(KeyboardArguments &arguments) {
+		this->onKeyboard(arguments);
     }
 
 	//-----------
@@ -35,7 +33,8 @@ namespace ofxCvGui {
 		this->localBounds.x = 0;
 		this->localBounds.y = 0;
         
-        ofNotifyEvent(this->onBoundsChange, localBounds, this);
+		auto arguments = BoundsChangeArguments(bounds);
+		this->onBoundsChange(arguments);
 	}
 
 	//-----------

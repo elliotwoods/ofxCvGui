@@ -26,10 +26,18 @@ namespace ofxCvGui {
 				this->widgets = widgets;
 				this->host = host;
 				
-				ofAddListener(this->host->onUpdate, this, &WidgetsHost::update);
-				ofAddListener(this->host->onDraw, this, &WidgetsHost::draw);
-				ofAddListener(this->host->onMouseAction, this, &WidgetsHost::mouseAction);
-				ofAddListener(this->host->onBoundsChange, this, &WidgetsHost::boundsChange);
+				this->host->onUpdate.addListener([this] (UpdateArguments& args) {
+					this->update(args);
+				}, this);
+				this->host->onDraw.addListener([this] (DrawArguments&) {
+					this->draw();
+				}, this);
+				this->host->onMouse.addListener([this] (MouseArguments& args) {
+					this->mouseAction(args);
+				}, this);
+				this->host->onBoundsChange.addListener([this] (BoundsChangeArguments& args) {
+					this->resize(args.bounds);
+				}, this);
 				
 				this->widgets->init(this->host->getWidth(), this->host->getHeight());
 				//this->widgets->setFont("ofxCvGui/fonts/swisop3.ttf");
@@ -41,11 +49,10 @@ namespace ofxCvGui {
 			//----------
 			void WidgetsHost::clear() {
 				if (this->widgets != 0) {
-					ofRemoveListener(host->onUpdate, this, &WidgetsHost::update);
-					ofRemoveListener(host->onDraw, this, &WidgetsHost::draw);
-					ofRemoveListener(host->onMouseAction, this, &WidgetsHost::mouseAction);
-					ofRemoveListener(host->onBoundsChange, this, &WidgetsHost::boundsChange);
-					
+					host->onUpdate.removeListeners(this);
+					host->onDraw.removeListeners(this);
+					host->onMouse.removeListeners(this);
+					host->onBoundsChange.removeListeners(this);
 					this->widgets = 0;
 				}
 			}
@@ -63,7 +70,7 @@ namespace ofxCvGui {
 			}
 			
 			//----------
-			void WidgetsHost::draw(DrawArguments& arguments) {
+			void WidgetsHost::draw() {
 				if (this->hasWidgets()) {
 					ofPushView();
 					ofViewport(host->getBounds());
@@ -95,7 +102,7 @@ namespace ofxCvGui {
 			}
 
 			//----------
-			void WidgetsHost::boundsChange(ofRectangle & bounds) {
+			void WidgetsHost::resize(const ofRectangle & bounds) {
 				if (this->hasWidgets()) {
 					this->widgets->windowResized(bounds.x, bounds.y);
 				}

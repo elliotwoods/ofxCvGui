@@ -10,15 +10,17 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::mouseAction(const MouseArguments& mouse) {
+	void ElementGroup_<T>::mouseAction(MouseArguments& mouse) {
 		typename vector<ofPtr<T> >::iterator it;
-		for (it = elements.begin(); it != elements.end(); it++)
-			(**it).mouseAction(MouseArguments(mouse, (**it).getBounds()));
+		for (auto element : this->elements) {
+			auto localArgs = MouseArguments(mouse, (**it).getBounds());
+			(*element).mouseAction(localArgs);
+		}
 	}
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::keyboardAction(const KeyboardArguments& keyboard) {
+	void ElementGroup_<T>::keyboardAction(KeyboardArguments& keyboard) {
 		typename vector<ofPtr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			(**it).keyboardAction(keyboard);
@@ -29,7 +31,8 @@ namespace ofxCvGui {
 	void ElementGroup_<T>::add(ofPtr<T>& addition) {
 		this->elements.push_back(addition);
         ofRectangle bounds = this->getBounds();
-		ofNotifyEvent(this->onBoundsChange, bounds, this);
+		auto args = BoundsChangeArguments(bounds);
+		this->onBoundsChange(args);
 	}
 
 	//----------
@@ -43,7 +46,8 @@ namespace ofxCvGui {
 			}
 
         ofRectangle bounds = this->getBounds();
-		ofNotifyEvent(this->onBoundsChange, bounds, this);
+		auto args = BoundsChangeArguments(bounds);
+		this->onBoundsChange(args);
 	}
 
 	//----------
@@ -51,7 +55,8 @@ namespace ofxCvGui {
 	void ElementGroup_<T>::clear() {
 		this->elements.clear();
         ofRectangle bounds;
-		ofNotifyEvent(this->onBoundsChange, bounds, this);
+		auto args = BoundsChangeArguments(bounds);
+		this->onBoundsChange(args);
 	}
 	
 	//----------

@@ -16,8 +16,8 @@ namespace ofxCvGui {
 	class ElementGroup_ : public T {
 	public:
 		void update();
-		void mouseAction(const MouseArguments& mouse);
-		void keyboardAction(const KeyboardArguments& keyboard);
+		void mouseAction(MouseArguments& mouse);
+		void keyboardAction(KeyboardArguments& keyboard);
 		void add(ofPtr<T>& addition);
 		void drop(ofPtr<T>& element);
 		void clear();

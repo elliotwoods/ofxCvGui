@@ -5,16 +5,16 @@ namespace ofxCvGui {
 		Pixels::Pixels(const ofPixels& pixels) :
 		pixels(pixels) {
 			this->refreshPerFrame = true;
-            ofAddListener(this->onUpdate, this, &Pixels::update);
+			this->onUpdate.addListener([this] (UpdateArguments&) { this->updateImage(); }, this);
 		}
         
         //----------
         Pixels::~Pixels() {
-            ofRemoveListener(this->onUpdate, this, &Pixels::update);
+			this->onUpdate.removeListeners(this);
         }
 
 		//----------
-		void Pixels::update(UpdateArguments&) {
+		void Pixels::updateImage() {
 			if (refreshPerFrame) {
 				if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
 					preview.allocate(pixels);

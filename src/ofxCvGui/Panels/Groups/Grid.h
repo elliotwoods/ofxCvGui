@@ -11,7 +11,7 @@ namespace ofxCvGui {
                 virtual ~Grid();
 				const PanelPtr findScreen(const ofVec2f & xy);
 			protected:
-				void boundsChange(ofRectangle & bounds);
+				void boundsChange(BoundsChangeArguments & arguments);
 				float xCount, yCount;
 				float panelWidth, panelHeight;
 			};
