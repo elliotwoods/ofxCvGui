@@ -22,6 +22,7 @@ namespace ofxCvGui {
 		void init();
 		
 		//content
+		void add(PanelPtr panel);
 		ofPtr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
 		ofPtr<Panels::Image> add(ofImage& asset, string caption="");
 		ofPtr<Panels::Pixels> add(const ofPixels& asset, string caption="");

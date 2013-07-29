@@ -7,12 +7,8 @@ namespace ofxCvGui {
 		namespace Groups {
 			class Base : public ElementGroup_<Panels::Base> {
 			public:
-                virtual ~Base() { };
+				virtual ~Base() { }
                 virtual const PanelPtr findScreen(const ofVec2f & xy) { return PanelPtr(); }
-			protected:
-				void drawContent(DrawArguments& arguments) {
-					this->drawSet(arguments);
-				}
 			};
 		}
 	}

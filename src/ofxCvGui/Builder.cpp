@@ -8,6 +8,11 @@ namespace ofxCvGui {
 	}
 	
 	//----------
+	void Builder::add(PanelPtr panel) {
+		controller.add(panel);
+	}
+
+	//----------
 	ofPtr<Panels::Draws> Builder::add(ofBaseDraws& asset, string caption) {
 		ofPtr<Panels::Draws> newPanel( new Panels::Draws(asset) );
 		newPanel->setCaption(caption);

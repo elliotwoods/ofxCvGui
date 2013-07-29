@@ -2,28 +2,41 @@
 namespace ofxCvGui {
 	//----------
 	template<typename T>
+	ElementGroup_<T>::ElementGroup_() {
+		this->onDraw.addListener([this] (const DrawArguments & args) {
+			this->drawSet(args);
+		}, this);
+	}
+
+	//----------
+	template<typename T>
+	ElementGroup_<T>::~ElementGroup_() {
+		this->onDraw.removeListeners(this);
+	}
+
+	//----------
+	template<typename T>
 	void ElementGroup_<T>::update() {
-		typename vector<ofPtr<T> >::iterator it;
-		for (it = elements.begin(); it != elements.end(); it++)
-			(**it).update();		
+		for (auto & element : this->elements) {
+			element->update();
+		}
 	}
 
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::mouseAction(MouseArguments& mouse) {
-		typename vector<ofPtr<T> >::iterator it;
-		for (auto element : this->elements) {
-			auto localArgs = MouseArguments(mouse, (**it).getBounds());
-			(*element).mouseAction(localArgs);
+		for (auto & element : this->elements) {
+			auto localArgs = MouseArguments(mouse, element->getBounds());
+			element->mouseAction(localArgs);
 		}
 	}
 
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::keyboardAction(KeyboardArguments& keyboard) {
-		typename vector<ofPtr<T> >::iterator it;
-		for (it = elements.begin(); it != elements.end(); it++)
-			(**it).keyboardAction(keyboard);
+		for (auto & element : elements) {
+			element->keyboardAction(keyboard);
+		}
 	}
 
 	//----------
@@ -59,6 +72,12 @@ namespace ofxCvGui {
 		this->onBoundsChange(args);
 	}
 	
+	//----------
+	template<typename T>
+	vector<ofPtr<T>> & ElementGroup_<T>::getElements() {
+		return this->elements;
+	}
+
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {

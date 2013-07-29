@@ -22,7 +22,6 @@ namespace ofxCvGui {
 #ifdef OFXUI
             Utils::WidgetsHost widgets;
 #endif
-			virtual void drawContent(DrawArguments& arguments) = 0;
 		};
 	}
 	typedef ofPtr<Panels::Base> PanelPtr;

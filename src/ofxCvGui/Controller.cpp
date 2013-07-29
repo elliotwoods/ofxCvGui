@@ -121,6 +121,11 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	PanelGroupPtr Controller::getRootGroup() {
+		return this->rootGroup;
+	}
+
+	//----------
 	void Controller::mouseMoved(ofMouseEventArgs &args) {
 		if (!initialised)
 			return;

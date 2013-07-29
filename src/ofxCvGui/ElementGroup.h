@@ -15,12 +15,15 @@ namespace ofxCvGui {
 	template <typename T>
 	class ElementGroup_ : public T {
 	public:
+		ElementGroup_();
+		virtual ~ElementGroup_();
 		void update();
 		void mouseAction(MouseArguments& mouse);
 		void keyboardAction(KeyboardArguments& keyboard);
 		void add(ofPtr<T>& addition);
 		void drop(ofPtr<T>& element);
 		void clear();
+		vector<ofPtr<T> > & getElements();
 
 	protected:
 		void drawSet(const DrawArguments& arguments);

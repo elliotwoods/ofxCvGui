@@ -5,10 +5,19 @@ namespace ofxCvGui {
 		//----------
 		Text::Text(string text) {
 			this->text = text;
+
+			this->onDraw.addListener([this] (DrawArguments & args) {
+				this->drawText(args);
+			}, this);
 		}
 
 		//----------
-		void Text::drawContent(DrawArguments& arguments) {
+		Text::~Text() {
+			this->onDraw.removeListeners(this);
+		}
+
+		//----------
+		void Text::drawText(DrawArguments& arguments) {
 			AssetRegister.drawText(this->caption, 20, 20, "", true, 30);
 			AssetRegister.drawText(this->text, 10, 70, "", false);
 		}

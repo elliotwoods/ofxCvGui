@@ -7,14 +7,14 @@ namespace ofxCvGui {
         
         //----------
         BaseImage::BaseImage() {
-			this->onMouse.addListener([this] (MouseArguments& args) {
+			this->onDraw.addListener([this] (DrawArguments & args) {
+				this->drawImage(args);
+			}, this);
+
+			this->onMouse.addListener([this] (MouseArguments & args) {
 				this->mouseAction(args);
 			}, this);
-			
-			this->onKeyboard.addListener([this] (KeyboardArguments& args) {
-				this->keyboardAction(args);
-			}, this);
-			
+
             this->zoom = ZoomFit;
             this->dragSelection = DragNone;
             this->buttonFitBounds = ofRectangle(20, 20, 30, 30);
@@ -79,7 +79,7 @@ namespace ofxCvGui {
         }
         
 		//----------
-		void BaseImage::drawContent(DrawArguments& arguments) {
+		void BaseImage::drawImage(DrawArguments& arguments) {
             if (this->zoom == ZoomFit) {
                 this->drawImage(this->getWidth(), this->getHeight());
             } else {
@@ -97,7 +97,7 @@ namespace ofxCvGui {
                 ofViewport(this->getBounds());
 
 				ofSetupScreen(); // ideally this should be ofSetupScreenOrtho, but that function seems to have a bug as of May 2013
-				ofTranslate(0, this->getHeight(), 0);
+				//ofTranslate(0, this->getHeight()/2, 0);
                 //ofSetupScreenOrtho(this->getWidth(), this->getHeight());
                 
 				ofTranslate(scrollOffset);

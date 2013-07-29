@@ -29,9 +29,16 @@ namespace ofxCvGui {
 				this->addListener(functor, 0);
 			}
 			void addListener(Functor functor, void* owner) {
-				auto last = this->listeners.end();
-				last--;
-				IndexType nextIndex = last->first.order + 1;
+				IndexType nextIndex;
+				if (this->listeners.empty()) {
+					//start with first index
+					nextIndex = 0;
+				} else {
+					//assign index directly after last in stack
+					auto last = this->listeners.end();
+					last--;
+					nextIndex = last->first.order + 1;
+				}
 				this->listeners.insert(Pair(Index(nextIndex, owner), functor));
 			}
 			void addListener(Functor functor, int order, void* owner) {

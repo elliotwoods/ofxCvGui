@@ -33,6 +33,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Text.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
+    <ClInclude Include="..\src\ofxCvGui\Utils\LambdaStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ofxCvGui\Assets.cpp" />

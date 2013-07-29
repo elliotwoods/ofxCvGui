@@ -9,12 +9,12 @@ namespace ofxCvGui {
 		class Text : public Panels::Base {
 		public:
 			Text(string text = "");
-            virtual ~Text() { }
+            virtual ~Text();
 			
 			string & getText() { return this->text; }
 			
 		protected:
-			void drawContent(DrawArguments& arguments);
+			void drawText(DrawArguments& arguments);
 			string text;
 		};
 	}

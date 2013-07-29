@@ -16,8 +16,9 @@ namespace ofxCvGui {
 	namespace Panels {
 		class Node : public Panels::Base {
 		public:
-			Node() { }
+			Node();
 			Node(ofNode & node);
+			virtual ~Node();
 			
 			//camera
 			CameraType & getCamera() { return this->camera; };
@@ -34,7 +35,7 @@ namespace ofxCvGui {
 
 			void push(ofNode & node);
 		protected:
-			void drawContent(DrawArguments& arguments);
+			void drawNodes(DrawArguments& arguments);
 			vector<ofNode*> nodes;
 			CameraType camera;
 			ofColor gridColor;

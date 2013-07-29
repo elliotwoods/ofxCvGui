@@ -3,15 +3,31 @@
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
+		Node::Node() {
+			this->onDraw.addListener([this] (DrawArguments& args) {
+				this->drawNodes(args);
+			}, this);
+		}
+
+		//----------
 		Node::Node(ofNode & node) {
 			this->push(node);
 			this->gridColor = ofColor(90, 50, 50);
 			this->gridEnabled = true;
 			this->gridLabelsEnabled = true;
+
+			this->onDraw.addListener([this] (DrawArguments& args) {
+				this->drawNodes(args);
+			}, this);
 		}
 
 		//----------
-		void Node::drawContent(DrawArguments& arguments) {
+		Node::~Node() {
+			this->onDraw.removeListeners(this);
+		}
+
+		//----------
+		void Node::drawNodes(DrawArguments& arguments) {
 			this->camera.begin(this->getBounds());
 
 			if (this->gridEnabled) {

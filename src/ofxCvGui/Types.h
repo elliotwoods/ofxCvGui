@@ -38,6 +38,8 @@ namespace ofxCvGui {
 		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const ofPtr<void>& currentPanel, const ofVec2f& cached = ofVec2f()); ///global
 		MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds); ///local
 		
+		bool isLocalPressed() const;
+
 		const Action action;
 		const int button;
 		const ofVec2f global;

@@ -103,6 +103,9 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Utils\LambdaStack.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -113,6 +116,9 @@
     </Filter>
     <Filter Include="src\Panels\Groups">
       <UniqueIdentifier>{224b59cb-2368-491d-b4c1-d52d8bcbfa53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Utils">
+      <UniqueIdentifier>{d436fc20-e603-40aa-b00e-d261791cc1ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
