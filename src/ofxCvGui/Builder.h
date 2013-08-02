@@ -28,6 +28,8 @@ namespace ofxCvGui {
 		ofPtr<Panels::Pixels> add(const ofPixels& asset, string caption="");
 		ofPtr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
 		ofPtr<Panels::Node> add(ofNode & asset, string caption="");
+
+		ofPtr<Panels::Base> addBlank(string caption = "");
 		ofPtr<Panels::Instructions> addInstructions();
 
 		//groups

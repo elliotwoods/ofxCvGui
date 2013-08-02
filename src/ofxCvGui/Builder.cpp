@@ -58,6 +58,14 @@ namespace ofxCvGui {
 	}
     
 	//----------
+	ofPtr<Panels::Base> Builder::addBlank(string caption) {
+		ofPtr<Panels::Base> newPanel( new Panels::Base() );
+		newPanel->setCaption(caption);
+		controller.add(newPanel);
+		return newPanel;
+	}
+
+	//----------
 	ofPtr<Panels::Instructions> Builder::addInstructions() {
 		ofPtr<Panels::Instructions> newPanel( new Panels::Instructions() );
 		PanelPtr panel(newPanel);
