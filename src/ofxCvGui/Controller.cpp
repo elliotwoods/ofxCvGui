@@ -56,11 +56,20 @@ namespace ofxCvGui {
 	void Controller::toggleMaximised() {
 		//if we were fullscreen, move to simply maximised
 		if (this->fullscreen) {
-			if (!this->fullscreen)
-				ofSetFullscreen(false);
+			this->fullscreen = false;
+			ofSetFullscreen(false);
 			this->maximised = true;
-		} else
-			this->maximised ^= true;
+		} else if (this->maximised)  {
+			this->maximised = false;
+		} else if (this->currentPanel != PanelPtr() ) {
+			this->maximised = true;
+		} else {
+			this->maximised = false;
+		}
+		auto args = ofResizeEventArgs();
+		args.width = ofGetWidth();
+		args.height = ofGetHeight();
+		this->windowResized(args);
 	}
 
 	//----------
@@ -105,7 +114,6 @@ namespace ofxCvGui {
 		if (this->maximised) {
             DrawArguments arg(ofGetCurrentViewport(), this->chromeVisible);
 			this->currentPanel->draw(arg);
-			this->currentPanel->onDraw(arg);
 		} else {
 			if (currentPanel != PanelPtr()) {
 				ofPushStyle();

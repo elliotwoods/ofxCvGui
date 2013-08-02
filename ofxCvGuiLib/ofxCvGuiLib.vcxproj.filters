@@ -49,6 +49,12 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.cpp">
+      <Filter>src\Panels\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.cpp">
+      <Filter>src\Panels\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -106,6 +112,12 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\LambdaStack.h">
       <Filter>src\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.h">
+      <Filter>src\Panels\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.h">
+      <Filter>src\Panels\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -119,6 +131,9 @@
     </Filter>
     <Filter Include="src\Utils">
       <UniqueIdentifier>{d436fc20-e603-40aa-b00e-d261791cc1ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Panels\Utils">
+      <UniqueIdentifier>{78f821db-c1d5-4c80-b094-875025e45580}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

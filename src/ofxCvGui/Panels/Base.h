@@ -13,6 +13,9 @@ namespace ofxCvGui {
 #ifdef OFXUI
             void setWidgets(ofxUICanvas & gui) {
                 this->widgets.set(gui, this);
+				gui.setPosition(20, 80);
+				gui.setHeight(1024);
+				gui.setColorBack(ofColor(0, 150));
             }
             void clearWidgets() {
                 this->widgets.clear();

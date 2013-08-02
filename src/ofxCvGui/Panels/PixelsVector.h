@@ -1,5 +1,7 @@
 #pragma once
 #include "ofxCvGui/Panels/BaseImage.h"
+#include "ofxCvGui/Utils/LambdaStack.h"
+
 #include "ofTypes.h"
 #include "ofPixels.h"
 #include "ofTexture.h"
@@ -14,16 +16,24 @@ namespace ofxCvGui {
             ~PixelsVector();
 			void update();
 			const ofPixels & getSelection() const;
+			int getSelectionIndex() const;
+			void setSelectionIndex(int selection);
+			ofxCvGui::Utils::LambdaStack<int> onSelectionChange;
 		protected:
 			void drawImage(float width, float height);
             void drawInfo();
             float getImageWidth() const;
             float getImageHeight() const;
+			void key(KeyboardArguments &);
+			void mouse(MouseArguments &);
+			void arrangeButtons();
 		private:
 			const vector<ofPixels>& pixels;
+			vector<ofRectangle> buttons;
+
 			ofTexture preview;
 			int selection;
-			int lastSelection;
+			bool needsUpdate;
 			size_t lastCount;
             bool refreshPerFrame;
 		};

@@ -31,9 +31,14 @@ namespace ofxCvGui {
 	{ }
 
 	//----------
-	bool MouseArguments::isLocalPressed() const {
+	bool MouseArguments::isLocal() const {
 		ofRectangle testBounds(0, 0, 1, 1);
-		return action == Action::Pressed && testBounds.inside(localNormalised);
+		return testBounds.inside(localNormalised);
+	}
+
+	//----------
+	bool MouseArguments::isLocalPressed() const {
+		return action == Action::Pressed && isLocal();
 	}
 
 #pragma mark KeyboardArguments
