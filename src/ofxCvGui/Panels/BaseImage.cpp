@@ -13,6 +13,11 @@ namespace ofxCvGui {
 		}
 
         //----------
+		BaseImage::Zoomed BaseImage::getZoomed() const {
+			return this->zoom;
+		}
+
+        //----------
         BaseImage::BaseImage() {
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				this->drawImage(args);
@@ -88,9 +93,9 @@ namespace ofxCvGui {
 		//----------
 		void BaseImage::drawImage(DrawArguments& arguments) {
             if (this->zoom == ZoomFit) {
+                this->drawImage(this->getWidth(), this->getHeight());
 				DrawCroppedArguments args(false, ofVec2f(this->getWidth(), this->getHeight()), ofVec2f(0,0));
 				this->onDrawCropped(args);
-                this->drawImage(this->getWidth(), this->getHeight());
             } else {
                 bool needsZoom = (this->getImageHeight() > this->getHeight() || this->getImageWidth() > this->getWidth());
                 

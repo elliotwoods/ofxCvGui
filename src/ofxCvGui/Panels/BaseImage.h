@@ -12,7 +12,10 @@ namespace ofxCvGui {
 				ofVec2f size;
 				ofVec2f offsetCropped;
 			};
+			enum Zoomed {ZoomOne, ZoomFit};
+
 			ofxCvGui::Utils::LambdaStack<DrawCroppedArguments> onDrawCropped;
+			Zoomed getZoomed() const;
 		protected:
             BaseImage();
             virtual ~BaseImage();
@@ -23,7 +26,7 @@ namespace ofxCvGui {
             void mouseAction(MouseArguments &);
             void nudgeZoom(KeyboardArguments &);
             static ofVec2f scroll;
-            enum {ZoomOne, ZoomFit} zoom;
+            Zoomed zoom;
             ofVec2f getScrollClamped() const;
         private:
             ofRectangle buttonFitBounds;
