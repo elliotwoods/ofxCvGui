@@ -5,6 +5,14 @@
 namespace ofxCvGui {
 	namespace Panels {
 		class BaseImage : public Base {
+		public:
+			struct DrawCroppedArguments {
+				DrawCroppedArguments(bool zoomed, const ofVec2f & size, const ofVec2f & offsetCropped);
+				bool zoomed;
+				ofVec2f size;
+				ofVec2f offsetCropped;
+			};
+			ofxCvGui::Utils::LambdaStack<DrawCroppedArguments> onDrawCropped;
 		protected:
             BaseImage();
             virtual ~BaseImage();

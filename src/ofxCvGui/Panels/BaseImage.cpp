@@ -6,6 +6,13 @@ namespace ofxCvGui {
         ofVec2f BaseImage::scroll = ofVec2f();
         
         //----------
+		BaseImage::DrawCroppedArguments::DrawCroppedArguments(bool zoomed, const ofVec2f & size, const ofVec2f & offsetCropped) {
+			this->zoomed = zoomed;
+			this->size = size;
+			this->offsetCropped = offsetCropped;
+		}
+
+        //----------
         BaseImage::BaseImage() {
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				this->drawImage(args);
@@ -81,6 +88,8 @@ namespace ofxCvGui {
 		//----------
 		void BaseImage::drawImage(DrawArguments& arguments) {
             if (this->zoom == ZoomFit) {
+				DrawCroppedArguments args(false, ofVec2f(this->getWidth(), this->getHeight()), ofVec2f(0,0));
+				this->onDrawCropped(args);
                 this->drawImage(this->getWidth(), this->getHeight());
             } else {
                 bool needsZoom = (this->getImageHeight() > this->getHeight() || this->getImageWidth() > this->getWidth());
@@ -102,6 +111,8 @@ namespace ofxCvGui {
                 
 				ofTranslate(scrollOffset);
                 this->drawImage(this->getImageWidth(), this->getImageHeight());
+				DrawCroppedArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), scrollOffset);
+				this->onDrawCropped(args);
 				ofPopView();
             
                 //only draw zoom box if we need to
