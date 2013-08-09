@@ -17,15 +17,15 @@ namespace ofxCvGui {
 	public:
 		ElementGroup_();
 		virtual ~ElementGroup_();
-		void update();
-		void mouseAction(MouseArguments& mouse);
-		void keyboardAction(KeyboardArguments& keyboard);
-		void add(ofPtr<T>& addition);
-		void drop(ofPtr<T>& element);
+			void add(ofPtr<T> addition);
+		void drop(ofPtr<T> element);
 		void clear();
 		vector<ofPtr<T> > & getElements();
 
 	protected:
+		void updateSet();
+		void mouseActionSet(MouseArguments& mouse);
+		void keyboardActionSet(KeyboardArguments& keyboard);
 		void drawSet(const DrawArguments& arguments);
 		vector<ofPtr<T> > elements;
 	};
@@ -36,4 +36,7 @@ namespace ofxCvGui {
 			this->drawSet(arguments);
 		}
 	};
+
+	typedef ofPtr<Element> ElementPtr;
+	typedef ofPtr<ElementGroup> ElementGroupPtr;
 }

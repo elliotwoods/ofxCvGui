@@ -8,6 +8,7 @@
 namespace ofxCvGui {
 	class Element {
 	public:
+		Element();
 		virtual ~Element() { }
 		void update();
 		
@@ -27,10 +28,14 @@ namespace ofxCvGui {
 		Utils::LambdaStack<KeyboardArguments> onKeyboard;
 		Utils::LambdaStack<BoundsChangeArguments> onBoundsChange;
 		
+		void enable();
+		void disable();
+
 	protected:
 		ofRectangle bounds; ///<bounds relative to parent
 		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0
 		string caption;
+		bool enabled;
 	};
 	
 	typedef ofPtr<Element> ElementPtr;

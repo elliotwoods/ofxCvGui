@@ -1,27 +1,40 @@
 #include "ofxCvGui/Element.h"
 namespace ofxCvGui {
 	//-----------
+	Element::Element() {
+		this->enabled = true;
+	}
+
+	//-----------
 	void Element::update() {
-        UpdateArguments args;
-		onUpdate.notifyListeners(args);
+		if (this->enabled) {
+			UpdateArguments args;
+			onUpdate.notifyListeners(args);
+		}
     }
     
     //-----------
 	void Element::draw(DrawArguments& arguments) {
-		ofPushMatrix();
-		ofTranslate(bounds.x, bounds.y);
-        this->onDraw(arguments);
-        ofPopMatrix();
+		if (this->enabled) {
+			ofPushMatrix();
+			ofTranslate(bounds.x, bounds.y);
+			this->onDraw(arguments);
+			ofPopMatrix();
+		}
 	}
     
     //-----------
     void Element::mouseAction(MouseArguments& arguments) {
-		this->onMouse(arguments);
+		if (this->enabled) {
+			this->onMouse(arguments);
+		}
     }
     
     //-----------
     void Element::keyboardAction(KeyboardArguments &arguments) {
-		this->onKeyboard(arguments);
+		if (this->enabled) {
+			this->onKeyboard(arguments);
+		}
     }
 
 	//-----------
@@ -55,5 +68,15 @@ namespace ofxCvGui {
 	//-----------
 	void Element::setCaption(string caption) {
 		this->caption = caption;
+	}
+	
+	//-----------
+	void Element::enable() {
+		this->enabled = true;
+	}
+
+	//-----------
+	void Element::disable() {
+		this->enabled = false;
 	}
 }

@@ -9,7 +9,7 @@ namespace ofxCvGui {
 			public:
                 Grid();
                 virtual ~Grid();
-				const PanelPtr findScreen(const ofVec2f & xy);
+				PanelPtr const findScreen(const ofVec2f & xy) override;
 			protected:
 				void boundsChange(BoundsChangeArguments & arguments);
 				float xCount, yCount;

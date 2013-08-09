@@ -31,6 +31,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
+    <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\LambdaStack.h" />
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +53,7 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6F0DDB4F-4014-4433-919B-9D956C034BAD}</ProjectGuid>

@@ -55,6 +55,9 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.cpp">
       <Filter>src\Panels\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -117,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.h">
       <Filter>src\Panels\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Utils\Button.h">
+      <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

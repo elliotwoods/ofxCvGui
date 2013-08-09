@@ -7,7 +7,7 @@ namespace ofxCvGui {
 		template<class ArgType>
 		class LambdaStack{
 			typedef std::function<void (ArgType&)> Functor;
-			typedef uint32_t IndexType;
+			typedef int32_t IndexType; // use negative index for bottom of stack
 			struct Index {
 				Index(IndexType order, void* owner) {
 					this->order = order;
@@ -41,12 +41,12 @@ namespace ofxCvGui {
 				}
 				this->listeners.insert(Pair(Index(nextIndex, owner), functor));
 			}
-			void addListener(Functor functor, int order, void* owner) {
+			void addListener(Functor functor, IndexType order, void* owner) {
 				//loop until we find a free index
-				while (listeners.count(index) > 0) {
+				while (listeners.count(Index(order, 0)) > 0) {
 					order++;
 				}
-				this->insert(Index(index, owner), functor);
+				this->listeners.insert(Pair(Index(order, owner), functor));
 			}
 			void removeListeners(void* owner) {
 				vector<IndexType> toRemove;

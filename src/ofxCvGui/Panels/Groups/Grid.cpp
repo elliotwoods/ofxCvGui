@@ -19,10 +19,10 @@ namespace ofxCvGui {
 			const PanelPtr Grid::findScreen(const ofVec2f & xy) {
 				unsigned int index = floor(xy.x / panelWidth) + xCount * floor(xy.y / panelHeight);
 				if (index < this->elements.size()) {
-					PanelPtr element = this->elements[index];
-					ofVec2f localXY = xy - ofVec2f(element->getBounds().x, element->getBounds().y);
-					if (element->findScreen(localXY) == PanelPtr())
-						return element;
+					PanelPtr panel = this->elements[index];
+					ofVec2f localXY = xy - ofVec2f(panel->getBounds().x, panel->getBounds().y);
+					if (panel->findScreen(localXY) == PanelPtr())
+						return panel;
 				}
 				return PanelPtr();
 			}
@@ -43,13 +43,15 @@ namespace ofxCvGui {
 				bounds.width = panelWidth;
 				bounds.height = panelHeight;
 
-				for (it = elements.begin(); it != elements.end(); it++, i++) {
+				for (auto it : this->elements) {
 					iX = i % (int)xCount;
 					iY = i / (int)xCount;
 					bounds.x = iX * panelWidth;
 					bounds.y = iY * panelHeight;
 
-					(*it)->setBounds(bounds);
+					it->setBounds(bounds);
+
+					i++;
 				}
 			}
 		}
