@@ -8,6 +8,7 @@ namespace ofxCvGui {
 			this->gridColor = ofColor(90, 50, 50);
 			this->gridEnabled = true;
 			this->gridLabelsEnabled = true;
+			this->gridScale = 10.0f;
 		}
 
 		//----------

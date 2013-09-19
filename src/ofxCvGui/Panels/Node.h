@@ -4,13 +4,9 @@
 
 #include "ofNode.h"
 
-#ifdef HAS_ADDON_OFXGRABCAM
-    #include "ofxGrabCam.h"
-    typedef ofxGrabCam CameraType;
-#else
-    #include "ofEasyCam.h"
-    typedef ofEasyCam CameraType;
-#endif
+//feel free to change this for a different camera type of your choosing
+#include "ofxGrabCam.h"
+typedef ofxGrabCam CameraType;
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -22,9 +18,7 @@ namespace ofxCvGui {
 			//camera
 			CameraType & getCamera() { return this->camera; };
 			void setCursorEnabled(bool cursorEnabled=true) {
-#ifdef HAS_ADDON_OFXGRABCAM
                 this->camera.setCursorDraw(cursorEnabled);
-#endif
             }
             
 			void setGridEnabled(bool gridEnabled);
