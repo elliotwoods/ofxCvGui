@@ -11,6 +11,54 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUI.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUI2DGraph.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUI2DPad.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIBaseDraws.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIBiLabelSlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIButton.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUICanvas.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUICircleSlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUICustomImageButton.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIDropDownList.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIEventArgs.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIFPS.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIFPSSlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIImage.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIImageButton.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIImageSampler.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIImageSlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIImageToggle.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUILabel.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUILabelButton.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUILabelToggle.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIMinimalSlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIMovingGraph.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIMultiImageButton.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIMultiImageSlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIMultiImageToggle.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUINumberDialer.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIOFWrapper.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIRadio.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIRangeSlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIRectangle.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIRotarySlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIScrollableCanvas.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUISlider.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUISpacer.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUISpectrum.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUISuperCanvas.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUITabBar.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUITextArea.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUITextInput.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIToggle.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIToggleMatrix.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIUtils.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIValuePlotter.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIWaveform.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIWidget.h" />
+    <ClInclude Include="..\..\ofxUI\src\ofxUIWidgetWithLabel.h" />
     <ClInclude Include="..\src\ofxCvGui.h" />
     <ClInclude Include="..\src\ofxCvGui\Assets.h" />
     <ClInclude Include="..\src\ofxCvGui\Builder.h" />
@@ -35,6 +83,7 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\LambdaStack.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Assets.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
@@ -104,6 +153,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -124,6 +174,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
