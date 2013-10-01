@@ -15,6 +15,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI2DGraph.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI2DPad.h" />
@@ -82,6 +83,7 @@
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Assets.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
@@ -149,7 +151,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -170,7 +172,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -186,7 +188,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RemoteDebug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>

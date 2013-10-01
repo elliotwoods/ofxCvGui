@@ -49,6 +49,9 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp">
+      <Filter>addons\ofxGrabcam\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -244,6 +247,9 @@
     <ClInclude Include="..\..\ofxUI\src\ofxUIWidgetWithLabel.h">
       <Filter>addons\ofxUI\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h">
+      <Filter>addons\ofxGrabcam\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -263,6 +269,12 @@
     </Filter>
     <Filter Include="addons\ofxUI\src">
       <UniqueIdentifier>{dab89aa1-3219-4515-81c9-effc607f7d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGrabcam">
+      <UniqueIdentifier>{8aee8299-2135-438b-8c58-db83c2ab70d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGrabcam\src">
+      <UniqueIdentifier>{bcc27bac-eb96-42b6-b069-c13bd0d214c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
