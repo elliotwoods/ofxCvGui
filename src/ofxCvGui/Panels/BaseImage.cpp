@@ -108,7 +108,7 @@ namespace ofxCvGui {
                 }
                 
                 ofPushView();
-                ofViewport(this->getBounds());
+				ofViewport(arguments.globalBounds);
 
 				ofSetupScreen(); // ideally this should be ofSetupScreenOrtho, but that function seems to have a bug as of May 2013
 				//ofTranslate(0, this->getHeight()/2, 0);
