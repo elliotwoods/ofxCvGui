@@ -39,10 +39,9 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::mouseActionSet(MouseArguments& mouse) {
+	void ElementGroup_<T>::mouseActionSet(MouseArguments& args) {
 		for (auto & element : this->elements) {
-			auto localArgs = MouseArguments(mouse, element->getBounds());
-			element->mouseAction(localArgs);
+			element->mouseAction(args);
 		}
 	}
 
@@ -52,6 +51,14 @@ namespace ofxCvGui {
 		for (auto & element : elements) {
 			element->keyboardAction(keyboard);
 		}
+	}
+
+	//----------
+	template<typename T>
+	ofPtr<T> ElementGroup_<T>::addBlank() {
+		ofPtr<T> newElement = ofPtr<T>(new T);
+		this->add(newElement);
+		return newElement;
 	}
 
 	//----------
@@ -98,7 +105,13 @@ namespace ofxCvGui {
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
 		typename vector<ofPtr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++) {
-            DrawArguments localArgs((*it)->getBounds(), arguments.chromeEnabled);
+			auto boundsWithinParent = (*it)->getBounds();
+			
+			ofRectangle globalBounds = boundsWithinParent;
+			globalBounds.x += arguments.globalBounds.x;
+			globalBounds.y += arguments.globalBounds.y;
+
+			DrawArguments localArgs(boundsWithinParent, globalBounds, arguments.chromeEnabled);
 			(**it).draw(localArgs);
         }
 	}

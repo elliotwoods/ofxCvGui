@@ -3,6 +3,7 @@ namespace ofxCvGui {
 	//-----------
 	Element::Element() {
 		this->enabled = true;
+		this->localMouseState = Waiting;
 	}
 
 	//-----------
@@ -24,9 +25,23 @@ namespace ofxCvGui {
 	}
     
     //-----------
-    void Element::mouseAction(MouseArguments& arguments) {
+    void Element::mouseAction(MouseArguments& args) {
 		if (this->enabled) {
-			this->onMouse(arguments);
+			auto localArgs = MouseArguments(args, this->getBounds());
+			this->onMouse(localArgs);
+
+			if (localArgs.isLocalPressed()) {
+				this->localMouseState = Down;
+			} else if (localArgs.action == MouseArguments::Dragged) {
+				if (this->localMouseState == Down) {
+					this->localMouseState = Dragging;
+				}
+			} else if (localArgs.action == MouseArguments::Released) {
+				if (this->localMouseState == Down) {
+					this->onMouseReleased(localArgs);
+				}
+				this->localMouseState = Waiting;
+			}
 		}
     }
     
@@ -37,6 +52,16 @@ namespace ofxCvGui {
 		}
     }
 
+    //-----------
+	void Element::clearMouseState() {
+		this->localMouseState = Waiting;
+	}
+
+    //-----------
+	Element::LocalMouseState Element::getMouseState() {
+		return this->localMouseState;
+	}
+
 	//-----------
 	void Element::setBounds(const ofRectangle& bounds) {
 		if (this->bounds == bounds)
@@ -46,7 +71,15 @@ namespace ofxCvGui {
 		this->localBounds.x = 0;
 		this->localBounds.y = 0;
         
-		auto arguments = BoundsChangeArguments(bounds);
+		auto arguments = BoundsChangeArguments(this->bounds);
+		this->onBoundsChange(arguments);
+	}
+
+	//-----------
+	void Element::setPosition(const ofVec2f& position) {
+		this->bounds.x = position.x;
+		this->bounds.y = position.y;
+		auto arguments = BoundsChangeArguments(this->bounds);
 		this->onBoundsChange(arguments);
 	}
 

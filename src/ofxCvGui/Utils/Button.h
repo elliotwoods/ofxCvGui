@@ -1,6 +1,6 @@
 #pragma once
 #include "ofxCvGui/Element.h"
-#include "ofxCvGui/Utils/LambdaStack.h"
+#include "ofxLiquidEvent.h"
 
 namespace ofxCvGui {
 	namespace Utils {
@@ -8,9 +8,9 @@ namespace ofxCvGui {
 		public:
 			Button();
 			~Button();
-			LambdaStack<ofVec2f> onHit; ///< returns mouse coords in local normalised
-			LambdaStack<DrawArguments> onDrawUp;
-			LambdaStack<DrawArguments> onDrawDown;
+			ofxLiquidEvent<ofVec2f> onHit; ///< returns mouse coords in local normalised
+			ofxLiquidEvent<DrawArguments> onDrawUp;
+			ofxLiquidEvent<DrawArguments> onDrawDown;
 		protected:
 			bool down;
 		};

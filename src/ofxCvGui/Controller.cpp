@@ -112,7 +112,7 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 		if (this->maximised) {
-            DrawArguments arg(ofGetCurrentViewport(), this->chromeVisible);
+            DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
 			this->currentPanel->draw(arg);
 		} else {
 			if (currentPanel != PanelPtr()) {
@@ -122,7 +122,7 @@ namespace ofxCvGui {
 				ofRect(currentPanel->getBounds());
 				ofPopStyle();
 			}
-            DrawArguments arg(ofGetCurrentViewport(), this->chromeVisible);
+            DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
 			rootGroup->draw(arg);
             this->rootGroup->onDraw(arg);
 		}

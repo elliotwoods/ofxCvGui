@@ -1,6 +1,6 @@
 #pragma once
 #include "ofxCvGui/Panels/BaseImage.h"
-#include "ofxCvGui/Utils/LambdaStack.h"
+#include "ofxLiquidEvent.h"
 
 #include "ofTypes.h"
 #include "ofPixels.h"
@@ -18,7 +18,7 @@ namespace ofxCvGui {
 			const ofPixels & getSelection() const;
 			int getSelectionIndex() const;
 			void setSelectionIndex(int selection);
-			ofxCvGui::Utils::LambdaStack<int> onSelectionChange;
+			ofxLiquidEvent<int> onSelectionChange;
 		protected:
 			void drawImage(float width, float height);
             void drawInfo();

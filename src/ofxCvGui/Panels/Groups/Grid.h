@@ -9,11 +9,16 @@ namespace ofxCvGui {
 			public:
                 Grid();
                 virtual ~Grid();
+				void setColsCount(int cols);
+				void setHeights(vector<float>&);
+				void setWidths(vector<float>&);
 				PanelPtr const findScreen(const ofVec2f & xy) override;
 			protected:
 				void boundsChange(BoundsChangeArguments & arguments);
 				float xCount, yCount;
 				float panelWidth, panelHeight;
+				bool xCountFixed;
+				vector<float> heights, widths;
 			};
 		}
 	}

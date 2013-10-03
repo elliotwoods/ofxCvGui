@@ -3,11 +3,17 @@
 
 #include "Types.h"
 #include "ofGraphics.h"
-#include "Utils/LambdaStack.h"
+#include "ofxLiquidEvent.h"
 
 namespace ofxCvGui {
 	class Element {
 	public:
+		enum LocalMouseState {
+			Waiting,
+			Down,
+			Dragging
+		};
+
 		Element();
 		virtual ~Element() { }
 		void update();
@@ -16,18 +22,23 @@ namespace ofxCvGui {
 		void mouseAction(MouseArguments& mouse);
 		void keyboardAction(KeyboardArguments& keyboard);
 
+		void clearMouseState();
+		LocalMouseState getMouseState();
+
 		void setBounds(const ofRectangle& bounds);
+		void setPosition(const ofVec2f&);
 		const ofRectangle& getBounds() const;
 		float getWidth() const;
 		float getHeight() const;
 		void setCaption(string caption);
 		
-		Utils::LambdaStack<UpdateArguments> onUpdate;
-		Utils::LambdaStack<DrawArguments> onDraw;
-		Utils::LambdaStack<MouseArguments> onMouse;
-		Utils::LambdaStack<KeyboardArguments> onKeyboard;
-		Utils::LambdaStack<BoundsChangeArguments> onBoundsChange;
-		
+		ofxLiquidEvent<UpdateArguments> onUpdate;
+		ofxLiquidEvent<DrawArguments> onDraw;
+		ofxLiquidEvent<MouseArguments> onMouse;
+		ofxLiquidEvent<KeyboardArguments> onKeyboard;
+		ofxLiquidEvent<BoundsChangeArguments> onBoundsChange;
+		ofxLiquidEvent<MouseArguments> onMouseReleased;
+
 		void enable();
 		void disable();
 
@@ -36,6 +47,7 @@ namespace ofxCvGui {
 		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0
 		string caption;
 		bool enabled;
+		LocalMouseState localMouseState;
 	};
 	
 	typedef ofPtr<Element> ElementPtr;

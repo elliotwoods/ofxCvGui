@@ -1,6 +1,7 @@
 #pragma once
 #include "ofxCvGui/Panels/Base.h"
 #include "ofxCvGui/Assets.h"
+#include "ofxLiquidEvent.h"
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -14,7 +15,7 @@ namespace ofxCvGui {
 			};
 			enum Zoomed {ZoomOne, ZoomFit};
 
-			ofxCvGui::Utils::LambdaStack<DrawCroppedArguments> onDrawCropped;
+			ofxLiquidEvent<DrawCroppedArguments> onDrawCropped;
 			Zoomed getZoomed() const;
 		protected:
             BaseImage();

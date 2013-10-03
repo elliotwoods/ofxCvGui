@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
+    <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI2DGraph.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI2DPad.h" />
@@ -59,6 +60,8 @@
     <ClInclude Include="..\..\ofxUI\src\ofxUIWaveform.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUIWidget.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUIWidgetWithLabel.h" />
+    <ClInclude Include="..\..\ofxXmlSettings\libs\tinyxml.h" />
+    <ClInclude Include="..\..\ofxXmlSettings\src\ofxXmlSettings.h" />
     <ClInclude Include="..\src\ofxCvGui.h" />
     <ClInclude Include="..\src\ofxCvGui\Assets.h" />
     <ClInclude Include="..\src\ofxCvGui\Builder.h" />
@@ -68,6 +71,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\BaseImage.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h" />
@@ -75,15 +79,19 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Node.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Scroll.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Text.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
-    <ClInclude Include="..\src\ofxCvGui\Utils\LambdaStack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
+    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\ofxXmlSettings\src\ofxXmlSettings.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Assets.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
@@ -92,12 +100,14 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Base.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Node.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Scroll.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Text.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.cpp" />
@@ -152,7 +162,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -173,7 +183,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>

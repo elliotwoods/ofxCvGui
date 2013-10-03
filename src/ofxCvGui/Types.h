@@ -11,9 +11,10 @@ namespace ofxCvGui {
     
 	//----------
 	struct DrawArguments {
-		DrawArguments(const ofRectangle& parentBounds, bool chromeEnabled);
+		DrawArguments(const ofRectangle& parentBounds, const ofRectangle& globalBounds, bool chromeEnabled);
         
 		const ofRectangle parentBounds;
+		const ofRectangle globalBounds;
 		const bool chromeEnabled;
 	};
 

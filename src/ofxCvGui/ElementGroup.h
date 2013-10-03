@@ -17,7 +17,8 @@ namespace ofxCvGui {
 	public:
 		ElementGroup_();
 		virtual ~ElementGroup_();
-			void add(ofPtr<T> addition);
+		void add(ofPtr<T> addition);
+		ofPtr<T> addBlank();
 		void drop(ofPtr<T> element);
 		void clear();
 		vector<ofPtr<T> > & getElements();

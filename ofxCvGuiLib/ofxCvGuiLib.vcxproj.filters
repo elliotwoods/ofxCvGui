@@ -61,6 +61,24 @@
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp">
       <Filter>addons\ofxGrabCam\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Scroll.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxXmlSettings\src\ofxXmlSettings.cpp">
+      <Filter>addons\ofxXmlSettings\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlerror.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlparser.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxml.cpp">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -114,9 +132,6 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h">
       <Filter>src\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Utils\LambdaStack.h">
-      <Filter>src\Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.h">
       <Filter>src\Panels\Utils</Filter>
@@ -271,6 +286,21 @@
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h">
       <Filter>addons\ofxGrabCam\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Scroll.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h">
+      <Filter>addons\ofxLiquidEvent\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxXmlSettings\src\ofxXmlSettings.h">
+      <Filter>addons\ofxXmlSettings\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxXmlSettings\libs\tinyxml.h">
+      <Filter>addons\ofxXmlSettings\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -302,6 +332,21 @@
     </Filter>
     <Filter Include="addons\ofxGrabCam\src">
       <UniqueIdentifier>{c288de42-6529-4b1a-a446-a4495f584d3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxLiquidEvent">
+      <UniqueIdentifier>{8a3cef12-acd4-4049-a129-a0a6df4eef24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxLiquidEvent\src">
+      <UniqueIdentifier>{c73fbdaa-939b-4fea-b4c0-509e149f68c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings">
+      <UniqueIdentifier>{cd39d0d1-61be-4124-876b-984765cdf743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings\src">
+      <UniqueIdentifier>{6eb626a6-7cc2-4be9-8505-be68feb429db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxXmlSettings\libs">
+      <UniqueIdentifier>{b390c64c-e67b-47d3-9e0c-0c44161dad1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -28,13 +28,21 @@ namespace ofxCvGui {
 		ofPtr<Panels::Pixels> add(const ofPixels& asset, string caption="");
 		ofPtr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
 		ofPtr<Panels::Node> add(ofNode & asset, string caption="");
-
-		ofPtr<Panels::Base> addBlank(string caption = "");
 		ofPtr<Panels::Instructions> addInstructions();
-
-		//groups
+		PanelPtr addBlank(string caption = "");
 		ofPtr<Panels::Groups::Grid> addGrid();
 		
+		//makers
+		static ofPtr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption="");
+		static ofPtr<Panels::Image> makePanel(ofImage& asset, string caption="");
+		static ofPtr<Panels::Pixels> makePanel(const ofPixels& asset, string caption="");
+		static ofPtr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption="");
+		static ofPtr<Panels::Node> makePanel(ofNode & asset, string caption="");
+		static ofPtr<Panels::Instructions> makeInstructionsPanel();
+		static ofPtr<Panels::Groups::Grid> makeGrid();
+		static ofPtr<Panels::Base> makeBlank();
+		
+
 		Controller & getController() { return this->controller; }
 		void clear();
 		void drop(PanelPtr &panel);

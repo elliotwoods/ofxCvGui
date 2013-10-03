@@ -2,8 +2,9 @@
 namespace ofxCvGui {
 #pragma mark DrawArguments
 	//----------
-	DrawArguments::DrawArguments(const ofRectangle& parentBounds, bool chromeEnabled) :
+	DrawArguments::DrawArguments(const ofRectangle& parentBounds, const ofRectangle& globalBounds, bool chromeEnabled) :
 		parentBounds(parentBounds),
+		globalBounds(globalBounds),
 		chromeEnabled(chromeEnabled)
 	{ }
 
