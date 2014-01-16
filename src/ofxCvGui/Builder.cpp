@@ -43,6 +43,16 @@ namespace ofxCvGui {
 	//----------
 	ofPtr<Panels::Base> Builder::addBlank(string caption) {
 		auto newPanel = this->makeBlank();
+		newPanel->setCaption(caption);
+		auto panel = PanelPtr(newPanel);
+		this->controller.add(panel);
+		return newPanel;
+	}
+
+	//----------
+	ofPtr<Panels::Node> Builder::addWorld(string caption) {
+		auto newPanel = this->makeWorld();
+		newPanel->setCaption(caption);
 		auto panel = PanelPtr(newPanel);
 		this->controller.add(panel);
 		return newPanel;
@@ -91,7 +101,8 @@ namespace ofxCvGui {
 
 	//----------
 	ofPtr<Panels::Node> Builder::makePanel(ofNode & asset, string caption) {
-		auto newPanel = ofPtr<Panels::Node> ( new Panels::Node(asset) );
+		auto newPanel = ofPtr<Panels::Node> ( new Panels::Node() );
+		newPanel->push(asset);
 		LABEL_PANEL_AND_RETURN
 	}
 
@@ -103,6 +114,11 @@ namespace ofxCvGui {
 	//----------
 	ofPtr<Panels::Groups::Grid> Builder::makeGrid() {
 		return ofPtr<Panels::Groups::Grid>( new Panels::Groups::Grid() );
+	}
+
+	//----------
+	ofPtr<Panels::Node> Builder::makeWorld() {
+		return ofPtr<Panels::Node>( new Panels::Node() );
 	}
 
 	//----------

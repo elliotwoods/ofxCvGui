@@ -35,10 +35,19 @@ namespace ofxCvGui {
 		void Scroll::update() {
 			if (this->position < 0.0f) {
 				this->setScroll(this->position * 0.9f);
-			} else if (this->position > this->length - this->getHeight()) {
-				float y = (this->length - this->getHeight()) - this->position;
-				y *= 0.9f;
-				this->setScroll(y + this->position);
+			} else {
+				float overflow = this->length - this->getHeight();
+				if (overflow < 0 && this->position > 0.0f) {
+					//less content than screen space
+					this->setScroll(this->position * 0.9f);
+				} else {
+					//more content than screen space
+					if (this->position > overflow) {
+						float position = this->position - overflow;
+						position *= 0.9f;
+						this->setScroll(position + overflow);
+					}
+				}
 			}
 		}
 

@@ -28,8 +28,9 @@ namespace ofxCvGui {
 		ofPtr<Panels::Pixels> add(const ofPixels& asset, string caption="");
 		ofPtr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
 		ofPtr<Panels::Node> add(ofNode & asset, string caption="");
-		ofPtr<Panels::Instructions> addInstructions();
 		PanelPtr addBlank(string caption = "");
+		ofPtr<Panels::Node> addWorld(string caption = "");
+		ofPtr<Panels::Instructions> addInstructions();
 		ofPtr<Panels::Groups::Grid> addGrid();
 		
 		//makers
@@ -40,6 +41,7 @@ namespace ofxCvGui {
 		static ofPtr<Panels::Node> makePanel(ofNode & asset, string caption="");
 		static ofPtr<Panels::Instructions> makeInstructionsPanel();
 		static ofPtr<Panels::Groups::Grid> makeGrid();
+		static ofPtr<Panels::Node> makeWorld();
 		static ofPtr<Panels::Base> makeBlank();
 		
 

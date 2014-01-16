@@ -3,7 +3,7 @@
 
 #include "Types.h"
 #include "ofGraphics.h"
-#include "ofxLiquidEvent.h"
+#include "ofxLiquidEvent/src/ofxLiquidEvent.h"
 
 namespace ofxCvGui {
 	class Element {

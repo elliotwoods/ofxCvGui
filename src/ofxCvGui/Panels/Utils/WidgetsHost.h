@@ -3,7 +3,7 @@
 
 #ifndef OFXCVGUI_DONT_USE_OFXUI
 #define OFX_UI_NO_XML
-#include "ofxUI.h"
+#include "ofxUI/src/ofxUI.h"
 
 namespace ofxCvGui {
 	namespace Panels {

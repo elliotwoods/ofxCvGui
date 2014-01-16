@@ -4,8 +4,11 @@
 
 #include "ofNode.h"
 
+#define HAS_ADDON_OFXGRABCAM
+//because why not?
+
 #ifdef HAS_ADDON_OFXGRABCAM
-    #include "ofxGrabCam.h"
+    #include "ofxGrabCam/src/ofxGrabCam.h"
     typedef ofxGrabCam CameraType;
 #else
     #include "ofEasyCam.h"
@@ -17,7 +20,6 @@ namespace ofxCvGui {
 		class Node : public Panels::Base {
 		public:
 			Node();
-			Node(ofNode & node);
 			virtual ~Node();
 			
 			//camera
@@ -34,6 +36,8 @@ namespace ofxCvGui {
 			void setGridLabelsEnabled(bool ticksEnabled);
 
 			void push(ofNode & node);
+
+			ofxLiquidEvent<ofCamera> onDrawWorld;
 		protected:
 			void drawNodes(DrawArguments& arguments);
 			vector<ofNode*> nodes;
