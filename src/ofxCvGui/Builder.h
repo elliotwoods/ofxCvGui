@@ -15,6 +15,7 @@
 #include "ofxCvGui/Panels/Instructions.h"
 
 #include "ofxCvGui/Panels/Node.h"
+#include "ofxCvGui/Panels/Scroll.h"
 
 namespace ofxCvGui {
 	class Builder {
@@ -30,6 +31,7 @@ namespace ofxCvGui {
 		ofPtr<Panels::Node> add(ofNode & asset, string caption="");
 		PanelPtr addBlank(string caption = "");
 		ofPtr<Panels::Node> addWorld(string caption = "");
+		ofPtr<Panels::Scroll> addScroll(string caption = "");
 		ofPtr<Panels::Instructions> addInstructions();
 		ofPtr<Panels::Groups::Grid> addGrid();
 		
@@ -39,9 +41,10 @@ namespace ofxCvGui {
 		static ofPtr<Panels::Pixels> makePanel(const ofPixels& asset, string caption="");
 		static ofPtr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption="");
 		static ofPtr<Panels::Node> makePanel(ofNode & asset, string caption="");
+		static ofPtr<Panels::Node> makeWorld();
+		static ofPtr<Panels::Scroll> makeScroll();
 		static ofPtr<Panels::Instructions> makeInstructionsPanel();
 		static ofPtr<Panels::Groups::Grid> makeGrid();
-		static ofPtr<Panels::Node> makeWorld();
 		static ofPtr<Panels::Base> makeBlank();
 		
 
