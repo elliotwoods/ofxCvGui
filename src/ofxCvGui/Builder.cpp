@@ -51,8 +51,7 @@ namespace ofxCvGui {
 
 	//----------
 	ofPtr<Panels::Node> Builder::addWorld(string caption) {
-		auto newPanel = this->makeWorld();
-		newPanel->setCaption(caption);
+		auto newPanel = this->makeWorld(caption);
 		auto panel = PanelPtr(newPanel);
 		this->controller.add(panel);
 		return newPanel;
@@ -60,8 +59,7 @@ namespace ofxCvGui {
 
 	//----------
 	ofPtr<Panels::Scroll> Builder::addScroll(string caption) {
-		auto newPanel = this->makeScroll();
-		newPanel->setCaption(caption);
+		auto newPanel = this->makeScroll(caption);
 		auto panel = PanelPtr(newPanel);
 		this->controller.add(panel);
 		return newPanel;
@@ -126,13 +124,17 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	ofPtr<Panels::Node> Builder::makeWorld() {
-		return ofPtr<Panels::Node>( new Panels::Node() );
+	ofPtr<Panels::Node> Builder::makeWorld(string caption) {
+		auto newPanel = ofPtr<Panels::Node>( new Panels::Node() );
+		newPanel->setCaption(caption);
+		return newPanel;
 	}
 
 	//----------
-	ofPtr<Panels::Scroll> Builder::makeScroll() {
-		return ofPtr<Panels::Scroll>( new Panels::Scroll() );
+	ofPtr<Panels::Scroll> Builder::makeScroll(string caption) {
+		auto newPanel = ofPtr<Panels::Scroll>( new Panels::Scroll() );
+		newPanel->setCaption(caption);
+		return newPanel;
 	}
 
 	//----------
