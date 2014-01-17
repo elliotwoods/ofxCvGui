@@ -41,6 +41,7 @@ namespace ofxCvGui {
 		bool initialised;
 		PanelGroupPtr rootGroup;
 		PanelPtr currentPanel;
+		ofRectangle currentPanelBounds;
 		bool maximised;
 		bool fullscreen;
         ofVec2f mouseCached;

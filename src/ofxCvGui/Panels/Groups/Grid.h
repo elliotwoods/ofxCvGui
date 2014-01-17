@@ -12,7 +12,7 @@ namespace ofxCvGui {
 				void setColsCount(int cols);
 				void setHeights(vector<float>&);
 				void setWidths(vector<float>&);
-				PanelPtr const findScreen(const ofVec2f & xy) override;
+				PanelPtr const findScreen(const ofVec2f & xy, ofRectangle & currentBounds) override;
 			protected:
 				void boundsChange(BoundsChangeArguments & arguments);
 				float xCount, yCount;

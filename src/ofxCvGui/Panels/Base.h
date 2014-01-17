@@ -1,13 +1,16 @@
 #pragma once
 #include "ofxCvGui/Element.h"
 #include "ofxCvGui/Panels/Utils/WidgetsHost.h"
+#include "ofRectangle.h"
 
 namespace ofxCvGui {
 	namespace Panels {
 		class Base : public Element {
 		public:
 			Base();
-			virtual const ofPtr<Panels::Base> findScreen(const ofVec2f & xy) { return ofPtr<Panels::Base>(); }
+			virtual const ofPtr<Panels::Base> findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) {
+				return ofPtr<Panels::Base>();
+			}
 			
 #ifdef OFXUI
             void setWidgets(ofxUICanvas & gui) {

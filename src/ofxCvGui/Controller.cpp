@@ -28,6 +28,7 @@ namespace ofxCvGui {
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;
 		this->currentPanel = PanelPtr();
+		this->currentPanelBounds = ofGetCurrentViewport();
 		this->initialised = true;
 	}
 	
@@ -85,6 +86,7 @@ namespace ofxCvGui {
 	//----------
 	void Controller::setFullscreen(PanelPtr panel) {
 		this->currentPanel = panel;
+		this->currentPanelBounds = ofGetCurrentViewport();
 		this->fullscreen = true;
 		this->maximised = this->fullscreen;
 		ofSetFullscreen(this->fullscreen);
@@ -115,11 +117,12 @@ namespace ofxCvGui {
             DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
 			this->currentPanel->draw(arg);
 		} else {
+			//highlight panel
 			if (currentPanel != PanelPtr()) {
 				ofPushStyle();
 				ofEnableAlphaBlending();
 				ofSetColor(90, 90, 90, 100);
-				ofRect(currentPanel->getBounds());
+				ofRect(this->currentPanelBounds);
 				ofPopStyle();
 			}
             DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
@@ -142,7 +145,9 @@ namespace ofxCvGui {
 			currentPanel->mouseAction(action);
 		else {
 			rootGroup->mouseAction(action);
-			this->currentPanel = PanelPtr(rootGroup->findScreen( ofVec2f(args.x, args.y) ));
+			auto currentPanelBounds = this->rootGroup->getBounds();
+			this->currentPanel = PanelPtr(rootGroup->findScreen(ofVec2f(args.x, args.y), currentPanelBounds));
+			this->currentPanelBounds = currentPanelBounds;
 		}
 	}
 	

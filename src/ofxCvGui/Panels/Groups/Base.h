@@ -8,7 +8,6 @@ namespace ofxCvGui {
 			class Base : public ElementGroup_<Panels::Base> {
 			public:
 				virtual ~Base() { }
-                virtual const PanelPtr findScreen(const ofVec2f & xy) { return PanelPtr(); }
 			};
 		}
 	}
