@@ -2,12 +2,9 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-        //---------
-        Base::Base() {
-        }
-        
-        //---------
-        Base::~Base() {
-        }
+		//-----------
+		Base::Base() {
+			this->setScissor(true);
+		}
 	}
 }

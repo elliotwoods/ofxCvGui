@@ -53,10 +53,6 @@ namespace ofxCvGui {
 
 		//----------
 		void Scroll::draw(DrawArguments& args) {
-			ofPushView();
-			ofViewport(args.parentBounds);
-			ofSetupScreen();
-			ofSetDrawBitmapMode(OF_BITMAPMODE_SIMPLE);
 			this->elements->draw(args);
 
 			float barLength = this->getBarLength();
@@ -75,8 +71,6 @@ namespace ofxCvGui {
 			ofSetLineWidth(OFXCVGUI_SCROLL_BAR_WIDTH);
 			ofLine(x, barPosition, x, barPosition + barLength);
 			ofPopStyle();
-		
-			ofPopView();
 		}
 
 		//----------

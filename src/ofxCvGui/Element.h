@@ -2,6 +2,8 @@
 #include <functional>
 
 #include "Types.h"
+#include "Utils/Utils.h"
+
 #include "ofGraphics.h"
 #include "ofxLiquidEvent/src/ofxLiquidEvent.h"
 
@@ -43,10 +45,12 @@ namespace ofxCvGui {
 		void disable();
 
 	protected:
+		void setScissor(bool);
 		ofRectangle bounds; ///<bounds relative to parent
 		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0
 		string caption;
 		bool enabled;
+		bool enableScissor;
 		LocalMouseState localMouseState;
 	};
 	
