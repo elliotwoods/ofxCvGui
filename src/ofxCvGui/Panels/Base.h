@@ -6,8 +6,7 @@ namespace ofxCvGui {
 	namespace Panels {
 		class Base : public Element {
 		public:
-            Base();
-            virtual ~Base();
+			Base();
 			virtual const ofPtr<Panels::Base> findScreen(const ofVec2f & xy) { return ofPtr<Panels::Base>(); }
 			
 #ifdef OFXUI

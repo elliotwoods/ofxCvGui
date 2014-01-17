@@ -79,6 +79,9 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -300,6 +303,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h">
       <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h">
+      <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

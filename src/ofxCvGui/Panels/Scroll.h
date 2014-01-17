@@ -1,6 +1,7 @@
 #pragma once
 #include "ofxCvGui/Panels/Base.h"
 #include "ofxCvGui/ElementGroup.h"
+#include "../Utils/Utils.h"
 
 #define OFXCVGUI_SCROLL_SPACING 2.0f
 #define OFXCVGUI_SCROLL_AREA_WIDTH 6.0f

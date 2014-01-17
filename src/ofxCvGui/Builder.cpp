@@ -67,7 +67,7 @@ namespace ofxCvGui {
 
 	//----------
 	ofPtr<Panels::Instructions> Builder::addInstructions() {
-		auto newPanel = this->makeInstructionsPanel();
+		auto newPanel = this->makeInstructions();
 		auto panel = PanelPtr(newPanel);
 		this->controller.add(panel);
 		return newPanel;
@@ -114,7 +114,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	ofPtr<Panels::Instructions> Builder::makeInstructionsPanel() {
+	ofPtr<Panels::Instructions> Builder::makeInstructions() {
 		return ofPtr<Panels::Instructions>( new Panels::Instructions() );
 	}
 

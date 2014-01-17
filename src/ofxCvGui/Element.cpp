@@ -3,6 +3,7 @@ namespace ofxCvGui {
 	//-----------
 	Element::Element() {
 		this->enabled = true;
+		this->enableScissor = false;
 		this->localMouseState = Waiting;
 	}
 
@@ -19,7 +20,13 @@ namespace ofxCvGui {
 		if (this->enabled) {
 			ofPushMatrix();
 			ofTranslate(bounds.x, bounds.y);
+			if (this->enableScissor) {
+				ofxCvGui::Utils::pushScissor(arguments.globalBounds);
+			}
 			this->onDraw(arguments);
+			if (this->enableScissor) {
+				ofxCvGui::Utils::popScissor();
+			}
 			ofPopMatrix();
 		}
 	}
@@ -111,5 +118,10 @@ namespace ofxCvGui {
 	//-----------
 	void Element::disable() {
 		this->enabled = false;
+	}
+
+	//-----------
+	void Element::setScissor(bool enableScissor) {
+		this->enableScissor = enableScissor;
 	}
 }
