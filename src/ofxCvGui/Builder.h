@@ -43,7 +43,7 @@ namespace ofxCvGui {
 		static ofPtr<Panels::Node> makePanel(ofNode & asset, string caption="");
 		static ofPtr<Panels::Node> makeWorld();
 		static ofPtr<Panels::Scroll> makeScroll();
-		static ofPtr<Panels::Instructions> makeInstructionsPanel();
+		static ofPtr<Panels::Instructions> makeInstructions();
 		static ofPtr<Panels::Groups::Grid> makeGrid();
 		static ofPtr<Panels::Base> makeBlank();
 		
