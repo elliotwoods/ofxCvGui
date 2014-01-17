@@ -107,18 +107,10 @@ namespace ofxCvGui {
                     scrollOffset = ofVec2f(this->getWidth() - this->getImageWidth(), this->getHeight() - this->getImageHeight()) / 2.0f;
                 }
                 
-                ofPushView();
-				ofViewport(arguments.globalBounds);
-
-				ofSetupScreen(); // ideally this should be ofSetupScreenOrtho, but that function seems to have a bug as of May 2013
-				//ofTranslate(0, this->getHeight()/2, 0);
-                //ofSetupScreenOrtho(this->getWidth(), this->getHeight());
-                
 				ofTranslate(scrollOffset);
                 this->drawImage(this->getImageWidth(), this->getImageHeight());
 				DrawCroppedArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), scrollOffset);
 				this->onDrawCropped(args);
-				ofPopView();
             
                 //only draw zoom box if we need to
                 if (needsZoom && arguments.chromeEnabled) {
