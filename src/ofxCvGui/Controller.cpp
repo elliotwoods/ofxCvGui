@@ -121,7 +121,7 @@ namespace ofxCvGui {
 			if (currentPanel != PanelPtr()) {
 				ofPushStyle();
 				ofEnableAlphaBlending();
-				ofSetColor(90, 90, 90, 100);
+				ofSetColor(40, 40, 40, 100);
 				ofRect(this->currentPanelBounds);
 				ofPopStyle();
 			}
