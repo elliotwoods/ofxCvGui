@@ -145,9 +145,7 @@ namespace ofxCvGui {
 			currentPanel->mouseAction(action);
 		else {
 			rootGroup->mouseAction(action);
-			auto currentPanelBounds = this->rootGroup->getBounds();
-			this->currentPanel = PanelPtr(rootGroup->findScreen(ofVec2f(args.x, args.y), currentPanelBounds));
-			this->currentPanelBounds = currentPanelBounds;
+			this->findCurrentPanel();
 		}
 	}
 	
@@ -211,6 +209,7 @@ namespace ofxCvGui {
 		rootGroup->setBounds(bounds);
 		if (this->maximised)
 			currentPanel->setBounds(bounds);
+		findCurrentPanel();
 	}
 
 	//----------
@@ -221,5 +220,12 @@ namespace ofxCvGui {
 			ofLogError("ofxCvGui") << "cannot perform this action as gui is not intialised";
 			return false;
 		}
+	}
+
+	//----------
+	void Controller::findCurrentPanel() {
+		auto currentPanelBounds = this->rootGroup->getBounds();
+		this->currentPanel = PanelPtr(rootGroup->findScreen(ofVec2f(ofGetMouseX(), ofGetMouseY()), currentPanelBounds));
+		this->currentPanelBounds = currentPanelBounds;
 	}
 }

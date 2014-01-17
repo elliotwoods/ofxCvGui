@@ -86,7 +86,12 @@ namespace ofxCvGui {
 						bounds.x = col * panelWidth;
 					}
 						
-					bounds.y = y;
+					//stop strange drawing artefacts when drawing on pixel boundaries
+					//e.g. text, lines
+					bounds.x = floor(bounds.x);
+					bounds.y = floor(y);
+					bounds.width = floor(bounds.width);
+					bounds.height = floor(bounds.height);
 
 					it->setBounds(bounds);
 

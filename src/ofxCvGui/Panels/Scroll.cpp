@@ -5,7 +5,7 @@ namespace ofxCvGui {
 		//----------
 		Scroll::Scroll() {
 			this->elements = ElementGroupPtr(new ElementGroup());
-			this->onUpdate += [this] (UpdateArguments&) { this->update(); };
+			this->onUpdate += [this] (UpdateArguments& args) { this->update();	};
 			this->onDraw += [this] (DrawArguments& args) { this->draw(args); };
 			this->onMouse += [this] (MouseArguments& args) { this->mouse(args); };
 			this->onBoundsChange += [this] (BoundsChangeArguments&) { this->arrange(); };
@@ -33,6 +33,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Scroll::update() {
+			this->elements->update();
 			if (this->position < 0.0f) {
 				this->setScroll(this->position * 0.9f);
 			} else {

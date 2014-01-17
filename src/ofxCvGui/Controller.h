@@ -38,6 +38,7 @@ namespace ofxCvGui {
 		////
 
 		bool checkInitialised();
+		void findCurrentPanel();
 		bool initialised;
 		PanelGroupPtr rootGroup;
 		PanelPtr currentPanel;
