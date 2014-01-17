@@ -107,11 +107,13 @@ namespace ofxCvGui {
                     scrollOffset = ofVec2f(this->getWidth() - this->getImageWidth(), this->getHeight() - this->getImageHeight()) / 2.0f;
                 }
                 
+				ofPushMatrix();
 				ofTranslate(scrollOffset);
                 this->drawImage(this->getImageWidth(), this->getImageHeight());
 				DrawCroppedArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), scrollOffset);
 				this->onDrawCropped(args);
-            
+				ofPopMatrix();
+
                 //only draw zoom box if we need to
                 if (needsZoom && arguments.chromeEnabled) {
                     //update zoom box
