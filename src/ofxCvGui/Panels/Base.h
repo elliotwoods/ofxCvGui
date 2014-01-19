@@ -1,6 +1,6 @@
 #pragma once
-#include "ofxCvGui/Element.h"
-#include "ofxCvGui/Panels/Utils/WidgetsHost.h"
+#include "../Element.h"
+#include "./Utils/WidgetsHost.h"
 #include "ofRectangle.h"
 
 namespace ofxCvGui {

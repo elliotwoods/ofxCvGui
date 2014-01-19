@@ -1,5 +1,5 @@
 #pragma once
-#include "ofxCvGui/Element.h"
+#include "../../Element.h"
 
 #ifndef OFXCVGUI_DONT_USE_OFXUI
 #define OFX_UI_NO_XML
