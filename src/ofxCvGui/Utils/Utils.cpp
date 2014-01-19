@@ -14,7 +14,7 @@ namespace ofxCvGui {
 			glGetIntegeri_v(GL_SCISSOR_BOX, 0, bounds);
 			return ofRectangle(bounds[0], bounds[1], bounds[2], bounds[3]);
 		}
-
+			
 		//----------
 		void applyScissor(const ofRectangle & bounds) {
 			int x = (int) bounds.x;
