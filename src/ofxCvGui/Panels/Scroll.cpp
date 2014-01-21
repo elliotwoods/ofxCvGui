@@ -8,6 +8,7 @@ namespace ofxCvGui {
 			this->onUpdate += [this] (UpdateArguments& args) { this->update();	};
 			this->onDraw += [this] (DrawArguments& args) { this->draw(args); };
 			this->onMouse += [this] (MouseArguments& args) { this->mouse(args); };
+			this->onKeyboard += [this] (KeyboardArguments& args) { this->keyboard(args); };
 			this->onBoundsChange += [this] (BoundsChangeArguments&) { this->arrange(); };
 			this->position = 0.0f;
 			this->length = 0.0f;
@@ -88,6 +89,11 @@ namespace ofxCvGui {
 				}
 			}
 			this->elements->mouseAction(args);
+		}
+
+		//----------
+		void Scroll::keyboard(KeyboardArguments& args) {
+			this->elements->keyboardAction(args);
 		}
 
 		//----------
