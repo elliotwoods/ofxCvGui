@@ -19,6 +19,7 @@ namespace ofxCvGui {
 			void update();
 			void draw(DrawArguments&);
 			void mouse(MouseArguments&);
+			void keyboard(KeyboardArguments&);
 			void arrange();
 			float getBarLength() const;
 			float getBarY() const;
