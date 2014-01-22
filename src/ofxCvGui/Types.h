@@ -69,4 +69,13 @@ namespace ofxCvGui {
 		BoundsChangeArguments(const ofRectangle & bounds);
 		const ofRectangle bounds;
 	};
+
+	//----------
+	class FilesDraggedArguments {
+	public:
+		FilesDraggedArguments(const ofVec2f & localPosition, const ofVec2f & globalPosition, const vector<string> & files);
+		const ofVec2f localPosition;
+		const ofVec2f globalPosition;
+		const vector<string> files;
+	};
 }

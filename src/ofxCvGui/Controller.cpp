@@ -22,6 +22,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
 		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
+		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 
 		AssetRegister.init();
 
@@ -137,7 +138,13 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	void Controller::mouseMoved(ofMouseEventArgs &args) {
+	PanelPtr Controller::getPanelUnderCursor(const ofVec2f & position) {
+		ofRectangle panelBounds = this->rootGroup->getBounds();
+		return this->findPanelUnderCursor(panelBounds, position);
+	}
+
+	//----------
+	void Controller::mouseMoved(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
 		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), this->currentPanel));
@@ -145,12 +152,12 @@ namespace ofxCvGui {
 			currentPanel->mouseAction(action);
 		else {
 			rootGroup->mouseAction(action);
-			this->findCurrentPanel();
+			this->updateCurrentPanel();
 		}
 	}
 	
 	//----------
-	void Controller::mousePressed(ofMouseEventArgs &args) {
+	void Controller::mousePressed(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
 		MouseArguments action(MouseArguments(args, MouseArguments::Pressed, rootGroup->getBounds(), this->currentPanel));
@@ -162,7 +169,7 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Controller::mouseReleased(ofMouseEventArgs &args) {
+	void Controller::mouseReleased(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
 		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), this->currentPanel);
@@ -173,7 +180,7 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Controller::mouseDragged(ofMouseEventArgs &args) {
+	void Controller::mouseDragged(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
         MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), this->currentPanel, mouseCached);
@@ -185,7 +192,7 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Controller::keyPressed(ofKeyEventArgs &args) {
+	void Controller::keyPressed(ofKeyEventArgs & args) {
 		if (args.key == 'f')
 			this->toggleFullscreen();
 		if (args.key == 'm')
@@ -202,14 +209,28 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Controller::windowResized(ofResizeEventArgs &args) {
+	void Controller::windowResized(ofResizeEventArgs & args) {
 		if (!initialised)
 			return;
 		ofRectangle bounds(0,0,ofGetWidth(), ofGetHeight());
 		rootGroup->setBounds(bounds);
 		if (this->maximised)
 			currentPanel->setBounds(bounds);
-		findCurrentPanel();
+		updateCurrentPanel();
+	}
+
+	//----------
+	void Controller::filesDragged(ofDragInfo & args) {
+		if (!initialised)
+			return;
+		auto rootBounds = this->rootGroup->getBounds();
+		auto panel = this->findPanelUnderCursor(rootBounds);
+		if (panel != PanelPtr()) {
+			auto panelBounds = panel->getBounds();
+			ofVec2f panelTopLeft = panelBounds.getTopLeft();
+			auto newArgs = FilesDraggedArguments((ofVec2f) args.position - panelTopLeft, (ofVec2f) args.position, args.files);
+			panel->ofFilesDragged(newArgs);
+		}
 	}
 
 	//----------
@@ -223,9 +244,14 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	void Controller::findCurrentPanel() {
+	PanelPtr Controller::findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position) {
+		return PanelPtr(rootGroup->findScreen(position, panelBounds));
+	}
+
+	//----------
+	void Controller::updateCurrentPanel() {
 		auto currentPanelBounds = this->rootGroup->getBounds();
-		this->currentPanel = PanelPtr(rootGroup->findScreen(ofVec2f(ofGetMouseX(), ofGetMouseY()), currentPanelBounds));
+		this->currentPanel = this->findPanelUnderCursor(currentPanelBounds);
 		this->currentPanelBounds = currentPanelBounds;
 	}
 }

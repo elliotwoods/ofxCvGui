@@ -12,6 +12,8 @@ namespace ofxCvGui {
 				return ofPtr<Panels::Base>();
 			}
 			
+			ofxLiquidEvent<FilesDraggedArguments> ofFilesDragged;
+
 #ifdef OFXUI
             void setWidgets(ofxUICanvas & gui) {
                 this->widgets.set(gui, this);

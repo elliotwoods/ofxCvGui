@@ -55,4 +55,10 @@ namespace ofxCvGui {
 	BoundsChangeArguments::BoundsChangeArguments(const ofRectangle & bounds) :
 		bounds(bounds)
 	{ }
+
+#pragma mark FilesDraggedArguments
+	//----------
+	FilesDraggedArguments::FilesDraggedArguments(const ofVec2f & localPosition, const ofVec2f & globalPosition, const vector<string> & files) :
+		localPosition(localPosition), globalPosition(globalPosition), files(files)
+	{ }
 }
