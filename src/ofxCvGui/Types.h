@@ -15,6 +15,7 @@ namespace ofxCvGui {
         
 		const ofRectangle parentBounds;
 		const ofRectangle globalBounds;
+		const ofRectangle localBounds;
 		const bool chromeEnabled;
 	};
 

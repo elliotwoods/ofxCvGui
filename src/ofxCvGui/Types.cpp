@@ -5,7 +5,8 @@ namespace ofxCvGui {
 	DrawArguments::DrawArguments(const ofRectangle& parentBounds, const ofRectangle& globalBounds, bool chromeEnabled) :
 		parentBounds(parentBounds),
 		globalBounds(globalBounds),
-		chromeEnabled(chromeEnabled)
+		chromeEnabled(chromeEnabled),
+		localBounds(0, 0, parentBounds.width, parentBounds.height)
 	{ }
 
 #pragma mark MouseArguments

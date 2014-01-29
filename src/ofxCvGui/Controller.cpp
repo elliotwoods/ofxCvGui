@@ -127,8 +127,7 @@ namespace ofxCvGui {
 				ofPopStyle();
 			}
             DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
-			rootGroup->draw(arg);
-            this->rootGroup->onDraw(arg);
+			this->rootGroup->draw(arg);
 		}
 	}
 
