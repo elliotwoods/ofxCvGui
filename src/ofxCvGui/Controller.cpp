@@ -10,7 +10,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	void Controller::init(ofPtr<Panels::Groups::Base> rootGroup) {
+	void Controller::init(shared_ptr<Panels::Groups::Base> rootGroup) {
 		ofBackground(30);
 		ofSetVerticalSync(true);
 

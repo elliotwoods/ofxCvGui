@@ -24,28 +24,28 @@ namespace ofxCvGui {
 		
 		//content
 		void add(PanelPtr panel);
-		ofPtr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
-		ofPtr<Panels::Image> add(ofImage& asset, string caption="");
-		ofPtr<Panels::Pixels> add(const ofPixels& asset, string caption="");
-		ofPtr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
-		ofPtr<Panels::Node> add(ofNode & asset, string caption="");
+		shared_ptr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
+		shared_ptr<Panels::Image> add(ofImage& asset, string caption="");
+		shared_ptr<Panels::Pixels> add(const ofPixels& asset, string caption="");
+		shared_ptr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
+		shared_ptr<Panels::Node> add(ofNode & asset, string caption="");
 		PanelPtr addBlank(string caption = "");
-		ofPtr<Panels::Node> addWorld(string caption = "");
-		ofPtr<Panels::Scroll> addScroll(string caption = "");
-		ofPtr<Panels::Instructions> addInstructions();
-		ofPtr<Panels::Groups::Grid> addGrid();
+		shared_ptr<Panels::Node> addWorld(string caption = "");
+		shared_ptr<Panels::Scroll> addScroll(string caption = "");
+		shared_ptr<Panels::Instructions> addInstructions();
+		shared_ptr<Panels::Groups::Grid> addGrid();
 		
 		//makers
-		static ofPtr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption="");
-		static ofPtr<Panels::Image> makePanel(ofImage& asset, string caption="");
-		static ofPtr<Panels::Pixels> makePanel(const ofPixels& asset, string caption="");
-		static ofPtr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption="");
-		static ofPtr<Panels::Node> makePanel(ofNode & asset, string caption="");
-		static ofPtr<Panels::Node> makeWorld(string caption = "");
-		static ofPtr<Panels::Scroll> makeScroll(string caption = "");
-		static ofPtr<Panels::Instructions> makeInstructions();
-		static ofPtr<Panels::Groups::Grid> makeGrid();
-		static ofPtr<Panels::Base> makeBlank();
+		static shared_ptr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption="");
+		static shared_ptr<Panels::Image> makePanel(ofImage& asset, string caption="");
+		static shared_ptr<Panels::Pixels> makePanel(const ofPixels& asset, string caption="");
+		static shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption="");
+		static shared_ptr<Panels::Node> makePanel(ofNode & asset, string caption="");
+		static shared_ptr<Panels::Node> makeWorld(string caption = "");
+		static shared_ptr<Panels::Scroll> makeScroll(string caption = "");
+		static shared_ptr<Panels::Instructions> makeInstructions();
+		static shared_ptr<Panels::Groups::Grid> makeGrid();
+		static PanelPtr makeBlank();
 		
 
 		Controller & getController() { return this->controller; }

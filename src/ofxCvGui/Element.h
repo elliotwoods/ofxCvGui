@@ -54,5 +54,5 @@ namespace ofxCvGui {
 		LocalMouseState localMouseState;
 	};
 	
-	typedef ofPtr<Element> ElementPtr;
+	typedef shared_ptr<Element> ElementPtr;
 }

@@ -17,18 +17,18 @@ namespace ofxCvGui {
 	public:
 		ElementGroup_();
 		virtual ~ElementGroup_();
-		void add(ofPtr<T> addition);
-		ofPtr<T> addBlank();
-		void drop(ofPtr<T> element);
+		void add(shared_ptr<T> addition);
+		shared_ptr<T> addBlank();
+		void drop(shared_ptr<T> element);
 		void clear();
-		vector<ofPtr<T> > & getElements();
+		vector<shared_ptr<T> > & getElements();
 
 	protected:
 		void updateSet();
 		void mouseActionSet(MouseArguments& mouse);
 		void keyboardActionSet(KeyboardArguments& keyboard);
 		void drawSet(const DrawArguments& arguments);
-		vector<ofPtr<T> > elements;
+		vector<shared_ptr<T> > elements;
 	};
 
 	class ElementGroup : public ElementGroup_<Element> {
@@ -38,6 +38,6 @@ namespace ofxCvGui {
 		}
 	};
 
-	typedef ofPtr<Element> ElementPtr;
-	typedef ofPtr<ElementGroup> ElementGroupPtr;
+	typedef shared_ptr<Element> ElementPtr;
+	typedef shared_ptr<ElementGroup> ElementGroupPtr;
 }

@@ -11,5 +11,5 @@ namespace ofxCvGui {
 			};
 		}
 	}
-	typedef ofPtr<Panels::Groups::Base> PanelGroupPtr;
+	typedef shared_ptr<Panels::Groups::Base> PanelGroupPtr;
 }

@@ -55,15 +55,15 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
-	ofPtr<T> ElementGroup_<T>::addBlank() {
-		ofPtr<T> newElement = ofPtr<T>(new T);
+	shared_ptr<T> ElementGroup_<T>::addBlank() {
+		shared_ptr<T> newElement = shared_ptr<T>(new T);
 		this->add(newElement);
 		return newElement;
 	}
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::add(ofPtr<T> addition) {
+	void ElementGroup_<T>::add(shared_ptr<T> addition) {
 		this->elements.push_back(addition);
         ofRectangle bounds = this->getBounds();
 		auto args = BoundsChangeArguments(bounds);
@@ -72,8 +72,8 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::drop(ofPtr<T> element) {
-		typename vector<ofPtr<T> >::iterator it;
+	void ElementGroup_<T>::drop(shared_ptr<T> element) {
+		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			if (*it == element) {
 				elements.erase(it);
@@ -96,14 +96,14 @@ namespace ofxCvGui {
 	
 	//----------
 	template<typename T>
-	vector<ofPtr<T>> & ElementGroup_<T>::getElements() {
+	vector<shared_ptr<T>> & ElementGroup_<T>::getElements() {
 		return this->elements;
 	}
 
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
-		typename vector<ofPtr<T> >::iterator it;
+		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++) {
 			auto boundsWithinParent = (*it)->getBounds();
 			

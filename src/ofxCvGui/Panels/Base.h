@@ -8,8 +8,8 @@ namespace ofxCvGui {
 		class Base : public Element {
 		public:
 			Base();
-			virtual const ofPtr<Panels::Base> findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) {
-				return ofPtr<Panels::Base>();
+			virtual const shared_ptr<Panels::Base> findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) {
+				return shared_ptr<Panels::Base>();
 			}
 			
 			ofxLiquidEvent<FilesDraggedArguments> ofFilesDragged;
@@ -31,5 +31,5 @@ namespace ofxCvGui {
 #endif
 		};
 	}
-	typedef ofPtr<Panels::Base> PanelPtr;
+	typedef shared_ptr<Panels::Base> PanelPtr;
 }

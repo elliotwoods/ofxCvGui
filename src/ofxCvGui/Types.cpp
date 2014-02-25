@@ -11,7 +11,7 @@ namespace ofxCvGui {
 
 #pragma mark MouseArguments
 	//----------
-	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const ofPtr<void>& currentPanel, const ofVec2f& cached) :
+	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, const ofVec2f& cached) :
 		action(action),
 		button(mouseArgs.button),
 		global(mouseArgs.x, mouseArgs.y),
@@ -45,7 +45,7 @@ namespace ofxCvGui {
 
 #pragma mark KeyboardArguments
 	//----------
-	KeyboardArguments::KeyboardArguments(const ofKeyEventArgs& keyboardArgs, Action action, ofPtr<void> currentPanel) :
+	KeyboardArguments::KeyboardArguments(const ofKeyEventArgs& keyboardArgs, Action action, shared_ptr<void> currentPanel) :
 		action(action),
 		key(keyboardArgs.key),
         InputArguments(currentPanel)
