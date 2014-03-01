@@ -67,22 +67,31 @@ namespace ofxCvGui {
 		void Slider::draw(DrawArguments & args) {
 			auto & font = ofxAssets::AssetRegister.getFont("ofxCvGui::swisop3", 12);
 			image("ofxCvGui::edit").draw(this->editBounds);
-			font.drawString(this->value->getName() + " : " + ofToString(this->value->get()), 5, 15);
+			font.drawString(this->value->getName() + " : " + ofToString(this->value->get()), 4, 15);
 	
 			const auto rangeScale = this->getRangeScale();
 			const auto width = this->getWidth();
 			const auto center = this->startMouseHoldValue;
 			const auto centerPx = ofMap(center, this->value->getMin(), this->value->getMax(), 0, this->getWidth());
-			const auto xPx = (this->value->get() - center) * (zoom * width) / rangeScale + centerPx;
+			const auto xPx = floor((this->value->get() - center) * (zoom * width) / rangeScale + centerPx);
 	
+			bool barActive = this->mouseHeldOnBar && this->getMouseState() != LocalMouseState::Waiting;
+
+			if (barActive) {
+				ofPushStyle();
+				ofSetColor(50);
+				ofRect(0, 20, xPx, 20);
+				ofPopStyle();
+			}
+
 			ofPushMatrix();
 			ofTranslate(0.0f, 40.0f);
 
 			ofPushMatrix();
 			ofTranslate(xPx, 0.0f);
-			auto & marker = image("ofxCvGui::sliderMarker");
-			ofScale(0.5f, 0.5f);
-			marker.draw(-marker.getWidth() / 2.0f, -marker.getHeight());
+			auto & marker = image(barActive ? "ofxCvGui::sliderMarkerFilled" : "ofxCvGui::sliderMarker");
+			ofScale(0.4f, 0.4f);
+			marker.draw(-marker.getWidth() / 2.0f, -marker.getHeight() - 3);
 			ofPopMatrix();
 	
 
@@ -93,6 +102,11 @@ namespace ofxCvGui {
 			this->ticks->draw();
 	
 			ofPopMatrix();
+
+			ofPushStyle();
+			ofSetLineWidth(1.0f);
+			ofLine(this->getWidth(), 0, this->getWidth(), 40);
+			ofPopStyle();
 		}
 
 		//----------
@@ -138,7 +152,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Slider::boundsChange(BoundsChangeArguments & args) {
-			this->editBounds = ofRectangle(args.bounds.width - 16,1,15, 15);
+			this->editBounds = ofRectangle(args.bounds.width - 20,1,15, 15);
 		}
 
 		//----------

@@ -1,5 +1,9 @@
 #include "Scroll.h"
 
+#define OFXCVGUI_SCROLL_SPACING 2.0f
+#define OFXCVGUI_SCROLL_AREA_WIDTH 15.0f
+#define OFXCVGUI_SCROLL_BAR_WIDTH 3.0f
+
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
