@@ -22,8 +22,8 @@ namespace ofxCvGui {
 	//----------
     class InputArguments {
     public:
-        InputArguments(const ofPtr<void>& currentPanel) : currentPanel(currentPanel) { }
-        const ofPtr<void> currentPanel;
+        InputArguments(const shared_ptr<void>& currentPanel) : currentPanel(currentPanel) { }
+        const shared_ptr<void> currentPanel;
         
         bool checkCurrentPanel(void * panel) {
             return currentPanel.get() == panel;
@@ -37,7 +37,7 @@ namespace ofxCvGui {
             Pressed, Released, Moved, Dragged
         };
         
-		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const ofPtr<void>& currentPanel, const ofVec2f& cached = ofVec2f()); ///global
+		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, const ofVec2f& cached = ofVec2f()); ///global
 		MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds); ///local
 		
 		bool isLocal() const; 
@@ -58,7 +58,7 @@ namespace ofxCvGui {
             Pressed, Released
         };
         
-		KeyboardArguments(const ofKeyEventArgs& keyboardArgs, Action action, ofPtr<void> currentPanel);
+		KeyboardArguments(const ofKeyEventArgs& keyboardArgs, Action action, shared_ptr<void> currentPanel);
         
 		const Action action;
 		const int key;
