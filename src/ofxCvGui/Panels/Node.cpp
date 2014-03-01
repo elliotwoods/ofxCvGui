@@ -3,24 +3,16 @@
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
-		Node::Node() {
-			this->onDraw.addListener([this] (DrawArguments& args) {
-				this->drawNodes(args);
-				if (args.chromeEnabled) {
-					AssetRegister.drawText(this->caption, 20, 20, "", true, 30);
-				}
-			}, this);
-
-			this->gridScale = 5.0f;
+		Node::Node(ofNode & node) {
+			this->push(node);
+			this->gridColor = ofColor(90, 50, 50);
+			this->gridEnabled = true;
+			this->gridLabelsEnabled = true;
+			this->gridScale = 10.0f;
 		}
 
 		//----------
-		Node::~Node() {
-			this->onDraw.removeListeners(this);
-		}
-
-		//----------
-		void Node::drawNodes(DrawArguments& arguments) {
+		void Node::drawContent(DrawArguments& arguments) {
 			this->camera.begin(this->getBounds());
 
 			if (this->gridEnabled) {
@@ -33,8 +25,6 @@ namespace ofxCvGui {
 			vector<ofNode*>::iterator it;
 			for (it = this->nodes.begin(); it != this->nodes.end(); it++)
 				(**it).draw();
-
-			this->onDrawWorld(this->getCamera());
 
 			this->camera.end();
 		}

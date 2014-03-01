@@ -4,30 +4,21 @@
 
 #include "ofNode.h"
 
-#define HAS_ADDON_OFXGRABCAM
-//because why not?
-
-#ifdef HAS_ADDON_OFXGRABCAM
-    #include "ofxGrabCam/src/ofxGrabCam.h"
-    typedef ofxGrabCam CameraType;
-#else
-    #include "ofEasyCam.h"
-    typedef ofEasyCam CameraType;
-#endif
+//feel free to change this for a different camera type of your choosing
+#include "ofxGrabCam.h"
+typedef ofxGrabCam CameraType;
 
 namespace ofxCvGui {
 	namespace Panels {
 		class Node : public Panels::Base {
 		public:
-			Node();
-			virtual ~Node();
+			Node() { }
+			Node(ofNode & node);
 			
 			//camera
 			CameraType & getCamera() { return this->camera; };
 			void setCursorEnabled(bool cursorEnabled=true) {
-#ifdef HAS_ADDON_OFXGRABCAM
                 this->camera.setCursorDraw(cursorEnabled);
-#endif
             }
             
 			void setGridEnabled(bool gridEnabled);
@@ -36,10 +27,8 @@ namespace ofxCvGui {
 			void setGridLabelsEnabled(bool ticksEnabled);
 
 			void push(ofNode & node);
-
-			ofxLiquidEvent<ofCamera> onDrawWorld;
 		protected:
-			void drawNodes(DrawArguments& arguments);
+			void drawContent(DrawArguments& arguments);
 			vector<ofNode*> nodes;
 			CameraType camera;
 			ofColor gridColor;
