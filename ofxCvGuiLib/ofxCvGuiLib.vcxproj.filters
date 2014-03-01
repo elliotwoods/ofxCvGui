@@ -82,6 +82,9 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -307,6 +310,9 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h">
       <Filter>src\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -353,6 +359,9 @@
     </Filter>
     <Filter Include="addons\ofxXmlSettings\libs">
       <UniqueIdentifier>{b390c64c-e67b-47d3-9e0c-0c44161dad1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Widgets">
+      <UniqueIdentifier>{116e901b-68ab-477e-b772-de6949f17b5b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -86,6 +86,7 @@
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
@@ -115,6 +116,7 @@
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6F0DDB4F-4014-4433-919B-9D956C034BAD}</ProjectGuid>

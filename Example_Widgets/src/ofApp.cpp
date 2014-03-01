@@ -1,8 +1,13 @@
 #include "ofApp.h"
 
+using namespace ofxCvGui;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
+	this->gui.init();
 
+	auto scrollPanel = this->gui.addScroll();
+	//scrollPanel->add(new Widgets::Slider("slider", this->radius, 0.0f, 100.0f));
 }
 
 //--------------------------------------------------------------

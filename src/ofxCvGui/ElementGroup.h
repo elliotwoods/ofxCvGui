@@ -38,6 +38,5 @@ namespace ofxCvGui {
 		}
 	};
 
-	typedef shared_ptr<Element> ElementPtr;
 	typedef shared_ptr<ElementGroup> ElementGroupPtr;
 }
