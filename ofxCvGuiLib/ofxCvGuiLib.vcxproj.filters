@@ -49,38 +49,8 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.cpp">
-      <Filter>src\Panels\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.cpp">
-      <Filter>src\Panels\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp">
-      <Filter>src\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp">
-      <Filter>addons\ofxGrabCam\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Panels\Scroll.cpp">
-      <Filter>src\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ofxXmlSettings\src\ofxXmlSettings.cpp">
-      <Filter>addons\ofxXmlSettings\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlerror.cpp">
-      <Filter>addons\ofxXmlSettings\libs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlparser.cpp">
-      <Filter>addons\ofxXmlSettings\libs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxml.cpp">
-      <Filter>addons\ofxXmlSettings\libs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp">
-      <Filter>src\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp">
-      <Filter>src\Utils</Filter>
+      <Filter>addons\ofxGrabcam\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,15 +105,6 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h">
       <Filter>src\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.h">
-      <Filter>src\Panels\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.h">
-      <Filter>src\Panels\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Utils\Button.h">
-      <Filter>src\Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ofxUI\src\ofxUI.h">
       <Filter>addons\ofxUI\src</Filter>
@@ -287,25 +248,7 @@
       <Filter>addons\ofxUI\src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h">
-      <Filter>addons\ofxGrabCam\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Panels\Scroll.h">
-      <Filter>src\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h">
-      <Filter>addons\ofxLiquidEvent\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ofxXmlSettings\src\ofxXmlSettings.h">
-      <Filter>addons\ofxXmlSettings\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ofxXmlSettings\libs\tinyxml.h">
-      <Filter>addons\ofxXmlSettings\libs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h">
-      <Filter>src\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h">
-      <Filter>src\Utils</Filter>
+      <Filter>addons\ofxGrabcam\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -318,41 +261,20 @@
     <Filter Include="src\Panels\Groups">
       <UniqueIdentifier>{224b59cb-2368-491d-b4c1-d52d8bcbfa53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Utils">
-      <UniqueIdentifier>{d436fc20-e603-40aa-b00e-d261791cc1ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Panels\Utils">
-      <UniqueIdentifier>{78f821db-c1d5-4c80-b094-875025e45580}</UniqueIdentifier>
-    </Filter>
     <Filter Include="addons">
-      <UniqueIdentifier>{321d75d1-fada-4d94-925b-f8faf2e0ac65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxGrabCam">
-      <UniqueIdentifier>{62d3c18d-7234-4843-aa40-e9a78605beb1}</UniqueIdentifier>
+      <UniqueIdentifier>{ea3c348c-130f-4d79-aac4-b44c44fb2d39}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxUI">
-      <UniqueIdentifier>{2d2cc5ab-522a-4886-9f9a-48a393d8cd38}</UniqueIdentifier>
+      <UniqueIdentifier>{b33225be-9b76-4a3d-8db1-f7acc4412acc}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxUI\src">
-      <UniqueIdentifier>{e8a2fe8d-d327-41fe-8705-70f05f5fb49c}</UniqueIdentifier>
+      <UniqueIdentifier>{dab89aa1-3219-4515-81c9-effc607f7d04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="addons\ofxGrabCam\src">
-      <UniqueIdentifier>{c288de42-6529-4b1a-a446-a4495f584d3f}</UniqueIdentifier>
+    <Filter Include="addons\ofxGrabcam">
+      <UniqueIdentifier>{8aee8299-2135-438b-8c58-db83c2ab70d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="addons\ofxLiquidEvent">
-      <UniqueIdentifier>{8a3cef12-acd4-4049-a129-a0a6df4eef24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxLiquidEvent\src">
-      <UniqueIdentifier>{c73fbdaa-939b-4fea-b4c0-509e149f68c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxXmlSettings">
-      <UniqueIdentifier>{cd39d0d1-61be-4124-876b-984765cdf743}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxXmlSettings\src">
-      <UniqueIdentifier>{6eb626a6-7cc2-4be9-8505-be68feb429db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxXmlSettings\libs">
-      <UniqueIdentifier>{b390c64c-e67b-47d3-9e0c-0c44161dad1e}</UniqueIdentifier>
+    <Filter Include="addons\ofxGrabcam\src">
+      <UniqueIdentifier>{bcc27bac-eb96-42b6-b069-c13bd0d214c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

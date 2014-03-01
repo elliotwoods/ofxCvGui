@@ -9,10 +9,13 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="RemoteDebug|Win32">
+      <Configuration>RemoteDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
-    <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI2DGraph.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUI2DPad.h" />
@@ -60,8 +63,6 @@
     <ClInclude Include="..\..\ofxUI\src\ofxUIWaveform.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUIWidget.h" />
     <ClInclude Include="..\..\ofxUI\src\ofxUIWidgetWithLabel.h" />
-    <ClInclude Include="..\..\ofxXmlSettings\libs\tinyxml.h" />
-    <ClInclude Include="..\..\ofxXmlSettings\src\ofxXmlSettings.h" />
     <ClInclude Include="..\src\ofxCvGui.h" />
     <ClInclude Include="..\src\ofxCvGui\Assets.h" />
     <ClInclude Include="..\src\ofxCvGui\Builder.h" />
@@ -71,7 +72,6 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\BaseImage.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h" />
-    <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h" />
@@ -79,20 +79,11 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Node.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
-    <ClInclude Include="..\src\ofxCvGui\Panels\Scroll.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Text.h" />
-    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.h" />
-    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
-    <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
-    <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxml.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlerror.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlparser.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\src\ofxXmlSettings.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Assets.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
@@ -101,24 +92,18 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Base.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Node.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Panels\Scroll.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Text.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6F0DDB4F-4014-4433-919B-9D956C034BAD}</ProjectGuid>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>ofxCvGuiLib</RootNamespace>
   </PropertyGroup>
@@ -135,7 +120,9 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='RemoteDebug|Win32'">
+    <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -164,7 +151,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -179,16 +166,13 @@
       </AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>PocoFoundationd.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
-    <PostBuildEvent>
-      <Command>xcopy /e /i /y "$(ProjectDir)..\data" "$(SolutionDir)bin\data"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -201,9 +185,12 @@
       </AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>PocoFoundation.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
-    <PostBuildEvent>
-      <Command>xcopy /e /i /y "$(ProjectDir)..\data" "$(SolutionDir)bin\data"</Command>
-    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RemoteDebug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4250</DisableSpecificWarnings>
+    </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
