@@ -35,7 +35,17 @@ namespace ofxCvGui {
     void Element::mouseAction(MouseArguments& args) {
 		if (this->enabled) {
 			auto localArgs = MouseArguments(args, this->getBounds());
-			this->onMouse(localArgs);
+			if(args.action == MouseArguments::Pressed) {
+				//special case for pressed, only pass if local
+				if (localArgs.isLocal()) {
+					this->onMouse(localArgs);
+					if (localArgs.isTaken()) {
+						args.take(); // if this element took, notify upstream
+					}
+				}
+			} else {
+				this->onMouse(localArgs);
+			}
 
 			if (localArgs.isLocalPressed()) {
 				this->localMouseState = Down;

@@ -4,10 +4,35 @@ using namespace ofxCvGui;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	ofSetCircleResolution(50);
+	ofEnableSmoothing();
+
 	this->gui.init();
 
+	auto drawPanel = this->gui.addBlank();
 	auto scrollPanel = this->gui.addScroll();
-	//scrollPanel->add(new Widgets::Slider("slider", this->radius, 0.0f, 100.0f));
+
+	for(int i=0; i<5; i++) {
+		this->x[i].set("X", ofRandomuf() * 512.0f, 0.0f, 512.0f);
+		this->y[i].set("Y", ofRandomuf() * 512.0f, 0.0f, 512.0f);
+		this->radius[i].set("Radius", ofRandomuf() * 100.0f, 0.0f, 100.0f);
+		this->luminance[i].set("Luminance", ofRandomuf() * 255.0f, 0.0f, 255.0f);
+
+		scrollPanel->add(ElementPtr(new Widgets::Slider(this->x[i])));
+		scrollPanel->add(ElementPtr(new Widgets::Slider(this->y[i])));
+		scrollPanel->add(ElementPtr(new Widgets::Slider(this->radius[i])));
+		scrollPanel->add(ElementPtr(new Widgets::Slider(this->luminance[i])));
+		scrollPanel->add(ElementPtr(new Widgets::Spacer()));
+	}
+
+	drawPanel->onDraw += [this] (ofxCvGui::DrawArguments &) {
+		for(int i=0; i<5; i++) {
+			ofPushStyle();
+			ofSetColor(this->luminance[i]);
+			ofCircle(this->x[i], this->y[i], this->radius[i]);
+			ofPopStyle();
+		}
+	};
 }
 
 //--------------------------------------------------------------
@@ -17,7 +42,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+	
 }
 
 //--------------------------------------------------------------

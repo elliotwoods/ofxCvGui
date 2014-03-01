@@ -5,11 +5,11 @@ namespace ofxCvGui {
 		//----------
 		Scroll::Scroll() {
 			this->elements = ElementGroupPtr(new ElementGroup());
-			this->onUpdate += [this] (UpdateArguments& args) { this->update();	};
-			this->onDraw += [this] (DrawArguments& args) { this->draw(args); };
-			this->onMouse += [this] (MouseArguments& args) { this->mouse(args); };
-			this->onKeyboard += [this] (KeyboardArguments& args) { this->keyboard(args); };
-			this->onBoundsChange += [this] (BoundsChangeArguments&) { this->arrange(); };
+			this->onUpdate += [this] (UpdateArguments & args) { this->update();	};
+			this->onDraw += [this] (DrawArguments & args) { this->draw(args); };
+			this->onMouse += [this] (MouseArguments & args) { this->mouse(args); };
+			this->onKeyboard += [this] (KeyboardArguments & args) { this->keyboard(args); };
+			this->onBoundsChange += [this] (BoundsChangeArguments & args) { this->arrange(args); };
 			this->position = 0.0f;
 			this->length = 0.0f;
 			this->onScrollBar = false;
@@ -18,7 +18,7 @@ namespace ofxCvGui {
 		//----------
 		void Scroll::add(ElementPtr element) {
 			this->elements->add(element);
-			this->arrange();
+			this->arrange(BoundsChangeArguments(this->getBounds()));
 		}
 
 		//----------
@@ -77,9 +77,11 @@ namespace ofxCvGui {
 
 		//----------
 		void Scroll::mouse(MouseArguments& args) {
+			this->elements->mouseAction(args);
 			if (args.action == MouseArguments::Pressed) {
 				this->onScrollBar = args.local.x > this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH;
-			} else if (args.action == MouseArguments::Dragged && this->getMouseState() == Element::Dragging && this->length > this->getHeight()) {
+				this->dragTaken = args.isTaken();
+			} else if (this->getMouseState() == Element::Dragging && this->length > this->getHeight() && !dragTaken) {
 				if (this->onScrollBar) {
 					const float range = this->length - this->getHeight();
 					const float spareScrollSpace = this->getHeight() - this->getBarLength();
@@ -88,7 +90,6 @@ namespace ofxCvGui {
 					this->setScroll(this->position - args.movement.y);
 				}
 			}
-			this->elements->mouseAction(args);
 		}
 
 		//----------
@@ -97,7 +98,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Scroll::arrange() {
+		void Scroll::arrange(BoundsChangeArguments & args) {
 			float y = 0;
 			for(auto element : this->elements->getElements()) {
 				auto elementBounds = element->getBounds();
@@ -107,6 +108,7 @@ namespace ofxCvGui {
 				y += elementBounds.height + OFXCVGUI_SCROLL_SPACING;
 			}
 			this->length = y;
+			this->elements->setBounds(ofRectangle(0, 0, this->getWidth(), this->length));
 		}
 
 		//----------

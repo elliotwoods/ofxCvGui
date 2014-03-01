@@ -70,6 +70,9 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -147,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h">
       <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h">
+      <Filter>src\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

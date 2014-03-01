@@ -37,6 +37,7 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
@@ -62,6 +63,7 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6F0DDB4F-4014-4433-919B-9D956C034BAD}</ProjectGuid>

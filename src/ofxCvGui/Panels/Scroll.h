@@ -17,16 +17,18 @@ namespace ofxCvGui {
 			void setScroll(float);
 		protected:
 			void update();
-			void draw(DrawArguments&);
-			void mouse(MouseArguments&);
-			void keyboard(KeyboardArguments&);
-			void arrange();
+			void draw(DrawArguments &);
+			void mouse(MouseArguments &);
+			void keyboard(KeyboardArguments &);
+			void arrange(BoundsChangeArguments &);
 			float getBarLength() const;
 			float getBarY() const;
+
 			ElementGroupPtr elements;
 			float position;
 			float length;
 			bool onScrollBar;
+			bool dragTaken;
 		};
 	}
 }

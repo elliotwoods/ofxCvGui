@@ -42,6 +42,8 @@ namespace ofxCvGui {
 		
 		bool isLocal() const; 
 		bool isLocalPressed() const;
+		bool isTaken() const;
+		void take();
 
 		const Action action;
 		const int button;
@@ -49,6 +51,10 @@ namespace ofxCvGui {
 		const ofVec2f local;
 		const ofVec2f localNormalised; ///<Texture coordinates
         const ofVec2f movement;
+
+		friend ostream& operator<<(ostream&, const MouseArguments &);
+	protected:
+		bool taken;
 	};
 
 	//----------
@@ -69,6 +75,7 @@ namespace ofxCvGui {
 	public:
 		BoundsChangeArguments(const ofRectangle & bounds);
 		const ofRectangle bounds;
+		const ofRectangle localBounds;
 	};
 
 	//----------

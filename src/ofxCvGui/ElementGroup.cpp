@@ -6,9 +6,8 @@ namespace ofxCvGui {
 		this->onUpdate.addListener([this] (const UpdateArguments & args) {
 			this->updateSet();
 		}, this);
-		this->onMouse.addListener([this] (const MouseArguments & args) {
-			MouseArguments nonConstArgs = args;
-			this->mouseActionSet(nonConstArgs);
+		this->onMouse.addListener([this] (MouseArguments & args) {
+			this->mouseActionSet(args);
 		}, this);
 		this->onKeyboard.addListener([this] (const KeyboardArguments & args) {
 			KeyboardArguments nonConstArgs = args;

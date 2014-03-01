@@ -6,29 +6,23 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class Slider : public Element {
 		public:
-			Slider(const string & caption, float & value, const float minimum, const float maximum);
 			Slider(ofParameter<float> &);
 			virtual ~Slider();
 		protected:
-			enum MouseHoldState {
-				None = 0,
-				Hold,
-				Dragged
-			};
-
 			void init();
 			void update(UpdateArguments &);
 			void draw(DrawArguments &);
 			void mouseAction(MouseArguments &);
 			void boundsChange(BoundsChangeArguments &);
+			float getRangeScale() const;
 
 			ofParameter<float> * value;
-			bool valueLocallyAllocated;
 
-			bool zoom;
+			float zoom;
 			unsigned long startMouseHoldTime;
-			float startMouseHoldX;
-			MouseHoldState mouseHoldState;
+			float startMouseHoldValue;
+			float startMouseHoldMouseX;
+			bool mouseHeldOnBar;
 
 			static ofMesh * ticks;
 			ofRectangle editBounds;

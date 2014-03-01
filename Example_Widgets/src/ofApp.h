@@ -22,5 +22,8 @@ class ofApp : public ofBaseApp{
 		
 		ofxCvGui::Builder gui;
 
-		float radius;
+		ofParameter<float> radius[5];
+		ofParameter<float> x[5];
+		ofParameter<float> y[5];
+		ofParameter<float> luminance[5];
 };

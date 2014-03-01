@@ -16,6 +16,7 @@
 #include "ofxCvGui/Panels/Scroll.h"
 
 #include "ofxCvGui/Widgets/Slider.h"
+#include "ofxCvGui/Widgets/Spacer.h"
 
 namespace ofxCvGui {
 	class Builder {

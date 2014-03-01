@@ -18,6 +18,7 @@ namespace ofxCvGui {
 		local(mouseArgs.x - rectangle.x, mouseArgs.y - rectangle.y),
 		localNormalised(local / ofVec2f(rectangle.width, rectangle.height)),
         movement(action == Dragged ? global - cached : ofVec2f()),
+		taken(false),
         InputArguments(currentPanel)
 	{ }
 
@@ -29,6 +30,7 @@ namespace ofxCvGui {
         local(parentArguments.local - ofVec2f(childBounds.x, childBounds.y)),
         localNormalised(local / ofVec2f(childBounds.width, childBounds.height)),
         movement(parentArguments.movement),
+		taken(false),
         InputArguments(parentArguments.currentPanel)
 	{ }
 
@@ -43,6 +45,22 @@ namespace ofxCvGui {
 		return action == Action::Pressed && isLocal();
 	}
 
+	//----------
+	bool MouseArguments::isTaken() const {
+		return this->taken;
+	}
+
+	//----------
+	void MouseArguments::take() {
+		this->taken = true;
+	}
+
+	//----------
+	ostream& operator<<(ostream& os, const MouseArguments & args) {
+		os << "[MouseAction : " << args.action << ", " << args.button << ", " << args.global << ", " << args.local << ", " << args.localNormalised << ", " << args.movement << "]";
+		return os;
+	}
+
 #pragma mark KeyboardArguments
 	//----------
 	KeyboardArguments::KeyboardArguments(const ofKeyEventArgs& keyboardArgs, Action action, shared_ptr<void> currentPanel) :
@@ -54,7 +72,8 @@ namespace ofxCvGui {
 #pragma mark BoundsChangeArguments
 	//----------
 	BoundsChangeArguments::BoundsChangeArguments(const ofRectangle & bounds) :
-		bounds(bounds)
+		bounds(bounds),
+		localBounds(0.0f, 0.0f, bounds.width, bounds.height)
 	{ }
 
 #pragma mark FilesDraggedArguments
