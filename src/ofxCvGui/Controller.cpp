@@ -1,4 +1,5 @@
 #include "ofxCvGui/Controller.h"
+#include "ofxAssets.h"
 
 namespace ofxCvGui {
 	//----------
@@ -24,7 +25,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 
-		AssetRegister.init();
+		ofxAssets::AssetRegister.addAddon("ofxCvGui");
 
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;

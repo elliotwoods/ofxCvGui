@@ -2,8 +2,8 @@
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
-		Image::Image(ofImage& image) :
-		image(image) {
+		Image::Image(ofImage & asset) :
+		asset(asset) {
 			this->onDraw.addListener([this] (DrawArguments& args) {
 				this->drawInfo(args);
 			}, this);
@@ -16,29 +16,29 @@ namespace ofxCvGui {
 		
         //----------
 		void Image::drawImage(float width, float height) {
-			this->image.draw(0, 0, width, height);
+			this->asset.draw(0, 0, width, height);
 		}
 
         //----------
         void Image::drawInfo(ofxCvGui::DrawArguments & arguments) {
 			if (!arguments.chromeEnabled)
 				return;
-            const ofPixels & pixels (image.getPixelsRef());
+            const auto & pixels = this->asset.getPixelsRef();
             
             stringstream ss;
             ss << pixels.getWidth() << "x" << pixels.getHeight() << ", " << pixels.getBitsPerChannel() << "bit/" << pixels.getNumChannels() << "ch";
             
-            AssetRegister.drawText(ss.str(), 20, this->getHeight() - 30, "", true, 20);
+            Utils::drawText(ss.str(), 20, this->getHeight() - 30, true, 20);
         }
         
         //----------
         float Image::getImageWidth() const {
-            return this->image.getWidth();
+            return this->asset.getWidth();
         }
         
         //----------
         float Image::getImageHeight() const {
-            return this->image.getHeight();
+            return this->asset.getHeight();
         }
 	}
 }

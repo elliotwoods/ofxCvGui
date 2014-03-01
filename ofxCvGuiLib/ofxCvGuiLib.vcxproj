@@ -11,59 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets.h" />
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
     <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUI.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUI2DGraph.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUI2DPad.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIBaseDraws.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIBiLabelSlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIButton.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUICanvas.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUICircleSlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUICustomImageButton.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIDropDownList.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIEventArgs.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIFPS.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIFPSSlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIImage.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIImageButton.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIImageSampler.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIImageSlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIImageToggle.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUILabel.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUILabelButton.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUILabelToggle.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIMinimalSlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIMovingGraph.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIMultiImageButton.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIMultiImageSlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIMultiImageToggle.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUINumberDialer.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIOFWrapper.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIRadio.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIRangeSlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIRectangle.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIRotarySlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIScrollableCanvas.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUISlider.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUISpacer.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUISpectrum.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUISuperCanvas.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUITabBar.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUITextArea.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUITextInput.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIToggle.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIToggleMatrix.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIUtils.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIValuePlotter.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIWaveform.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIWidget.h" />
-    <ClInclude Include="..\..\ofxUI\src\ofxUIWidgetWithLabel.h" />
-    <ClInclude Include="..\..\ofxXmlSettings\libs\tinyxml.h" />
-    <ClInclude Include="..\..\ofxXmlSettings\src\ofxXmlSettings.h" />
     <ClInclude Include="..\src\ofxCvGui.h" />
-    <ClInclude Include="..\src\ofxCvGui\Assets.h" />
     <ClInclude Include="..\src\ofxCvGui\Builder.h" />
     <ClInclude Include="..\src\ofxCvGui\Controller.h" />
     <ClInclude Include="..\src\ofxCvGui\Element.h" />
@@ -81,20 +32,15 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Scroll.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Text.h" />
-    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.h" />
-    <ClInclude Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
+    <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxml.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlerror.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\libs\tinyxmlparser.cpp" />
-    <ClCompile Include="..\..\ofxXmlSettings\src\ofxXmlSettings.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Assets.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Element.cpp" />
@@ -111,10 +57,9 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Scroll.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Text.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\ToolbarItem.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Panels\Utils\WidgetsHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
   </ItemGroup>
@@ -145,10 +90,12 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+    <Import Project="ofxCvGui.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+    <Import Project="ofxCvGui.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -166,7 +113,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;..%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
     <Link>

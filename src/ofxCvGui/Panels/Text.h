@@ -1,6 +1,5 @@
 #pragma once
 #include "ofxCvGui/Panels/Base.h"
-#include "ofxCvGui/Assets.h"
 //WARNING!!!
 //this may be depreciated after widgets are introduced
 

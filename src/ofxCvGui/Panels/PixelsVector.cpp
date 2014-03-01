@@ -84,7 +84,7 @@ namespace ofxCvGui {
 			}
 			for (int i=0; i<this->pixels.size(); i++) {
 				auto & button = buttons[i];
-				bounds = AssetRegister.drawText(ofToString(i), button.x, button.y, "", true, 30, 30);
+				bounds = Utils::drawText(ofToString(i), button.x, button.y, true, 30, 30);
 				if (i==selection) {
 					ofPushStyle();
 					ofSetColor(255);

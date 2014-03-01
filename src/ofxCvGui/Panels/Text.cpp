@@ -1,4 +1,5 @@
 #include "ofxCvGui/Panels/Text.h"
+#include "ofxAssets.h"
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -18,8 +19,8 @@ namespace ofxCvGui {
 
 		//----------
 		void Text::drawText(DrawArguments& arguments) {
-			AssetRegister.drawText(this->caption, 20, 20, "", true, 30);
-			AssetRegister.drawText(this->text, 10, 70, "", false);
+			Utils::drawText(this->caption, 20, 20, true, 30);
+			Utils::drawText(this->text, 10, 70, false);
 		}
 	}
 }

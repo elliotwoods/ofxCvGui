@@ -1,10 +1,63 @@
 #include "Utils.h"
-#include <vector>
+#include "Constants.h"
+#include "ofxAssets.h"
+#include "ofGraphics.h"
 #include "ofAppRunner.h"
-using namespace std;
+#include <vector>
 
 namespace ofxCvGui {
 	namespace Utils {
+#pragma mark Text
+		//---------
+		ofRectangle drawText(const string& text, float x, float y, bool background, float minHeight, float minWidth) {
+			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
+			bool hasFont = font.isLoaded();
+
+			ofPushStyle();
+			ofSetColor(0x46);
+			ofFill();
+			ofRectangle bounds(x, y, 0, 0);
+			bool multiline = ofIsStringInString(text, "\n");
+
+			if (hasFont) {
+				ofRectangle rawBounds = font.getStringBoundingBox(text, x, y);
+				float rawWidth = rawBounds.width;
+				float rawHeight;
+				if (!multiline)
+					rawHeight = font.getStringBoundingBox("Hy", x, y).height;
+				else
+					rawHeight = rawBounds.height + font.getLineHeight() * 0.5f;
+				bounds.x = x;
+				bounds.y = y;
+				bounds.width = rawWidth + font.getSize();
+				if (bounds.width < minWidth) {
+					x += (minWidth - bounds.width) / 2.0f;
+					bounds.width = minWidth;
+				}
+				bounds.height = MAX(rawHeight, minHeight);
+				if (background)
+					ofRect(bounds);
+				ofPopStyle();
+				ofSetColor(255);
+				x = x + font.getSize() / 2;
+				if (!multiline)
+					y = y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f;
+				else
+					y = y + font.getLineHeight();
+				font.drawString(text, x, y);
+			} else {
+				bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
+				if (background)
+					ofRect(bounds);
+				ofPopStyle();
+				ofSetColor(255);
+				ofDrawBitmapString(text, x + 10, y + 20);
+			}
+
+			return bounds;
+		}
+
+#pragma mark Scissor
 		//----------
 		vector<ofRectangle> scissorHistory;
 		

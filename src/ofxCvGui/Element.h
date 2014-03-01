@@ -3,6 +3,7 @@
 
 #include "Types.h"
 #include "Utils/Utils.h"
+#include "Utils/Constants.h"
 
 #include "ofGraphics.h"
 #include "ofxLiquidEvent/src/ofxLiquidEvent.h"

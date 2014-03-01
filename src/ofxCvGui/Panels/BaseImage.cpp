@@ -1,4 +1,7 @@
 #include "ofxCvGui/Panels/BaseImage.h"
+#include "ofxAssets.h"
+
+using namespace ofxAssets;
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -161,9 +164,9 @@ namespace ofxCvGui {
             }
 
 			if (arguments.chromeEnabled) {
-				AssetRegister["zoom_fit"].draw(buttonFitBounds);
-				AssetRegister["zoom_one"].draw(buttonOneBounds);
-				AssetRegister.drawText(this->caption, 100, 20, "", true, 30);
+				image("ofxCvGui::zoom_fit").draw(buttonFitBounds);
+				image("ofxCvGui::zoom_one").draw(buttonOneBounds);
+				Utils::drawText(this->caption, 100, 20, true, 30);
 				
 				ofPushStyle();
 				ofSetColor(150);
