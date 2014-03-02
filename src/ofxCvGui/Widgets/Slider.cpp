@@ -13,6 +13,7 @@ namespace ofxCvGui {
 		Slider::Slider(ofParameter<float> & parameter) {
 			this->init();
 			this->value = & parameter;
+			this->setCaption(this->value->getName());
 		}
 
 		//----------
@@ -118,18 +119,17 @@ namespace ofxCvGui {
 					this->mouseHeldOnBar = args.local.y > 15;
 
 					if (this->mouseHeldOnBar) {
-						if (ofGetElapsedTimeMillis() - startMouseHoldTime < 500) {
+						if (ofGetElapsedTimeMillis() - this->startMouseHoldTime < 500 && abs(args.local.x - this->startMouseHoldMouseX) < 5) {
 							//double click	
 							this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
 						}
-
 						//start hold
 						this->startMouseHoldTime = ofGetElapsedTimeMillis();
 						this->startMouseHoldValue = this->value->get();
 						this->startMouseHoldMouseX = args.local.x;
 					} else if (this->editBounds.inside(args.local)) {
 						//if we clicked the pencil
-						auto result = ofSystemTextBoxDialog(this->caption + " (" + ofToString(this->value->get()) + ")");
+						auto result = ofSystemTextBoxDialog(this->value->getName() + " (" + ofToString(this->value->get()) + ")");
 						if (!result.empty()) {
 							this->value->set(ofToFloat(result));
 						}
