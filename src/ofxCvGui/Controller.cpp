@@ -13,7 +13,6 @@ namespace ofxCvGui {
 	//----------
 	void Controller::init(shared_ptr<Panels::Groups::Base> rootGroup) {
 		ofBackground(30);
-		ofSetVerticalSync(true);
 
 		ofAddListener(ofEvents().update, this, &Controller::update);
 		ofAddListener(ofEvents().draw, this, &Controller::draw);
