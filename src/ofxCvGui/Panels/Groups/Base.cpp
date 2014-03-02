@@ -1,4 +1,4 @@
-#include "Base.h"
+#include "ofxCvGui/Panels/Groups/Base.h"
 
 namespace ofxMachineVision {
 	namespace Panels {

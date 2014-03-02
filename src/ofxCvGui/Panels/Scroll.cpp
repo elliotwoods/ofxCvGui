@@ -104,7 +104,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Scroll::arrange(BoundsChangeArguments & args) {
+		void Scroll::arrange(const BoundsChangeArguments & args) {
 			float y = 0;
 			for(auto element : this->elements->getElements()) {
 				auto elementBounds = element->getBounds();
