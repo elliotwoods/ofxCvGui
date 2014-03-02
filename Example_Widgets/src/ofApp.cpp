@@ -16,12 +16,19 @@ void ofApp::setup(){
 		this->x[i].set("X", ofRandomuf() * 512.0f, 0.0f, 512.0f);
 		this->y[i].set("Y", ofRandomuf() * 512.0f, 0.0f, 512.0f);
 		this->radius[i].set("Radius", ofRandomuf() * 100.0f, 0.0f, 100.0f);
-		this->luminance[i].set("Luminance", ofRandomuf() * 255.0f, 0.0f, 255.0f);
+		this->luminance[i].set("Luminance", floor(ofRandomuf() * 255.0f), 0.0f, 255.0f);
 
 		scrollPanel->add(ElementPtr(new Widgets::Slider(this->x[i])));
 		scrollPanel->add(ElementPtr(new Widgets::Slider(this->y[i])));
 		scrollPanel->add(ElementPtr(new Widgets::Slider(this->radius[i])));
-		scrollPanel->add(ElementPtr(new Widgets::Slider(this->luminance[i])));
+
+		//special slider with a validator to check for whole values
+		auto luminanceSlider = new Widgets::Slider(this->luminance[i]);
+		luminanceSlider->setValidator([] (float & value) {
+			value = floor(value + 0.5f);
+		});
+		scrollPanel->add(ElementPtr(luminanceSlider));
+
 		scrollPanel->add(ElementPtr(new Widgets::Spacer()));
 	}
 
