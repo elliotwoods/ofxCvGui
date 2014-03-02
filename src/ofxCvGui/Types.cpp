@@ -42,7 +42,7 @@ namespace ofxCvGui {
 
 	//----------
 	bool MouseArguments::isLocalPressed() const {
-		return action == Action::Pressed && isLocal();
+		return action == Pressed && isLocal();
 	}
 
 	//----------

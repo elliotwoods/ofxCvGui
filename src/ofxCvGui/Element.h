@@ -6,7 +6,7 @@
 #include "Utils/Constants.h"
 
 #include "ofGraphics.h"
-#include "ofxLiquidEvent/src/ofxLiquidEvent.h"
+#include "../../../addons/ofxLiquidEvent/src/ofxLiquidEvent.h"
 
 namespace ofxCvGui {
 	class Element {

@@ -1,6 +1,6 @@
 #pragma once
-#include "ofxCvGui2/src/ofxCvGui/Element.h"
-#include "ofxLiquidEvent/src/ofxLiquidEvent.h"
+#include "Element.h"
+#include "../../../addons/ofxLiquidEvent/src/ofxLiquidEvent.h"
 
 namespace ofxCvGui {
 	namespace Utils {
