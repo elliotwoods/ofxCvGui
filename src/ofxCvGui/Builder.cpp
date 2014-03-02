@@ -34,11 +34,6 @@ namespace ofxCvGui {
 	shared_ptr<Panels::PixelsVector> Builder::add(const vector<ofPixels>& asset, string caption) {
 		MAKE_PANEL_AND_RETURN
 	}
-
-	//----------
-	shared_ptr<Panels::Node> Builder::add(ofNode & asset, string caption) {
-		MAKE_PANEL_AND_RETURN
-	}
     
 	//----------
 	shared_ptr<Panels::Base> Builder::addBlank(string caption) {
@@ -50,7 +45,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	shared_ptr<Panels::Node> Builder::addWorld(string caption) {
+	shared_ptr<Panels::World> Builder::addWorld(string caption) {
 		auto newPanel = this->makeWorld(caption);
 		auto panel = PanelPtr(newPanel);
 		this->controller.add(panel);
@@ -107,13 +102,6 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	shared_ptr<Panels::Node> Builder::makePanel(ofNode & asset, string caption) {
-		auto newPanel = shared_ptr<Panels::Node> ( new Panels::Node() );
-		newPanel->push(asset);
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
 	shared_ptr<Panels::Instructions> Builder::makeInstructions() {
 		return shared_ptr<Panels::Instructions>( new Panels::Instructions() );
 	}
@@ -124,17 +112,15 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	shared_ptr<Panels::Node> Builder::makeWorld(string caption) {
-		auto newPanel = shared_ptr<Panels::Node>( new Panels::Node() );
-		newPanel->setCaption(caption);
-		return newPanel;
+	shared_ptr<Panels::World> Builder::makeWorld(string caption) {
+		auto newPanel = shared_ptr<Panels::World>( new Panels::World() );
+		LABEL_PANEL_AND_RETURN
 	}
 
 	//----------
 	shared_ptr<Panels::Scroll> Builder::makeScroll(string caption) {
 		auto newPanel = shared_ptr<Panels::Scroll>( new Panels::Scroll() );
-		newPanel->setCaption(caption);
-		return newPanel;
+		LABEL_PANEL_AND_RETURN
 	}
 
 	//----------

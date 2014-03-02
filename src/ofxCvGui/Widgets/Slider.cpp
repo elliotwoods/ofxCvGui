@@ -65,7 +65,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Slider::draw(DrawArguments & args) {
-			auto & font = ofxAssets::AssetRegister.getFont("ofxCvGui::swisop3", 12);
+			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 			image("ofxCvGui::edit").draw(this->editBounds);
 			font.drawString(this->value->getName() + " : " + ofToString(this->value->get()), 4, 15);
 	

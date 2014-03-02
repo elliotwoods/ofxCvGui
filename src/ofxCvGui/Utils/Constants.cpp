@@ -2,5 +2,5 @@
 
 namespace ofxCvGui {
 	//----------
-	std::string defaultTypeface = "swisop3";
+	std::string defaultTypeface = "ofxCvGui::swisop3";
 }

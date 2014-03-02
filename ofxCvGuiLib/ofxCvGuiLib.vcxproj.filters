@@ -40,9 +40,6 @@
     <ClCompile Include="..\src\ofxCvGui\Types.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Panels\Node.cpp">
-      <Filter>src\Panels</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
@@ -72,6 +69,9 @@
     </ClCompile>
     <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp">
       <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\World.cpp">
+      <Filter>src\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,9 +118,6 @@
     <ClInclude Include="..\src\ofxCvGui\ElementGroup.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Panels\Node.h">
-      <Filter>src\Panels</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
@@ -153,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h">
       <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\World.h">
+      <Filter>src\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
