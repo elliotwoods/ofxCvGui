@@ -109,7 +109,7 @@ namespace ofxCvGui {
 			for(auto element : this->elements->getElements()) {
 				auto elementBounds = element->getBounds();
 				elementBounds.y = y;
-				elementBounds.width = this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH;
+				elementBounds.width = this->getWidth() - (elementBounds.x + OFXCVGUI_SCROLL_AREA_WIDTH);
 				element->setBounds(elementBounds);
 				y += elementBounds.height + OFXCVGUI_SCROLL_SPACING;
 			}

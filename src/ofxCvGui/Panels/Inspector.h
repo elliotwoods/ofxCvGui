@@ -2,6 +2,8 @@
 #include "Scroll.h"
 #include "../Widgets/IInspectable.h"
 
+#include <set>
+
 namespace ofxCvGui {
 	namespace Panels {
 		class Inspector : public Scroll {
@@ -9,10 +11,15 @@ namespace ofxCvGui {
 			Inspector();
 			void clear();
 			static void select(Widgets::IInspectable &);
+			static bool isSelected(Widgets::IInspectable &);
 
 			static ofxLiquidEvent<ElementGroupPtr> onClear;
 		protected:
-			static ofxLiquidEvent<Widgets::IInspectable> onNewSelection;
+			bool initialised;
+			static ofxLiquidEvent<Widgets::IInspectable> makeNewSelection;
+			static ofxLiquidEvent<Widgets::IInspectable> makeNoSelection;
+
+			static set<Widgets::IInspectable *> selection;
 		};
 	}
 }

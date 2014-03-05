@@ -8,6 +8,7 @@ namespace ofxCvGui {
 		public:
 			Slider(ofParameter<float> &);
 			virtual ~Slider();
+			ofxLiquidEvent<const float> onChange;
 		protected:
 			void init();
 			void update(UpdateArguments &);
@@ -23,6 +24,7 @@ namespace ofxCvGui {
 			float startMouseHoldValue;
 			float startMouseHoldMouseX;
 			bool mouseHeldOnBar;
+			bool mouseHover;
 
 			static ofMesh * ticks;
 			ofRectangle editBounds;

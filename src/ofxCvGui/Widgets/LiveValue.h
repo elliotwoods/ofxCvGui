@@ -11,7 +11,7 @@ namespace ofxCvGui {
 			LiveValue(string caption, function<T()> liveValue) {
 				this->setCaption(caption);
 				this->liveValue = liveValue;
-				this->setBounds(ofRectangle(0,0, 100, 50));
+				this->setBounds(ofRectangle(5, 0, 100, 50));
 
 				this->onUpdate += [this] (UpdateArguments &) {
 					stringstream ss;
@@ -21,7 +21,7 @@ namespace ofxCvGui {
 
 				this->onDraw += [this] (DrawArguments & args) {
 					auto & captionFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
-					captionFont.drawString(this->caption + " : ", 4, 15);
+					captionFont.drawString(this->caption + " : ", 0, 15);
 
 					auto & valueFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
 					auto valueBounds = valueFont.getStringBoundingBox(result, 0, 0);

@@ -14,6 +14,7 @@ namespace ofxCvGui {
 			this->init();
 			this->value = & parameter;
 			this->setCaption(this->value->getName());
+			this->mouseHover = false;
 		}
 
 		//----------
@@ -35,7 +36,7 @@ namespace ofxCvGui {
 				ticks.setMode(OF_PRIMITIVE_POINTS);
 			}
 
-			this->setBounds(ofRectangle(0, 0, 100, 50));
+			this->setBounds(ofRectangle(5, 0, 100, 50));
 			this->onUpdate += [this] (UpdateArguments & args) {
 				this->update(args);
 			};
@@ -53,7 +54,12 @@ namespace ofxCvGui {
 
 		//----------
 		void Slider::update(UpdateArguments &) {
-			this->value->set(ofClamp(this->value->get(), this->value->getMin(), this->value->getMax()));
+			const float clampedValue = ofClamp(this->value->get(), this->value->getMin(), this->value->getMax());
+			if (clampedValue != this->value->get()) {
+				this->value->set(clampedValue);
+				this->onChange(clampedValue);
+			}
+
 			if(this->getMouseState() == LocalMouseState::Down && this->mouseHeldOnBar) {
 				const auto mouseHoldTime = float(ofGetElapsedTimeMillis() - startMouseHoldTime) / 1000.0f;
 				if (mouseHoldTime > 1.0f) {
@@ -68,7 +74,7 @@ namespace ofxCvGui {
 		void Slider::draw(DrawArguments & args) {
 			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 			image("ofxCvGui::edit").draw(this->editBounds);
-			font.drawString(this->value->getName() + " : " + ofToString(this->value->get()), 4, 15);
+			font.drawString(this->value->getName() + " : " + ofToString(this->value->get()), 0, 15);
 	
 			const auto rangeScale = this->getRangeScale();
 			const auto width = this->getWidth();
@@ -78,7 +84,7 @@ namespace ofxCvGui {
 	
 			bool barActive = this->mouseHeldOnBar && this->getMouseState() != LocalMouseState::Waiting;
 
-			if (barActive) {
+			if (this->mouseHover) {
 				ofPushStyle();
 				ofSetColor(50);
 				ofRect(0, 20, xPx, 20);
@@ -121,7 +127,9 @@ namespace ofxCvGui {
 					if (this->mouseHeldOnBar) {
 						if (ofGetElapsedTimeMillis() - this->startMouseHoldTime < 500 && abs(args.local.x - this->startMouseHoldMouseX) < 5) {
 							//double click	
-							this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
+							float newValue = ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true);
+							this->value->set(newValue);
+							this->onChange(newValue);
 						}
 						//start hold
 						this->startMouseHoldTime = ofGetElapsedTimeMillis();
@@ -131,7 +139,9 @@ namespace ofxCvGui {
 						//if we clicked the pencil
 						auto result = ofSystemTextBoxDialog(this->value->getName() + " (" + ofToString(this->value->get()) + ")");
 						if (!result.empty()) {
-							this->value->set(ofToFloat(result));
+							float newValue = ofToFloat(result);
+							this->value->set(newValue);
+							this->onChange(newValue);
 						}
 					} else {
 						nothingHappened = true;
@@ -144,9 +154,14 @@ namespace ofxCvGui {
 			case MouseArguments::Dragged:
 				if (this->getMouseState() == LocalMouseState::Dragging && this->mouseHeldOnBar) {
 					float dNormX = (args.local.x - this->startMouseHoldMouseX) / (this->getWidth() * zoom);
-					this->value->set(dNormX * this->getRangeScale() + startMouseHoldValue);
+					float newValue = dNormX * this->getRangeScale() + startMouseHoldValue;
+					this->value->set(newValue);
+					this->onChange(newValue);
 					break;
 				}
+				break;
+			case MouseArguments::Moved:
+				this->mouseHover = args.isLocal() && args.local.y > 15;
 			}
 		}
 
