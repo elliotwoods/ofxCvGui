@@ -14,9 +14,7 @@
 #include "ofxCvGui/Panels/Instructions.h"
 #include "ofxCvGui/Panels/World.h"
 #include "ofxCvGui/Panels/Scroll.h"
-
-#include "ofxCvGui/Widgets/Slider.h"
-#include "ofxCvGui/Widgets/Spacer.h"
+#include "ofxCvGui/Panels/Inspector.h"
 
 namespace ofxCvGui {
 	class Builder {
@@ -33,6 +31,7 @@ namespace ofxCvGui {
 		shared_ptr<Panels::World> addWorld(string caption = "");
 		shared_ptr<Panels::Scroll> addScroll(string caption = "");
 		shared_ptr<Panels::Instructions> addInstructions();
+		shared_ptr<Panels::Inspector> addInspector();
 		shared_ptr<Panels::Groups::Grid> addGrid();
 		
 		//panel factory
@@ -43,6 +42,7 @@ namespace ofxCvGui {
 		static shared_ptr<Panels::World> makeWorld(string caption = "");
 		static shared_ptr<Panels::Scroll> makeScroll(string caption = "");
 		static shared_ptr<Panels::Instructions> makeInstructions();
+		static shared_ptr<Panels::Inspector> makeInspector();
 		static shared_ptr<Panels::Groups::Grid> makeGrid();
 		static PanelPtr makeBlank();
 

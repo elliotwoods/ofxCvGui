@@ -4,4 +4,9 @@
 #include "ofxCvGui/Builder.h"
 
 #include "ofxCvGui/Utils/Button.h"
-#include "ofxCvGui/Panels/Scroll.h"
+
+#include "ofxCvGui/Widgets/IInspectable.h"
+#include "ofxCvGui/Widgets/Title.h"
+#include "ofxCvGui/Widgets/Spacer.h"
+#include "ofxCvGui/Widgets/Slider.h"
+#include "ofxCvGui/Widgets/LiveValue.h"

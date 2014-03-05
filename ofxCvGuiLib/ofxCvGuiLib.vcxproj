@@ -26,6 +26,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Inspector.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Instructions.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
@@ -36,8 +37,11 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Title.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\LiveValue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
@@ -52,6 +56,7 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Inspector.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\World.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
@@ -64,6 +69,7 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6F0DDB4F-4014-4433-919B-9D956C034BAD}</ProjectGuid>

@@ -73,6 +73,12 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\World.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Inspector.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -153,6 +159,18 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h">
       <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Inspector.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Title.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\LiveValue.h">
+      <Filter>src\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

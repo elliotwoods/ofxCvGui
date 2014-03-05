@@ -69,6 +69,14 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	shared_ptr<Panels::Inspector> Builder::addInspector() {
+		auto newPanel = this->makeInspector();
+		auto panel = PanelPtr(newPanel);
+		this->controller.add(panel);
+		return newPanel;
+	}
+
+	//----------
 	shared_ptr<Panels::Groups::Grid> Builder::addGrid() {
 		auto newPanel = this->makeGrid();
 		auto panel = PanelPtr(newPanel);
@@ -104,6 +112,11 @@ namespace ofxCvGui {
 	//----------
 	shared_ptr<Panels::Instructions> Builder::makeInstructions() {
 		return shared_ptr<Panels::Instructions>( new Panels::Instructions() );
+	}
+
+	//----------
+	shared_ptr<Panels::Inspector> Builder::makeInspector() {
+		return shared_ptr<Panels::Inspector>( new Panels::Inspector() );
 	}
 
 	//----------
