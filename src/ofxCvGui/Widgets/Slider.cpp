@@ -103,6 +103,11 @@ namespace ofxCvGui {
 				ofPopStyle();
 			}
 
+			ofPushStyle();
+			ofSetColor(50);
+			ofLine(0, 40, this->getWidth(), 40);
+			ofPopStyle();
+
 			ofPushMatrix();
 			ofTranslate(0.0f, 40.0f);
 
