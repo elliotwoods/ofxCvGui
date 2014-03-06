@@ -6,9 +6,11 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class Slider : public Element {
 		public:
+			typedef std::function<void (float &)> Validator; 
 			Slider(ofParameter<float> &);
 			virtual ~Slider();
-			ofxLiquidEvent<const float> onChange;
+			void setValidator(Validator);
+			ofxLiquidEvent<ofParameter<float>> onValueChange;
 		protected:
 			void init();
 			void update(UpdateArguments &);
@@ -16,6 +18,8 @@ namespace ofxCvGui {
 			void mouseAction(MouseArguments &);
 			void boundsChange(BoundsChangeArguments &);
 			float getRangeScale() const;
+			void setValue(float);
+			void notifyValueChamge();
 
 			ofParameter<float> * value;
 
@@ -26,8 +30,9 @@ namespace ofxCvGui {
 			bool mouseHeldOnBar;
 			bool mouseHover;
 
-			static ofMesh * ticks;
+			static ofMesh * tenTicks;
 			ofRectangle editBounds;
+			Validator validator;
 		};
 	}
 }
