@@ -45,8 +45,8 @@ namespace ofxCvGui {
 				Inspector::selection.clear();
 			} else {
 				Inspector::makeNewSelection(object);
+				Inspector::selection.insert(&object);
 			}
-			Inspector::selection.insert(&object);
 		}
 
 		//---------
