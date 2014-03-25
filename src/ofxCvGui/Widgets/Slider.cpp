@@ -69,7 +69,7 @@ namespace ofxCvGui {
 		void Slider::update(UpdateArguments &) {
 			if (this->value->get() < this->value->getMin() || this->value->get() > this->value->getMax()) {
 				this->value->set(ofClamp(this->value->get(), this->value->getMin(), this->value->getMax()));
-				this->notifyValueChamge();
+				this->notifyValueChange();
 			}
 
 			if(this->getMouseState() == LocalMouseState::Down && this->mouseHeldOnBar) {
@@ -151,6 +151,7 @@ namespace ofxCvGui {
 	
 			ofPopMatrix();
 
+			//draw side marker
 			ofPushStyle();
 			ofSetLineWidth(1.0f);
 			ofLine(this->getWidth(), 0, this->getWidth(), 40);
@@ -169,7 +170,7 @@ namespace ofxCvGui {
 						if (ofGetElapsedTimeMillis() - this->startMouseHoldTime < 500 && abs(args.local.x - this->startMouseHoldMouseX) < 5) {
 							//double click	
 							this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
-							this->notifyValueChamge();
+							this->notifyValueChange();
 						}
 						//start hold
 						this->startMouseHoldTime = ofGetElapsedTimeMillis();
@@ -180,7 +181,7 @@ namespace ofxCvGui {
 						auto result = ofSystemTextBoxDialog(this->value->getName() + " (" + ofToString(this->value->get()) + ")");
 						if (!result.empty()) {
 							this->value->set(ofToFloat(result));
-							this->notifyValueChamge();
+							this->notifyValueChange();
 						}
 					} else {
 						nothingHappened = true;
@@ -194,7 +195,7 @@ namespace ofxCvGui {
 				if (this->getMouseState() == LocalMouseState::Dragging && this->mouseHeldOnBar) {
 					float dNormX = (args.local.x - this->startMouseHoldMouseX) / (this->getWidth() * zoom);
 					this->value->set(dNormX * this->getRangeScale() + startMouseHoldValue);
-					this->notifyValueChamge();
+					this->notifyValueChange();
 					break;
 				}
 				break;
@@ -214,7 +215,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Slider::notifyValueChamge() {
+		void Slider::notifyValueChange() {
 			this->onValueChange.notifyListeners(* this->value);
 		}
 	}

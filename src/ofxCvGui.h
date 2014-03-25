@@ -9,4 +9,6 @@
 #include "ofxCvGui/Widgets/Title.h"
 #include "ofxCvGui/Widgets/Spacer.h"
 #include "ofxCvGui/Widgets/Slider.h"
+#include "ofxCvGui/Widgets/Toggle.h"
+#include "ofxCvGui/Widgets/Button.h"
 #include "ofxCvGui/Widgets/LiveValue.h"

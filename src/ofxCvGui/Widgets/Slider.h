@@ -19,7 +19,7 @@ namespace ofxCvGui {
 			void boundsChange(BoundsChangeArguments &);
 			float getRangeScale() const;
 			void setValue(float);
-			void notifyValueChamge();
+			void notifyValueChange();
 
 			ofParameter<float> * value;
 

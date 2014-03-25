@@ -37,11 +37,13 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Title.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\LiveValue.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Toggle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
@@ -67,9 +69,11 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Toggle.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6F0DDB4F-4014-4433-919B-9D956C034BAD}</ProjectGuid>
@@ -123,6 +127,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
+      <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -147,6 +152,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
+      <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -50,8 +50,19 @@ namespace ofxCvGui {
 		}
 
 		//---------
+		void Inspector::setSelection(IInspectable & object) {
+			Inspector::makeNewSelection(object);
+			Inspector::selection.insert(&object);
+		}
+
+		//---------
 		bool Inspector::isSelected(Widgets::IInspectable & object) {
 			return Inspector::selection.count(&object) > 0;
+		}
+
+		//---------
+		const set<Widgets::IInspectable *> Inspector::getSelection() {
+			return Inspector::selection;
 		}
 
 		//---------

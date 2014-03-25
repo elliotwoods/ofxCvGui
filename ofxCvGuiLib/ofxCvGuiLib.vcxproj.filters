@@ -79,6 +79,12 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp">
       <Filter>src\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Toggle.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -170,6 +176,12 @@
       <Filter>src\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Widgets\LiveValue.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Toggle.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h">
       <Filter>src\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

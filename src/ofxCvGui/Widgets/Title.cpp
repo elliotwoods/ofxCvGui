@@ -12,13 +12,13 @@ namespace ofxCvGui {
 				int fontSize = 14;
 				switch (this->level) {
 				case H1:
-					fontSize = 18;
+					fontSize = 24;
 					break;
 				case H2:
-					fontSize = 14;
+					fontSize = 18;
 					break;
 				case H3:
-					fontSize = 12;
+					fontSize = 14;
 					break;
 				}
 				auto font = ofxAssets::font(ofxCvGui::defaultTypeface, fontSize);
