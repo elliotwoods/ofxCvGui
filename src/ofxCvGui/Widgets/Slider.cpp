@@ -75,7 +75,7 @@ namespace ofxCvGui {
 			if(this->getMouseState() == LocalMouseState::Down && this->mouseHeldOnBar) {
 				const auto mouseHoldTime = float(ofGetElapsedTimeMillis() - startMouseHoldTime) / 1000.0f;
 				if (mouseHoldTime > 1.0f) {
-					this->zoom = mouseHoldTime;
+					this->zoom = exp(mouseHoldTime - 1.0f);
 				}
 			} else if (this->getMouseState() == LocalMouseState::Waiting) {
 				this->zoom = (this->zoom - 1.0f) * 0.9f + 1.0f;
@@ -120,33 +120,36 @@ namespace ofxCvGui {
 			marker.draw(-marker.getWidth() / 2.0f, -marker.getHeight() - 3);
 			ofPopMatrix();
 	
-			//draw ticks
+			//zoom around start drag value
 			ofTranslate(+centerPx, 0.0f);
 			ofScale(zoom, 1.0f);
 			ofTranslate(-centerPx, 0.0f);
 			ofScale(width, 1.0f);
-			//if 255.0f
-			const auto magnitudeOrder = ceil(log(rangeScale) / log(10)); // 3
-			const auto magnitude = pow(10.0f, magnitudeOrder); // 1000
-			const auto mantissa = rangeScale / magnitude; // 0.255
-			const auto majorTickCount = 10.0f * mantissa; // 2.55
-			const auto majorTickFraction = 1.0f / majorTickCount; // 0.3921
+																				// if range=255.0f
+			const auto magnitudeOrder = ceil(log(rangeScale) / log(10));		// 3
+			const auto magnitude = pow(10.0f, magnitudeOrder);					// 1000
+			const auto innerMagnitude = pow(10.0f, magnitudeOrder - 2);			// 10
+			const auto mantissa = rangeScale / magnitude;						// 0.255
+			const auto majorTickCount = 10.0f * mantissa;						// 2.55
+			const auto majorTickFraction = 1.0f / majorTickCount;				// 0.3921
+
 			ofMesh majorTicks;
-			for(float majorTick = 0.0f; majorTick < 1.0f; majorTick += majorTickFraction) {
-				majorTicks.addVertex(ofVec3f(majorTick, 0.0f, 0.0f));
-				if (this->zoom > 1.2f) {
-					for(int i=0; i < majorTickCount; i++) {
-						ofPushStyle();
-						ofPushMatrix();
-						ofSetColor(255, 255, 255, ofMap(this->zoom, 1.2f, 10.0f, 0.0f, 255.0f));
-						ofTranslate(i * majorTickFraction, 0.0f);
-						ofScale(majorTickFraction, 1.0f, 1.0f);
-						this->tenTicks->drawVertices();
-						ofPopMatrix();
-						ofPopStyle();
-					}
-				}
+			//postitive ticks
+			for(float tick = 0.0f; tick <= value->getMax(); tick += innerMagnitude) {
+				majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
+				majorTicks.addColor(255);
 			}
+			//negative ticks
+			for(float tick = 0.0f; tick >= value->getMin(); tick -= innerMagnitude) {
+				if (tick == 0.0f) {
+					continue;
+				}
+				majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
+				majorTicks.addColor(0);
+			}
+
+			ofScale(1.0f / rangeScale, 1.0f, 1.0f);
+			ofTranslate(-value->getMin(), 0.0f, 0.0f);
 			majorTicks.drawVertices();
 	
 			ofPopMatrix();
