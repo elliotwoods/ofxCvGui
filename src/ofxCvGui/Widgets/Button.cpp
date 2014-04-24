@@ -21,7 +21,8 @@ namespace ofxCvGui {
 			Toggle::setParameter(this->hitValue);
 			this->onValueChange += [this] (ofParameter<bool> & value) {
 				if (value) {
-					this->onHit(EventArgs());
+					EventArgs dummyArgs;
+					this->onHit(dummyArgs);
 					this->hitValue.set(false);
 				}
 			};

@@ -44,7 +44,7 @@ namespace ofxCvGui {
 					y = y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f;
 				else
 					y = y + font.getLineHeight();
-				font.drawString(text, x, y);
+				font.drawString(text, (int) x, (int) y);
 			} else {
 				bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
 				if (background)

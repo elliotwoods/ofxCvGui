@@ -1,6 +1,7 @@
 #pragma once
 #include "../Element.h"
 #include "ofParameter.h"
+#include "ofxAssets.h"
 
 namespace ofxCvGui {
 	namespace Widgets {
@@ -25,7 +26,7 @@ namespace ofxCvGui {
 
 					auto & valueFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
 					auto valueBounds = valueFont.getStringBoundingBox(result, 0, 0);
-					valueFont.drawString(result, this->getWidth() - valueBounds.width - 5, 35);
+					valueFont.drawString(result, (int) (this->getWidth() - valueBounds.width - 5), 35);
 
 					ofPushStyle();
 					ofSetLineWidth(1.0f);

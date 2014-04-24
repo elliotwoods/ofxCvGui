@@ -23,7 +23,7 @@ namespace ofxCvGui {
 				}
 				auto font = ofxAssets::font(ofxCvGui::defaultTypeface, fontSize);
 
-				font.drawString(this->caption, 0, this->getHeight() - 10);
+				font.drawString(this->caption, 0, (int) this->getHeight() - 10);
 			};
 		}
 	}
