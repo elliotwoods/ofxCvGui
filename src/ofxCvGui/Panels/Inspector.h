@@ -14,6 +14,7 @@ namespace ofxCvGui {
 			static void setSelection(Widgets::IInspectable &);
 			static bool isSelected(Widgets::IInspectable &);
 			static const set<Widgets::IInspectable *> getSelection();
+			static void refresh();
 			static ofxLiquidEvent<ElementGroupPtr> onClear;
 		protected:
 			bool initialised;

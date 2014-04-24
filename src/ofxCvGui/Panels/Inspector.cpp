@@ -64,6 +64,18 @@ namespace ofxCvGui {
 		const set<Widgets::IInspectable *> Inspector::getSelection() {
 			return Inspector::selection;
 		}
+		
+		//---------
+		void Inspector::refresh() {
+			auto selection = Inspector::getSelection();
+			if (selection.empty()) {
+				Inspector::makeNoSelection(**selection.begin()); // call dummy function with invalid
+				Inspector::selection.clear();
+			} else {
+				Inspector::makeNewSelection(**selection.begin()); // only add first, no multiple selection
+				Inspector::selection.insert(*selection.begin());
+			}
+		}
 
 		//---------
 		ofxLiquidEvent<ElementGroupPtr> Inspector::onClear = ofxLiquidEvent<ElementGroupPtr>();
