@@ -85,6 +85,9 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp">
       <Filter>src\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\LiveValue.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />

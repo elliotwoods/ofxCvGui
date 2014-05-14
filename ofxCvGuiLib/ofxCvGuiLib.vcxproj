@@ -70,6 +70,7 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\LiveValue.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp" />

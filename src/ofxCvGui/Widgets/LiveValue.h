@@ -5,7 +5,6 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-
 		template<typename T>
 		class LiveValue : public Element {
 		public:
@@ -31,7 +30,7 @@ namespace ofxCvGui {
 					ofPushStyle();
 					ofSetLineWidth(1.0f);
 					ofLine(this->getWidth(), 0, this->getWidth(), 40);
-					ofPopStyle();
+					ofPopStyle();	
 				};
 			};
 
@@ -43,6 +42,18 @@ namespace ofxCvGui {
 
 			function<T()> liveValue;
 			string result;
+		};
+
+		class LiveValueHistory : public LiveValue<float> {
+		public:
+			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = false);
+		protected:
+			deque<float> history;
+			bool keepZeroAsMinimum;
+			float minimum;
+			float maximum;
+			ofPath graphFill;
+			ofPolyline graphLine;
 		};
 	}
 }
