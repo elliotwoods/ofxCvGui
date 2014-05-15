@@ -54,6 +54,11 @@ namespace ofxCvGui {
 			float maximum;
 			ofPath graphFill;
 			ofPolyline graphLine;
+
+			bool showPreviewValue;
+			float hoverX;
+
+			bool pause;
 		};
 	}
 }
