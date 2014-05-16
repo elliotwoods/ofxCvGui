@@ -13,6 +13,6 @@
 #include "ofxCvGui/Widgets/Button.h"
 #include "ofxCvGui/Widgets/LiveValue.h"
 
-void inspect(ofxCvGui::Widgets::IInspectable & target) {
-	ofxCvGui::Panels::Inspector::setSelection(target);
+namespace ofxCvGui {
+	void inspect(ofxCvGui::Widgets::IInspectable & target);
 }

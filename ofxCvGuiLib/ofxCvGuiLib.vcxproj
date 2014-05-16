@@ -48,6 +48,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
+    <ClCompile Include="..\src\ofxCvGui.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Element.cpp" />
