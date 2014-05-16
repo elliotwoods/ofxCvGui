@@ -54,7 +54,7 @@ namespace ofxCvGui {
 				}
 
 				//don't draw if we have no range
-				if (abs(this->minimum - this->maximum) < 1e-11) {
+				if (abs(this->minimum - this->maximum) < FLT_EPSILON) {
 					return;
 				}
 
@@ -85,7 +85,7 @@ namespace ofxCvGui {
 
 				ofPopStyle();
 
-				if (this->showPreviewValue && (abs(this->minimum - this->maximum) > 1e-11)) {
+				if (this->showPreviewValue && (abs(this->minimum - this->maximum) > FLT_EPSILON)) {
 					const auto historySize = this->history.size();
 					unsigned int backX = this->getWidth() - this->hoverX;
 					if (backX < historySize) {
