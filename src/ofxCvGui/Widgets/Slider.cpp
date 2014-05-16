@@ -221,5 +221,10 @@ namespace ofxCvGui {
 		void Slider::notifyValueChange() {
 			this->onValueChange.notifyListeners(* this->value);
 		}
+
+		//----------
+		shared_ptr<Slider> make(ofParameter<float> & parameter) {
+			return shared_ptr<Slider>(new Slider(parameter));
+		}
 	}
 }

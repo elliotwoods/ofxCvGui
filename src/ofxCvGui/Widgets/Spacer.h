@@ -8,5 +8,7 @@ namespace ofxCvGui {
 		public:
 			Spacer();
 		};
+
+		shared_ptr<Spacer> makeSpacer();
 	}
 }

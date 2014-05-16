@@ -15,5 +15,7 @@ namespace ofxCvGui {
 		protected:
 			const Level level;
 		};
+
+		shared_ptr<Title> makeTitle(string caption, Title::Level);
 	}
 }

@@ -34,5 +34,7 @@ namespace ofxCvGui {
 			ofRectangle editBounds;
 			Validator validator;
 		};
+
+		shared_ptr<Slider> make(ofParameter<float> &);
 	}
 }
