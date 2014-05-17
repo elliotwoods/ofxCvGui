@@ -19,7 +19,6 @@ namespace ofxCvGui {
 			static void refresh();
 			static ofxLiquidEvent<ElementGroupPtr> onClear;
 		protected:
-			bool initialised;
 			static ofxLiquidEvent<Widgets::IInspectable> makeNewSelection;
 			static ofxLiquidEvent<Widgets::IInspectable> makeNoSelection;
 			static ofxLiquidEvent<ElementPtr> addWidgetEvent;

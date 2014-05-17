@@ -23,14 +23,6 @@ namespace ofxCvGui {
 				this->arrange();
 			}, this);
 
-			this->initialised = false;
-			this->onUpdate += [this] (UpdateArguments &) {
-				if (!this->initialised) {
-					this->clear();
-					this->initialised = true;
-				}
-			};
-
 			this->clear();
 		}
 
