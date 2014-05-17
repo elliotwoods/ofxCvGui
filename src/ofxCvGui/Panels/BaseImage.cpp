@@ -97,7 +97,7 @@ namespace ofxCvGui {
 		void BaseImage::drawImage(DrawArguments& arguments) {
             if (this->zoom == ZoomFit) {
                 this->drawImage(this->getWidth(), this->getHeight());
-				DrawCroppedArguments args(false, ofVec2f(this->getWidth(), this->getHeight()), ofVec2f(0,0));
+				DrawCroppedArguments args(false, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(0,0));
 				ofPushMatrix();
 				ofScale(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight());
 				this->onDrawCropped(args);

@@ -2,6 +2,10 @@
 
 namespace ofxCvGui {
 	void inspect(ofxCvGui::Widgets::IInspectable & target) {
-		ofxCvGui::Panels::Inspector::setSelection(target);
+		Panels::Inspector::setSelection(target);
+	}
+
+	void addToInspector(ofxCvGui::ElementPtr element) {
+		Panels::Inspector::addWidget(element);
 	}
 }

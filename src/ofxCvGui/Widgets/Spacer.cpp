@@ -13,10 +13,5 @@ namespace ofxCvGui {
 				ofCircle(center + ofVec2f(+10.0f, 0.0f), 2.0f);
 			};
 		}
-
-		//----------
-		shared_ptr<Spacer> makeSpacer() {
-			return shared_ptr<Spacer>(new Spacer());
-		}
 	}
 }

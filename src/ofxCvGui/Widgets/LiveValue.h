@@ -8,6 +8,10 @@ namespace ofxCvGui {
 		template<typename T>
 		class LiveValue : public Element {
 		public:
+			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValue<T>, string caption, const function<T()> & liveValueFunction) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(LiveValue<T>, caption, liveValueFunction);
+			}
+
 			LiveValue(string caption, function<T()> liveValue) {
 				this->setCaption(caption);
 				this->liveValue = liveValue;
@@ -46,6 +50,10 @@ namespace ofxCvGui {
 
 		class LiveValueHistory : public LiveValue<float> {
 		public:
+			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValueHistory, string caption, const function<float()> & liveValueFunction, bool keepZeroAsMinimum) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(LiveValueHistory, caption, liveValueFunction, keepZeroAsMinimum);
+			}
+
 			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = false);
 		protected:
 			deque<float> history;

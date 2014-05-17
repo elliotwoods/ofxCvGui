@@ -6,6 +6,9 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class Toggle : public Element {
 		public:
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, ofParameter<bool> & parameter) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, parameter);
+			}
 			Toggle(ofParameter<bool> &);
 			Toggle(string caption);
 			Toggle();
@@ -28,5 +31,7 @@ namespace ofxCvGui {
 			bool isMouseDown;
 			bool isMouseOver;
 		};
+
+		shared_ptr<Toggle> make(ofParameter<bool> &);
 	}
 }

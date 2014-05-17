@@ -8,15 +8,20 @@ namespace ofxCvGui {
 	namespace Panels {
 		//---------
 		Inspector::Inspector() {
-			Inspector::makeNewSelection += [this] (IInspectable & object) {
+			Inspector::makeNewSelection.addListener([this] (IInspectable & object) {
 				this->clear();
 				object.populate(this->elements);
 				this->arrange();
-			};
+			}, this);
 
-			Inspector::makeNoSelection += [this] (IInspectable & object) {
+			Inspector::makeNoSelection.addListener([this] (IInspectable & object) {
 				this->clear();
-			};
+			}, this);
+
+			Inspector::addWidgetEvent.addListener([this] (ElementPtr & widget) {
+				this->add(widget);
+				this->arrange();
+			}, this);
 
 			this->initialised = false;
 			this->onUpdate += [this] (UpdateArguments &) {
@@ -27,6 +32,14 @@ namespace ofxCvGui {
 			};
 
 			this->clear();
+		}
+
+		//---------
+		Inspector::~Inspector() {
+			//not sure if this gets deleted last?
+			//Inspector::makeNewSelection.removeListeners(this);
+			//Inspector::makeNoSelection.removeListeners(this);
+			//Inspector::addWidgetEvent.removeListeners(this);
 		}
 
 		//---------
@@ -64,6 +77,11 @@ namespace ofxCvGui {
 		const set<Widgets::IInspectable *> Inspector::getSelection() {
 			return Inspector::selection;
 		}
+
+		//---------
+		void Inspector::addWidget(ElementPtr widget) {
+			Inspector::addWidgetEvent(widget);
+		}
 		
 		//---------
 		void Inspector::refresh() {
@@ -83,6 +101,9 @@ namespace ofxCvGui {
 		//---------
 		ofxLiquidEvent<IInspectable> Inspector::makeNewSelection = ofxLiquidEvent<IInspectable>();
 		ofxLiquidEvent<IInspectable> Inspector::makeNoSelection = ofxLiquidEvent<IInspectable>();
+
+		//---------
+		ofxLiquidEvent<ElementPtr> Inspector::addWidgetEvent = ofxLiquidEvent<ElementPtr>();
 
 		//---------
 		set<Widgets::IInspectable *> Inspector::selection = set<Widgets::IInspectable *>();

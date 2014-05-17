@@ -26,10 +26,5 @@ namespace ofxCvGui {
 				font.drawString(this->caption, 0, (int) this->getHeight() - 10);
 			};
 		}
-
-		//---------
-		shared_ptr<Title> makeTitle(string caption, Title::Level level) {
-			return shared_ptr<Title>(new Title(caption, level));
-		}
 	}
 }

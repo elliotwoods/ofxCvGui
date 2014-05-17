@@ -49,5 +49,7 @@ namespace ofxCvGui {
 		bool fullscreen;
         ofVec2f mouseCached;
 		bool chromeVisible;
+
+		float cachedWidth, cachedHeight;
 	};
 }

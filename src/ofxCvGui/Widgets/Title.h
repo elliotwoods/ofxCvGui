@@ -11,11 +11,12 @@ namespace ofxCvGui {
 				H2,
 				H3
 			};
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Title, string caption, Level level) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(Title, caption, level);
+			}
 			Title(string caption, Level);
 		protected:
 			const Level level;
 		};
-
-		shared_ptr<Title> makeTitle(string caption, Title::Level);
 	}
 }

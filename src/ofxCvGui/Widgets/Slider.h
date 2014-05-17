@@ -7,6 +7,10 @@ namespace ofxCvGui {
 		class Slider : public Element {
 		public:
 			typedef std::function<void (float &)> Validator; 
+
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Slider, ofParameter<float> & parameter) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(Slider, parameter);
+			}
 			Slider(ofParameter<float> &);
 			virtual ~Slider();
 			void setValidator(Validator);
@@ -34,7 +38,5 @@ namespace ofxCvGui {
 			ofRectangle editBounds;
 			Validator validator;
 		};
-
-		shared_ptr<Slider> make(ofParameter<float> &);
 	}
 }

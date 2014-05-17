@@ -15,4 +15,5 @@
 
 namespace ofxCvGui {
 	void inspect(ofxCvGui::Widgets::IInspectable & target);
+	void addToInspector(ofxCvGui::ElementPtr);
 }

@@ -8,6 +8,9 @@ namespace ofxCvGui {
 		this->maximised = false;
 		this->fullscreen = false;
 		this->chromeVisible = true;
+
+		this->cachedWidth = 0.0f;
+		this->cachedHeight = 0.0f;
 	}
 
 	//----------
@@ -68,15 +71,16 @@ namespace ofxCvGui {
 		} else {
 			this->maximised = false;
 		}
-		auto args = ofResizeEventArgs();
-		args.width = ofGetWidth();
-		args.height = ofGetHeight();
-		this->windowResized(args);
+		if (this->maximised) {
+			this->currentPanel->setBounds(ofGetCurrentViewport());
+		} else {
+			this->rootGroup->setBounds(ofGetCurrentViewport());
+		}
 	}
 
 	//----------
 	void Controller::toggleFullscreen() {
-		if ( this->currentPanel != PanelPtr() )
+		if (this->currentPanel != PanelPtr())
 			this->fullscreen ^= true;
 		else
 			this->fullscreen = false;
@@ -107,6 +111,13 @@ namespace ofxCvGui {
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised)
 			return;
+		if (cachedWidth != ofGetWidth() || cachedHeight != ofGetHeight()) {
+			//on windows the event doesn't always fire
+			ofResizeEventArgs args;
+			args.width = ofGetWidth();
+			args.height = ofGetHeight();
+			this->windowResized(args);
+		}
 		rootGroup->update();
 	}
 
@@ -138,8 +149,12 @@ namespace ofxCvGui {
 
 	//----------
 	PanelPtr Controller::getPanelUnderCursor(const ofVec2f & position) {
-		ofRectangle panelBounds = this->rootGroup->getBounds();
-		return this->findPanelUnderCursor(panelBounds, position);
+		if (this->maximised) {
+			return currentPanel;
+		} else {
+			ofRectangle panelBounds = this->rootGroup->getBounds();
+			return this->findPanelUnderCursor(panelBounds, position);
+		}
 	}
 
 	//----------
@@ -213,9 +228,12 @@ namespace ofxCvGui {
 			return;
 		ofRectangle bounds(0,0,ofGetWidth(), ofGetHeight());
 		rootGroup->setBounds(bounds);
-		if (this->maximised)
+		if (this->maximised) {
 			currentPanel->setBounds(bounds);
+		}
 		updateCurrentPanel();
+		this->cachedWidth = args.width;
+		this->cachedHeight = args.height;
 	}
 
 	//----------
@@ -249,8 +267,10 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::updateCurrentPanel() {
-		auto currentPanelBounds = this->rootGroup->getBounds();
-		this->currentPanel = this->findPanelUnderCursor(currentPanelBounds);
-		this->currentPanelBounds = currentPanelBounds;
+		if (!this->maximised) {
+			auto currentPanelBounds = this->rootGroup->getBounds();
+			this->currentPanel = this->findPanelUnderCursor(currentPanelBounds);
+			this->currentPanelBounds = currentPanelBounds;
+		}
 	}
 }

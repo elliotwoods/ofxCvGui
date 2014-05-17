@@ -8,6 +8,9 @@
 #include "ofGraphics.h"
 #include "../../../addons/ofxLiquidEvent/src/ofxLiquidEvent.h"
 
+#define OFXCVGUI_MAKE_ELEMENT_HEADER(T, ...) static shared_ptr<T> make(__VA_ARGS__)
+#define OFXCVGUI_MAKE_ELEMENT_BODY(T, ...) return shared_ptr<T>(new T(__VA_ARGS__));
+
 namespace ofxCvGui {
 	class Element {
 	public:

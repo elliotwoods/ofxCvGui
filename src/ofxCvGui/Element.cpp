@@ -81,8 +81,6 @@ namespace ofxCvGui {
 
 	//-----------
 	void Element::setBounds(const ofRectangle& bounds) {
-		if (this->bounds == bounds)
-			return;
 		this->bounds = bounds;
 		this->localBounds = bounds;
 		this->localBounds.x = 0;
