@@ -30,6 +30,13 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		void Slider::setIntValidator() {
+			this->setValidator([] (float & value) {
+				value = floor(value + 0.5f);
+			});
+		}
+
+		//----------
 		void Slider::setValidator(Validator validator) {
 			this->validator = validator;
 		}
