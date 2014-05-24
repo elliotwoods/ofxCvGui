@@ -45,6 +45,8 @@ namespace ofxCvGui {
 		ofxLiquidEvent<BoundsChangeArguments> onBoundsChange;
 		ofxLiquidEvent<MouseArguments> onMouseReleased;
 
+		void setEnabled(bool);
+		bool getEnabled() const;
 		void enable();
 		void disable();
 

@@ -8,7 +8,9 @@ namespace ofxCvGui {
 		public:
 			class EventArgs {
 			};
-
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Button, string caption, const function<void ()> & buttonCallbackFunction) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(Button, caption, buttonCallbackFunction);
+			}
 			Button(string caption);
 			Button(string caption, std::function<void ()>);
 			virtual ~Button() { }

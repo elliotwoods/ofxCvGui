@@ -119,6 +119,16 @@ namespace ofxCvGui {
 	}
 	
 	//-----------
+	void Element::setEnabled(bool enabled) {
+		this->enabled = enabled;
+	}
+
+	//-----------
+	bool Element::getEnabled() const {
+		return this->enabled;
+	}
+
+	//-----------
 	void Element::enable() {
 		this->enabled = true;
 	}

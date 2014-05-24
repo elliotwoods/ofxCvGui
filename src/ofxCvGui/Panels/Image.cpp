@@ -16,7 +16,9 @@ namespace ofxCvGui {
 		
         //----------
 		void Image::drawImage(float width, float height) {
-			this->asset.draw(0, 0, width, height);
+			if (this->asset.isAllocated()) {
+				this->asset.draw(0, 0, width, height);
+			}
 		}
 
         //----------
