@@ -19,7 +19,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Pixels::updateImage() {
-			if (refreshPerFrame) {
+			if (refreshPerFrame && this->pixels.isAllocated()) {
 				if (preview.getWidth() != pixels.getWidth() || preview.getHeight() != pixels.getHeight())
 					preview.allocate(pixels);
 				preview.loadData(pixels);

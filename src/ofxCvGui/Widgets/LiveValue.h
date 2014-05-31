@@ -1,7 +1,7 @@
 #pragma once
 #include "../Element.h"
 #include "ofParameter.h"
-#include "ofxAssets/src/ofxAssets.h"
+#include "../../../addons/ofxAssets/src/ofxAssets.h"
 
 namespace ofxCvGui {
 	namespace Widgets {
