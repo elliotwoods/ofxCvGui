@@ -1,5 +1,7 @@
 #include "LiveValue.h"
 
+#include "ofAppRunner.h"
+
 namespace ofxCvGui {
 	namespace Widgets {
 		//----------
@@ -122,6 +124,13 @@ namespace ofxCvGui {
 					}
 				}
 			};
+		}
+		
+		//----------
+		shared_ptr<LiveValueHistory> makeFps() {
+			return shared_ptr<LiveValueHistory>(new LiveValueHistory("Framerate", [] () {
+				return ofGetFrameRate();
+			}));
 		}
 	}
 }

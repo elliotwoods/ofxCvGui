@@ -68,5 +68,7 @@ namespace ofxCvGui {
 
 			bool pause;
 		};
+		
+		shared_ptr<LiveValueHistory> makeFps();
 	}
 }

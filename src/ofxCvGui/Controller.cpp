@@ -27,8 +27,17 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 
+#ifdef __DEBUGGING__
+		//if we're still debugging in the build location, copy in latest assets
+		{
+			auto checkDir =	ofDirectory("../../../../../addons/ofxCvGui2/data/assets/");
+			if (checkDir.exists()) {
+				checkDir.copyTo(".");
+			}
+		}
+#endif
 		ofxAssets::AssetRegister.addAddon("ofxCvGui");
-
+		
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;
 		this->currentPanel = PanelPtr();
