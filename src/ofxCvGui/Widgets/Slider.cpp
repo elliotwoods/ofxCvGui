@@ -17,9 +17,9 @@ namespace ofxCvGui {
 			this->mouseHover = false;
 
 			this->onValueChange += [this] (ofParameter<float> & value) {
-				if (this->validator) {
+				for(auto & validator : this->validators) {
 					auto validatorValue = value.get();
-					this->validator(validatorValue);
+					validator(validatorValue);
 					value.set(validatorValue);
 				}
 			};
@@ -30,17 +30,22 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Slider::setIntValidator() {
-			this->setValidator([] (float & value) {
+		void Slider::addIntValidator() {
+			this->addValidator([] (float & value) {
 				value = floor(value + 0.5f);
 			});
 		}
 
 		//----------
-		void Slider::setValidator(Validator validator) {
-			this->validator = validator;
+		void Slider::addValidator(Validator validator) {
+			this->validators.push_back(validator);
 		}
 
+		//----------
+		void Slider::clearValidators() {
+			this->validators.clear();
+		}
+		
 		//----------
 		void Slider::init() {
 			this->zoom = 1.0f;

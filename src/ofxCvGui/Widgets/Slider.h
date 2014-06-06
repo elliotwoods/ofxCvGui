@@ -13,8 +13,9 @@ namespace ofxCvGui {
 			}
 			Slider(ofParameter<float> &);
 			virtual ~Slider();
-			void setValidator(Validator);
-			void setIntValidator();
+			void addValidator(Validator);
+			void addIntValidator();
+			void clearValidators();
 			ofxLiquidEvent<ofParameter<float>> onValueChange;
 		protected:
 			void init();
@@ -37,7 +38,7 @@ namespace ofxCvGui {
 
 			static ofMesh * tenTicks;
 			ofRectangle editBounds;
-			Validator validator;
+			vector<Validator> validators;
 		};
 	}
 }
