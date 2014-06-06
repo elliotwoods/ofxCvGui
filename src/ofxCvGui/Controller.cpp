@@ -46,14 +46,14 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Controller::add(PanelPtr& panel) {
+	void Controller::add(PanelPtr panel) {
 		if (!initialised)
 			return;
 		this->rootGroup->add(panel);
 	}
 
 	//----------
-	void Controller::drop(PanelPtr& panel) {
+	void Controller::drop(PanelPtr panel) {
 		if (!initialised)
 			return;
 		this->rootGroup->drop(panel);

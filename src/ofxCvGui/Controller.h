@@ -10,8 +10,8 @@ namespace ofxCvGui {
 	public:
 		Controller();
 		void init(PanelGroupPtr rootGroup);
-		void add(PanelPtr& panel);
-		void drop(PanelPtr& panel);
+		void add(PanelPtr panel);
+		void drop(PanelPtr panel);
 		void clear();
 		void toggleMaximised();
 		void toggleFullscreen();
