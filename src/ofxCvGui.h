@@ -14,6 +14,7 @@
 #include "ofxCvGui/Widgets/LiveValue.h"
 
 namespace ofxCvGui {
-	void inspect(ofxCvGui::Widgets::IInspectable & target);
+	void inspect(ofxCvGui::Widgets::IInspectable &);
+	bool isBeingInspected(ofxCvGui::Widgets::IInspectable &);
 	void addToInspector(ofxCvGui::ElementPtr);
 }
