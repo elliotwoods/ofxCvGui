@@ -8,13 +8,14 @@ namespace ofxCvGui {
 		public:
 			Image(ofImage &);
             virtual ~Image();
+			void setImage(ofImage &);
 		protected:
 			void drawImage(float width, float height);
             void drawInfo(DrawArguments& arguments);
             float getImageWidth() const;
             float getImageHeight() const;
 		private:
-			ofImage & asset;
+			ofImage * asset;
 		};
 	}
 }

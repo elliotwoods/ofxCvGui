@@ -91,6 +91,20 @@ namespace ofxCvGui {
 	}
 
 	//-----------
+	void Element::setWidth(float width) {
+		auto bounds = this->getBounds();
+		bounds.setWidth(width);
+		this->setBounds(bounds);
+	}
+
+	//-----------
+	void Element::setHeight(float height) {
+		auto bounds = this->getBounds();
+		bounds.setHeight(height);
+		this->setBounds(bounds);
+	}
+
+	//-----------
 	void Element::setPosition(const ofVec2f& position) {
 		this->bounds.x = position.x;
 		this->bounds.y = position.y;

@@ -104,7 +104,7 @@ namespace ofxCvGui {
 			//draw side marker
 			ofPushStyle();
 			ofSetLineWidth(1.0f);
-			ofLine(this->getWidth(), 0, this->getWidth(), 30);
+			ofLine(this->getWidth(), 0, this->getWidth(), this->buttonBounds.getHeight());
 			ofPopStyle();
 		}
 

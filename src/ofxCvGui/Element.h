@@ -32,6 +32,9 @@ namespace ofxCvGui {
 		LocalMouseState getMouseState();
 
 		void setBounds(const ofRectangle& bounds);
+		void setWidth(float);
+		void setHeight(float);
+
 		void setPosition(const ofVec2f&);
 		const ofRectangle& getBounds() const;
 		float getWidth() const;
