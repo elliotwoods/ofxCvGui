@@ -10,7 +10,7 @@ namespace ofxCvGui {
 		Inspector::Inspector() {
 			Inspector::makeNewSelection.addListener([this] (IInspectable & object) {
 				this->clear();
-				object.populate(this->elements);
+				object.populateInspector(this->elements);
 				this->arrange();
 			}, this);
 

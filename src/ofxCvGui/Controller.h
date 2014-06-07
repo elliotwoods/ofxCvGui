@@ -16,6 +16,7 @@ namespace ofxCvGui {
 		void toggleMaximised();
 		void toggleFullscreen();
 		void setFullscreen(PanelPtr panel);
+		void clearFullscreen();
 		void showChrome();
 		void hideChrome();
 		PanelGroupPtr getRootGroup();

@@ -102,8 +102,16 @@ namespace ofxCvGui {
 		this->currentPanel = panel;
 		this->currentPanelBounds = ofGetCurrentViewport();
 		this->fullscreen = true;
-		this->maximised = this->fullscreen;
+		this->maximised = true;
 		ofSetFullscreen(this->fullscreen);
+	}
+
+	//----------
+	void Controller::clearFullscreen() {
+		this->fullscreen = false;
+		this->maximised = false;
+		this->updateCurrentPanel();
+		ofSetFullscreen(false);
 	}
 
 	//----------

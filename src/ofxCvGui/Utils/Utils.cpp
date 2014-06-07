@@ -57,6 +57,28 @@ namespace ofxCvGui {
 			return bounds;
 		}
 
+		//---------
+		string makeString(char key) {
+			switch(key) {
+			case ' ':
+				return "SPACE";
+			case OF_KEY_BACKSPACE:
+				return "BACKSPACE";
+			case OF_KEY_RETURN:
+				return "RETURN";
+			case OF_KEY_DOWN:
+				return "DOWN";
+			case OF_KEY_UP:
+				return "UP";
+			case OF_KEY_LEFT:
+				return "LEFT";
+			case OF_KEY_RIGHT:
+				return "RIGHT";
+			default:
+				return string("") + key;
+			}
+		}
+
 #pragma mark Scissor
 		//----------
 		vector<ofRectangle> scissorHistory;

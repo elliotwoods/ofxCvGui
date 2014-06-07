@@ -6,7 +6,7 @@ namespace ofxCvGui {
 		class IInspectable {
 		public:
 			/// override this function to populate an inspector when selected
-			virtual void populate(ElementGroupPtr) = 0;
+			virtual void populateInspector(ElementGroupPtr) = 0;
 		};
 	}
 }
