@@ -3,6 +3,8 @@
 #include "ofxAssets.h"
 #include "ofGraphics.h"
 #include "ofAppRunner.h"
+#include "ofAppGLFWWindow.h"
+
 #include <vector>
 
 namespace ofxCvGui {
@@ -55,6 +57,16 @@ namespace ofxCvGui {
 			}
 
 			return bounds;
+		}
+
+		//---------
+		void drawProcessingNotice(string message) {
+			auto window = dynamic_cast<ofAppGLFWWindow*>(ofGetWindowPtr());
+			if (window) {
+				drawText(message, 0, 0, true, ofGetHeight(), ofGetWidth());
+				glfwSwapBuffers(window->getGLFWWindow());
+				glFlush();
+			}
 		}
 
 		//---------
