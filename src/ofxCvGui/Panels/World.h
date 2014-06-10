@@ -3,9 +3,16 @@
 
 #include "ofNode.h"
 
-//feel free to change this for a different camera type of your choosing
-#include "../../../addons/ofxGrabCam/src/ofxGrabCam.h"
-typedef ofxGrabCam CameraType;
+#define USE_OFXGRABCAM
+
+#ifdef USE_OFXGRABCAM
+	//feel free to change this for a different camera type of your choosing
+	#include "../../../addons/ofxGrabCam/src/ofxGrabCam.h"
+	typedef ofxGrabCam CameraType;
+#else
+	#include "ofEasyCam.h"
+	typedef ofEasyCam CameraType;
+#endif
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -15,9 +22,11 @@ namespace ofxCvGui {
 			
 			//camera
 			CameraType & getCamera() { return this->camera; };
+#ifdef USE_OFXGRABCAM
 			void setCursorEnabled(bool cursorEnabled=true) {
                 this->camera.setCursorDraw(cursorEnabled);
             }
+#endif
             
 			void setGridEnabled(bool gridEnabled);
 			void setGridColor(const ofColor & gridColor);
