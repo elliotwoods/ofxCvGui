@@ -9,8 +9,6 @@ using namespace std;
 namespace ofxCvGui {
 	typedef vector<ElementPtr> ElementSet;
 	typedef vector<ElementPtr>::iterator ElementIterator;
-	typedef vector<PanelPtr> PanelSet;
-	typedef vector<PanelPtr>::iterator PanelIterator;
 
 	template <typename T>
 	class ElementGroup_ : public T {

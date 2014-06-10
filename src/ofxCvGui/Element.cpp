@@ -130,6 +130,7 @@ namespace ofxCvGui {
 	//-----------
 	void Element::setCaption(string caption) {
 		this->caption = caption;
+		this->onCaptionChange(caption);
 	}
 	
 	//-----------

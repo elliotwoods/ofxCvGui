@@ -19,6 +19,7 @@ namespace ofxCvGui {
 		protected:
             BaseImage();
             virtual ~BaseImage();
+			void drawTitle() override;
 			void drawImage(DrawArguments& arguments);
 			virtual void drawImage(float width, float height) = 0;
             virtual float getImageWidth() const = 0;

@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <set>
 
 #include "Types.h"
 #include "Utils/Utils.h"
@@ -39,7 +40,9 @@ namespace ofxCvGui {
 		const ofRectangle& getBounds() const;
 		float getWidth() const;
 		float getHeight() const;
+		
 		void setCaption(string caption);
+		ofxLiquidEvent<string> onCaptionChange;
 		
 		ofxLiquidEvent<UpdateArguments> onUpdate;
 		ofxLiquidEvent<DrawArguments> onDraw;
@@ -52,7 +55,6 @@ namespace ofxCvGui {
 		bool getEnabled() const;
 		void enable();
 		void disable();
-
 	protected:
 		void setScissor(bool);
 		ofRectangle bounds; ///<bounds relative to parent
@@ -61,6 +63,7 @@ namespace ofxCvGui {
 		bool enabled;
 		bool enableScissor;
 		LocalMouseState localMouseState;
+		set<shared_ptr<Element>> listeningElements; ///<other elements which react to this elements events
 	};
 	
 	typedef shared_ptr<Element> ElementPtr;

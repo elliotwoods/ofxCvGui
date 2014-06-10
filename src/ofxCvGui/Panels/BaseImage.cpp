@@ -24,7 +24,7 @@ namespace ofxCvGui {
         BaseImage::BaseImage() {
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				this->drawImage(args);
-			}, this);
+			}, 0, this);
 
 			this->onMouse.addListener([this] (MouseArguments & args) {
 				this->mouseAction(args);
@@ -165,19 +165,6 @@ namespace ofxCvGui {
                     ////
                 }
             }
-
-			if (arguments.chromeEnabled) {
-				image("ofxCvGui::zoom_fit").draw(buttonFitBounds);
-				image("ofxCvGui::zoom_one").draw(buttonOneBounds);
-				Utils::drawText(this->caption, 100, 20, true, 30);
-				
-				ofPushStyle();
-				ofSetColor(150);
-				ofSetLineWidth(2.0f);
-				ofNoFill();
-				ofRect(this->zoom == ZoomFit ? buttonFitBounds : buttonOneBounds);
-				ofPopStyle();
-			}
 		}
         
 		//----------
@@ -200,5 +187,19 @@ namespace ofxCvGui {
             scroll.y = floor(scroll.y);
             return scroll;
         }
+		
+		//----------
+		void BaseImage::drawTitle() {
+			image("ofxCvGui::zoom_fit").draw(buttonFitBounds);
+			image("ofxCvGui::zoom_one").draw(buttonOneBounds);
+			Utils::drawText(this->caption, 100, 20, true, 30);
+			
+			ofPushStyle();
+			ofSetColor(150);
+			ofSetLineWidth(2.0f);
+			ofNoFill();
+			ofRect(this->zoom == ZoomFit ? buttonFitBounds : buttonOneBounds);
+			ofPopStyle();
+		}
 	}
 }
