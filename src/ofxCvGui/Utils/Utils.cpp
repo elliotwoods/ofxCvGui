@@ -64,7 +64,7 @@ namespace ofxCvGui {
 			auto window = dynamic_cast<ofAppGLFWWindow*>(ofGetWindowPtr());
 			if (window) {
 				drawText(message, 0, 0, true, ofGetHeight(), ofGetWidth());
-				glfwSwapBuffers(window->getGLFWWindow());
+				glfwSwapBuffers(glfwGetCurrentContext());
 				glFlush();
 			}
 		}

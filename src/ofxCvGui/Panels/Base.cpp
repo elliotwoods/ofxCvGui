@@ -17,7 +17,9 @@ namespace ofxCvGui {
 		
 		//----------
 		void Base::drawTitle() {
-			Utils::drawText(this->caption, 20, 20, true, 30);
+			if (!this->caption.empty()) {
+				Utils::drawText(this->caption, 20, 20, true, 30);
+			}
 		}
 	}
 }
