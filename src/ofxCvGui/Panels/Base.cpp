@@ -1,5 +1,5 @@
 #include "ofxCvGui/Panels/Base.h"
-#include "../../../ofxAssets/src/ofxAssets.h"
+#include "ofxAssets.h"
 
 using namespace ofxAssets;
 
