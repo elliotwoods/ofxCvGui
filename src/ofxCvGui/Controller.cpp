@@ -112,7 +112,6 @@ namespace ofxCvGui {
 		this->maximised = false;
 		this->updateCurrentPanel();
 		ofSetFullscreen(false);
-		this->rootGroup->setBounds(ofGetCurrentViewport());
 	}
 
 	//----------
