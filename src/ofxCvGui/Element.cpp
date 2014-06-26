@@ -43,6 +43,11 @@ namespace ofxCvGui {
 						args.take(); // if this element took, notify upstream
 					}
 				}
+			} else if (args.action == MouseArguments::Dragged) {
+				//special case for dragged, only pass if mouse went down in this element
+				if (this->localMouseState == Dragging) {
+					this->onMouse(localArgs);
+				}
 			} else {
 				this->onMouse(localArgs);
 			}
@@ -86,6 +91,12 @@ namespace ofxCvGui {
 		this->localBounds.x = 0;
 		this->localBounds.y = 0;
         
+		auto arguments = BoundsChangeArguments(this->bounds);
+		this->onBoundsChange(arguments);
+	}
+
+	//-----------
+	void Element::arrange() {
 		auto arguments = BoundsChangeArguments(this->bounds);
 		this->onBoundsChange(arguments);
 	}

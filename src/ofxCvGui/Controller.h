@@ -52,5 +52,6 @@ namespace ofxCvGui {
 		bool chromeVisible;
 
 		float cachedWidth, cachedHeight;
+		bool needsRebuild;
 	};
 }

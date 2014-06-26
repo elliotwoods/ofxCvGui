@@ -8,6 +8,7 @@ namespace ofxCvGui {
 		this->maximised = false;
 		this->fullscreen = false;
 		this->chromeVisible = true;
+		this->needsRebuild = false;
 
 		this->cachedWidth = 0.0f;
 		this->cachedHeight = 0.0f;
@@ -112,6 +113,7 @@ namespace ofxCvGui {
 		this->maximised = false;
 		this->updateCurrentPanel();
 		ofSetFullscreen(false);
+		this->needsRebuild = true;
 	}
 
 	//----------
@@ -128,12 +130,15 @@ namespace ofxCvGui {
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised)
 			return;
-		if (cachedWidth != ofGetWidth() || cachedHeight != ofGetHeight()) {
+		if (needsRebuild || cachedWidth != ofGetWidth() || cachedHeight != ofGetHeight()) {
 			//on windows the event doesn't always fire
 			ofResizeEventArgs args;
 			args.width = ofGetWidth();
 			args.height = ofGetHeight();
 			this->windowResized(args);
+			this->needsRebuild = false;
+			cachedWidth = ofGetWidth();
+			cachedHeight = ofGetHeight();
 		}
 		rootGroup->update();
 	}

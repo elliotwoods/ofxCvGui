@@ -7,6 +7,7 @@ namespace ofxCvGui {
 		class ElementHost : public Base {
 		public:
 			ElementHost();
+			ElementGroupPtr getElementGroup();
 		protected:
 			ElementGroupPtr elementGroup;
 		};

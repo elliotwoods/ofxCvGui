@@ -98,7 +98,18 @@ namespace ofxCvGui {
 		void Slider::draw(DrawArguments & args) {
 			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 			image("ofxCvGui::edit").draw(this->editBounds);
-			font.drawString(this->value->getName() + " : " + ofToString(this->value->get()), 0, 15);
+
+			stringstream valueString;
+			valueString.imbue(std::locale(""));
+			const auto actualValue = this->value->get();
+			if (actualValue == floor(actualValue)) {
+				valueString << std::fixed;
+				valueString.precision(0);
+			} else {
+				valueString.precision(3);
+			}
+			valueString << actualValue;
+			font.drawString(this->value->getName() + " : " + valueString.str(), 0, 15);
 	
 			const auto rangeScale = this->getRangeScale();
 			const auto width = this->getWidth();

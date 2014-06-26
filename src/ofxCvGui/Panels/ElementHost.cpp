@@ -5,6 +5,9 @@ namespace ofxCvGui {
 		//----------
 		ElementHost::ElementHost() {
 			this->elementGroup = ElementGroupPtr(new ElementGroup());
+			this->onUpdate += [this] (UpdateArguments&) {
+				this->elementGroup->update();
+			};
 			this->onDraw += [this] (DrawArguments& args) {
 				ofPushView();
 				ofViewport(args.globalBounds);
@@ -24,6 +27,11 @@ namespace ofxCvGui {
 				localBounds.y = 0.0f;
 				this->elementGroup->setBounds(localBounds);
 			};
+		}
+
+		//----------
+		ElementGroupPtr ElementHost::getElementGroup() {
+			return this->elementGroup;
 		}
 	}
 }
