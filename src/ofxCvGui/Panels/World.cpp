@@ -16,7 +16,7 @@ namespace ofxCvGui {
 
 		//----------
 		void World::drawContent(DrawArguments& arguments) {
-			this->camera.begin(this->getBounds());
+			this->camera.begin(arguments.globalBounds);
 
 			if (this->gridEnabled) {
 				ofPushStyle();
