@@ -13,7 +13,7 @@ namespace ofxCvGui {
 			this->onDraw += [this] (DrawArguments & args) { this->draw(args); };
 			this->onMouse += [this] (MouseArguments & args) { this->mouse(args); };
 			this->onKeyboard += [this] (KeyboardArguments & args) { this->keyboard(args); };
-			this->onBoundsChange += [this] (BoundsChangeArguments & args) { this->arrange(); };
+			this->onBoundsChange += [this] (BoundsChangeArguments & args) { this->arrangeScroll(); };
 			this->position = 0.0f;
 			this->length = 0.0f;
 			this->onScrollBar = false;
@@ -22,7 +22,7 @@ namespace ofxCvGui {
 		//----------
 		void Scroll::add(ElementPtr element) {
 			this->elements->add(element);
-			this->arrange();
+			this->arrangeScroll();
 		}
 
 		//----------
@@ -104,7 +104,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Scroll::arrange() {
+		void Scroll::arrangeScroll() {
 			float y = 0;
 			for(auto element : this->elements->getElements()) {
 				auto elementBounds = element->getBounds();
