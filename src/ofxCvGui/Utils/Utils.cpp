@@ -61,10 +61,11 @@ namespace ofxCvGui {
 
 		//---------
 		void drawProcessingNotice(string message) {
-			auto window = dynamic_cast<ofAppGLFWWindow*>(ofGetWindowPtr());
+			auto window = glfwGetCurrentContext();
 			if (window) {
+				ofClear(0, 0);
 				drawText(message, 0, 0, true, ofGetHeight(), ofGetWidth());
-				glfwSwapBuffers(glfwGetCurrentContext());
+				glfwSwapBuffers(window);
 				glFlush();
 			}
 		}
