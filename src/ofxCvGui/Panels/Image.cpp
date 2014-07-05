@@ -2,7 +2,7 @@
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
-		Image::Image(ofImage & asset) {
+		Image::Image(ofAbstractImage & asset) {
 			this->asset = 0;
 			this->setImage(asset);
 			this->onDraw.addListener([this] (DrawArguments& args) {
@@ -16,14 +16,14 @@ namespace ofxCvGui {
         }
 		
         //----------
-		void Image::setImage(ofImage & asset) {
+		void Image::setImage(ofAbstractImage & asset) {
 			this->asset = & asset;
 		}
 
         //----------
 		void Image::drawImage(float width, float height) {
 			if (this->asset) {
-				if (this->asset->isAllocated()) {
+				if (this->asset->getWidth() != 0) {
 					this->asset->draw(0, 0, width, height);
 				}
 			}
@@ -34,10 +34,27 @@ namespace ofxCvGui {
 			if (this->asset) {
 				if (!arguments.chromeEnabled)
 					return;
-				const auto & pixels = this->asset->getPixelsRef();
-            
+
+				int bitsPerChannel = 0;
+				int channelCount = 0;
+				if (dynamic_cast<ofImage *>(this->asset)) {
+					bitsPerChannel = 8;
+					channelCount = dynamic_cast<ofImage *>(this->asset)->getPixelsRef().getNumChannels();
+				}
+				else if (dynamic_cast<ofFloatImage *>(this->asset)) {
+					bitsPerChannel = 32;
+					channelCount = dynamic_cast<ofFloatImage *>(this->asset)->getPixelsRef().getNumChannels();
+				}
+				else if (dynamic_cast<ofShortImage *>(this->asset)) {
+					bitsPerChannel = 16;
+					channelCount = dynamic_cast<ofShortImage *>(this->asset)->getPixelsRef().getNumChannels();
+				}
+
 				stringstream ss;
-				ss << pixels.getWidth() << "x" << pixels.getHeight() << ", " << pixels.getBitsPerChannel() << "bit/" << pixels.getNumChannels() << "ch";
+				ss << this->asset->getWidth() << "x" << this->asset->getHeight();
+				if (bitsPerChannel != 0) {
+					ss << ", " << bitsPerChannel << "bit/" << channelCount << "ch";
+				}
             
 				Utils::drawText(ss.str(), 20, this->getHeight() - 30, true, 20);
 			}

@@ -6,16 +6,16 @@ namespace ofxCvGui {
 	namespace Panels {
 		class Image : public Panels::BaseImage {
 		public:
-			Image(ofImage &);
+			Image(ofAbstractImage &);
             virtual ~Image();
-			void setImage(ofImage &);
+			void setImage(ofAbstractImage &);
 		protected:
 			void drawImage(float width, float height);
             void drawInfo(DrawArguments& arguments);
             float getImageWidth() const;
             float getImageHeight() const;
 		private:
-			ofImage * asset;
+			ofAbstractImage * asset;
 		};
 	}
 }
