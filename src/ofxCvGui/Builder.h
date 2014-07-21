@@ -13,6 +13,7 @@
 #include "ofxCvGui/Panels/Text.h"
 #include "ofxCvGui/Panels/Instructions.h"
 #include "ofxCvGui/Panels/World.h"
+#include "ofxCvGui/Panels/ElementHost.h"
 #include "ofxCvGui/Panels/Scroll.h"
 #include "ofxCvGui/Panels/Inspector.h"
 
@@ -29,6 +30,7 @@ namespace ofxCvGui {
 		shared_ptr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
 		PanelPtr addBlank(string caption = "");
 		shared_ptr<Panels::World> addWorld(string caption = "");
+		shared_ptr<Panels::ElementHost> addElementHost(string caption = "");
 		shared_ptr<Panels::Scroll> addScroll(string caption = "");
 		shared_ptr<Panels::Instructions> addInstructions();
 		shared_ptr<Panels::Inspector> addInspector();
@@ -40,6 +42,7 @@ namespace ofxCvGui {
 		static shared_ptr<Panels::Pixels> makePanel(const ofPixels& asset, string caption="");
 		static shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption="");
 		static shared_ptr<Panels::World> makeWorld(string caption = "");
+		static shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
 		static shared_ptr<Panels::Scroll> makeScroll(string caption = "");
 		static shared_ptr<Panels::Instructions> makeInstructions();
 		static shared_ptr<Panels::Inspector> makeInspector();
