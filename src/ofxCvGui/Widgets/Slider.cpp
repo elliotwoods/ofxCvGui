@@ -105,83 +105,88 @@ namespace ofxCvGui {
 			if (actualValue == floor(actualValue)) {
 				valueString << std::fixed;
 				valueString.precision(0);
-			} else {
+			}
+			else {
 				valueString.precision(3);
 			}
 			valueString << actualValue;
 			font.drawString(this->value->getName() + " : " + valueString.str(), 0, 15);
-	
+
 			const auto rangeScale = this->getRangeScale();
 			const auto width = this->getWidth();
 			const auto center = this->startMouseHoldValue;
-			const auto centerPx = ofMap(center, this->value->getMin(), this->value->getMax(), 0, this->getWidth());
-			const auto xPx = floor((this->value->get() - center) * (zoom * width) / rangeScale + centerPx);
-	
-			bool barActive = this->mouseHeldOnBar && this->getMouseState() != LocalMouseState::Waiting;
+			if (rangeScale > 0) {
+				const auto centerPx = ofMap(center, this->value->getMin(), this->value->getMax(), 0, this->getWidth());
+				const auto xPx = floor((this->value->get() - center) * (zoom * width) / rangeScale + centerPx);
 
-			if (this->mouseHover) {
+				bool barActive = this->mouseHeldOnBar && this->getMouseState() != LocalMouseState::Waiting;
+
+				if (this->mouseHover) {
+					ofPushStyle();
+					ofSetColor(50);
+					ofRect(0, 20, xPx, 20);
+					ofPopStyle();
+				}
+
 				ofPushStyle();
 				ofSetColor(50);
-				ofRect(0, 20, xPx, 20);
+				ofLine(0, 40, this->getWidth(), 40);
+				ofPopStyle();
+
+				ofPushMatrix();
+				ofTranslate(0.0f, 40.0f);
+
+				ofPushMatrix();
+				ofTranslate(xPx, 0.0f);
+
+				//draw handle
+				auto & marker = image(barActive ? "ofxCvGui::sliderMarkerFilled" : "ofxCvGui::sliderMarker");
+				ofScale(0.4f, 0.4f);
+				marker.draw(-marker.getWidth() / 2.0f, -marker.getHeight() - 3);
+				ofPopMatrix();
+
+				//zoom around start drag value
+				ofTranslate(+centerPx, 0.0f);
+				ofScale(zoom, 1.0f);
+				ofTranslate(-centerPx, 0.0f);
+				ofScale(width, 1.0f);
+				// if range=255.0f
+				const auto magnitudeOrder = ceil(log(rangeScale) / log(10));		// 3
+				const auto magnitude = pow(10.0f, magnitudeOrder);					// 1000
+				const auto innerMagnitude = pow(10.0f, magnitudeOrder - 2);			// 10
+				const auto mantissa = rangeScale / magnitude;						// 0.255
+				const auto majorTickCount = 10.0f * mantissa;						// 2.55
+				const auto majorTickFraction = 1.0f / majorTickCount;				// 0.3921
+
+				ofMesh majorTicks;
+				if (innerMagnitude > 0.0f) {
+					//postitive ticks
+					for (float tick = 0.0f; tick <= value->getMax(); tick += innerMagnitude) {
+						majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
+						majorTicks.addColor(255);
+					}
+					//negative ticks
+					for (float tick = 0.0f; tick >= value->getMin(); tick -= innerMagnitude) {
+						if (tick == 0.0f) {
+							continue;
+						}
+						majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
+						majorTicks.addColor(0);
+					}
+				}
+
+				ofScale(1.0f / rangeScale, 1.0f, 1.0f);
+				ofTranslate(-value->getMin(), 0.0f, 0.0f);
+				majorTicks.drawVertices();
+
+				ofPopMatrix();
+
+				//draw side marker
+				ofPushStyle();
+				ofSetLineWidth(1.0f);
+				ofLine(this->getWidth(), 0, this->getWidth(), 40);
 				ofPopStyle();
 			}
-
-			ofPushStyle();
-			ofSetColor(50);
-			ofLine(0, 40, this->getWidth(), 40);
-			ofPopStyle();
-
-			ofPushMatrix();
-			ofTranslate(0.0f, 40.0f);
-
-			ofPushMatrix();
-			ofTranslate(xPx, 0.0f);
-
-			//draw handle
-			auto & marker = image(barActive ? "ofxCvGui::sliderMarkerFilled" : "ofxCvGui::sliderMarker");
-			ofScale(0.4f, 0.4f);
-			marker.draw(-marker.getWidth() / 2.0f, -marker.getHeight() - 3);
-			ofPopMatrix();
-	
-			//zoom around start drag value
-			ofTranslate(+centerPx, 0.0f);
-			ofScale(zoom, 1.0f);
-			ofTranslate(-centerPx, 0.0f);
-			ofScale(width, 1.0f);
-																				// if range=255.0f
-			const auto magnitudeOrder = ceil(log(rangeScale) / log(10));		// 3
-			const auto magnitude = pow(10.0f, magnitudeOrder);					// 1000
-			const auto innerMagnitude = pow(10.0f, magnitudeOrder - 2);			// 10
-			const auto mantissa = rangeScale / magnitude;						// 0.255
-			const auto majorTickCount = 10.0f * mantissa;						// 2.55
-			const auto majorTickFraction = 1.0f / majorTickCount;				// 0.3921
-
-			ofMesh majorTicks;
-			//postitive ticks
-			for(float tick = 0.0f; tick <= value->getMax(); tick += innerMagnitude) {
-				majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
-				majorTicks.addColor(255);
-			}
-			//negative ticks
-			for(float tick = 0.0f; tick >= value->getMin(); tick -= innerMagnitude) {
-				if (tick == 0.0f) {
-					continue;
-				}
-				majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
-				majorTicks.addColor(0);
-			}
-
-			ofScale(1.0f / rangeScale, 1.0f, 1.0f);
-			ofTranslate(-value->getMin(), 0.0f, 0.0f);
-			majorTicks.drawVertices();
-	
-			ofPopMatrix();
-
-			//draw side marker
-			ofPushStyle();
-			ofSetLineWidth(1.0f);
-			ofLine(this->getWidth(), 0, this->getWidth(), 40);
-			ofPopStyle();
 		}
 
 		//----------
