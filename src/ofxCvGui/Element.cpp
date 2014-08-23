@@ -5,6 +5,7 @@ namespace ofxCvGui {
 		this->enabled = true;
 		this->enableScissor = false;
 		this->localMouseState = Waiting;
+		this->mouseOver = false;
 	}
 
 	//-----------
@@ -64,6 +65,8 @@ namespace ofxCvGui {
 				}
 				this->localMouseState = Waiting;
 			}
+
+			this->mouseOver = localArgs.isLocal();
 		}
     }
     
@@ -80,8 +83,23 @@ namespace ofxCvGui {
 	}
 
     //-----------
-	Element::LocalMouseState Element::getMouseState() {
+	Element::LocalMouseState Element::getMouseState() const {
 		return this->localMouseState;
+	}
+
+	//-----------
+	bool Element::isMouseDown() const {
+		return this->getMouseState() == LocalMouseState::Down;
+	}
+
+	//-----------
+	bool Element::isMouseDragging() const {
+		return this->getMouseState() == LocalMouseState::Dragging;
+	}
+
+	//-----------
+	bool Element::isMouseOver() const {
+		return this->mouseOver;
 	}
 
 	//-----------

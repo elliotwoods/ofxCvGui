@@ -30,7 +30,10 @@ namespace ofxCvGui {
 		void keyboardAction(KeyboardArguments& keyboard);
 
 		void clearMouseState();
-		LocalMouseState getMouseState();
+		LocalMouseState getMouseState() const;
+		bool isMouseDown() const;
+		bool isMouseDragging() const;
+		bool isMouseOver() const;
 
 		void setBounds(const ofRectangle& bounds);
 		void setWidth(float);
@@ -64,6 +67,7 @@ namespace ofxCvGui {
 		bool enabled;
 		bool enableScissor;
 		LocalMouseState localMouseState;
+		bool mouseOver;
 		set<shared_ptr<Element>> listeningElements; ///<other elements which react to this elements events
 	};
 	
