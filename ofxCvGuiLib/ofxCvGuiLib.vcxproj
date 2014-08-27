@@ -47,6 +47,7 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Title.h" />
@@ -80,6 +81,7 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\LiveValue.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\MultipleChoice.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp" />
@@ -97,7 +99,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -111,7 +113,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -173,6 +175,7 @@
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
       <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -225,6 +228,7 @@
       <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

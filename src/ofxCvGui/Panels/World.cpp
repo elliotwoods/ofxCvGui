@@ -8,7 +8,7 @@ namespace ofxCvGui {
 			this->gridEnabled = true;
 			this->gridLabelsEnabled = true;
 			this->gridScale = 10.0f;
-
+			
 			this->onDraw += [this] (DrawArguments & args) {
 				this->drawContent(args);
 			};
