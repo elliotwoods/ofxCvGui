@@ -25,7 +25,6 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
-		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 
 #ifdef __DEBUGGING__
@@ -130,14 +129,18 @@ namespace ofxCvGui {
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised)
 			return;
-		if ((ofGetFrameNum() - this->lastRebuildRequiredFrame) < 5 || cachedWidth != ofGetWidth() || cachedHeight != ofGetHeight()) {
-			//on windows the event doesn't always fire
-			ofResizeEventArgs args;
-			args.width = ofGetWidth();
-			args.height = ofGetHeight();
-			this->windowResized(args);
-			cachedWidth = ofGetWidth();
-			cachedHeight = ofGetHeight();
+		if ((ofGetFrameNum() - this->lastRebuildRequiredFrame) < 5 || this->cachedWidth != ofGetWidth() || this->cachedHeight != ofGetHeight()) {
+			//on windows the window resize doesn't always fire (e.g. when maximising).
+			//as a temporary fix, we perform all resize events by manually checking for size change
+			this->cachedWidth = ofGetWidth();
+			this->cachedHeight = ofGetHeight();
+
+			ofRectangle bounds(0, 0, this->cachedWidth, this->cachedHeight);
+			rootGroup->setBounds(bounds);
+			if (this->maximised) {
+				currentPanel->setBounds(bounds);
+			}
+			updateCurrentPanel();
 		}
 		rootGroup->update();
 	}
@@ -241,21 +244,6 @@ namespace ofxCvGui {
 			currentPanel->keyboardAction(action);
 		else
 			rootGroup->keyboardAction(action);
-	}
-	
-	//----------
-	void Controller::windowResized(ofResizeEventArgs & args) {
-		if (!initialised)
-			return;
-		ofRectangle bounds(0,0,ofGetWidth(), ofGetHeight());
-		rootGroup->setBounds(bounds);
-		if (this->maximised) {
-			currentPanel->setBounds(bounds);
-		}
-		updateCurrentPanel();
-		this->cachedWidth = args.width;
-		this->cachedHeight = args.height;
-		this->lastRebuildRequiredFrame = ofGetFrameNum(); // this seems surplus
 	}
 
 	//----------

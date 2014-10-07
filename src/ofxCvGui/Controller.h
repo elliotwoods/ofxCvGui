@@ -34,7 +34,6 @@ namespace ofxCvGui {
 		void mouseReleased(ofMouseEventArgs & args);
 		void mouseDragged(ofMouseEventArgs & args);
 		void keyPressed(ofKeyEventArgs & args);
-		void windowResized(ofResizeEventArgs & args);
 		void filesDragged(ofDragInfo & args);
 		//
 		////
