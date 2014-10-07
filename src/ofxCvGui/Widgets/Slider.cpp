@@ -80,8 +80,7 @@ namespace ofxCvGui {
 		//----------
 		void Slider::update(UpdateArguments &) {
 			if (this->value->get() < this->value->getMin() || this->value->get() > this->value->getMax()) {
-				this->value->set(ofClamp(this->value->get(), this->value->getMin(), this->value->getMax()));
-				this->notifyValueChange();
+				this->notifyValueChange(); // this clamps
 			}
 
 			if(this->getMouseState() == LocalMouseState::Down && this->mouseHeldOnBar) {
@@ -247,6 +246,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Slider::notifyValueChange() {
+			this->value->set(ofClamp(this->value->get(), this->value->getMin(), this->value->getMax()));
 			this->onValueChange.notifyListeners(* this->value);
 		}
 	}
