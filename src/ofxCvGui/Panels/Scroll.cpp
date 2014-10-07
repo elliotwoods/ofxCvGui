@@ -105,7 +105,6 @@ namespace ofxCvGui {
 
 		//----------
 		void Scroll::arrangeScroll() {
-			this->elements->setBounds(ofRectangle(0, 0, this->getWidth(), this->length));
 			float y = 0;
 			for(auto element : this->elements->getElements()) {
 				auto elementBounds = element->getBounds();
@@ -115,6 +114,7 @@ namespace ofxCvGui {
 				y += elementBounds.height + OFXCVGUI_SCROLL_SPACING;
 			}
 			this->length = y;
+			this->elements->setBounds(ofRectangle(0, 0, this->getWidth(), this->length));
 		}
 
 		//----------
