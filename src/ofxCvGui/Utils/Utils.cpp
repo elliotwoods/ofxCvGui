@@ -60,6 +60,11 @@ namespace ofxCvGui {
 		}
 
 		//---------
+		ofRectangle drawText(const string & text, const ofRectangle & bounds, bool background) {
+			return drawText(text, bounds.x, bounds.y, background, bounds.height, bounds.width);
+		}
+
+		//---------
 		void drawProcessingNotice(string message) {
 			auto window = glfwGetCurrentContext();
 			if (window) {
