@@ -47,6 +47,7 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
@@ -80,6 +81,7 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Indicator.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\LiveValue.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\MultipleChoice.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />

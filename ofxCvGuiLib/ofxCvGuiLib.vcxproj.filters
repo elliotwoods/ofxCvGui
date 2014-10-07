@@ -92,6 +92,9 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\MultipleChoice.cpp">
       <Filter>src\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Indicator.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -192,6 +195,9 @@
       <Filter>src\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h">
       <Filter>src\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

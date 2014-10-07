@@ -12,6 +12,8 @@
 #include "ofxCvGui/Widgets/Toggle.h"
 #include "ofxCvGui/Widgets/Button.h"
 #include "ofxCvGui/Widgets/LiveValue.h"
+#include "ofxCvGui/Widgets/MultipleChoice.h"
+#include "ofxCvGui/Widgets/Indicator.h"
 
 namespace ofxCvGui {
 	void inspect(ofxCvGui::Widgets::IInspectable &);
