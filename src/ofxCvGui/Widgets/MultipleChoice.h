@@ -5,20 +5,28 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class MultipleChoice : public Element {
 		public:
-			MultipleChoice();
-			void addChoice(string);
-			void removeChoice(string);
-			void clearChoices();
+			OFXCVGUI_MAKE_ELEMENT_HEADER(MultipleChoice, string caption) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(MultipleChoice, caption);
+			}
+			MultipleChoice(string caption);
+			void addOption(string);
+			void removeOption(string);
+			void clearOptions();
 
-			void select(int);
-			void select(string);
+			void setSelection(int);
+			void setSelection(string);
 
 			int getSelectionIndex() const;
 			string getSelection() const;
 
 			ofxLiquidEvent<int> selectionChange;
 		protected:
-			vector<shared_ptr<Toggle>> choices;
+			void clampSelection();
+			ofRectangle getOptionBounds(int optionIndex) const;
+
+			vector<string> options;
+			int selectionIndex;
+			ofRectangle optionsBounds;
 		};
 	}
 }
