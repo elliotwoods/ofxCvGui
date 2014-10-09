@@ -7,8 +7,13 @@ namespace ofxCvGui {
 		map<Indicator::Status, ofColor> * Indicator::colorMap = nullptr;
 
 		//----------
-		Indicator::Indicator(string caption, Function statusFunction) :
+		Indicator::Indicator(string caption, StatusFunction statusFunction) :
 			statusFunction(statusFunction) {
+			init(caption);
+		}
+
+		//----------
+		void Indicator::init(string caption) {
 			this->setCaption(caption);
 			this->setBounds(ofRectangle(5, 0, 100, 30));
 			this->onDraw += [this](ofxCvGui::DrawArguments & args) {

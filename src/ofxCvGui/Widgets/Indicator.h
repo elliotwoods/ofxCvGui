@@ -7,19 +7,21 @@ namespace ofxCvGui {
 		class Indicator : public Element {
 		public:
 			enum Status {
-				Clear,
-				Good,
+				Clear = 0,
+				Good = 1,
 				Warning,
 				Error
 			};
-			typedef std::function<Status()> Function;
+			typedef std::function<Status()> StatusFunction;
+			typedef std::function<bool()> BoolFunction;
 
-			OFXCVGUI_MAKE_ELEMENT_HEADER(Indicator, string caption, Function statusFunction) {
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Indicator, string caption, StatusFunction statusFunction) {
 				OFXCVGUI_MAKE_ELEMENT_BODY(Indicator, caption, statusFunction);
 			}
-			Indicator(string caption, Function statusFunction);
+			Indicator(string caption, StatusFunction statusFunction);
 		protected:
-			const Function statusFunction;
+			void init(string caption);
+			const StatusFunction statusFunction;
 			static map<Status, ofColor> * colorMap;
 		};
 	}
