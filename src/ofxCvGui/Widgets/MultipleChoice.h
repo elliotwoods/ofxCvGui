@@ -19,7 +19,7 @@ namespace ofxCvGui {
 			int getSelectionIndex() const;
 			string getSelection() const;
 
-			ofxLiquidEvent<int> selectionChange;
+			ofxLiquidEvent<const int> onSelectionChange;
 		protected:
 			void clampSelection();
 			ofRectangle getOptionBounds(int optionIndex) const;

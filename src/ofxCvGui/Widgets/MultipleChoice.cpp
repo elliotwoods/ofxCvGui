@@ -8,7 +8,7 @@ namespace ofxCvGui {
 			this->selectionIndex = -1;
 			this->setCaption(caption);
 
-			this->setBounds(ofRectangle(0, 0, 100, 50));
+			this->setBounds(ofRectangle(0, 0, 100, 60));
 			this->onDraw += [this](ofxCvGui::DrawArguments & args) {
 				//draw caption
 				auto & captionFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
@@ -85,6 +85,9 @@ namespace ofxCvGui {
 		void MultipleChoice::setSelection(int selectionIndex) {
 			this->selectionIndex = selectionIndex;
 			this->clampSelection();
+			if (this->selectionIndex == selectionIndex) {
+				this->onSelectionChange(this->selectionIndex);
+			}
 		}
 
 		//----------
@@ -118,7 +121,10 @@ namespace ofxCvGui {
 				this->selectionIndex = -1;
 			}
 			else {
-				this->selectionIndex = ofClamp(this->selectionIndex, 0, this->options.size() - 1);
+				auto clampedSelection = ofClamp(this->selectionIndex, 0, this->options.size() - 1);
+				if (clampedSelection != this->selectionIndex) {
+					this->setSelection(clampedSelection);
+				}
 			}
 		}
 
@@ -132,6 +138,12 @@ namespace ofxCvGui {
 			auto optionBounds = this->optionsBounds;
 			optionBounds.width /= (float) this->options.size();
 			optionBounds.x += optionBounds.width * optionIndex;
+
+			const float borderSize = 2.0f;
+			optionBounds.width -= borderSize * 2.0f;
+			optionBounds.x += borderSize;
+			optionBounds.height -= borderSize * 2.0f;
+			optionBounds.y += borderSize;
 
 			return optionBounds;
 		}
