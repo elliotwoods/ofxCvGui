@@ -64,7 +64,13 @@ namespace ofxCvGui {
 				this->graphFill.lineTo(this->getWidth() - size, 40.0f);
 				int x = 0;
 				for(auto & point : this->history) {
-					auto y = ofMap(point, this->minimum, this->maximum, 40.0f, 0.0f, false);
+					float y = ofMap(point, this->minimum, this->maximum, 40.0f, 0.0f, false);
+
+					//check valid number
+					if (y != y || y <= std::numeric_limits<float>::min() || y >= std::numeric_limits<float>::max()) {
+						continue;
+					}
+					
 					this->graphFill.lineTo(this->getWidth() - size + x, y);
 					this->graphLine.lineTo(this->getWidth() - size + x, y);
 					x++;
