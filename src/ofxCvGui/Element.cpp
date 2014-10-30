@@ -46,7 +46,12 @@ namespace ofxCvGui {
 				}
 			} else if (args.action == MouseArguments::Dragged) {
 				//special case for dragged, only pass if mouse went down in this element
-				if (this->localMouseState == Dragging) {
+				if (this->localMouseState == LocalMouseState::Dragging) {
+					this->onMouse(localArgs);
+				}
+			} else if (args.action == MouseArguments::Released) {
+				//special case for released, only pass if mouse went down in this element
+				if (this->localMouseState != LocalMouseState::Waiting) {
 					this->onMouse(localArgs);
 				}
 			} else {
@@ -54,16 +59,16 @@ namespace ofxCvGui {
 			}
 
 			if (localArgs.isLocalPressed()) {
-				this->localMouseState = Down;
+				this->localMouseState = LocalMouseState::Down;
 			} else if (localArgs.action == MouseArguments::Dragged) {
-				if (this->localMouseState == Down) {
-					this->localMouseState = Dragging;
+				if (this->localMouseState == LocalMouseState::Down) {
+					this->localMouseState = LocalMouseState::Dragging;
 				}
 			} else if (localArgs.action == MouseArguments::Released) {
-				if (this->localMouseState == Down) {
+				if (this->localMouseState == LocalMouseState::Down) {
 					this->onMouseReleased(localArgs);
 				}
-				this->localMouseState = Waiting;
+				this->localMouseState = LocalMouseState::Waiting;
 			}
 
 			this->mouseOver = localArgs.isLocal();
@@ -142,8 +147,16 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	const ofRectangle& Element::getBounds() const{
+	const ofRectangle & Element::getBounds() const {
 		return this->bounds;
+	}
+
+	//-----------
+	const ofRectangle Element::getLocalBounds() const {
+		auto localBounds = this->bounds;
+		localBounds.x = 0.0f;
+		localBounds.y = 0.0f;
+		return localBounds;
 	}
 
 	//-----------

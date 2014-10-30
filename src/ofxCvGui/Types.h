@@ -43,6 +43,10 @@ namespace ofxCvGui {
 		bool isLocal() const; 
 		bool isLocalPressed() const;
 		bool isTaken() const;
+
+		/// Not taken, or is something other than a mouse down action
+		bool mightStillBeUseful() const;
+
 		void take();
 
 		const Action action;

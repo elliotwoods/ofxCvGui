@@ -41,7 +41,8 @@ namespace ofxCvGui {
 		void arrange();
 
 		void setPosition(const ofVec2f&);
-		const ofRectangle& getBounds() const;
+		const ofRectangle & getBounds() const;
+		const ofRectangle getLocalBounds() const;
 		float getWidth() const;
 		float getHeight() const;
 		

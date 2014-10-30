@@ -30,6 +30,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\BaseImage.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\ElementCanvas.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Base.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\ElementCanvas.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp" />
