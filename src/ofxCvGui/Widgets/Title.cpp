@@ -31,7 +31,7 @@ namespace ofxCvGui {
 				this->setHeight(textBottom + 10);
 			}
 			this->onDraw += [this, fontSize] (ofxCvGui::DrawArguments & args) {
-				auto font = ofxAssets::font(ofxCvGui::defaultTypeface, fontSize);
+				auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, fontSize);
 				font.drawString(this->caption, 0, 30);
 			};
 		}
