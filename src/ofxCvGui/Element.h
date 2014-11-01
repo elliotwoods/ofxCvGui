@@ -25,7 +25,7 @@ namespace ofxCvGui {
 		virtual ~Element() { }
 		void update();
 		
-		void draw(DrawArguments& arguments);
+		void draw(const DrawArguments& arguments);
 		void mouseAction(MouseArguments& mouse);
 		void keyboardAction(KeyboardArguments& keyboard);
 

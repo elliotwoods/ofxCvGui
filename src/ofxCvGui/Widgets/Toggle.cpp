@@ -52,7 +52,6 @@ namespace ofxCvGui {
 			};
 			
 			this->isMouseOver = false;
-			this->isMouseDown = false;
 		}
 
 		//----------
@@ -79,11 +78,12 @@ namespace ofxCvGui {
 			}
 
 			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
+			auto isMouseDown = this->getMouseState() != LocalMouseState::Waiting;
 
 			ofPushStyle();
 			
 			//fill
-			ofSetColor(this->value->get() ^ this->isMouseDown ?  80 : 50);
+			ofSetColor(this->value->get() ^ isMouseDown ?  80 : 50);
 			ofFill();
 			const auto radius = 5.0f;
 			ofRectRounded(this->buttonBounds, radius, radius, radius, radius);
@@ -119,14 +119,13 @@ namespace ofxCvGui {
 
 			switch(args.action) {
 			case MouseArguments::Pressed:
-				this->isMouseDown = this->isMouseOver;
+				if (this->isMouseOver) {
+					args.takeMousePress(this);
+				}
 				break;
 			case MouseArguments::Released:
-				if (this->isMouseDown) {
-					this->value->set(! this->value->get());
-					this->notifyValueChange();
-				}
-				this->isMouseDown = false;
+				this->value->set(! this->value->get());
+				this->notifyValueChange();
 				break;
 			}
 		}

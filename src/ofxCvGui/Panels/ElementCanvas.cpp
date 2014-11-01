@@ -4,8 +4,6 @@ namespace ofxCvGui {
 	namespace Panels {
 		//---------
 		ElementCanvas::ElementCanvas() {
-			this->dragging = false;
-
 			this->canvasElements = shared_ptr<ElementGroup>(new ElementGroup);
 			this->fixedElements = shared_ptr<ElementGroup>(new ElementGroup);
 
@@ -25,16 +23,13 @@ namespace ofxCvGui {
 				this->fixedElements->mouseAction(args);
 				if (args.mightStillBeUseful()) {
 					this->canvasElements->mouseAction(args);
+					args.takeMousePress(this);
 				}
-				if (args.isLocalPressed() && !args.isTaken()) {
-					args.take();
-					this->dragging = true;
-				}
-				else if(args.action == MouseArguments::Action::Dragged) {
-					this->scrollPosition -= args.movement;
-				}
-				else {
-					this->dragging = false;
+				
+				if(args.action == MouseArguments::Action::Dragged) {
+					if (args.getOwner() == this) {
+						this->scrollPosition -= args.movement;
+					}
 				}
 			};
 

@@ -121,7 +121,11 @@ namespace ofxCvGui {
 		//----------
 		void pushScissor(const ofRectangle & bounds) {
 			scissorHistory.push_back(getScissor());
-			applyScissor(bounds);
+			if (scissorHistory.empty()) {
+				applyScissor(bounds);
+			} else {
+				applyScissor(bounds.getIntersection(scissorHistory.back()));
+			}
 		}
 
 		//----------

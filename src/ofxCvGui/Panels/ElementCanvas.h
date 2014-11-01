@@ -20,8 +20,6 @@ namespace ofxCvGui {
 
 			ofVec2f scrollPosition;
 			ofRectangle canvasExtents;
-
-			bool dragging;
 		};
 	}
 }

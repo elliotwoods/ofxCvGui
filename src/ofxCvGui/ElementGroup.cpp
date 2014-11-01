@@ -104,14 +104,7 @@ namespace ofxCvGui {
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
 		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++) {
-			auto boundsWithinParent = (*it)->getBounds();
-			
-			ofRectangle globalBounds = boundsWithinParent;
-			globalBounds.x += arguments.globalBounds.x;
-			globalBounds.y += arguments.globalBounds.y;
-
-			DrawArguments localArgs(boundsWithinParent, globalBounds, arguments.chromeEnabled);
-			(**it).draw(localArgs);
+			(**it).draw(arguments);
         }
 	}
 

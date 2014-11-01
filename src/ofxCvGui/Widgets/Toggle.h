@@ -28,7 +28,6 @@ namespace ofxCvGui {
 			ofParameter<bool> * value;
 
 			ofRectangle buttonBounds;
-			bool isMouseDown;
 			bool isMouseOver;
 		};
 

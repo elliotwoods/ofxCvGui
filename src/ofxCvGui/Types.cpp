@@ -2,23 +2,23 @@
 namespace ofxCvGui {
 #pragma mark DrawArguments
 	//----------
-	DrawArguments::DrawArguments(const ofRectangle& parentBounds, const ofRectangle& globalBounds, bool chromeEnabled) :
-		parentBounds(parentBounds),
+	DrawArguments::DrawArguments(const ofRectangle& boundsWithinParent, const ofRectangle& globalBounds, bool chromeEnabled) :
+		boundsWithinParent(boundsWithinParent),
 		globalBounds(globalBounds),
 		chromeEnabled(chromeEnabled),
-		localBounds(0, 0, parentBounds.width, parentBounds.height)
+		localBounds(0, 0, boundsWithinParent.width, boundsWithinParent.height)
 	{ }
 
 #pragma mark MouseArguments
 	//----------
-	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, const ofVec2f& cached) :
+	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * takenBy, const ofVec2f& cached) :
 		action(action),
 		button(mouseArgs.button),
 		global(mouseArgs.x, mouseArgs.y),
 		local(mouseArgs.x - rectangle.x, mouseArgs.y - rectangle.y),
 		localNormalised(local / ofVec2f(rectangle.width, rectangle.height)),
         movement(action == Dragged ? global - cached : ofVec2f()),
-		taken(false),
+		takenBy(takenBy),
         InputArguments(currentPanel)
 	{ }
 
@@ -30,7 +30,7 @@ namespace ofxCvGui {
         local(parentArguments.local - ofVec2f(childBounds.x, childBounds.y)),
         localNormalised(local / ofVec2f(childBounds.width, childBounds.height)),
         movement(parentArguments.movement),
-		taken(false),
+		takenBy(parentArguments.takenBy),
         InputArguments(parentArguments.currentPanel)
 	{ }
 
@@ -41,29 +41,38 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	bool MouseArguments::isLocalPressed() const {
+	bool MouseArguments::takeMousePress(void * element) {
 		auto local = this->isLocal();
-		return (action == Pressed) && local;
+		auto gotClick = (action == Pressed) && local && (! this->isTaken() || this->getOwner() == this);
+		if (gotClick) {
+			this->forceMouseTake(element);
+		}
+		return gotClick;
 	}
 
 	//----------
 	bool MouseArguments::isTaken() const {
-		return this->taken;
+		return (bool) (this->takenBy);
 	}
 
 	//----------
 	bool MouseArguments::mightStillBeUseful() const {
-		return (!this->taken) || action != Pressed;
+		return (!this->isTaken()) || action != Pressed;
 	}
 
 	//----------
-	void MouseArguments::take() {
-		this->taken = true;
+	void MouseArguments::forceMouseTake(void * element) {
+		this->takenBy = element;
+	}
+
+	//----------
+	void * MouseArguments::getOwner() const {
+		return this->takenBy;
 	}
 
 	//----------
 	ostream& operator<<(ostream& os, const MouseArguments & args) {
-		os << "[MouseAction : " << args.action << ", " << args.button << ", " << args.global << ", " << args.local << ", " << args.localNormalised << ", " << args.movement << "]";
+		os << "[MouseAction : " << args.action << ", " << args.button << ", " << args.global << ", " << args.local << ", " << args.localNormalised << ", " << args.movement << " " << (args.isTaken() ? "X" : " ") << "]";
 		return os;
 	}
 

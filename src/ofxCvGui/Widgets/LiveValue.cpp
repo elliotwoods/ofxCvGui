@@ -79,6 +79,7 @@ namespace ofxCvGui {
 				this->graphFill.lineTo(this->getWidth() - size, 40.0f);
 				this->graphFill.close();
 			};
+
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				ofPushStyle();
 				
@@ -107,22 +108,27 @@ namespace ofxCvGui {
 					}
 				}
 			}, -1, this);
+
 			this->onMouse += [this] (MouseArguments & args) {
-				if (args.isLocalPressed() && args.local.y < 40) {
-					if (args.button == 0) {
-						this->pause ^= true;
-						if (this->pause) {
-							this->graphLine.clear();
-							this->graphFill.setFillColor(80);
+				if (args.local.y < 40) {
+					if (args.takeMousePress(this)) {
+						switch (args.button) {
+						case 0:
+							this->pause ^= true;
+							if (this->pause) {
+								this->graphLine.clear();
+								this->graphFill.setFillColor(80);
+							}
+							break;
+						case 2:
+							this->history.clear();
+							this->minimum = 0.0f;
+							this->maximum = 1.0f;
+							break;
 						}
-						args.take();
-					} else if (args.button == 2) {
-						this->history.clear();
-						this->minimum = 0.0f;
-						this->maximum = 1.0f;
-						args.take();
 					}
 				}
+				
 				if (args.action == MouseArguments::Action::Moved) {
 					this->showPreviewValue = args.isLocal() && args.local.y < 40;
 					if (this->showPreviewValue) {

@@ -11,9 +11,9 @@ namespace ofxCvGui {
     
 	//----------
 	struct DrawArguments {
-		DrawArguments(const ofRectangle& parentBounds, const ofRectangle& globalBounds, bool chromeEnabled);
+		DrawArguments(const ofRectangle& boundsWithinParent, const ofRectangle& globalBounds, bool chromeEnabled);
         
-		const ofRectangle parentBounds;
+		const ofRectangle boundsWithinParent;
 		const ofRectangle globalBounds;
 		const ofRectangle localBounds;
 		const bool chromeEnabled;
@@ -37,17 +37,22 @@ namespace ofxCvGui {
             Pressed, Released, Moved, Dragged
         };
         
-		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, const ofVec2f& cached = ofVec2f()); ///global
+		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * owner, const ofVec2f& cached = ofVec2f()); ///global
 		MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds); ///local
 		
 		bool isLocal() const; 
-		bool isLocalPressed() const;
 		bool isTaken() const;
+
+		/// If the click is local and available then take it and return true, else return false
+		bool takeMousePress(void * element);
 
 		/// Not taken, or is something other than a mouse down action
 		bool mightStillBeUseful() const;
 
-		void take();
+		/// Only use this is you know what you're doing. This is for manually marking a mouse take
+		void forceMouseTake(void * element);
+
+		void * getOwner() const;
 
 		const Action action;
 		const int button;
@@ -58,7 +63,7 @@ namespace ofxCvGui {
 
 		friend ostream& operator<<(ostream&, const MouseArguments &);
 	protected:
-		bool taken;
+		void * takenBy;
 	};
 
 	//----------

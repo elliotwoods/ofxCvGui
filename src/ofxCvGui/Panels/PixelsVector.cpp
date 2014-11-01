@@ -135,9 +135,9 @@ namespace ofxCvGui {
 		
 		//----------
 		void PixelsVector::mouse(MouseArguments & args) {
-			if (args.isLocalPressed()) {
-				for(int i=0; i<this->buttons.size(); i++) {
-					if (this->buttons[i].inside(args.local)) {
+			for(int i=0; i<this->buttons.size(); i++) {
+				if (this->buttons[i].inside(args.local)) {
+					if (args.takeMousePress(this)) {
 						this->selection = i;
 						this->onSelectionChange(selection);
 					}

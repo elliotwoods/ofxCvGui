@@ -15,6 +15,7 @@ namespace ofxCvGui {
 			this->value = & parameter;
 			this->setCaption(this->value->getName());
 			this->mouseHover = false;
+			this->mouseWentDownOnSlider = false;
 
 			this->onValueChange += [this] (ofParameter<float> & value) {
 				for(auto & validator : this->validators) {
@@ -83,7 +84,7 @@ namespace ofxCvGui {
 				this->notifyValueChange(); // this clamps
 			}
 
-			if(this->getMouseState() == LocalMouseState::Down && this->mouseHeldOnBar) {
+			if(this->getMouseState() == LocalMouseState::Down && this->mouseWentDownOnSlider) {
 				const auto mouseHoldTime = float(ofGetElapsedTimeMillis() - startMouseHoldTime) / 1000.0f;
 				if (mouseHoldTime > 1.0f) {
 					this->zoom = exp(mouseHoldTime - 1.0f);
@@ -118,7 +119,7 @@ namespace ofxCvGui {
 				const auto centerPx = ofMap(center, this->value->getMin(), this->value->getMax(), 0, this->getWidth());
 				const auto xPx = floor((this->value->get() - center) * (zoom * width) / rangeScale + centerPx);
 
-				bool barActive = this->mouseHeldOnBar && this->getMouseState() != LocalMouseState::Waiting;
+				bool barActive = this->mouseWentDownOnSlider && this->getMouseState() != LocalMouseState::Waiting;
 
 				if (this->mouseHover) {
 					ofPushStyle();
@@ -192,11 +193,9 @@ namespace ofxCvGui {
 		void Slider::mouseAction(MouseArguments & args) {
 			switch (args.action) {
 			case MouseArguments::Pressed:
-				{
-					bool nothingHappened = false;
-					this->mouseHeldOnBar = args.local.y > 15;
-
-					if (this->mouseHeldOnBar) {
+				if (args.local.y > 15) {
+					if (args.takeMousePress(this)) {
+						this->mouseWentDownOnSlider = true;
 						if (ofGetElapsedTimeMillis() - this->startMouseHoldTime < 500 && abs(args.local.x - this->startMouseHoldMouseX) < 5) {
 							//double click	
 							this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
@@ -206,27 +205,23 @@ namespace ofxCvGui {
 						this->startMouseHoldTime = ofGetElapsedTimeMillis();
 						this->startMouseHoldValue = this->value->get();
 						this->startMouseHoldMouseX = args.local.x;
-					} else if (this->editBounds.inside(args.local)) {
-						//if we clicked the pencil
+					}
+				} else if (this->editBounds.inside(args.local)) {
+					if (args.takeMousePress(this)) {
+						this->mouseWentDownOnSlider = false;
 						auto result = ofSystemTextBoxDialog(this->value->getName() + " (" + ofToString(this->value->get()) + ")");
 						if (!result.empty()) {
 							this->value->set(ofToFloat(result));
 							this->notifyValueChange();
 						}
-					} else {
-						nothingHappened = true;
 					}
-					if (!nothingHappened) {
-						args.take();
-					}
-					break;
 				}
+				break;
 			case MouseArguments::Dragged:
-				if (this->getMouseState() == LocalMouseState::Dragging && this->mouseHeldOnBar) {
+				if (this->mouseWentDownOnSlider) {
 					float dNormX = (args.local.x - this->startMouseHoldMouseX) / (this->getWidth() * zoom);
 					this->value->set(dNormX * this->getRangeScale() + startMouseHoldValue);
 					this->notifyValueChange();
-					break;
 				}
 				break;
 			case MouseArguments::Moved:

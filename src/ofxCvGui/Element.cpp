@@ -17,14 +17,20 @@ namespace ofxCvGui {
     }
     
     //-----------
-	void Element::draw(DrawArguments& arguments) {
+	void Element::draw(const DrawArguments& parentArguments) {
 		if (this->enabled) {
+			auto boundsWithinParent = this->getBounds();
+			ofRectangle globalBounds = boundsWithinParent;
+			globalBounds.x += parentArguments.globalBounds.x;
+			globalBounds.y += parentArguments.globalBounds.y;
+			DrawArguments localArguments(boundsWithinParent, globalBounds, parentArguments.chromeEnabled);
+
 			ofPushMatrix();
 			ofTranslate(bounds.x, bounds.y);
 			if (this->enableScissor) {
-				ofxCvGui::Utils::pushScissor(arguments.globalBounds);
+				ofxCvGui::Utils::pushScissor(localArguments.globalBounds);
 			}
-			this->onDraw(arguments);
+			this->onDraw(localArguments);
 			if (this->enableScissor) {
 				ofxCvGui::Utils::popScissor();
 			}
@@ -36,42 +42,40 @@ namespace ofxCvGui {
     void Element::mouseAction(MouseArguments& args) {
 		if (this->enabled) {
 			auto localArgs = MouseArguments(args, this->getBounds());
+			this->mouseOver = localArgs.isLocal();
+
 			if(args.action == MouseArguments::Pressed) {
 				//special case for pressed, only pass if local
 				if (localArgs.isLocal()) {
 					this->onMouse(localArgs);
 					if (localArgs.isTaken()) {
-						args.take(); // if this element took, notify upstream
+						auto clickOwner = localArgs.getOwner();
+						args.forceMouseTake(clickOwner); // if this element took, notify upstream
+						this->localMouseState = LocalMouseState::Down;
 					}
 				}
 			} else if (args.action == MouseArguments::Dragged) {
-				//special case for dragged, only pass if mouse went down in this element
+				//if mouse is being dragged and is taken by this element, then set local state to dragging
+				if (this->localMouseState == LocalMouseState::Down) {
+					this->localMouseState = LocalMouseState::Dragging;
+				}
+				//if our local state is dragging then pass through the drag action
 				if (this->localMouseState == LocalMouseState::Dragging) {
 					this->onMouse(localArgs);
 				}
 			} else if (args.action == MouseArguments::Released) {
-				//special case for released, only pass if mouse went down in this element
+				//if we've got the cursor, then let's take the action and release the cursor
 				if (this->localMouseState != LocalMouseState::Waiting) {
-					this->onMouse(localArgs);
+					//only pass the event into the element if the mouse release was local
+					if (this->mouseOver) {
+						this->onMouse(localArgs);
+						this->onMouseReleased(localArgs);
+					}
+					this->localMouseState = LocalMouseState::Waiting;
 				}
 			} else {
 				this->onMouse(localArgs);
 			}
-
-			if (localArgs.isLocalPressed()) {
-				this->localMouseState = LocalMouseState::Down;
-			} else if (localArgs.action == MouseArguments::Dragged) {
-				if (this->localMouseState == LocalMouseState::Down) {
-					this->localMouseState = LocalMouseState::Dragging;
-				}
-			} else if (localArgs.action == MouseArguments::Released) {
-				if (this->localMouseState == LocalMouseState::Down) {
-					this->onMouseReleased(localArgs);
-				}
-				this->localMouseState = LocalMouseState::Waiting;
-			}
-
-			this->mouseOver = localArgs.isLocal();
 		}
     }
     

@@ -12,6 +12,10 @@ namespace ofxCvGui {
 			this->onDraw += [this] (DrawArguments & args) {
 				this->drawContent(args);
 			};
+
+			this->onMouse += [this](MouseArguments & args) {
+				args.takeMousePress(this);
+			};
 		}
 
 		//----------
