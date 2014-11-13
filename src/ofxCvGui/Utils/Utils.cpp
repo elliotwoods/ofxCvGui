@@ -130,10 +130,14 @@ namespace ofxCvGui {
 
 		//----------
 		void popScissor() {
+			if (scissorHistory.empty()) {
+				ofLogError("ofxCvGui::popScissor") << "Scissor history is empty";
+			}
 			applyScissor(scissorHistory.back());
 			scissorHistory.pop_back();
 			if(scissorHistory.empty()) {
 				glDisable(GL_SCISSOR_TEST);
+				glScissor(0, 0, ofGetWidth(), ofGetHeight());
 			}
 		}
 	}
