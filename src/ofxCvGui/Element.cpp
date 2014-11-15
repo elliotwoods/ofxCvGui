@@ -200,7 +200,7 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	void Element::addListenersToParent(Element * parent) {
+	void Element::addListenersToParent(Element * parent, bool syncBoundsToParent) {
 		parent->onUpdate.addListener([this](UpdateArguments & args) {
 			this->update();
 		}, this);
@@ -213,12 +213,17 @@ namespace ofxCvGui {
 		parent->onKeyboard.addListener([this](KeyboardArguments & args) {
 			this->keyboardAction(args);
 		}, this);
+		if (syncBoundsToParent) {
+			parent->onBoundsChange.addListener([this](BoundsChangeArguments & args) {
+				this->setBounds(args.localBounds);
+			}, this);
+		}
 	}
 
 	//-----------
-	void Element::addListenersToParent(shared_ptr<Element> parent) {
+	void Element::addListenersToParent(shared_ptr<Element> parent, bool syncBoundsToParent) {
 		if (parent) {
-			this->addListenersToParent(parent);
+			this->addListenersToParent(parent, syncBoundsToParent);
 		}
 	}
 
@@ -228,6 +233,7 @@ namespace ofxCvGui {
 		parent->onDraw.removeListeners(this);
 		parent->onMouse.removeListeners(this);
 		parent->onKeyboard.removeListeners(this);
+		parent->onBoundsChange.removeListeners(this);
 	}
 
 	//-----------

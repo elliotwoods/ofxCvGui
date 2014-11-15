@@ -63,8 +63,8 @@ namespace ofxCvGui {
 		void enable();
 		void disable();
 
-		void addListenersToParent(Element *);
-		void addListenersToParent(shared_ptr<Element>);
+		void addListenersToParent(Element *, bool syncBoundsToParent = false);
+		void addListenersToParent(shared_ptr<Element>, bool syncBoundsToParent = false);
 		void removeListenersFromParent(Element *);
 		void removeListenersFromParent(shared_ptr<Element>);
 	protected:
