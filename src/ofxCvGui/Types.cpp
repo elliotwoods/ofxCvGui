@@ -72,7 +72,7 @@ namespace ofxCvGui {
 
 	//----------
 	ostream& operator<<(ostream& os, const MouseArguments & args) {
-		os << "[MouseAction : " << args.action << ", " << args.button << ", " << args.global << ", " << args.local << ", " << args.localNormalised << ", " << args.movement << " " << (args.isTaken() ? "X" : " ") << "]";
+		os << "[MouseAction : a(" << args.action << "), b(" << args.button << "), g(" << args.global << "), l(" << args.local << "), ln(" << args.localNormalised << "), m(" << args.movement << "), t(" << (args.isTaken() ? "X" : " ") << ")]";
 		return os;
 	}
 
