@@ -76,7 +76,9 @@ namespace ofxCvGui {
 			auto canvasBounds = this->canvasExtents;
 			canvasBounds.x -= this->scrollPosition.x;
 			canvasBounds.y -= this->scrollPosition.y;
-			this->canvasElements->setBounds(canvasBounds);
+			if (this->canvasElements->getBounds() != canvasBounds) {
+				this->canvasElements->setBounds(canvasBounds);
+			}
 
 			auto intersectionViewAndCanvas = canvasBounds.getIntersection(this->getLocalBounds());
 			if (intersectionViewAndCanvas.width < this->getWidth() / 3.0f || intersectionViewAndCanvas.height < this->getHeight() / 3.0f) {
