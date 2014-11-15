@@ -54,12 +54,19 @@ namespace ofxCvGui {
 		ofxLiquidEvent<MouseArguments> onMouse;
 		ofxLiquidEvent<KeyboardArguments> onKeyboard;
 		ofxLiquidEvent<BoundsChangeArguments> onBoundsChange;
+
+		//utility events
 		ofxLiquidEvent<MouseArguments> onMouseReleased;
 
 		void setEnabled(bool);
 		bool getEnabled() const;
 		void enable();
 		void disable();
+
+		void addListenersToParent(Element *);
+		void addListenersToParent(shared_ptr<Element>);
+		void removeListenersFromParent(Element *);
+		void removeListenersFromParent(shared_ptr<Element>);
 	protected:
 		void setScissor(bool);
 		ofRectangle bounds; ///<bounds relative to parent

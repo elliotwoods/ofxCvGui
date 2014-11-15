@@ -68,9 +68,9 @@ namespace ofxCvGui {
 				if (this->localMouseState != LocalMouseState::Waiting) {
 					//only pass the event into the element if the mouse release was local
 					if (this->mouseOver) {
-						this->onMouse(localArgs);
 						this->onMouseReleased(localArgs);
 					}
+					this->onMouse(localArgs);
 					this->localMouseState = LocalMouseState::Waiting;
 				}
 			} else {
@@ -197,6 +197,44 @@ namespace ofxCvGui {
 	//-----------
 	void Element::disable() {
 		this->enabled = false;
+	}
+
+	//-----------
+	void Element::addListenersToParent(Element * parent) {
+		parent->onUpdate.addListener([this](UpdateArguments & args) {
+			this->update();
+		}, this);
+		parent->onDraw.addListener([this](DrawArguments & args) {
+			this->draw(args);
+		}, this);
+		parent->onMouse.addListener([this](MouseArguments & args) {
+			this->mouseAction(args);
+		}, this);
+		parent->onKeyboard.addListener([this](KeyboardArguments & args) {
+			this->keyboardAction(args);
+		}, this);
+	}
+
+	//-----------
+	void Element::addListenersToParent(shared_ptr<Element> parent) {
+		if (parent) {
+			this->addListenersToParent(parent);
+		}
+	}
+
+	//-----------
+	void Element::removeListenersFromParent(Element * parent) {
+		parent->onUpdate.removeListeners(this);
+		parent->onDraw.removeListeners(this);
+		parent->onMouse.removeListeners(this);
+		parent->onKeyboard.removeListeners(this);
+	}
+
+	//-----------
+	void Element::removeListenersFromParent(shared_ptr<Element> parent) {
+		if (parent) {
+			this->removeListenersFromParent(parent.get());
+		}
 	}
 
 	//-----------
