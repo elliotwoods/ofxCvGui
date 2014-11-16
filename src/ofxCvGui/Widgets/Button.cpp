@@ -37,8 +37,16 @@ namespace ofxCvGui {
 			this->onMouseReleased += [this](MouseArguments & args) {
 				EventArgs dummyArgs;
 				this->onHit(dummyArgs);
-				this->hitValue.set(false);
+				this->needsToDrop = true;
 			};
+			this->onUpdate += [this](UpdateArguments & args) {
+				if (this->needsToDrop) {
+					this->hitValue.set(false);
+					this->needsToDrop = false;
+				}
+			};
+
+			this->needsToDrop = false;
 		}
 	}
 }

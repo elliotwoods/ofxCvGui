@@ -18,6 +18,7 @@ namespace ofxCvGui {
 		protected:
 			void init(string caption, char hotKey);
 			ofParameter<bool> hitValue;
+			bool needsToDrop;
 		};
 	}
 }
