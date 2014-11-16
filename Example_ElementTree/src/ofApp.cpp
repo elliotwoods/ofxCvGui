@@ -2,6 +2,55 @@
 
 using namespace ofxCvGui;
 
+class MyElement : public ofxCvGui::Element {
+public:
+	MyElement(){
+		this->onDraw += [this](ofxCvGui::DrawArguments & args) {
+			//black background
+			ofPushStyle();
+			ofFill();
+			ofSetColor(0);
+			ofRect(args.localBounds);
+			ofPopStyle();
+
+			ofPushStyle();
+			if (this->getMouseState() == ofxCvGui::Element::LocalMouseState::Waiting) {
+				ofNoFill();
+				ofRect(args.localBounds);
+			}
+			else if (this->getMouseState() == ofxCvGui::Element::LocalMouseState::Down) {
+				ofFill();
+				ofSetColor(100);
+				ofRect(args.localBounds);
+				ofFill();
+			}
+			else if (this->getMouseState() == ofxCvGui::Element::LocalMouseState::Dragging) {
+				ofFill();
+				ofSetColor(200, 0, 0);
+				ofRect(args.localBounds);
+				ofFill();
+			}
+			ofPopStyle();
+
+			ofDrawBitmapString(this->getCaption(), 5, 15);
+		};
+
+		this->onMouse += [this](ofxCvGui::MouseArguments & args) {
+			//this function does a few things:
+			// * check if the mouse press if local
+			// * if so, take ownership of the mouse press
+			// * also the Element will change the this->getMouseState() == LocalMouseState::Down (note : this happens after this onMouse function returns)
+			args.takeMousePress(this);
+		};
+	}
+
+	void addChild(ofxCvGui::ElementPtr child) {
+		this->child = child;
+		child->addListenersToParent(this);
+	}
+
+	ElementPtr child;
+};
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetCircleResolution(50);
@@ -9,40 +58,47 @@ void ofApp::setup(){
 
 	this->gui.init();
 
-	auto drawPanel = this->gui.addBlank();
-	auto scrollPanel = this->gui.addScroll();
+	//make a panel which we can add elements to
+	auto elementsPanel = make_shared<ofxCvGui::Panels::ElementHost>();
 
-	for(int i=0; i<5; i++) {
-		this->x[i].set("X", ofRandomuf() * 512.0f, 0.0f, 512.0f);
-		this->y[i].set("Y", ofRandomuf() * 512.0f, 0.0f, 512.0f);
-		this->radius[i].set("Radius", ofRandomuf() * 100.0f, 0.0f, 100.0f);
-		this->luminance[i].set("Luminance", floor(ofRandomuf() * 255.0f), 0.0f, 255.0f);
-		this->fill[i].set("Fill", false);
+	//add that panel to the gui
+	this->gui.add(elementsPanel);
 
-		scrollPanel->add(ElementPtr(new Widgets::Slider(this->x[i])));
-		scrollPanel->add(ElementPtr(new Widgets::Slider(this->y[i])));
-		scrollPanel->add(ElementPtr(new Widgets::Slider(this->radius[i])));
-		scrollPanel->add(ElementPtr(new Widgets::Toggle(this->fill[i])));
 
-		//special slider with a validator to check for whole values
-		auto luminanceSlider = new Widgets::Slider(this->luminance[i]);
-		luminanceSlider->setValidator([] (float & value) {
-			value = floor(value + 0.5f);
-		});
-		scrollPanel->add(ElementPtr(luminanceSlider));
 
-		scrollPanel->add(ElementPtr(new Widgets::Spacer()));
-	}
 
-	drawPanel->onDraw += [this] (ofxCvGui::DrawArguments &) {
-		for(int i=0; i<5; i++) {
-			ofPushStyle();
-			this->fill[i].get() ? ofFill() : ofNoFill();
-			ofSetColor(this->luminance[i]);
-			ofCircle(this->x[i], this->y[i], this->radius[i]);
-			ofPopStyle();
-		}
-	};
+
+	//make the basic elements
+	auto element1 = make_shared<MyElement>();
+	auto element2 = make_shared<MyElement>();
+	
+	//set captions
+	element1->setCaption("1");
+	element2->setCaption("2");
+
+	//set the bounds of the elements
+	element1->setBounds(ofRectangle(100, 100, 200, 200));
+	element2->setBounds(ofRectangle(200, 200, 200, 200));
+
+	//add them to the elements group panel
+	elementsPanel->getElementGroup()->add(element1);
+	elementsPanel->getElementGroup()->add(element2);
+
+
+
+
+
+	//make a nested element
+	auto element1_1 = make_shared<MyElement>();
+
+	//set caption
+	element1_1->setCaption("1_1");
+
+	//set the local bounds of the nested element
+	element1_1->setBounds(ofRectangle(50, 50, 100, 100));
+
+	//add the nested element to our existing element
+	element1->addChild(element1_1);
 }
 
 //--------------------------------------------------------------

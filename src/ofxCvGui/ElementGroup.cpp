@@ -39,7 +39,9 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::mouseActionSet(MouseArguments& args) {
-		for (auto & element : this->elements) {
+		auto it = this->elements.rbegin();
+		for (; it != this->elements.rend(); it++) {
+			auto element = *it;
 			element->mouseAction(args);
 		}
 	}

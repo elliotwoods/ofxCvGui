@@ -9,33 +9,17 @@ namespace ofxCvGui {
 
 			this->onUpdate += [this](ofxCvGui::UpdateArguments &) {
 				this->update();
-
-				this->canvasElements->update();
-				this->fixedElements->update();
-			};
-
-			this->onDraw += [this](ofxCvGui::DrawArguments & args) {
-				this->canvasElements->draw(args);
-				this->fixedElements->draw(args);
 			};
 
 			this->onMouse += [this](ofxCvGui::MouseArguments & args) {
-				this->fixedElements->mouseAction(args);
-				if (args.mightStillBeUseful()) {
-					this->canvasElements->mouseAction(args);
-					args.takeMousePress(this);
-				}
-				
-				if(args.action == MouseArguments::Action::Dragged) {
-					if (args.getOwner() == this) {
-						this->scrollPosition -= args.movement;
-					}
+				args.takeMousePress(this);
+				if(args.isDragging(this)) {
+					this->scrollPosition -= args.movement;
 				}
 			};
 
-			this->onBoundsChange += [this](ofxCvGui::BoundsChangeArguments & args) {
-				this->fixedElements->setBounds(args.localBounds);
-			};
+			this->canvasElements->addListenersToParent(this);
+			this->fixedElements->addListenersToParent(this, true);
 		}
 
 		//---------
@@ -56,18 +40,12 @@ namespace ofxCvGui {
 			ofVec2f bottomRight(thisBounds.getWidth(), thisBounds.getHeight());
 
 			for (auto element : this->canvasElements->getElements()) {
-				auto elementBounds = element->getBounds();
-				if (elementBounds.x < topLeft.x) {
-					topLeft.x = elementBounds.x;
+				auto elementBottomRight = element->getBounds().getBottomRight();
+				if (elementBottomRight.x > bottomRight.x) {
+					bottomRight.x = elementBottomRight.x;
 				}
-				if (elementBounds.y < topLeft.y) {
-					topLeft.y = elementBounds.y;
-				}
-				if (elementBounds.x > bottomRight.x) {
-					bottomRight.x = elementBounds.x;
-				}
-				if (elementBounds.y > bottomRight.y) {
-					bottomRight.y = elementBounds.y;
+				if (elementBottomRight.y > bottomRight.y) {
+					bottomRight.y = elementBottomRight.y;
 				}
 			}
 

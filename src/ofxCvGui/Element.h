@@ -16,9 +16,10 @@ namespace ofxCvGui {
 	class Element {
 	public:
 		enum LocalMouseState {
-			Waiting,
-			Down,
-			Dragging
+			Waiting = 1 << 0,
+			Down = 1 << 1,
+			Dragging = 1 << 2,
+			ChildOwnsMouse = 1 << 3 // for when a child element owns the mouse
 		};
 
 		Element();
@@ -47,6 +48,7 @@ namespace ofxCvGui {
 		float getHeight() const;
 		
 		void setCaption(string caption);
+		const string & getCaption() const;
 		ofxLiquidEvent<string> onCaptionChange;
 		
 		ofxLiquidEvent<UpdateArguments> onUpdate;

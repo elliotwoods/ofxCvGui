@@ -34,7 +34,10 @@ namespace ofxCvGui {
 	class MouseArguments : public InputArguments {
     public:
         enum Action {
-            Pressed, Released, Moved, Dragged
+            Pressed = 1 << 0,
+			Released = 1 << 1,
+			Moved = 1 << 2,
+			Dragged = 1 << 3
         };
         
 		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * owner, const ofVec2f& cached = ofVec2f()); ///global
@@ -51,6 +54,8 @@ namespace ofxCvGui {
 
 		/// Only use this is you know what you're doing. This is for manually marking a mouse take
 		void forceMouseTake(void * element);
+
+		bool isDragging(void * element) const;
 
 		void * getOwner() const;
 

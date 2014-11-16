@@ -43,9 +43,10 @@ namespace ofxCvGui {
 	//----------
 	bool MouseArguments::takeMousePress(void * element) {
 		auto local = this->isLocal();
-		auto gotClick = (action == Pressed) && local && (! this->isTaken() || this->getOwner() == this);
+		auto gotClick = (action == Pressed) && local && (! this->isTaken() || this->getOwner() == element);
 		if (gotClick) {
 			this->forceMouseTake(element);
+			cout << "Take mouse : " << element << endl;
 		}
 		return gotClick;
 	}
@@ -63,6 +64,11 @@ namespace ofxCvGui {
 	//----------
 	void MouseArguments::forceMouseTake(void * element) {
 		this->takenBy = element;
+	}
+
+	//----------
+	bool MouseArguments::isDragging(void * element) const {
+		return this->getOwner() == element && this->action == MouseArguments::Action::Dragged;
 	}
 
 	//----------

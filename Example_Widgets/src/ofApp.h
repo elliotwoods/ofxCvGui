@@ -21,4 +21,10 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 		ofxCvGui::Builder gui;
+
+		ofParameter<float> radius[5];
+		ofParameter<float> x[5];
+		ofParameter<float> y[5];
+		ofParameter<float> luminance[5];
+		ofParameter<bool> fill[5];
 };
