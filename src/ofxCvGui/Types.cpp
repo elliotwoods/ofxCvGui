@@ -46,7 +46,6 @@ namespace ofxCvGui {
 		auto gotClick = (action == Pressed) && local && (! this->isTaken() || this->getOwner() == element);
 		if (gotClick) {
 			this->forceMouseTake(element);
-			cout << "Take mouse : " << element << endl;
 		}
 		return gotClick;
 	}
