@@ -1,15 +1,16 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxCvGui.h"
 
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 
 	public:
 		void setup();
 		void update();
 		void draw();
 
-		void keyPressed  (int key);
+		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
 		void mouseDragged(int x, int y, int button);
@@ -19,4 +20,11 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+		ofxCvGui::Builder gui;
+
+		ofParameter<float> radius[5];
+		ofParameter<float> x[5];
+		ofParameter<float> y[5];
+		ofParameter<float> luminance[5];
+		ofParameter<bool> fill[5];
 };
