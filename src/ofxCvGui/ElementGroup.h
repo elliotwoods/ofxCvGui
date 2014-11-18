@@ -21,6 +21,8 @@ namespace ofxCvGui {
 		void clear();
 		vector<shared_ptr<T> > & getElements();
 
+		void layoutGridVertical(float spacing = 0.0f);
+		void layoutGridHorizontal(float spacing = 0.0f);
 	protected:
 		void updateSet();
 		void mouseActionSet(MouseArguments& mouse);

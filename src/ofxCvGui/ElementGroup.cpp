@@ -103,6 +103,32 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
+	void ElementGroup_<T>::layoutGridVertical(float spacing) {
+		const auto localBounds = this->getLocalBounds();
+		const auto step = (localBounds.getHeight() - spacing) / (float) this->elements.size();
+		const auto width = localBounds.getWidth();
+		float y = spacing;
+		for (auto element : this->elements) {
+			element->setBounds(ofRectangle(0.0f, y, width, step - spacing));
+			y += step;
+		}
+	}
+
+	//----------
+	template<typename T>
+	void ElementGroup_<T>::layoutGridHorizontal(float spacing) {
+		const auto localBounds = this->getLocalBounds();
+		const auto step = (localBounds.getWidth() - spacing) / (float) this->elements.size();
+		const auto height = localBounds.getHeight();
+		float x = spacing;
+		for (auto element : this->elements) {
+			element->setBounds(ofRectangle(0.0f, x, step - spacing, height));
+			x += step;
+		}
+	}
+
+	//----------
+	template<typename T>
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
 		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++) {
