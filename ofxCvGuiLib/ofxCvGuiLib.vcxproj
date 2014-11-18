@@ -27,6 +27,7 @@
     <ClInclude Include="..\src\ofxCvGui\Controller.h" />
     <ClInclude Include="..\src\ofxCvGui\Element.h" />
     <ClInclude Include="..\src\ofxCvGui\ElementGroup.h" />
+    <ClInclude Include="..\src\ofxCvGui\ElementSlot.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\BaseImage.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h" />
@@ -64,6 +65,7 @@
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Element.cpp" />
     <ClCompile Include="..\src\ofxCvGui\ElementGroup.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\ElementSlot.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Base.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
