@@ -71,11 +71,13 @@ namespace ofxCvGui {
 		void removeListenersFromParent(shared_ptr<Element>);
 	protected:
 		void setScissor(bool);
+		void setHitTestOnBounds(bool);
 		ofRectangle bounds; ///<bounds relative to parent
 		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0
 		string caption;
 		bool enabled;
 		bool enableScissor;
+		bool enableHitTestOnBounds;
 		LocalMouseState localMouseState;
 		bool mouseOver;
 		set<shared_ptr<Element>> listeningElements; ///<other elements which react to this elements events

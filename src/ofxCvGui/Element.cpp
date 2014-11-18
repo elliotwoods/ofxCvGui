@@ -6,6 +6,7 @@ namespace ofxCvGui {
 		this->enableScissor = false;
 		this->localMouseState = Waiting;
 		this->mouseOver = false;
+		this->enableHitTestOnBounds = true;
 	}
 
 	//-----------
@@ -45,8 +46,11 @@ namespace ofxCvGui {
 			this->mouseOver = localArgs.isLocal();
 
 			if(args.action == MouseArguments::Pressed) {
+				//some elements might not want to perform a local hit test since their bounds are meaningless (e.g. ElementSlot)
+				auto isHit = localArgs.isLocal() || !this->enableHitTestOnBounds;
+
 				//special case for pressed, only pass if local and not already taken
-				if (localArgs.isLocal() && !localArgs.isTaken()) {
+				if (isHit && !localArgs.isTaken()) {
 					//pass the mouse event onto Element's event handlers
 					this->onMouse.notifyListenersInReverse(localArgs);
 
@@ -268,5 +272,10 @@ namespace ofxCvGui {
 	//-----------
 	void Element::setScissor(bool enableScissor) {
 		this->enableScissor = enableScissor;
+	}
+
+	//-----------
+	void Element::setHitTestOnBounds(bool enableHitTestOnBounds) {
+		this->enableHitTestOnBounds = enableHitTestOnBounds;
 	}
 }
