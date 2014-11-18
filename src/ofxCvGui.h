@@ -5,6 +5,10 @@
 
 #include "ofxCvGui/Utils/Button.h"
 
+#include "ofxCvGui/Element.h"
+#include "ofxCvGui/ElementSlot.h"
+#include "ofxCvGui/ElementGroup.h"
+
 #include "ofxCvGui/Widgets/IInspectable.h"
 #include "ofxCvGui/Widgets/Title.h"
 #include "ofxCvGui/Widgets/Spacer.h"
