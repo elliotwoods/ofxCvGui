@@ -76,6 +76,40 @@ namespace ofxCvGui {
 		}
 
 		//---------
+		void drawToolTip(const string & text, const ofVec2f & position) {
+			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
+			bool hasFont = font.isLoaded();
+
+			if (!hasFont) {
+				ofDrawBitmapStringHighlight(text, position);
+			} else {
+				const auto rawBounds = font.getStringBoundingBox(text, 0, 0);
+				const auto halfTextWidth = rawBounds.getWidth() / 2.0f;
+				const auto textHeight = rawBounds.getHeight() - rawBounds.y;
+				const ofVec2f textDrawAnchor(position.x - (halfTextWidth + rawBounds.x), position.y - (rawBounds.getHeight() + rawBounds.y) - 15);
+
+				ofPath bubble;
+				bubble.setStrokeColor(ofColor(0));
+				bubble.setStrokeWidth(3.0f);
+				bubble.moveTo(position);
+				bubble.lineTo(position + ofVec2f(-5, -5));
+				bubble.lineTo(position + ofVec2f(-halfTextWidth - 5, -5));
+				bubble.lineTo(position + ofVec2f(-halfTextWidth - 5, -5 - textHeight - 10));
+				bubble.lineTo(position + ofVec2f(+halfTextWidth + 5, -5 - textHeight - 10));
+				bubble.lineTo(position + ofVec2f(+halfTextWidth + 5, -5));
+				bubble.lineTo(position + ofVec2f(+5, -5));
+				bubble.close();				
+				bubble.draw();
+
+				//draw text
+				ofPushStyle();
+				ofSetColor(0);
+				font.drawString(text, floor(textDrawAnchor.x), floor(textDrawAnchor.y));
+				ofPopStyle();
+			}
+		}
+
+		//---------
 		string makeString(char key) {
 			switch(key) {
 			case ' ':
