@@ -19,6 +19,7 @@ namespace ofxCvGui {
 		shared_ptr<T> addBlank();
 		void drop(shared_ptr<T> element);
 		void clear();
+		const vector<shared_ptr<T> > & getElements() const;
 		vector<shared_ptr<T> > & getElements();
 
 		void layoutGridVertical(float spacing = 0.0f);

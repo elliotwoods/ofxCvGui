@@ -39,8 +39,12 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::mouseActionSet(MouseArguments& args) {
-		auto it = this->elements.rbegin();
-		for (; it != this->elements.rend(); it++) {
+		//since these actions may change the element count,
+		// we will cache the list of elements before
+		auto cachedElements = this->elements;
+
+		auto it = cachedElements.rbegin();
+		for (; it != cachedElements.rend(); it++) {
 			auto element = *it;
 			element->mouseAction(args);
 		}
@@ -49,7 +53,11 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::keyboardActionSet(KeyboardArguments& keyboard) {
-		for (auto & element : elements) {
+		//since these actions may change the element count,
+		// we will cache the list of elements before
+		auto cachedElements = this->elements;
+
+		for (auto & element : cachedElements) {
 			element->keyboardAction(keyboard);
 		}
 	}
@@ -95,6 +103,12 @@ namespace ofxCvGui {
 		this->onBoundsChange(args);
 	}
 	
+	//----------
+	template<typename T>
+	const vector<shared_ptr<T>> & ElementGroup_<T>::getElements() const {
+		return this->elements;
+	}
+
 	//----------
 	template<typename T>
 	vector<shared_ptr<T>> & ElementGroup_<T>::getElements() {
