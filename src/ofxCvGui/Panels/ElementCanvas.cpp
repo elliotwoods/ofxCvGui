@@ -42,10 +42,10 @@ namespace ofxCvGui {
 			for (auto element : this->canvasElements->getElements()) {
 				auto elementBottomRight = element->getBounds().getBottomRight();
 				if (elementBottomRight.x > bottomRight.x) {
-					bottomRight.x = elementBottomRight.x;
+					bottomRight.x = elementBottomRight.x + 10;
 				}
 				if (elementBottomRight.y > bottomRight.y) {
-					bottomRight.y = elementBottomRight.y;
+					bottomRight.y = elementBottomRight.y + 10;
 				}
 			}
 

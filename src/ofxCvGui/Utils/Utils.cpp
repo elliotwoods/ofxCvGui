@@ -90,13 +90,13 @@ namespace ofxCvGui {
 
 				ofPath bubble;
 				bubble.setStrokeColor(ofColor(0));
-				bubble.setStrokeWidth(3.0f);
+				bubble.setStrokeWidth(1.0f);
 				bubble.moveTo(position);
 				bubble.lineTo(position + ofVec2f(-5, -5));
-				bubble.lineTo(position + ofVec2f(-halfTextWidth - 5, -5));
-				bubble.lineTo(position + ofVec2f(-halfTextWidth - 5, -5 - textHeight - 10));
-				bubble.lineTo(position + ofVec2f(+halfTextWidth + 5, -5 - textHeight - 10));
-				bubble.lineTo(position + ofVec2f(+halfTextWidth + 5, -5));
+				bubble.lineTo(position + ofVec2f(-halfTextWidth - 10, -5));
+				bubble.lineTo(position + ofVec2f(-halfTextWidth - 10, -5 - textHeight - 10));
+				bubble.lineTo(position + ofVec2f(+halfTextWidth + 10, -5 - textHeight - 10));
+				bubble.lineTo(position + ofVec2f(+halfTextWidth + 10, -5));
 				bubble.lineTo(position + ofVec2f(+5, -5));
 				bubble.close();				
 				bubble.draw();
