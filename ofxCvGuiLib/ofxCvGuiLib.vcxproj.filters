@@ -101,6 +101,9 @@
     <ClCompile Include="..\src\ofxCvGui\ElementSlot.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\InspectController.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -182,9 +185,6 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h">
-      <Filter>src\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Inspector.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
@@ -210,6 +210,9 @@
       <Filter>src\Panels</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\ElementSlot.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\InspectController.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

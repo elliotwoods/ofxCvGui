@@ -26,6 +26,12 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		void Scroll::clear() {
+			this->elements->clear();
+			this->arrangeScroll();
+		}
+
+		//----------
 		ElementGroupPtr Scroll::getGroup() {
 			return this->elements;
 		}

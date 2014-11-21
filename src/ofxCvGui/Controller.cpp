@@ -1,4 +1,5 @@
 #include "ofxCvGui/Controller.h"
+#include "ofxCvGui/InspectController.h"
 #include "ofxAssets.h"
 
 namespace ofxCvGui {
@@ -134,6 +135,7 @@ namespace ofxCvGui {
 			}
 			updateCurrentPanel();
 		}
+		InspectController::X().update();
 		rootGroup->update();
 	}
 
