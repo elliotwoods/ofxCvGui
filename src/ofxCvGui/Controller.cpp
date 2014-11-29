@@ -35,6 +35,13 @@ namespace ofxCvGui {
 		this->rootGroup = rootGroup;
 		this->currentPanel = PanelPtr();
 		this->currentPanelBounds = ofGetCurrentViewport();
+
+		//cache fonts
+		ofxAssets::font("ofxCvGui::swisop3", 12);
+		ofxAssets::font("ofxCvGui::swisop3", 14);
+		ofxAssets::font("ofxCvGui::swisop3", 18);
+		ofxAssets::font("ofxCvGui::swisop3", 24);
+
 		this->initialised = true;
 	}
 	
