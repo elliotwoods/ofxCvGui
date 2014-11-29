@@ -33,15 +33,23 @@ namespace ofxCvGui {
 			void setGridScale(const float gridScale);
 			void setGridLabelsEnabled(bool ticksEnabled);
 
+			void setUseFbo(bool);
+			bool getUseFbo() const;
+
 			ofxLiquidEvent<ofCamera> onDrawWorld;
 		protected:
-			void drawContent(DrawArguments& arguments);
+			void drawContent(const ofRectangle & bounds);
+			void allocateFbo();
+
 			vector<ofNode*> nodes;
 			CameraType camera;
 			ofColor gridColor;
 			float gridScale;
 			bool gridLabelsEnabled;
 			bool gridEnabled;
+
+			bool useFbo;
+			ofFbo fbo;
 		};
 	}
 }

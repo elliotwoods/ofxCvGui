@@ -17,6 +17,10 @@
 #include "ofxCvGui/Panels/Scroll.h"
 #include "ofxCvGui/Panels/Inspector.h"
 
+//panels which currently lack factory functions
+#include "ofxCvGui/Panels/ElementCanvas.h"
+#include "ofxCvGui/Panels/SharedView.h"
+
 namespace ofxCvGui {
 	class Builder {
 	public:

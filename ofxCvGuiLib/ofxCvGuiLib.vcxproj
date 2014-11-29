@@ -39,6 +39,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Inspector.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Instructions.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\SharedView.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
@@ -76,6 +77,7 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Inspector.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\SharedView.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\World.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />

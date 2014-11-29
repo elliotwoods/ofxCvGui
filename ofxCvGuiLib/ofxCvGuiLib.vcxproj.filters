@@ -104,6 +104,9 @@
     <ClCompile Include="..\src\ofxCvGui\InspectController.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\SharedView.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\InspectController.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\SharedView.h">
+      <Filter>src\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

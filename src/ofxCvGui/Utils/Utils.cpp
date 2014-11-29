@@ -166,6 +166,7 @@ namespace ofxCvGui {
 		void popScissor() {
 			if (scissorHistory.empty()) {
 				ofLogError("ofxCvGui::popScissor") << "Scissor history is empty";
+				return;
 			}
 			applyScissor(scissorHistory.back());
 			scissorHistory.pop_back();
@@ -173,6 +174,24 @@ namespace ofxCvGui {
 				glDisable(GL_SCISSOR_TEST);
 				glScissor(0, 0, ofGetWidth(), ofGetHeight());
 			}
+		}
+
+		//----------
+		bool disableScissor() {
+			GLboolean scissorEnabled;
+			glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled);
+			if (scissorEnabled == GL_TRUE) {
+				glDisable(GL_SCISSOR_TEST);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		//----------
+		void enableScissor() {
+			glEnable(GL_SCISSOR_TEST);
 		}
 	}
 }

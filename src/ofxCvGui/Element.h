@@ -65,12 +65,13 @@ namespace ofxCvGui {
 		void enable();
 		void disable();
 
+		void setScissor(bool);
+
 		void addListenersToParent(Element *, bool syncBoundsToParent = false);
 		void addListenersToParent(shared_ptr<Element>, bool syncBoundsToParent = false);
 		void removeListenersFromParent(Element *);
 		void removeListenersFromParent(shared_ptr<Element>);
 	protected:
-		void setScissor(bool);
 		void setHitTestOnBounds(bool);
 		ofRectangle bounds; ///<bounds relative to parent
 		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0

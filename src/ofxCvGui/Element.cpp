@@ -226,6 +226,11 @@ namespace ofxCvGui {
 	}
 
 	//-----------
+	void Element::setScissor(bool enableScissor) {
+		this->enableScissor = enableScissor;
+	}
+
+	//-----------
 	void Element::addListenersToParent(Element * parent, bool syncBoundsToParent) {
 		parent->onUpdate.addListener([this](UpdateArguments & args) {
 			this->update();
@@ -267,11 +272,6 @@ namespace ofxCvGui {
 		if (parent) {
 			this->removeListenersFromParent(parent.get());
 		}
-	}
-
-	//-----------
-	void Element::setScissor(bool enableScissor) {
-		this->enableScissor = enableScissor;
 	}
 
 	//-----------
