@@ -43,7 +43,7 @@ namespace ofxCvGui {
 		//----------
 		void Scroll::setScroll(float position) {
 			this->position = position;
-			this->elements->setPosition(ofVec2f(0, -position));
+			this->elements->setPosition(ofVec2f(0, -floor(position)));
 		}
 
 		//----------
