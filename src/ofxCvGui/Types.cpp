@@ -1,4 +1,6 @@
 #include "ofxCvGui/Types.h"
+#include "ofxCvGui/Element.h"
+
 namespace ofxCvGui {
 #pragma mark DrawArguments
 	//----------
@@ -11,13 +13,14 @@ namespace ofxCvGui {
 
 #pragma mark MouseArguments
 	//----------
-	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * takenBy, const ofVec2f& cached) :
+	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, bool isDoubleClick, void * takenBy, const ofVec2f& cached) :
 		action(action),
 		button(mouseArgs.button),
 		global(mouseArgs.x, mouseArgs.y),
 		local(mouseArgs.x - rectangle.x, mouseArgs.y - rectangle.y),
 		localNormalised(local / ofVec2f(rectangle.width, rectangle.height)),
         movement(action == Dragged ? global - cached : ofVec2f()),
+		isDoubleClick(isDoubleClick),
 		takenBy(takenBy),
         InputArguments(currentPanel)
 	{ }
@@ -30,6 +33,7 @@ namespace ofxCvGui {
         local(parentArguments.local - ofVec2f(childBounds.x, childBounds.y)),
         localNormalised(local / ofVec2f(childBounds.width, childBounds.height)),
         movement(parentArguments.movement),
+		isDoubleClick(parentArguments.isDoubleClick),
 		takenBy(parentArguments.takenBy),
         InputArguments(parentArguments.currentPanel)
 	{ }
@@ -48,6 +52,11 @@ namespace ofxCvGui {
 			this->forceMouseTake(element);
 		}
 		return gotClick;
+	}
+
+	//----------
+	bool MouseArguments::takeMousePress(shared_ptr<Element> element) {
+		return this->takeMousePress(element.get());
 	}
 
 	//----------

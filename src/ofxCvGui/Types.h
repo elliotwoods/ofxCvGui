@@ -4,6 +4,9 @@
 #include "ofTypes.h"
 
 namespace ofxCvGui {
+	//-------------
+	class Element; //temporary definition
+
 	//----------
     struct UpdateArguments {
         
@@ -40,7 +43,7 @@ namespace ofxCvGui {
 			Dragged = 1 << 3
         };
         
-		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * owner, const ofVec2f& cached = ofVec2f()); ///global
+		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, bool isDoubleClick, void * owner, const ofVec2f& cached = ofVec2f()); ///global
 		MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds); ///local
 		
 		bool isLocal() const; 
@@ -48,6 +51,7 @@ namespace ofxCvGui {
 
 		/// If the click is local and available then take it and return true, else return false
 		bool takeMousePress(void * element);
+		bool takeMousePress(shared_ptr<Element>);
 
 		/// Not taken, or is something other than a mouse down action
 		bool mightStillBeUseful() const;
@@ -65,6 +69,7 @@ namespace ofxCvGui {
 		const ofVec2f local;
 		const ofVec2f localNormalised; ///<Texture coordinates
         const ofVec2f movement;
+		const bool isDoubleClick;
 
 		friend ostream& operator<<(ostream&, const MouseArguments &);
 	protected:

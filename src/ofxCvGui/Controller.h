@@ -5,6 +5,10 @@
 #include "ofxCvGui/Panels/Base.h"
 #include "ofxCvGui/Types.h"
 
+#define OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX 3
+#define OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS 500
+
+
 namespace ofxCvGui {
 	class Controller {
 	public:
@@ -49,6 +53,7 @@ namespace ofxCvGui {
 		bool fullscreen;
         ofVec2f mouseCached;
 		void * mouseOwner;
+		pair<long long, ofMouseEventArgs> lastMouseClick; ///<timestamp in millis
 		bool chromeVisible;
 
 		float cachedWidth, cachedHeight;

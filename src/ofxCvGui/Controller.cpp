@@ -11,7 +11,7 @@ namespace ofxCvGui {
 		this->chromeVisible = true;
 		this->lastRebuildRequiredFrame = -10;
 		this->mouseOwner = nullptr;
-
+		this->lastMouseClick = pair<long long, ofMouseEventArgs>(std::numeric_limits<long long>::min(), ofMouseEventArgs());
 		this->cachedWidth = 0.0f;
 		this->cachedHeight = 0.0f;
 	}
@@ -186,7 +186,7 @@ namespace ofxCvGui {
 	void Controller::mouseMoved(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), this->currentPanel, this->mouseOwner));
+		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), this->currentPanel, false, this->mouseOwner));
 		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else {
@@ -199,20 +199,26 @@ namespace ofxCvGui {
 	void Controller::mousePressed(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(MouseArguments(args, MouseArguments::Pressed, rootGroup->getBounds(), this->currentPanel, this->mouseOwner));
+		auto thisMouseClick = pair<long long, ofMouseEventArgs>(ofGetElapsedTimeMillis(), args);
+
+		bool isDoubleClick = (thisMouseClick.first - this->lastMouseClick.first) < OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS;
+		isDoubleClick &= thisMouseClick.second.distance(this->lastMouseClick.second) < OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX;
+
+		MouseArguments action(MouseArguments(args, MouseArguments::Pressed, rootGroup->getBounds(), this->currentPanel, isDoubleClick, this->mouseOwner));
 		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
 			rootGroup->mouseAction(action);
         this->mouseCached = action.global;
 		this->mouseOwner = action.getOwner();
+		this->lastMouseClick = thisMouseClick;
 	}
 	
 	//----------
 	void Controller::mouseReleased(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), this->currentPanel, this->mouseOwner);
+		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), this->currentPanel, false, this->mouseOwner);
         if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
@@ -224,7 +230,7 @@ namespace ofxCvGui {
 	void Controller::mouseDragged(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), this->currentPanel, this->mouseOwner, mouseCached);
+		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), this->currentPanel, false, this->mouseOwner, mouseCached);
         if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
