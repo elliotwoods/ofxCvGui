@@ -203,7 +203,8 @@
       <IgnoreSpecificDefaultLibraries>PocoFoundationd.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy /e /i /y "$(ProjectDir)..\data" "$(SolutionDir)bin\data"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -230,7 +231,8 @@
       <IgnoreSpecificDefaultLibraries>PocoFoundationd.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy /e /i /y "$(ProjectDir)..\data" "$(SolutionDir)bin\data"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
