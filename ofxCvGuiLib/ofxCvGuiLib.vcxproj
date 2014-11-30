@@ -22,6 +22,8 @@
     <ClInclude Include="..\..\ofxAssets\src\ofxAssets.h" />
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
     <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h" />
+    <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputField.h" />
+    <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputFieldFontRenderer.h" />
     <ClInclude Include="..\src\ofxCvGui.h" />
     <ClInclude Include="..\src\ofxCvGui\Builder.h" />
     <ClInclude Include="..\src\ofxCvGui\Controller.h" />
@@ -48,6 +50,7 @@
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
+    <ClInclude Include="..\src\ofxCvGui\Utils\TextField.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h" />
@@ -61,6 +64,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
+    <ClCompile Include="..\..\ofxTextInputField\src\ofxTextInputField.cpp" />
     <ClCompile Include="..\src\ofxCvGui.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
@@ -86,6 +90,7 @@
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Utils\TextField.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Indicator.cpp" />
@@ -180,7 +185,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
       <MinimalRebuild>false</MinimalRebuild>
@@ -207,7 +212,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
       <MinimalRebuild>false</MinimalRebuild>
@@ -233,7 +238,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
     </ClCompile>
@@ -256,7 +261,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
     </ClCompile>

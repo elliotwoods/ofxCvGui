@@ -4,6 +4,7 @@
 #include "ofxCvGui/Builder.h"
 
 #include "ofxCvGui/Utils/Button.h"
+#include "ofxCvGui/Utils/TextField.h"
 
 #include "ofxCvGui/Element.h"
 #include "ofxCvGui/ElementSlot.h"
