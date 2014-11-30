@@ -34,6 +34,7 @@ namespace ofxCvGui {
 		if (this->inspectThisFrame) {
 			if (this->currentTarget.lock() != this->inspectThisFrame) {
 				this->currentTarget = this->inspectThisFrame;
+				this->inspectThisFrame.reset();
 				needsToNotifyListeners = true;
 			}
 			this->inspectThisFrame.reset();
