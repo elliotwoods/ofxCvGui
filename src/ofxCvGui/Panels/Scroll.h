@@ -25,7 +25,6 @@ namespace ofxCvGui {
 			float position;
 			float length;
 			bool onScrollBar;
-			bool dragTaken;
 		};
 	}
 }

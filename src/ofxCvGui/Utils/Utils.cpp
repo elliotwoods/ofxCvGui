@@ -139,7 +139,9 @@ namespace ofxCvGui {
 		ofRectangle getScissor() {
 			int bounds[4];
 			glGetIntegeri_v(GL_SCISSOR_BOX, 0, bounds);
-			return ofRectangle(bounds[0], bounds[1], bounds[2], bounds[3]);
+			auto currentScissor = ofRectangle(bounds[0], bounds[1], bounds[2], bounds[3]);
+			currentScissor.y = ofGetWindowHeight() - currentScissor.y - bounds[3]; // flip coords
+			return currentScissor;
 		}
 			
 		//----------
@@ -154,11 +156,13 @@ namespace ofxCvGui {
 
 		//----------
 		void pushScissor(const ofRectangle & bounds) {
-			scissorHistory.push_back(getScissor());
+			const auto currentScissor = getScissor();
+			auto & debugScissorHistory = scissorHistory; // just so we can debug in debug mode. this gets optimised away
+			scissorHistory.push_back(currentScissor);
 			if (scissorHistory.empty()) {
 				applyScissor(bounds);
 			} else {
-				applyScissor(bounds.getIntersection(scissorHistory.back()));
+				applyScissor(bounds.getIntersection(currentScissor));
 			}
 		}
 
