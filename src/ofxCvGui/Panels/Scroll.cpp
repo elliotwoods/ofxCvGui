@@ -47,6 +47,29 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		float Scroll::getScroll() const {
+			return this->position;
+		}
+
+		//----------
+		void Scroll::scrollToInclude(ElementPtr element) {
+			const auto elementBounds = element->getBounds();
+			auto correctedElementBounds = elementBounds;
+			correctedElementBounds.y -= this->position;
+
+			if (this->getLocalBounds().getIntersection(correctedElementBounds).getHeight() == 0) {
+				//check if need to scroll up or down
+				if (this->position > correctedElementBounds.y) {
+					//need to scroll up
+					this->setScroll(elementBounds.y);
+				} else {
+					//need to scroll down
+					this->setScroll(elementBounds.height + (elementBounds.y - this->getLocalBounds().height));
+				}
+			}
+		}
+
+		//----------
 		void Scroll::update() {
 			if (this->localMouseState == LocalMouseState::Waiting) {
 				if (this->position < 0.0f) {
