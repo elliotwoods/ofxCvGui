@@ -8,8 +8,6 @@ namespace ofxCvGui {
 	namespace Panels {
 		//----------
 		Scroll::Scroll() {
-			this->setCaption("Scroll");
-
 			this->elements = ElementGroupPtr(new ElementGroup());
 			this->elements->setScissor(true);
 

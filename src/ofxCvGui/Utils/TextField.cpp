@@ -13,9 +13,6 @@ namespace ofxCvGui {
 				case ofxCvGui::KeyboardArguments::Action::Pressed:
 					ofArgs.type = ofKeyEventArgs::Type::Pressed;
 					this->textInputField.keyPressed(ofArgs);
-					if (args.key == OF_KEY_RETURN) {
-						this->onHitReturn(this->textInputField.text);
-					}
 					break;
 				case ofxCvGui::KeyboardArguments::Action::Released:
 					ofArgs.type = ofKeyEventArgs::Type::Released;
