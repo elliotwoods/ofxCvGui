@@ -7,6 +7,8 @@ namespace ofxCvGui {
 		this->localMouseState = Waiting;
 		this->mouseOver = false;
 		this->enableHitTestOnBounds = true;
+		this->cachedView = nullptr;
+		this->needsViewUpdate = false;
 	}
 
 	//-----------
@@ -20,22 +22,45 @@ namespace ofxCvGui {
     //-----------
 	void Element::draw(const DrawArguments& parentArguments) {
 		if (this->enabled) {
-			auto boundsWithinParent = this->getBounds();
-			ofRectangle globalBounds = boundsWithinParent;
-			globalBounds.x += parentArguments.globalBounds.x;
-			globalBounds.y += parentArguments.globalBounds.y;
-			DrawArguments localArguments(boundsWithinParent, globalBounds, parentArguments.chromeEnabled);
+			if (this->cachedView) {
+				if (this->needsViewUpdate) {
+					//if we need to update the view, then redraw the fbo
+					this->cachedView->begin();
+					ofClear(80, 0);
 
-			ofPushMatrix();
-			ofTranslate(bounds.x, bounds.y);
-			if (this->enableScissor) {
-				ofxCvGui::Utils::pushScissor(localArguments.globalBounds);
+					bool scissorWasEnabled = Utils::disableScissor();
+
+					const auto localBounds = this->getLocalBounds();
+					DrawArguments localArguments(localBounds, localBounds, parentArguments.chromeEnabled);
+					this->onDraw(localArguments);
+					
+					if (scissorWasEnabled) {
+						Utils::enableScissor();
+					}
+
+					this->cachedView->end();
+					this->needsViewUpdate = false;
+				}
+				this->cachedView->draw(this->bounds);
+			} else {
+				auto boundsWithinParent = this->getBounds();
+				ofRectangle globalBounds = boundsWithinParent;
+				globalBounds.x += parentArguments.globalBounds.x;
+				globalBounds.y += parentArguments.globalBounds.y;
+				DrawArguments localArguments(boundsWithinParent, globalBounds, parentArguments.chromeEnabled);
+
+				ofPushMatrix();
+				ofTranslate(bounds.x, bounds.y);
+				if (this->enableScissor) {
+					ofxCvGui::Utils::pushScissor(localArguments.globalBounds);
+				}
+				this->onDraw(localArguments);
+				if (this->enableScissor) {
+					ofxCvGui::Utils::popScissor();
+				}
+				ofPopMatrix();
 			}
-			this->onDraw(localArguments);
-			if (this->enableScissor) {
-				ofxCvGui::Utils::popScissor();
-			}
-			ofPopMatrix();
+			
 		}
 	}
     
@@ -138,7 +163,12 @@ namespace ofxCvGui {
 		this->localBounds = bounds;
 		this->localBounds.x = 0;
 		this->localBounds.y = 0;
-        
+
+		if (this->cachedView) {
+			this->allocateCachedView();
+			this->markViewDirty();
+		}
+
 		auto arguments = BoundsChangeArguments(this->bounds);
 		this->onBoundsChange(arguments);
 	}
@@ -272,6 +302,38 @@ namespace ofxCvGui {
 		if (parent) {
 			this->removeListenersFromParent(parent.get());
 		}
+	}
+
+	//-----------
+	void Element::setCachedView(bool cachedViewEnabled) {
+		if (cachedViewEnabled) {
+			if (!this->cachedView) {
+				this->cachedView = new ofFbo();
+				this->allocateCachedView();
+				this->markViewDirty();
+			}
+		}
+		else {
+			if (this->cachedView) {
+				delete this->cachedView;
+			}
+		}
+	}
+
+	//-----------
+	void Element::markViewDirty() {
+		this->needsViewUpdate = true;
+	}
+
+	//-----------
+	void Element::allocateCachedView() {
+		ofFbo::Settings fboSettings;
+		fboSettings.width = this->bounds.width;
+		fboSettings.height = this->bounds.height;
+		fboSettings.internalformat = GL_RGBA;
+		//fboSettings.numSamples = 2;
+
+		this->cachedView->allocate(fboSettings);
 	}
 
 	//-----------

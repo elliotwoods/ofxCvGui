@@ -7,6 +7,7 @@
 #include "Utils/Constants.h"
 
 #include "ofGraphics.h"
+#include "ofFbo.h"
 #include "../../../addons/ofxLiquidEvent/src/ofxLiquidEvent.h"
 
 #define OFXCVGUI_MAKE_ELEMENT_HEADER(T, ...) static shared_ptr<T> make(__VA_ARGS__)
@@ -71,7 +72,11 @@ namespace ofxCvGui {
 		void addListenersToParent(shared_ptr<Element>, bool syncBoundsToParent = false);
 		void removeListenersFromParent(Element *);
 		void removeListenersFromParent(shared_ptr<Element>);
+
+		void setCachedView(bool cachedViewEnabled);
+		void markViewDirty();
 	protected:
+		void allocateCachedView();
 		void setHitTestOnBounds(bool);
 		ofRectangle bounds; ///<bounds relative to parent
 		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0
@@ -81,7 +86,9 @@ namespace ofxCvGui {
 		bool enableHitTestOnBounds;
 		LocalMouseState localMouseState;
 		bool mouseOver;
-		set<shared_ptr<Element>> listeningElements; ///<other elements which react to this elements events
+
+		ofFbo * cachedView = 0;
+		bool needsViewUpdate;
 	};
 	
 	typedef shared_ptr<Element> ElementPtr;
