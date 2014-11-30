@@ -45,6 +45,16 @@ namespace ofxCvGui {
 			};
 
 			this->onDraw += [this](ofxCvGui::DrawArguments & args) {
+				if (!this->hintText.empty() && this->textInputField.text.empty()) {
+					ofPushStyle();
+					ofSetColor(100);
+					auto fontRenderer = this->textInputField.getFontRenderer();
+					auto typedFontRenderer = dynamic_cast<ofxTextInput::TypedFontRenderer *>(fontRenderer);
+					if (typedFontRenderer) {
+						typedFontRenderer->drawString(this->hintText, this->textInputField.getHorizontalPadding(), fontRenderer->getLineHeight() + this->textInputField.getVerticalPadding());
+					}
+					ofPopStyle();
+				}
 				this->textInputField.draw();
 			};
 
@@ -62,6 +72,11 @@ namespace ofxCvGui {
 			ofRemoveListener(this->textInputField.onHitReturn, this, &TextField::callbackHitReturn);
 		}
 		
+		//----------
+		void TextField::setHintText(const string & hintText) {
+			this->hintText = hintText;
+		}
+
 		//----------
 		const string & TextField::getText() const {
 			return this->textInputField.text;

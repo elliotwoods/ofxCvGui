@@ -10,6 +10,8 @@ namespace ofxCvGui {
 			TextField();
 			~TextField();
 
+			void setHintText(const string &);
+
 			const string & getText() const;
 			void setText(const string &);
 			void clearText();
@@ -27,6 +29,7 @@ namespace ofxCvGui {
 			void callbackTextChanged(string &);
 			void callbackHitReturn(string &);
 			ofxTextInputField textInputField;
+			string hintText;
 		};
 	}
 }
