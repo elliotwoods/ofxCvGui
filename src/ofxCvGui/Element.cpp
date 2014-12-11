@@ -79,6 +79,11 @@ namespace ofxCvGui {
 					//pass the mouse event onto Element's event handlers
 					this->onMouse.notifyListenersInReverse(localArgs);
 
+					//if we have a mouse released handler, then we must also try and take the click
+					if (!this->onMouseReleased.empty()) {
+						localArgs.takeMousePress(this);
+					}
+
 					//check if one of the handlers took ownership of the mouse down event
 					if (localArgs.isTaken()) {
 						// if this element or any nested elements took the click, notify upstream arguments of the take
