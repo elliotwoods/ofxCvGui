@@ -40,10 +40,11 @@ namespace ofxCvGui {
             Pressed = 1 << 0,
 			Released = 1 << 1,
 			Moved = 1 << 2,
-			Dragged = 1 << 3
+			Dragged = 1 << 3,
+			DoubleClick = 1 << 4
         };
         
-		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, bool isDoubleClick, void * owner, const ofVec2f& cached = ofVec2f()); ///global
+		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * owner, const ofVec2f& cached = ofVec2f()); ///global
 		MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds); ///local
 		
 		bool isLocal() const; 
@@ -60,6 +61,7 @@ namespace ofxCvGui {
 		void forceMouseTake(void * element);
 
 		bool isDragging(void * element) const;
+		bool isDoubleClicked(void * element) const;
 
 		void * getOwner() const;
 
@@ -69,7 +71,6 @@ namespace ofxCvGui {
 		const ofVec2f local;
 		const ofVec2f localNormalised; ///<Texture coordinates
         const ofVec2f movement;
-		const bool isDoubleClick;
 
 		friend ostream& operator<<(ostream&, const MouseArguments &);
 	protected:

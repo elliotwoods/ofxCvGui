@@ -6,7 +6,7 @@
 #include "ofxCvGui/Types.h"
 
 #define OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX 3
-#define OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS 500
+#define OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS 250
 
 
 namespace ofxCvGui {
@@ -53,6 +53,7 @@ namespace ofxCvGui {
 		bool fullscreen;
         ofVec2f mouseCached;
 		void * mouseOwner;
+		void * lastClickOwner;
 		pair<long long, ofMouseEventArgs> lastMouseClick; ///<timestamp in millis
 		bool chromeVisible;
 
