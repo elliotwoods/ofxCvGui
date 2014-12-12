@@ -13,6 +13,10 @@ namespace ofxCvGui {
 			
 			/// Elements which are fixed above the canvas
 			ElementGroupPtr getFixedElementGroup(); 
+
+			const ofVec2f & getScrollPosition() const;
+			void setScrollPosition(const ofVec2f &);
+			const ofRectangle & getCanvasExtents() const;
 		protected:
 			void update();
 			ElementGroupPtr canvasElements;

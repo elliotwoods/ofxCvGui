@@ -33,6 +33,21 @@ namespace ofxCvGui {
 		}
 
 		//---------
+		const ofVec2f & ElementCanvas::getScrollPosition() const {
+			return this->scrollPosition;
+		}
+
+		//---------
+		void ElementCanvas::setScrollPosition(const ofVec2f & scrollPosition) {
+			this->scrollPosition = scrollPosition;
+		}
+
+		//---------
+		const ofRectangle & ElementCanvas::getCanvasExtents() const {
+			return this->canvasExtents;
+		}
+
+		//---------
 		void ElementCanvas::update() {
 			auto thisBounds = this->getBounds();
 
