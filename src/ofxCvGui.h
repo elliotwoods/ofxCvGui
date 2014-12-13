@@ -4,17 +4,21 @@
 #include "ofxCvGui/Builder.h"
 
 #include "ofxCvGui/Utils/Button.h"
+#include "ofxCvGui/Utils/TextField.h"
 
-#include "ofxCvGui/Widgets/IInspectable.h"
+#include "ofxCvGui/Element.h"
+#include "ofxCvGui/ElementSlot.h"
+#include "ofxCvGui/ElementGroup.h"
+
 #include "ofxCvGui/Widgets/Title.h"
 #include "ofxCvGui/Widgets/Spacer.h"
 #include "ofxCvGui/Widgets/Slider.h"
 #include "ofxCvGui/Widgets/Toggle.h"
 #include "ofxCvGui/Widgets/Button.h"
 #include "ofxCvGui/Widgets/LiveValue.h"
+#include "ofxCvGui/Widgets/MultipleChoice.h"
+#include "ofxCvGui/Widgets/Indicator.h"
 
 namespace ofxCvGui {
-	void inspect(ofxCvGui::Widgets::IInspectable &);
-	bool isBeingInspected(ofxCvGui::Widgets::IInspectable &);
-	void addToInspector(ofxCvGui::ElementPtr);
+
 }

@@ -22,20 +22,26 @@
     <ClInclude Include="..\..\ofxAssets\src\ofxAssets.h" />
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
     <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h" />
+    <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputField.h" />
+    <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputFieldFontRenderer.h" />
     <ClInclude Include="..\src\ofxCvGui.h" />
     <ClInclude Include="..\src\ofxCvGui\Builder.h" />
     <ClInclude Include="..\src\ofxCvGui\Controller.h" />
     <ClInclude Include="..\src\ofxCvGui\Element.h" />
     <ClInclude Include="..\src\ofxCvGui\ElementGroup.h" />
+    <ClInclude Include="..\src\ofxCvGui\ElementSlot.h" />
+    <ClInclude Include="..\src\ofxCvGui\InspectController.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\BaseImage.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Draws.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\ElementCanvas.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Inspector.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Instructions.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\SharedView.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
@@ -44,9 +50,10 @@
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
+    <ClInclude Include="..\src\ofxCvGui\Utils\TextField.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
-    <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
@@ -57,19 +64,24 @@
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
+    <ClCompile Include="..\..\ofxTextInputField\src\ofxTextInputField.cpp" />
     <ClCompile Include="..\src\ofxCvGui.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Controller.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Element.cpp" />
     <ClCompile Include="..\src\ofxCvGui\ElementGroup.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\ElementSlot.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\InspectController.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Base.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\BaseImage.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\ElementCanvas.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Inspector.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\SharedView.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\World.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
@@ -78,8 +90,10 @@
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Utils\TextField.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Indicator.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\LiveValue.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\MultipleChoice.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
@@ -99,7 +113,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -113,7 +127,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -171,11 +185,10 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
       <MinimalRebuild>false</MinimalRebuild>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -190,7 +203,8 @@
       <IgnoreSpecificDefaultLibraries>PocoFoundationd.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy /e /i /y "$(ProjectDir)..\data" "$(SolutionDir)bin\data"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -199,7 +213,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
       <MinimalRebuild>false</MinimalRebuild>
@@ -217,7 +231,8 @@
       <IgnoreSpecificDefaultLibraries>PocoFoundationd.lib</IgnoreSpecificDefaultLibraries>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy /e /i /y "$(ProjectDir)..\data" "$(SolutionDir)bin\data"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -225,10 +240,9 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -249,7 +263,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxCvGui2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
     </ClCompile>

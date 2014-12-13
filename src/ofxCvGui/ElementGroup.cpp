@@ -39,7 +39,13 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::mouseActionSet(MouseArguments& args) {
-		for (auto & element : this->elements) {
+		//since these actions may change the element count,
+		// we will cache the list of elements before
+		auto cachedElements = this->elements;
+
+		auto it = cachedElements.rbegin();
+		for (; it != cachedElements.rend(); it++) {
+			auto element = *it;
 			element->mouseAction(args);
 		}
 	}
@@ -47,7 +53,11 @@ namespace ofxCvGui {
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::keyboardActionSet(KeyboardArguments& keyboard) {
-		for (auto & element : elements) {
+		//since these actions may change the element count,
+		// we will cache the list of elements before
+		auto cachedElements = this->elements;
+
+		for (auto & element : cachedElements) {
 			element->keyboardAction(keyboard);
 		}
 	}
@@ -95,8 +105,40 @@ namespace ofxCvGui {
 	
 	//----------
 	template<typename T>
+	const vector<shared_ptr<T>> & ElementGroup_<T>::getElements() const {
+		return this->elements;
+	}
+
+	//----------
+	template<typename T>
 	vector<shared_ptr<T>> & ElementGroup_<T>::getElements() {
 		return this->elements;
+	}
+
+	//----------
+	template<typename T>
+	void ElementGroup_<T>::layoutGridVertical(float spacing) {
+		const auto localBounds = this->getLocalBounds();
+		const auto step = (localBounds.getHeight() - spacing) / (float) this->elements.size();
+		const auto width = localBounds.getWidth();
+		float y = spacing;
+		for (auto element : this->elements) {
+			element->setBounds(ofRectangle(0.0f, y, width, step - spacing));
+			y += step;
+		}
+	}
+
+	//----------
+	template<typename T>
+	void ElementGroup_<T>::layoutGridHorizontal(float spacing) {
+		const auto localBounds = this->getLocalBounds();
+		const auto step = (localBounds.getWidth() - spacing) / (float) this->elements.size();
+		const auto height = localBounds.getHeight();
+		float x = spacing;
+		for (auto element : this->elements) {
+			element->setBounds(ofRectangle(0.0f, x, step - spacing, height));
+			x += step;
+		}
 	}
 
 	//----------
@@ -104,14 +146,7 @@ namespace ofxCvGui {
 	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
 		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++) {
-			auto boundsWithinParent = (*it)->getBounds();
-			
-			ofRectangle globalBounds = boundsWithinParent;
-			globalBounds.x += arguments.globalBounds.x;
-			globalBounds.y += arguments.globalBounds.y;
-
-			DrawArguments localArgs(boundsWithinParent, globalBounds, arguments.chromeEnabled);
-			(**it).draw(localArgs);
+			(**it).draw(arguments);
         }
 	}
 

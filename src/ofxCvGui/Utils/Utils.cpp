@@ -60,6 +60,11 @@ namespace ofxCvGui {
 		}
 
 		//---------
+		ofRectangle drawText(const string & text, const ofRectangle & bounds, bool background) {
+			return drawText(text, bounds.x, bounds.y, background, bounds.height, bounds.width);
+		}
+
+		//---------
 		void drawProcessingNotice(string message) {
 			auto window = glfwGetCurrentContext();
 			if (window) {
@@ -67,6 +72,40 @@ namespace ofxCvGui {
 				drawText(message, 0, 0, true, ofGetHeight(), ofGetWidth());
 				glfwSwapBuffers(window);
 				glFlush();
+			}
+		}
+
+		//---------
+		void drawToolTip(const string & text, const ofVec2f & position) {
+			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
+			bool hasFont = font.isLoaded();
+
+			if (!hasFont) {
+				ofDrawBitmapStringHighlight(text, position);
+			} else {
+				const auto rawBounds = font.getStringBoundingBox(text, 0, 0);
+				const auto halfTextWidth = rawBounds.getWidth() / 2.0f;
+				const auto textHeight = rawBounds.getHeight() - rawBounds.y;
+				const ofVec2f textDrawAnchor(position.x - (halfTextWidth + rawBounds.x), position.y - (rawBounds.getHeight() + rawBounds.y) - 15);
+
+				ofPath bubble;
+				bubble.setStrokeColor(ofColor(0));
+				bubble.setStrokeWidth(1.0f);
+				bubble.moveTo(position);
+				bubble.lineTo(position + ofVec2f(-5, -5));
+				bubble.lineTo(position + ofVec2f(-halfTextWidth - 10, -5));
+				bubble.lineTo(position + ofVec2f(-halfTextWidth - 10, -5 - textHeight - 10));
+				bubble.lineTo(position + ofVec2f(+halfTextWidth + 10, -5 - textHeight - 10));
+				bubble.lineTo(position + ofVec2f(+halfTextWidth + 10, -5));
+				bubble.lineTo(position + ofVec2f(+5, -5));
+				bubble.close();				
+				bubble.draw();
+
+				//draw text
+				ofPushStyle();
+				ofSetColor(0);
+				font.drawString(text, floor(textDrawAnchor.x), floor(textDrawAnchor.y));
+				ofPopStyle();
 			}
 		}
 
@@ -100,7 +139,9 @@ namespace ofxCvGui {
 		ofRectangle getScissor() {
 			int bounds[4];
 			glGetIntegeri_v(GL_SCISSOR_BOX, 0, bounds);
-			return ofRectangle(bounds[0], bounds[1], bounds[2], bounds[3]);
+			auto currentScissor = ofRectangle(bounds[0], bounds[1], bounds[2], bounds[3]);
+			currentScissor.y = ofGetWindowHeight() - currentScissor.y - bounds[3]; // flip coords
+			return currentScissor;
 		}
 			
 		//----------
@@ -115,17 +156,46 @@ namespace ofxCvGui {
 
 		//----------
 		void pushScissor(const ofRectangle & bounds) {
-			scissorHistory.push_back(getScissor());
-			applyScissor(bounds);
+			const auto currentScissor = getScissor();
+			auto & debugScissorHistory = scissorHistory; // just so we can debug in debug mode. this gets optimised away
+			scissorHistory.push_back(currentScissor);
+			if (scissorHistory.empty()) {
+				applyScissor(bounds);
+			} else {
+				applyScissor(bounds.getIntersection(currentScissor));
+			}
 		}
 
 		//----------
 		void popScissor() {
+			if (scissorHistory.empty()) {
+				ofLogError("ofxCvGui::popScissor") << "Scissor history is empty";
+				return;
+			}
 			applyScissor(scissorHistory.back());
 			scissorHistory.pop_back();
 			if(scissorHistory.empty()) {
 				glDisable(GL_SCISSOR_TEST);
+				glScissor(0, 0, ofGetWidth(), ofGetHeight());
 			}
+		}
+
+		//----------
+		bool disableScissor() {
+			GLboolean scissorEnabled;
+			glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled);
+			if (scissorEnabled == GL_TRUE) {
+				glDisable(GL_SCISSOR_TEST);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		//----------
+		void enableScissor() {
+			glEnable(GL_SCISSOR_TEST);
 		}
 	}
 }

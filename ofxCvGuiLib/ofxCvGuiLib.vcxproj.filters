@@ -92,6 +92,27 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\MultipleChoice.cpp">
       <Filter>src\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Indicator.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\ElementCanvas.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\ElementSlot.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\InspectController.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\SharedView.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxTextInputField\src\ofxTextInputField.cpp">
+      <Filter>addons\ofxTextInputField\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Utils\TextField.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -173,9 +194,6 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ofxCvGui\Widgets\IInspectable.h">
-      <Filter>src\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Inspector.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
@@ -193,6 +211,30 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h">
       <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\ElementCanvas.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\ElementSlot.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\InspectController.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\SharedView.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Utils\TextField.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputField.h">
+      <Filter>addons\ofxTextInputField\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputFieldFontRenderer.h">
+      <Filter>addons\ofxTextInputField\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +273,12 @@
     </Filter>
     <Filter Include="addons\ofxAssets\src">
       <UniqueIdentifier>{eac035b9-8285-4384-8376-8be6a3ce3581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxTextInputField">
+      <UniqueIdentifier>{01533d41-2531-42d3-9b18-3077bf81134c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxTextInputField\src">
+      <UniqueIdentifier>{e6f97d40-bc7f-4e29-8579-3a70be6755c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

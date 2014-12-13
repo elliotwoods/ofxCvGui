@@ -33,7 +33,7 @@ namespace ofxCvGui {
 			unsigned long startMouseHoldTime;
 			float startMouseHoldValue;
 			float startMouseHoldMouseX;
-			bool mouseHeldOnBar;
+			bool mouseWentDownOnSlider;
 			bool mouseHover;
 
 			static ofMesh * tenTicks;

@@ -44,6 +44,21 @@ namespace ofxCvGui {
         
 		//----------
         void BaseImage::mouseAction(MouseArguments& mouse) {
+			if (mouse.takeMousePress(this)) {
+				if (this->buttonFitBounds.inside(mouse.local)) {
+					this->zoom = ZoomFit;
+				}
+				else if (this->buttonOneBounds.inside(mouse.local)) {
+					this->zoom = ZoomOne;
+				}
+				else if (this->zoomBox.inside(mouse.local)) {
+					this->dragSelection = DragZoomBox;
+				}
+				else {
+					this->dragSelection = DragImage;
+				}
+			}
+
             if (mouse.action == MouseArguments::Dragged && this->zoom != ZoomFit) {
                 if (this->dragSelection == DragImage) {
                     this->scroll += mouse.movement;
@@ -51,18 +66,6 @@ namespace ofxCvGui {
                 } else if (this->dragSelection == DragZoomBox) {
                     this->scroll -= mouse.movement / ofVec2f(zoomBox.width, zoomBox.height) * ofVec2f(this->getImageWidth(), this->getImageHeight());
                     this->scroll = this->getScrollClamped();
-                }
-            }
-            
-            if (mouse.action == MouseArguments::Pressed && mouse.checkCurrentPanel(this)) {
-                if (this->buttonFitBounds.inside(mouse.local)) {
-                    this->zoom = ZoomFit;
-                } else if (this->buttonOneBounds.inside(mouse.local)) {
-                    this->zoom = ZoomOne;
-                } else if (this->zoomBox.inside(mouse.local)) {
-                    this->dragSelection = DragZoomBox;
-                } else {
-                    this->dragSelection = DragImage;
                 }
             }
             

@@ -1,2 +1,0 @@
-ofxCvGui2
-ofxUI
