@@ -36,7 +36,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		ElementGroupPtr Scroll::getGroup() {
+		ElementGroupPtr Scroll::getElementGroup() {
 			return this->elements;
 		}
 

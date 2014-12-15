@@ -47,6 +47,9 @@ namespace ofxCvGui {
 			this->onMouse += [this] (MouseArguments & args) {
 				this->mouseAction(args);
 			};
+			this->onMouseReleased += [this] (MouseArguments & args) {
+				this->mouseReleased(args);
+			};
 			this->onBoundsChange += [this] (BoundsChangeArguments & args) {
 				this->boundsChange(args);
 			};
@@ -123,11 +126,13 @@ namespace ofxCvGui {
 					args.takeMousePress(this);
 				}
 				break;
-			case MouseArguments::Released:
-				this->value->set(! this->value->get());
-				this->notifyValueChange();
-				break;
 			}
+		}
+
+		//----------
+		void Toggle::mouseReleased(MouseArguments & args) {
+			this->value->set(!this->value->get());
+			this->notifyValueChange();
 		}
 
 		//----------

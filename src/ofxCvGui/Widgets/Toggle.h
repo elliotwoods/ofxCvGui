@@ -21,6 +21,7 @@ namespace ofxCvGui {
 			void update(UpdateArguments &);
 			void draw(DrawArguments &);
 			void mouseAction(MouseArguments &);
+			void mouseReleased(MouseArguments &);
 			void boundsChange(BoundsChangeArguments &);
 			void notifyValueChange();
 

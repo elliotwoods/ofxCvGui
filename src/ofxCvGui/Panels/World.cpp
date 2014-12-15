@@ -58,15 +58,15 @@ namespace ofxCvGui {
 						this->camera.mouseMoved(ofArgs);
 						break;
 					case MouseArguments::Action::Pressed:
-						ofArgs.type = ofMouseEventArgs::Type::Moved;
+						ofArgs.type = ofMouseEventArgs::Type::Pressed;
 						this->camera.mousePressed(ofArgs);
 						break;
 					case MouseArguments::Action::Released:
-						ofArgs.type = ofMouseEventArgs::Type::Moved;
+						ofArgs.type = ofMouseEventArgs::Type::Released;
 						this->camera.mouseReleased(ofArgs);
 						break;
 					case MouseArguments::Action::Dragged:
-						ofArgs.type = ofMouseEventArgs::Type::Moved;
+						ofArgs.type = ofMouseEventArgs::Type::Dragged;
 						this->camera.mouseDragged(ofArgs);
 						break;
 					default:

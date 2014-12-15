@@ -11,10 +11,11 @@ namespace ofxCvGui {
 				case MouseArguments::Action::Pressed:
 					args.takeMousePress(this);
 					break;
-				case MouseArguments::Action::Released:
-					this->onButtonHit(args);
-					break;
 				}
+			}, this);
+
+			this->onMouseReleased.addListener([this](MouseArguments & args) {
+				this->onButtonHit(args);
 			}, this);
 
 			this->onDraw.addListener([this] (DrawArguments& args) {
@@ -30,6 +31,7 @@ namespace ofxCvGui {
 		Button::~Button() {
 			this->onMouse.removeListeners(this);
 			this->onDraw.removeListeners(this);
+			this->onMouseReleased.removeListeners(this);
 		}
 
 		//----------

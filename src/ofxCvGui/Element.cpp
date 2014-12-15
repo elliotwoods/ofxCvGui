@@ -119,10 +119,10 @@ namespace ofxCvGui {
 					if (this->mouseOver && (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::Down))) {
 						this->onMouseReleased(localArgs);
 					}
-					//either way, we need to pass this into the Element's handlers and children for consideration
-					this->onMouse(localArgs);
-					this->localMouseState = LocalMouseState::Waiting;
 				}
+				//either way, we need to pass this into the Element's handlers and children for consideration
+				this->onMouse(localArgs);
+				this->localMouseState = LocalMouseState::Waiting;
 			} else {
 				//mouse moved
 				this->onMouse(localArgs);

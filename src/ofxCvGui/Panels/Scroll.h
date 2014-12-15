@@ -10,7 +10,7 @@ namespace ofxCvGui {
 			Scroll();
 			void add(ElementPtr);
 			virtual void clear();
-			ElementGroupPtr getGroup();
+			ElementGroupPtr getElementGroup();
 
 			///Scroll functions
 			/// Note : Scroll is positive as you scroll down (first item is off the top)
