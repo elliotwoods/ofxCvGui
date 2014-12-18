@@ -114,7 +114,7 @@ namespace ofxCvGui {
 		void Scroll::mouse(MouseArguments& args) {
 			if (args.takeMousePress(this)) {
 				this->onScrollBar = args.local.x > this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH;
-			} else if (args.action == MouseArguments::Action::Dragged) {
+			} else if (args.isDragging(this)) {
 				if (this->length > this->getHeight()) {
 					if (this->onScrollBar) {
 						const float range = this->length - this->getHeight();
