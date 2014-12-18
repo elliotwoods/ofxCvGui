@@ -280,8 +280,15 @@ namespace ofxCvGui {
 			this->keyboardAction(args);
 		}, this);
 		if (syncBoundsToParent) {
+			//resize to parents bounds
 			parent->onBoundsChange.addListener([this](BoundsChangeArguments & args) {
 				this->setBounds(args.localBounds);
+			}, this);
+		}
+		else {
+			//just rearrange ourselves (e.g. we just exited a fullscreen state)
+			parent->onBoundsChange.addListener([this](BoundsChangeArguments &) {
+				this->arrange();
 			}, this);
 		}
 	}
