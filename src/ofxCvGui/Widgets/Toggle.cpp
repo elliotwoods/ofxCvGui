@@ -99,8 +99,7 @@ namespace ofxCvGui {
 			}
 
 			ofSetColor(255);
-			const auto textBounds = font.getStringBoundingBox(this->caption, 0, 0);
-			font.drawString(this->caption, (int) ((this->buttonBounds.width - textBounds.width) / 2.0f), (int) ((this->buttonBounds.height + textBounds.height) / 2.0f));
+			Utils::drawText(this->caption, this->buttonBounds, false);
 			
 			ofPopStyle();
 

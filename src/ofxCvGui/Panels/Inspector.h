@@ -11,7 +11,11 @@ namespace ofxCvGui {
 			~Inspector();
 
 			void clear() override;
+
+			bool getTitleEnabled() const;
+			void setTitleEnabled(bool);
 		protected:
+			bool titleEnabled;
 		};
 	}
 }
