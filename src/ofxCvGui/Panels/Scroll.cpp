@@ -140,6 +140,9 @@ namespace ofxCvGui {
 				auto elementBounds = element->getBounds();
 				elementBounds.y = y;
 				elementBounds.width = this->getWidth() - (elementBounds.x + OFXCVGUI_SCROLL_AREA_WIDTH);
+				if (elementBounds.width <= 0 || elementBounds.height <= 0) {
+					continue; // sometimes during initialisation this might happen, and it can cause errors
+				}
 				element->setBounds(elementBounds);
 				y += elementBounds.height + OFXCVGUI_SCROLL_SPACING;
 			}
