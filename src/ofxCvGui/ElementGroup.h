@@ -26,9 +26,10 @@ namespace ofxCvGui {
 		void layoutGridHorizontal(float spacing = 0.0f);
 	protected:
 		void updateSet();
-		void mouseActionSet(MouseArguments& mouse);
-		void keyboardActionSet(KeyboardArguments& keyboard);
-		void drawSet(const DrawArguments& arguments);
+		void mouseActionSet(MouseArguments &);
+		void keyboardActionSet(KeyboardArguments &);
+		void drawSet(const DrawArguments &);
+		void arrangeSet(const BoundsChangeArguments &);
 		vector<shared_ptr<T> > elements;
 	};
 
