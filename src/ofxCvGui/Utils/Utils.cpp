@@ -114,18 +114,25 @@ namespace ofxCvGui {
 			switch(key) {
 			case ' ':
 				return "SPACE";
+				break;
 			case OF_KEY_BACKSPACE:
 				return "BACKSPACE";
+				break;
 			case OF_KEY_RETURN:
 				return "RETURN";
+				break;
 			case OF_KEY_DOWN:
 				return "DOWN";
+				break;
 			case OF_KEY_UP:
 				return "UP";
+				break;
 			case OF_KEY_LEFT:
 				return "LEFT";
+				break;
 			case OF_KEY_RIGHT:
 				return "RIGHT";
+				break;
 			default:
 				return string("") + key;
 			}
@@ -137,8 +144,12 @@ namespace ofxCvGui {
 		
 		//----------
 		ofRectangle getScissor() {
-			int bounds[4];
-			glGetIntegeri_v(GL_SCISSOR_BOX, 0, bounds);
+			GLint bounds[4];
+			if (getScissorEnabled()) {
+				glGetIntegerv(GL_SCISSOR_BOX, bounds);
+			} else {
+				glGetIntegerv(GL_VIEWPORT, bounds);
+			}
 			auto currentScissor = ofRectangle(bounds[0], bounds[1], bounds[2], bounds[3]);
 			currentScissor.y = ofGetWindowHeight() - currentScissor.y - bounds[3]; // flip coords
 			return currentScissor;
@@ -181,10 +192,15 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		bool disableScissor() {
+		bool getScissorEnabled() {
 			GLboolean scissorEnabled;
 			glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled);
-			if (scissorEnabled == GL_TRUE) {
+			return scissorEnabled == GL_TRUE;
+		}
+		
+		//----------
+		bool disableScissor() {
+			if (getScissorEnabled()) {
 				glDisable(GL_SCISSOR_TEST);
 				return true;
 			}

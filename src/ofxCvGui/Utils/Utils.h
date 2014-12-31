@@ -17,6 +17,7 @@ namespace ofxCvGui {
 		void pushScissor(const ofRectangle &);
 		void popScissor();
 
+		bool getScissorEnabled();
 		bool disableScissor();
 		void enableScissor();
 	}
