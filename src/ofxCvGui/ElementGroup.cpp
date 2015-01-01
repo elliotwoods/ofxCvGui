@@ -17,6 +17,9 @@ namespace ofxCvGui {
 			DrawArguments nonConstArgs = args;
 			this->drawSet(nonConstArgs);
 		}, this);
+		this->onBoundsChange.addListener([this](const BoundsChangeArguments & args) {
+			this->arrangeSet(args);
+		}, this);
 	}
 
 	//----------
@@ -26,6 +29,7 @@ namespace ofxCvGui {
 		this->onMouse.removeListeners(this);
 		this->onKeyboard.removeListeners(this);
 		this->onDraw.removeListeners(this);
+		this->onBoundsChange.removeListeners(this);
 	}
 
 	//----------
@@ -143,11 +147,20 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::drawSet(const DrawArguments& arguments) {
+	void ElementGroup_<T>::drawSet(const DrawArguments & arguments) {
 		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++) {
 			(**it).draw(arguments);
         }
+	}
+
+	//----------
+	template<typename T>
+	void ElementGroup_<T>::arrangeSet(const BoundsChangeArguments &) {
+		typename vector<shared_ptr<T> >::iterator it;
+		for (it = elements.begin(); it != elements.end(); it++) {
+			(**it).arrange();
+		}
 	}
 
 	template class ElementGroup_<Element>;

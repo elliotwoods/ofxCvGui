@@ -1,0 +1,4 @@
+* ofxAssets
+* ofxGrabCam
+* ofxLiquidEvent
+* ofxTextInputField

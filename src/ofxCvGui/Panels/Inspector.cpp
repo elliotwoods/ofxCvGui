@@ -35,7 +35,9 @@ namespace ofxCvGui {
 		//---------
 		void Inspector::clear() {
 			Scroll::clear();
-			this->elements->add(shared_ptr<Title>(new Title("Inspector", Title::Level::H1)));
+			if (this->titleEnabled) {
+				this->elements->add(shared_ptr<Title>(new Title("Inspector", Title::Level::H1)));
+			}
 			InspectController::X().onClear.notifyListeners(this->elements);
 			this->arrange();
 		}
