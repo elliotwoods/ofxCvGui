@@ -21,6 +21,8 @@ namespace ofxCvGui {
 				this->arrange();
 			}, this);
 
+			this->titleEnabled = true;
+		
 			this->clear();
 		}
 
@@ -36,6 +38,16 @@ namespace ofxCvGui {
 			this->elements->add(shared_ptr<Title>(new Title("Inspector", Title::Level::H1)));
 			InspectController::X().onClear.notifyListeners(this->elements);
 			this->arrange();
+		}
+
+		//---------
+		bool Inspector::getTitleEnabled() const {
+			return this->titleEnabled;
+		}
+
+		//---------
+		void Inspector::setTitleEnabled(bool titleEnabled) {
+			this->titleEnabled = titleEnabled;
 		}
 	}
 }

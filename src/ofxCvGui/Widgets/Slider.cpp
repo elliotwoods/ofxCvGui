@@ -196,11 +196,7 @@ namespace ofxCvGui {
 				if (args.local.y > 15) {
 					if (args.takeMousePress(this)) {
 						this->mouseWentDownOnSlider = true;
-						if (ofGetElapsedTimeMillis() - this->startMouseHoldTime < 500 && abs(args.local.x - this->startMouseHoldMouseX) < 5) {
-							//double click	
-							this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
-							this->notifyValueChange();
-						}
+
 						//start hold
 						this->startMouseHoldTime = ofGetElapsedTimeMillis();
 						this->startMouseHoldValue = this->value->get();
@@ -215,6 +211,12 @@ namespace ofxCvGui {
 							this->notifyValueChange();
 						}
 					}
+				}
+				break;
+			case MouseArguments::DoubleClick:
+				if (args.getOwner() == this) {
+					this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
+					this->notifyValueChange();
 				}
 				break;
 			case MouseArguments::Dragged:
