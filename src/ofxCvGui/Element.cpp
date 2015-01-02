@@ -66,66 +66,99 @@ namespace ofxCvGui {
     
     //-----------
     void Element::mouseAction(MouseArguments& args) {
+		
+		// NOTE : This is one of the most important functions of this entire addon
+		
 		if (this->enabled) {
 			auto localArgs = MouseArguments(args, this->getBounds());
 			this->mouseOver = localArgs.isLocal();
-
-			if(args.action == MouseArguments::Pressed) {
-				//some elements might not want to perform a local hit test since their bounds are meaningless (e.g. ElementSlot)
-				auto isHit = localArgs.isLocal() || !this->enableHitTestOnBounds;
-
-				//special case for pressed, only pass if local and not already taken
-				if (isHit && !localArgs.isTaken()) {
-					//pass the mouse event onto Element's event handlers
-					this->onMouse.notifyListenersInReverse(localArgs);
-
-					//if we have a mouse released handler, then we must also try and take the click
-					if (!this->onMouseReleased.empty()) {
-						localArgs.takeMousePress(this);
-					}
-
-					//check if one of the handlers took ownership of the mouse down event
-					if (localArgs.isTaken()) {
-						// if this element or any nested elements took the click, notify upstream arguments of the take
-						auto clickOwner = localArgs.getOwner();
-						args.forceMouseTake(clickOwner); // if this element took, notify upstream
-
-						if (clickOwner == this) {
-							// if we're the ones who took the mouse down action, let's flag it in our local state
-							this->localMouseState = LocalMouseState::Down;
+			
+			//some elements might not want to perform a local hit test since their bounds are meaningless (e.g. ElementSlot)
+			auto isHit = this->mouseOver || !this->enableHitTestOnBounds;
+			
+			
+			switch(args.action) {
+				case MouseArguments::Action::Pressed:
+				{
+					//special case for pressed, only pass if local and not already taken
+					if (isHit && !localArgs.isTaken()) {
+						//pass the mouse event onto Element's event handlers
+						this->onMouse.notifyListenersInReverse(localArgs);
+						
+						//if we have a mouse released handler, then we must also try and take the click
+						if (!this->onMouseReleased.empty()) {
+							localArgs.takeMousePress(this);
 						}
-						else {
-							// otherwise a child element handled by this element has taken ownership of the mouse
-							this->localMouseState = LocalMouseState::ChildOwnsMouse;
+						
+						//check if one of the handlers took ownership of the mouse down event
+						if (localArgs.isTaken()) {
+							// if this element or any nested elements took the click, notify upstream arguments of the take
+							auto clickOwner = localArgs.getOwner();
+							args.forceMouseTake(clickOwner); // if this element took, notify upstream
+							
+							if (clickOwner == this) {
+								// if we're the ones who took the mouse down action, let's flag it in our local state
+								this->localMouseState = LocalMouseState::Down;
+							}
+							else {
+								// otherwise a child element handled by this element has taken ownership of the mouse
+								this->localMouseState = LocalMouseState::ChildOwnsMouse;
+							}
 						}
 					}
 				}
-			} else if (args.action == MouseArguments::Dragged) {
-				//if mouse is being dragged and went down in this Element, then we're now dragging
-				if (this->localMouseState == LocalMouseState::Down) {
-					this->localMouseState = LocalMouseState::Dragging;
+				break;
+					
+					
+				case MouseArguments::Action::Dragged:
+				{
+					//if mouse is being dragged and went down in this Element, then we're now dragging
+					if (this->localMouseState == LocalMouseState::Down) {
+						this->localMouseState = LocalMouseState::Dragging;
+					}
+					
+					//if our local state is dragging or child owns the mouse, then pass through the drag action
+					//this is also true when a child element is being dragged
+					//to check if this element is being dragged, use args.isDragging(myElement) inside your handler
+					if (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::ChildOwnsMouse)) {
+						this->onMouse(localArgs);
+					}
 				}
-
-				//if our local state is dragging or child owns the mouse, then pass through the drag action
-				//this is also true when a child element is being dragged
-				//to check if this element is being dragged, use args.isDragging(myElement) inside your handler
-				if (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::ChildOwnsMouse)) {
-					this->onMouse(localArgs);
-				}
-			} else if (args.action == MouseArguments::Released) {
-				//if we've got the cursor, then let's take the action and release the cursor
-				if (this->localMouseState != LocalMouseState::Waiting) {
+				break;
+					
+					
+				case MouseArguments::Action::Released:
+				{
 					//only trigger the onMouseReleased if the mouse release was local
 					if (this->mouseOver && (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::Down))) {
 						this->onMouseReleased(localArgs);
 					}
+					
+					//either way, we need to pass this into the Element's handlers and children for consideration unless we and no children owns the mouse
+					if(this->localMouseState != LocalMouseState::Waiting) {
+						this->onMouse(localArgs);
+						this->localMouseState = LocalMouseState::Waiting;
+					}
 				}
-				//either way, we need to pass this into the Element's handlers and children for consideration
-				this->onMouse(localArgs);
-				this->localMouseState = LocalMouseState::Waiting;
-			} else {
-				//mouse moved
-				this->onMouse(localArgs);
+				break;
+					
+					
+				case MouseArguments::Action::DoubleClick:
+				{
+					this->onMouse(localArgs);
+				}
+				break;
+					
+					
+				case MouseArguments::Action::Moved:
+				{
+					this->onMouse(localArgs);
+				}
+				break;
+				
+					
+				default:
+				break;
 			}
 		}
     }

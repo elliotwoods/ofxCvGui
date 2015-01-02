@@ -41,8 +41,7 @@ namespace ofxCvGui {
 				ofPopStyle();
 			};
 			this->onMouse += [this](ofxCvGui::MouseArguments & args) {
-				args.takeMousePress(this);
-				if (args.action == ofxCvGui::MouseArguments::Action::Dragged || args.action == ofxCvGui::MouseArguments::Action::Pressed) {
+				if (args.takeMousePress(this) || args.isDragging(this) ) {
 					for (int i = 0; i < this->options.size(); i++) {
 						if (this->getOptionBounds(i).inside(args.local)) {
 							this->setSelection(i);
