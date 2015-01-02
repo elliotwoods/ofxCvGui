@@ -16,18 +16,11 @@ namespace ofxCvGui {
 			this->setCaption(this->value->getName());
 			this->mouseHover = false;
 			this->mouseWentDownOnSlider = false;
-
-			this->onValueChange += [this] (ofParameter<float> & value) {
-				for(auto & validator : this->validators) {
-					auto validatorValue = value.get();
-					validator(validatorValue);
-					value.set(validatorValue);
-				}
-			};
 		}
 
 		//----------
 		Slider::~Slider() {
+
 		}
 
 		//----------
@@ -37,6 +30,13 @@ namespace ofxCvGui {
 			});
 		}
 
+		//----------
+		void Slider::addStepValidator(float step) {
+			this->addValidator([step] (float & value) {
+				value = step * floor(value / step + 0.5f);
+			});
+		}
+		
 		//----------
 		void Slider::addValidator(Validator validator) {
 			this->validators.push_back(validator);
@@ -62,7 +62,7 @@ namespace ofxCvGui {
 				ticks.setMode(OF_PRIMITIVE_POINTS);
 			}
 
-			this->setBounds(ofRectangle(5, 0, 100, 50));
+			this->setBounds(ofRectangle(5, 0, 100, 55));
 			this->onUpdate += [this] (UpdateArguments & args) {
 				this->update(args);
 			};
@@ -76,14 +76,13 @@ namespace ofxCvGui {
 				this->boundsChange(args);
 			};
 
+			this->markViewDirty();
 		}
 
 		//----------
 		void Slider::update(UpdateArguments &) {
-			if (this->value->get() < this->value->getMin() || this->value->get() > this->value->getMax()) {
-				this->notifyValueChange(); // this clamps
-			}
 
+			//Perform the zoom;
 			if(this->getMouseState() == LocalMouseState::Down && this->mouseWentDownOnSlider) {
 				const auto mouseHoldTime = float(ofGetElapsedTimeMillis() - startMouseHoldTime) / 1000.0f;
 				if (mouseHoldTime > 1.0f) {
@@ -92,6 +91,11 @@ namespace ofxCvGui {
 			} else if (this->getMouseState() == LocalMouseState::Waiting) {
 				this->zoom = (this->zoom - 1.0f) * 0.9f + 1.0f;
 			}
+			if(abs(this->zoom - 1.0f) > 1E-2) {
+				this->markViewDirty();
+			} else {
+				this->zoom = 1.0f;
+			}
 		}
 
 		//----------
@@ -99,6 +103,11 @@ namespace ofxCvGui {
 			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 			image("ofxCvGui::edit").draw(this->editBounds);
 
+			
+			//--
+			//Draw value string
+			//--
+			//
 			stringstream valueString;
 			valueString.imbue(std::locale(""));
 			const auto actualValue = this->value->get();
@@ -111,20 +120,47 @@ namespace ofxCvGui {
 			}
 			valueString << actualValue;
 			font.drawString(this->value->getName() + " : " + valueString.str(), 0, 15);
-
+			//
+			//--
+			
+			
 			const auto rangeScale = this->getRangeScale();
 			const auto width = this->getWidth();
 			const auto center = this->startMouseHoldValue;
+			
 			if (rangeScale > 0) {
 				const auto centerPx = ofMap(center, this->value->getMin(), this->value->getMax(), 0, this->getWidth());
-				const auto xPx = floor((this->value->get() - center) * (zoom * width) / rangeScale + centerPx);
+				
+				const auto valueToPosition = [&](const float & value) {
+					return (value - center) * (zoom * width) / rangeScale + centerPx;
+				};
+				const auto positionToValue = [&](const float & position) {
+					return (position - centerPx) * rangeScale / (zoom * width) + center;
+				};
 
-				bool barActive = this->mouseWentDownOnSlider && this->getMouseState() != LocalMouseState::Waiting;
+				const auto xPx = floor(valueToPosition(this->value->get()));
+				const auto zeroPx = valueToPosition(0.0f);
+				
+				bool draggingSlider = this->mouseWentDownOnSlider && this->getMouseState() != LocalMouseState::Waiting;
 
 				if (this->mouseHover) {
 					ofPushStyle();
-					ofSetColor(50);
-					ofRect(0, 20, xPx, 20);
+					ofSetColor(zeroPx < xPx ? 50 : 30);
+					ofRect(zeroPx, 20, xPx - zeroPx, 20);;
+					
+					//we draw as shapes because sometimes we miss the finer features (e.g. "-") with standard funcs
+					
+					ofSetColor(150);
+					
+					auto minValue = this->getCheckedValue(positionToValue(0.0f));
+					auto & smallFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 10);
+					smallFont.drawStringAsShapes(ofToString(minValue), 0, 51);
+
+					auto maxValue = this->getCheckedValue(positionToValue(width));
+					auto maxTextString = ofToString(maxValue);
+					auto maxTextBounds = smallFont.getStringBoundingBox(maxTextString, 0.0f, 0.0f);
+					smallFont.drawStringAsShapes(maxTextString, this->getWidth() - maxTextBounds.getRight(), 51);
+					
 					ofPopStyle();
 				}
 
@@ -140,7 +176,7 @@ namespace ofxCvGui {
 				ofTranslate(xPx, 0.0f);
 
 				//draw handle
-				auto & marker = image(barActive ? "ofxCvGui::sliderMarkerFilled" : "ofxCvGui::sliderMarker");
+				auto & marker = image(draggingSlider ? "ofxCvGui::sliderMarkerFilled" : "ofxCvGui::sliderMarker");
 				ofScale(0.4f, 0.4f);
 				marker.draw(-marker.getWidth() / 2.0f, -marker.getHeight() - 3);
 				ofPopMatrix();
@@ -208,7 +244,7 @@ namespace ofxCvGui {
 						auto result = ofSystemTextBoxDialog(this->value->getName() + " (" + ofToString(this->value->get()) + ")");
 						if (!result.empty()) {
 							this->value->set(ofToFloat(result));
-							this->notifyValueChange();
+							this->checkValueAndNotifyListeners();
 						}
 					}
 				}
@@ -216,18 +252,27 @@ namespace ofxCvGui {
 			case MouseArguments::DoubleClick:
 				if (args.getOwner() == this) {
 					this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
-					this->notifyValueChange();
+					this->checkValueAndNotifyListeners();
 				}
 				break;
 			case MouseArguments::Dragged:
 				if (this->mouseWentDownOnSlider) {
 					float dNormX = (args.local.x - this->startMouseHoldMouseX) / (this->getWidth() * zoom);
 					this->value->set(dNormX * this->getRangeScale() + startMouseHoldValue);
-					this->notifyValueChange();
+					this->checkValueAndNotifyListeners();
 				}
 				break;
 			case MouseArguments::Moved:
-				this->mouseHover = args.isLocal() && args.local.y > 15;
+				{
+					auto newMouseHover = args.isLocal() && args.local.y > 15;
+					if(newMouseHover != this->mouseHover) {
+						this->mouseHover = newMouseHover;
+						this->markViewDirty();
+					}
+				}
+				break;
+			default:
+				break;
 			}
 		}
 
@@ -242,9 +287,19 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Slider::notifyValueChange() {
-			this->value->set(ofClamp(this->value->get(), this->value->getMin(), this->value->getMax()));
+		float Slider::getCheckedValue(float value) {
+			for(auto & validator : this->validators) {
+				validator(value);
+			}
+			
+			return ofClamp(value, this->value->getMin(), this->value->getMax());
+		}
+		
+		//----------
+		void Slider::checkValueAndNotifyListeners() {
+			this->value->set(this->getCheckedValue(this->value->get()));
 			this->onValueChange.notifyListeners(* this->value);
+			this->markViewDirty();
 		}
 	}
 }
