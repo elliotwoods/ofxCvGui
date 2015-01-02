@@ -88,7 +88,7 @@ namespace ofxCvGui {
 			//fill
 			ofSetColor(this->value->get() ^ isMouseDown ?  80 : 50);
 			ofFill();
-			const auto radius = 5.0f;
+			const auto radius = 4.0f;
 			ofRectRounded(this->buttonBounds, radius, radius, radius, radius);
 			
 			//outline

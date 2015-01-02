@@ -14,7 +14,7 @@ namespace ofxCvGui {
 				auto & captionFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 				captionFont.drawString(this->caption + " : ", 0, 15);
 
-				const auto radius = 5.0f;
+				const auto radius = 4.0f;
 
 				//draw main background
 				ofPushStyle();

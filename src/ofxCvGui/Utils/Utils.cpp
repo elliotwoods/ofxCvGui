@@ -157,16 +157,19 @@ namespace ofxCvGui {
 			
 		//----------
 		void applyScissor(const ofRectangle & bounds) {
+#ifndef OFXCVGUI_DISBALE_SCISSOR
 			int x = (int) bounds.x;
 			int y = (int) (ofGetWindowHeight() - (bounds.y + bounds.height));
 			int width = (int) bounds.width;
 			int height = (int) bounds.height;
 			glEnable(GL_SCISSOR_TEST);
 			glScissor(x, y, width, height);
+#endif
 		}
 
 		//----------
 		void pushScissor(const ofRectangle & bounds) {
+#ifndef OFXCVGUI_DISBALE_SCISSOR
 			const auto currentScissor = getScissor();
 			auto & debugScissorHistory = scissorHistory; // just so we can debug in debug mode. this gets optimised away
 			scissorHistory.push_back(currentScissor);
@@ -175,10 +178,12 @@ namespace ofxCvGui {
 			} else {
 				applyScissor(bounds.getIntersection(currentScissor));
 			}
+#endif
 		}
 
 		//----------
 		void popScissor() {
+#ifndef OFXCVGUI_DISBALE_SCISSOR
 			if (scissorHistory.empty()) {
 				ofLogError("ofxCvGui::popScissor") << "Scissor history is empty";
 				return;
@@ -189,6 +194,7 @@ namespace ofxCvGui {
 				glDisable(GL_SCISSOR_TEST);
 				glScissor(0, 0, ofGetWidth(), ofGetHeight());
 			}
+#endif
 		}
 
 		//----------
@@ -211,7 +217,9 @@ namespace ofxCvGui {
 
 		//----------
 		void enableScissor() {
+#ifndef OFXCVGUI_DISBALE_SCISSOR
 			glEnable(GL_SCISSOR_TEST);
+#endif
 		}
 	}
 }

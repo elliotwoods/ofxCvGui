@@ -15,6 +15,7 @@ namespace ofxCvGui {
 			virtual ~Slider();
 			void addValidator(Validator);
 			void addIntValidator();
+			void addStepValidator(float step);
 			void clearValidators();
 			ofxLiquidEvent<ofParameter<float>> onValueChange;
 		protected:
@@ -25,7 +26,9 @@ namespace ofxCvGui {
 			void boundsChange(BoundsChangeArguments &);
 			float getRangeScale() const;
 			void setValue(float);
-			void notifyValueChange();
+			
+			float getCheckedValue(float value);
+			void checkValueAndNotifyListeners();
 
 			ofParameter<float> * value;
 

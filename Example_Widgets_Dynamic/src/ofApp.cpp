@@ -4,16 +4,12 @@ using namespace ofxCvGui;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	//make things pretty
 	ofEnableSmoothing();
-	this->circleResolution = 50;
-
-/*
-	need to add:
-	button
-	slider with negative
-	livevalue with edit
-	multiple choice
-*/
+	
+	//set a starting circle resolution
+	ofSetCircleResolution(32);
+	this->circleResolution = 32;
 
 	//setup the gui
 	this->gui.init();
@@ -29,13 +25,24 @@ void ofApp::setup(){
 				ofNoFill();
 			}
 			ofSetColor(circle->luminance);
-			ofCircle(circle->x, circle->y, circle->radius);
+			
+			ofPushMatrix();
+			ofTranslate(circle->x, circle->y);
+			ofRotate(circle->rotation);
+			
+			ofCircle(0, 0, circle->radius);
+			
+			ofPopMatrix();
+			
 			ofPopStyle();
 		}
 	};
 	
 	//add the scroll panel which we'll need to edit later on
 	this->scrollPanel = this->gui.addScroll();
+	
+	//add one circle to the set to begin with
+	this->addCircle();
 	
 	//perform the initial rebuild of widgets
 	this->rebuildWidgets();
@@ -62,6 +69,7 @@ void ofApp::addCircle() {
 	circle->radius.set("Radius", ofRandomuf() * 100.0f, 0.0f, 100.0f);
 	circle->luminance.set("Luminance", floor(ofRandomuf() * 255.0f), 0.0f, 255.0f);
 	circle->fill.set("Fill", false);
+	circle->rotation.set("Rotation", 0.0f, -180.0f, 180.0f);
 	
 	this->circles.push_back(circle);
 }
@@ -116,6 +124,8 @@ void ofApp::rebuildWidgets() {
 			this->circleResolution = ofToInt(circleResolutionSelector->getSelection());
 		}
 	};
+	// Set the selection to reflect the current active value
+	circleResolutionSelector->setSelection(ofToString(this->circleResolution));
 	this->scrollPanel->add(circleResolutionSelector);
 	
 	// SPACER WIDGET
@@ -174,6 +184,10 @@ void ofApp::rebuildWidgets() {
 		scrollPanel->add(make_shared<Widgets::Slider>(circle->y));
 		scrollPanel->add(make_shared<Widgets::Slider>(circle->radius));
 		scrollPanel->add(make_shared<Widgets::Toggle>(circle->fill));
+		
+		auto rotationSlider = make_shared<Widgets::Slider>(circle->rotation);
+		rotationSlider->addStepValidator(10.0f);
+		scrollPanel->add(rotationSlider);
 		
 		//special slider with a validator to check for integer values
 		auto luminanceSlider = make_shared<Widgets::Slider>(circle->luminance);

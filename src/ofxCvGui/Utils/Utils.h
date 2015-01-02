@@ -1,6 +1,8 @@
 #pragma once
 #include "ofRectangle.h"
 
+//#define OFXCVGUI_DISBALE_SCISSOR
+
 namespace ofxCvGui {
 	namespace Utils {
 #pragma mark Text

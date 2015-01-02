@@ -24,24 +24,31 @@ namespace ofxCvGui {
 		if (this->enabled) {
 			if (this->cachedView) {
 				if (this->needsViewUpdate) {
-					//if we need to update the view, then redraw the fbo
-					this->cachedView->begin();
-					ofClear(80, 0);
-
 					bool scissorWasEnabled = Utils::disableScissor();
+					
+					//if we need to update the view, then redraw the fbo
+					this->cachedView->begin(true);
+					
+					ofClear(20, 0);
 
+					//we shouldn't need to do this
+					glViewport(0, 0, this->cachedView->getWidth(), this->cachedView->getHeight());
+					
 					const auto localBounds = this->getLocalBounds();
 					DrawArguments localArguments(localBounds, localBounds, parentArguments.chromeEnabled);
 					this->onDraw(localArguments);
+					
+					this->cachedView->end();
 					
 					if (scissorWasEnabled) {
 						Utils::enableScissor();
 					}
 
-					this->cachedView->end();
 					this->needsViewUpdate = false;
 				}
-				this->cachedView->draw(this->bounds);
+				
+				this->cachedView->draw(this->getBounds());
+				
 			} else {
 				auto boundsWithinParent = this->getBounds();
 				ofRectangle globalBounds = boundsWithinParent;
@@ -376,7 +383,7 @@ namespace ofxCvGui {
 		fboSettings.width = this->bounds.width;
 		fboSettings.height = this->bounds.height;
 		fboSettings.internalformat = GL_RGBA;
-		//fboSettings.numSamples = 2;
+		fboSettings.numSamples = 0;
 
 		this->cachedView->allocate(fboSettings);
 	}

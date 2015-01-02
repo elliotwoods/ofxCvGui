@@ -12,6 +12,7 @@ class ofApp : public ofBaseApp{
 		ofParameter<float> y;
 		ofParameter<float> luminance;
 		ofParameter<bool> fill;
+		ofParameter<float> rotation;
 	};
 	
 public:
