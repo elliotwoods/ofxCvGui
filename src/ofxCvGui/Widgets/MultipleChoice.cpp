@@ -116,6 +116,21 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		void MultipleChoice::entangle(ofParameter<int> & parameter) {
+			//if we change, update the parameter
+			this->onSelectionChange += [&parameter](const int & selection) {
+				parameter.set(selection);
+			};
+
+			//if we're out of sync, update ourselves
+			this->onUpdate += [this, &parameter](ofxCvGui::UpdateArguments &) {
+				if (parameter.get() != this->getSelectionIndex()) {
+					this->setSelection(parameter.get());
+				}
+			};
+		}
+
+		//----------
 		void MultipleChoice::clampSelection() {
 			if (this->options.empty()) {
 				this->selectionIndex = -1;
