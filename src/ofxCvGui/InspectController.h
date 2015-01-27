@@ -3,11 +3,15 @@
 #include "ElementGroup.h"
 
 namespace ofxCvGui {
+	struct InspectArguments {
+		ElementGroupPtr inspector;
+	};
+
 	/// inherit this class if your object is inspectable
 	class IInspectable {
 	public:
-		/// override this function to populate an inspector when selected
-		virtual void populateInspector(ElementGroupPtr) = 0;
+		/// Listen to this event if you want to populate the insspector when selected 
+		ofxLiquidEvent<InspectArguments> onPopulateInspector;
 	};
 
 	class InspectController {

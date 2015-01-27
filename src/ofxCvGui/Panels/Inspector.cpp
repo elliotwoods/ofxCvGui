@@ -11,7 +11,9 @@ namespace ofxCvGui {
 			InspectController::X().onTargetChange.addListener([this](shared_ptr<IInspectable> target) {
 				this->clear();
 				if (target) {
-					target->populateInspector(this->elements);
+					InspectArguments args;
+					args.inspector = this->elements;
+					target->onPopulateInspector(args);
 					this->arrange();
 				}
 			}, this);
