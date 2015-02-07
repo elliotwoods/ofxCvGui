@@ -6,8 +6,8 @@
 namespace ofxCvGui {
 	namespace Utils {
 #pragma mark Text
-		ofRectangle drawText(const string& text, float x, float y, bool background = true, float minHeight = 15, float minWidth = 0);
-		ofRectangle drawText(const string& text, const ofRectangle & bounds, bool background = true);
+		ofRectangle drawText(const string& text, float x, float y, bool background = true, float minHeight = 15, float minWidth = 0, bool scissor = false);
+		ofRectangle drawText(const string& text, const ofRectangle & bounds, bool background = true, bool scissor = false);
 		void drawProcessingNotice(string message);
 		void drawToolTip(const string & text, const ofVec2f & position);
 

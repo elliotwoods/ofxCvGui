@@ -11,10 +11,15 @@ namespace ofxCvGui {
 	namespace Utils {
 #pragma mark Text
 		//---------
-		ofRectangle drawText(const string& text, float x, float y, bool background, float minHeight, float minWidth) {
+		ofRectangle drawText(const string& text, float x, float y, bool background, float minHeight, float minWidth, bool scissor) {
 			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
 			bool hasFont = font.isLoaded();
 
+			if (scissor) {
+				Utils::pushScissor(ofRectangle(x, y, minWidth, minHeight));
+			}
+
+			ofPushStyle();
 			ofPushStyle();
 			ofSetColor(0x46);
 			ofFill();
@@ -55,13 +60,18 @@ namespace ofxCvGui {
 				ofSetColor(255);
 				ofDrawBitmapString(text, x + 10, y + 20);
 			}
+			ofPopStyle();
+
+			if (scissor) {
+				Utils::popScissor();
+			}
 
 			return bounds;
 		}
 
 		//---------
-		ofRectangle drawText(const string & text, const ofRectangle & bounds, bool background) {
-			return drawText(text, bounds.x, bounds.y, background, bounds.height, bounds.width);
+		ofRectangle drawText(const string & text, const ofRectangle & bounds, bool background, bool scissor) {
+			return drawText(text, bounds.x, bounds.y, background, bounds.height, bounds.width, scissor);
 		}
 
 		//---------
