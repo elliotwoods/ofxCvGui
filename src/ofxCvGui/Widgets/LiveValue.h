@@ -1,6 +1,7 @@
 #pragma once
 #include "../Element.h"
 #include "ofParameter.h"
+#include "ofSystemUtils.h"
 #include "../../../addons/ofxAssets/src/ofxAssets.h"
 
 namespace ofxCvGui {
@@ -20,32 +21,55 @@ namespace ofxCvGui {
 				this->onUpdate += [this] (UpdateArguments &) {
 					stringstream ss;
 					ss << this->liveValue();
-					this->result = ss.str();
+					this->cachedValue = ss.str();
 				};
-
 				this->onDraw += [this] (DrawArguments & args) {
 					auto & captionFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 					captionFont.drawString(this->caption + " : ", 0, 15);
 
 					auto & valueFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
-					auto valueBounds = valueFont.getStringBoundingBox(result, 0, 0);
-					valueFont.drawString(result, (int) (this->getWidth() - valueBounds.width - 5), 35);
+					auto valueBounds = valueFont.getStringBoundingBox(cachedValue, 0, 0);
+					valueFont.drawString(cachedValue, (int)(this->getWidth() - valueBounds.width - 5), 35);
 
 					ofPushStyle();
 					ofSetLineWidth(1.0f);
 					ofLine(this->getWidth(), 0, this->getWidth(), 40);
 					ofPopStyle();	
 				};
+				this->onBoundsChange += [this](BoundsChangeArguments & args) {
+					this->editButton->setBounds(ofRectangle(args.localBounds.width - 20, 5, 15, 15));
+				};
+
+				this->editButton = make_shared<Element>();
+				this->editButton->onDraw += [this](DrawArguments & args) {
+					ofxAssets::image("ofxCvGui::edit").draw(args.localBounds);
+				};
+				this->editButton->onMouseReleased += [this](MouseArguments & args) {
+					auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "] (" + this->cachedValue + ")");
+					if (result != "") {
+						this->onEditValue(result);
+					}
+				};
+				this->editButton->addListenersToParent(this);
 			};
 
 			virtual ~LiveValue() { }
+
+			void setEditable(bool editable) {
+				this->editButton->setEnabled(editable);
+			}
+
+			ofxLiquidEvent<string> onEditValue;
+
 		protected:
 			void init();
 			void update(UpdateArguments &);
 			void draw(DrawArguments &);
-
+			
 			function<T()> liveValue;
-			string result;
+			string cachedValue;
+			
+			shared_ptr<Element> editButton;
 		};
 
 		class LiveValueHistory : public LiveValue<float> {
