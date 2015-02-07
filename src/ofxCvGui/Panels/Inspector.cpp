@@ -13,7 +13,7 @@ namespace ofxCvGui {
 				if (target) {
 					InspectArguments args;
 					args.inspector = this->elements;
-					target->onPopulateInspector(args);
+					target->onInspect(args);
 					this->arrange();
 				}
 			}, this);

@@ -11,7 +11,7 @@ namespace ofxCvGui {
 	class IInspectable {
 	public:
 		/// Listen to this event if you want to populate the insspector when selected 
-		ofxLiquidEvent<InspectArguments> onPopulateInspector;
+		ofxLiquidEvent<InspectArguments> onInspect;
 	};
 
 	class InspectController {
