@@ -195,7 +195,9 @@ namespace ofxCvGui {
 		void BaseImage::drawTitle() {
 			image("ofxCvGui::zoom_fit").draw(buttonFitBounds);
 			image("ofxCvGui::zoom_one").draw(buttonOneBounds);
-			Utils::drawText(this->caption, 100, 20, true, 30);
+			if (!this->caption.empty()) {
+				Utils::drawText(this->caption, 100, 20, true, 30);
+			}
 			
 			ofPushStyle();
 			ofSetColor(150);

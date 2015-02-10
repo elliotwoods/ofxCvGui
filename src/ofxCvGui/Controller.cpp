@@ -272,7 +272,7 @@ namespace ofxCvGui {
 			auto panelBounds = panel->getBounds();
 			ofVec2f panelTopLeft = panelBounds.getTopLeft();
 			auto newArgs = FilesDraggedArguments((ofVec2f) args.position - panelTopLeft, (ofVec2f) args.position, args.files);
-			panel->ofFilesDragged(newArgs);
+			panel->onFilesDragged(newArgs);
 		}
 	}
 

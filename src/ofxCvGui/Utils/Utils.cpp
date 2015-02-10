@@ -87,6 +87,9 @@ namespace ofxCvGui {
 
 		//---------
 		void drawToolTip(const string & text, const ofVec2f & position) {
+			//draw ignoring scissor
+			auto scissorEnabled = disableScissor();
+
 			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
 			bool hasFont = font.isLoaded();
 
@@ -116,6 +119,10 @@ namespace ofxCvGui {
 				ofSetColor(0);
 				font.drawString(text, floor(textDrawAnchor.x), floor(textDrawAnchor.y));
 				ofPopStyle();
+			}
+
+			if (scissorEnabled) {
+				enableScissor();
 			}
 		}
 
