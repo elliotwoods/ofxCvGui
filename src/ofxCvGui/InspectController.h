@@ -35,7 +35,7 @@ namespace ofxCvGui {
 		ofxLiquidEvent<ElementPtr> onAddWidget;
 
 		///this is actually triggered from the individual inspectors
-		ofxLiquidEvent<ElementGroupPtr> onClear;
+		ofxLiquidEvent<InspectArguments> onClear;
 	protected:
 		static InspectController * singleton;
 		weak_ptr<IInspectable> currentTarget;

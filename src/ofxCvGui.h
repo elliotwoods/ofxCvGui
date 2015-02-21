@@ -19,6 +19,8 @@
 #include "ofxCvGui/Widgets/MultipleChoice.h"
 #include "ofxCvGui/Widgets/Indicator.h"
 
+#include "ofxCvGui/InspectController.h"
+
 namespace ofxCvGui {
 
 }

@@ -40,7 +40,8 @@ namespace ofxCvGui {
 			if (this->titleEnabled) {
 				this->elements->add(shared_ptr<Title>(new Title("Inspector", Title::Level::H1)));
 			}
-			InspectController::X().onClear.notifyListeners(this->elements);
+			InspectArguments inspectArguments = { this->elements };
+			InspectController::X().onClear.notifyListeners(inspectArguments);
 			this->arrange();
 		}
 
