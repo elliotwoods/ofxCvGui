@@ -14,16 +14,26 @@ namespace ofxCvGui {
 			}
 
 			LiveValue(string caption, function<T()> liveValue) {
+				this->init(caption, liveValue);
+			};
+
+			LiveValue(string caption, const T & liveValue) {
+				this->init(caption, [&liveValue]() {
+					return liveValue;
+				});
+			};
+
+			void init(string caption, function<T()> liveValue) {
 				this->setCaption(caption);
 				this->liveValue = liveValue;
 				this->setBounds(ofRectangle(5, 0, 100, 50));
 
-				this->onUpdate += [this] (UpdateArguments &) {
+				this->onUpdate += [this](UpdateArguments &) {
 					stringstream ss;
 					ss << this->liveValue();
 					this->cachedValue = ss.str();
 				};
-				this->onDraw += [this] (DrawArguments & args) {
+				this->onDraw += [this](DrawArguments & args) {
 					auto & captionFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 					captionFont.drawString(this->caption + " : ", 0, 15);
 
@@ -34,7 +44,7 @@ namespace ofxCvGui {
 					ofPushStyle();
 					ofSetLineWidth(1.0f);
 					ofLine(this->getWidth(), 0, this->getWidth(), 40);
-					ofPopStyle();	
+					ofPopStyle();
 				};
 				this->onBoundsChange += [this](BoundsChangeArguments & args) {
 					this->editButton->setBounds(ofRectangle(args.localBounds.width - 20, 5, 15, 15));
@@ -51,7 +61,9 @@ namespace ofxCvGui {
 					}
 				};
 				this->editButton->addListenersToParent(this);
-			};
+				this->setEditable(false);
+			}
+
 
 			virtual ~LiveValue() { }
 
