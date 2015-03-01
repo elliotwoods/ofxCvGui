@@ -43,7 +43,7 @@ namespace ofxCvGui {
 					}
 				}
 
-				//curve towards new bounds
+				//damp towards new bounds
 				if (!this->keepZeroAsMinimum) {
 					this->minimum = this->minimum * 0.8 + newMin * 0.2;
 				}
