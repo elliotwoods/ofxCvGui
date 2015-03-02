@@ -53,6 +53,7 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\TextField.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\EditableValue.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />

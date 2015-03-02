@@ -236,6 +236,9 @@
     <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputFieldFontRenderer.h">
       <Filter>addons\ofxTextInputField\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\EditableValue.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
