@@ -1,3 +1,13 @@
+### My projects won't load
+
+Note that ofxCvGui2 is a little bit funny about its folder location (sorry!). It actually needs to be installed as `openFrameworks/addons/ofxCvGui` not `openFrameworks/addons/ofxCvGui<u>2</u>`.
+
+If you have the `2` in the addon path name, then you're likely to come across a host of errors, e.g.:
+
+* Projects in Visual Studio refuse to load because they reference an incorrect path
+* Assets folder is not copied
+* Other addons cannot include ofxCvGui
+
 ### My mouse pressed action does not fire
 
 This could be perhaps because your element bounds are not set (perhaps even somewhere up the tree of ElementGroup's, etc).
