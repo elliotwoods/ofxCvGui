@@ -7,13 +7,17 @@ namespace ofxCvGui {
 	namespace Panels {
 		class Draws : public Panels::BaseImage {
 		public:
-			Draws(ofBaseDraws& pixels);
+			Draws();
+			Draws(ofBaseDraws &);
+			void setDrawObject(ofBaseDraws &);
+			void clearDrawObject();
+			ofBaseDraws * getDrawObject() const;
 		protected:
 			void drawImage(float width, float height);
             float getImageWidth() const;
             float getImageHeight() const;
 		private:
-			ofBaseDraws& draws;
+			ofBaseDraws * drawObject;
 		};
 	}
 }
