@@ -78,8 +78,18 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	bool MouseArguments::isDragging(shared_ptr<Element> element) const {
+		return this->isDragging((void*)element.get());
+	}
+
+	//----------
 	bool MouseArguments::isDoubleClicked(void * element) const {
 		return this->getOwner() == element && this->action == MouseArguments::Action::DoubleClick;
+	}
+
+	//----------
+	bool MouseArguments::isDoubleClicked(shared_ptr<Element> element) const {
+		return this->isDoubleClicked((void*)element.get());
 	}
 
 	//----------

@@ -61,7 +61,9 @@ namespace ofxCvGui {
 		void forceMouseTake(void * element);
 
 		bool isDragging(void * element) const;
+		bool isDragging(shared_ptr<Element>) const;
 		bool isDoubleClicked(void * element) const;
+		bool isDoubleClicked(shared_ptr<Element>) const;
 
 		void * getOwner() const;
 

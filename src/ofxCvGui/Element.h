@@ -17,10 +17,10 @@ namespace ofxCvGui {
 	class Element {
 	public:
 		enum LocalMouseState {
-			Waiting = 1 << 0,
-			Down = 1 << 1,
-			Dragging = 1 << 2,
-			ChildOwnsMouse = 1 << 3 // for when a child element owns the mouse
+			Waiting = 1,
+			Down = 2,
+			Dragging = 6, // Dragging & Down != 0. So localMouseState & Down will return true if dragging
+			ChildOwnsMouse = 8 // for when a child element owns the mouse
 		};
 
 		Element();
