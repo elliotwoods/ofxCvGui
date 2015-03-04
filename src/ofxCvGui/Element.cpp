@@ -22,52 +22,70 @@ namespace ofxCvGui {
     //-----------
 	void Element::draw(const DrawArguments& parentArguments) {
 		if (this->enabled) {
-			if (this->cachedView) {
-				if (this->needsViewUpdate) {
-					bool scissorWasEnabled = Utils::disableScissor();
-					
-					//if we need to update the view, then redraw the fbo
-					this->cachedView->begin(true);
-					
-					ofClear(20, 0);
+			auto boundsWithinParent = this->getBounds();
+			ofRectangle globalBounds = boundsWithinParent;
+			globalBounds.x += parentArguments.globalBounds.x;
+			globalBounds.y += parentArguments.globalBounds.y;
 
-					//we shouldn't need to do this
-					glViewport(0, 0, this->cachedView->getWidth(), this->cachedView->getHeight());
-					
-					const auto localBounds = this->getLocalBounds();
-					DrawArguments localArguments(localBounds, localBounds, parentArguments.chromeEnabled);
-					this->onDraw(localArguments);
-					
-					this->cachedView->end();
-					
-					if (scissorWasEnabled) {
-						Utils::enableScissor();
+			//only draw if this Element will be shown on the screen (not outside, not scissored out)
+			if (Utils::getScissor().intersects(globalBounds)) {
+
+				if (this->cachedView) {
+
+					//--
+					//Cached view mechanism
+					//--
+					//
+					if (this->needsViewUpdate) {
+						bool scissorWasEnabled = Utils::disableScissor();
+
+						//if we need to update the view, then redraw the fbo
+						this->cachedView->begin(true);
+
+						ofClear(20, 0);
+
+						//we shouldn't need to do this
+						glViewport(0, 0, this->cachedView->getWidth(), this->cachedView->getHeight());
+
+						const auto localBounds = this->getLocalBounds();
+						DrawArguments localArguments(localBounds, localBounds, parentArguments.chromeEnabled);
+						this->onDraw(localArguments);
+
+						this->cachedView->end();
+
+						if (scissorWasEnabled) {
+							Utils::enableScissor();
+						}
+
+						this->needsViewUpdate = false;
 					}
+					this->cachedView->draw(this->getBounds());
+					//
+					//--
 
-					this->needsViewUpdate = false;
 				}
-				
-				this->cachedView->draw(this->getBounds());
-				
-			} else {
-				auto boundsWithinParent = this->getBounds();
-				ofRectangle globalBounds = boundsWithinParent;
-				globalBounds.x += parentArguments.globalBounds.x;
-				globalBounds.y += parentArguments.globalBounds.y;
-				DrawArguments localArguments(boundsWithinParent, globalBounds, parentArguments.chromeEnabled);
+				else {
 
-				ofPushMatrix();
-				ofTranslate(bounds.x, bounds.y);
-				if (this->enableScissor) {
-					ofxCvGui::Utils::pushScissor(localArguments.globalBounds);
+					//--
+					//Direct draw mechanism (default)
+					//--
+					//
+					DrawArguments localArguments(boundsWithinParent, globalBounds, parentArguments.chromeEnabled);
+					ofPushMatrix();
+					ofTranslate(bounds.x, bounds.y);
+					if (this->enableScissor) {
+						ofxCvGui::Utils::pushScissor(localArguments.globalBounds);
+					}
+					this->onDraw(localArguments);
+					if (this->enableScissor) {
+						ofxCvGui::Utils::popScissor();
+					}
+					ofPopMatrix();
+					//
+					//--
+
 				}
-				this->onDraw(localArguments);
-				if (this->enableScissor) {
-					ofxCvGui::Utils::popScissor();
-				}
-				ofPopMatrix();
 			}
-			
 		}
 	}
     
