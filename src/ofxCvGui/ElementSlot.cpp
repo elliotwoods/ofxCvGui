@@ -28,6 +28,12 @@ namespace ofxCvGui {
 				this->element->keyboardAction(args);
 			}
 		};
+
+		this->onBoundsChange += [this](ofxCvGui::BoundsChangeArguments & args) {
+			if (this->element) {
+				this->element->setBounds(args.localBounds);
+			}
+		};
 	}
 
 	//----------

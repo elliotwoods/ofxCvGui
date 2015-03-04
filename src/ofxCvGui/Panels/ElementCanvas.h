@@ -1,6 +1,9 @@
 #pragma once
 #include "Base.h"
 #include "ofxCvGui/ElementGroup.h"
+#include "ofxCvGui/ElementSlot.h"
+
+#include "ofParameter.h"
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -14,15 +17,21 @@ namespace ofxCvGui {
 			/// Elements which are fixed above the canvas
 			ElementGroupPtr getFixedElementGroup(); 
 
-			const ofVec2f & getScrollPosition() const;
 			void setScrollPosition(const ofVec2f &);
+			const ofVec2f & getScrollPosition() const;
+
 			const ofRectangle & getCanvasExtents() const;
 		protected:
 			void update();
+			void callbackZoomChange(float &);
+
 			ElementGroupPtr canvasElements;
 			ElementGroupPtr fixedElements;
+			ElementPtr zoomControl;
 
-			ofVec2f scrollPosition;
+			ofParameter<float> zoom;
+			ofVec2f scrollPosition; // 0,0 means no scroll. +,+ means canvas moves up left
+
 			ofRectangle canvasExtents;
 		};
 	}

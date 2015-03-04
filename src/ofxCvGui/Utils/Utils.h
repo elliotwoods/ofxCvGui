@@ -1,5 +1,6 @@
 #pragma once
 #include "ofRectangle.h"
+#include "ofMatrix4x4.h"
 
 //#define OFXCVGUI_DISBALE_SCISSOR
 
@@ -22,5 +23,8 @@ namespace ofxCvGui {
 		bool getScissorEnabled();
 		bool disableScissor();
 		void enableScissor();
+
+#pragma mark Math
+		ofRectangle operator*(const ofRectangle &, const ofMatrix4x4 &);
 	}
 }

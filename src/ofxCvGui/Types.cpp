@@ -2,15 +2,6 @@
 #include "ofxCvGui/Element.h"
 
 namespace ofxCvGui {
-#pragma mark DrawArguments
-	//----------
-	DrawArguments::DrawArguments(const ofRectangle& boundsWithinParent, const ofRectangle& globalBounds, bool chromeEnabled) :
-		boundsWithinParent(boundsWithinParent),
-		globalBounds(globalBounds),
-		chromeEnabled(chromeEnabled),
-		localBounds(0, 0, boundsWithinParent.width, boundsWithinParent.height)
-	{ }
-
 #pragma mark MouseArguments
 	//----------
 	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * takenBy, const ofVec2f& cached) :
@@ -22,18 +13,6 @@ namespace ofxCvGui {
         movement(action == Dragged ? global - cached : ofVec2f()),
 		takenBy(takenBy),
         InputArguments(currentPanel)
-	{ }
-
-	//----------
-	MouseArguments::MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds) :
-        action(parentArguments.action),
-        button(parentArguments.button),
-        global(parentArguments.global),
-        local(parentArguments.local - ofVec2f(childBounds.x, childBounds.y)),
-        localNormalised(local / ofVec2f(childBounds.width, childBounds.height)),
-        movement(parentArguments.movement),
-		takenBy(parentArguments.takenBy),
-        InputArguments(parentArguments.currentPanel)
 	{ }
 
 	//----------

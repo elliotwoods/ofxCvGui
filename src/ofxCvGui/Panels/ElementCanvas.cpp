@@ -1,4 +1,5 @@
 #include "ElementCanvas.h"
+#include "../Widgets/Slider.h"
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -13,13 +14,34 @@ namespace ofxCvGui {
 
 			this->onMouse += [this](ofxCvGui::MouseArguments & args) {
 				args.takeMousePress(this);
-				if(args.isDragging(this)) {
+				if (args.isDragging(this)) {
 					this->scrollPosition -= args.movement;
 				}
 			};
 
+			canvasElements->onZoomChange += [this](ofxCvGui::ZoomChangeArguments & args) {
+				const auto zoomRatio = args.newZoom / args.oldZoom;
+
+				// MP = midPoint
+				// TL = top left
+
+				auto MP = ofVec2f(this->getWidth() / 2.0f, this->getHeight() / 2.0f);
+				auto TL = -this->getScrollPosition();
+				auto MP_TL = TL - MP;
+				auto MP_TL_new = MP_TL * zoomRatio;
+				
+
+				this->setScrollPosition(-MP - MP_TL_new);
+			};
+
 			this->canvasElements->addListenersToParent(this);
 			this->fixedElements->addListenersToParent(this, true);
+
+			this->zoom.set("Zoom", 0, -1, 1);
+			this->zoomControl = Widgets::Slider::make(this->zoom);
+			this->zoomControl->setBounds(ofRectangle(10, 10, 100, 50));
+			this->zoomControl->addListenersToParent(this->fixedElements);
+			this->zoom.addListener(this, &ElementCanvas::callbackZoomChange);
 		}
 
 		//---------
@@ -33,13 +55,13 @@ namespace ofxCvGui {
 		}
 
 		//---------
-		const ofVec2f & ElementCanvas::getScrollPosition() const {
-			return this->scrollPosition;
+		void ElementCanvas::setScrollPosition(const ofVec2f & scrollPosition) {
+			this->scrollPosition = scrollPosition;
 		}
 
 		//---------
-		void ElementCanvas::setScrollPosition(const ofVec2f & scrollPosition) {
-			this->scrollPosition = scrollPosition;
+		const ofVec2f & ElementCanvas::getScrollPosition() const {
+			return this->scrollPosition;
 		}
 
 		//---------
@@ -51,6 +73,12 @@ namespace ofxCvGui {
 		void ElementCanvas::update() {
 			auto thisBounds = this->getBounds();
 
+
+
+			//--
+			//Calculate canvas extents
+			//--
+			//
 			ofVec2f topLeft(0, 0);
 			ofVec2f bottomRight(thisBounds.getWidth(), thisBounds.getHeight());
 
@@ -65,18 +93,42 @@ namespace ofxCvGui {
 			}
 
 			this->canvasExtents = ofRectangle(topLeft, bottomRight);
+			//
+			//--
 
+
+
+			//--
+			//Set canvasBounds to size of extents and position of scroll
+			//--
+			//
 			auto canvasBounds = this->canvasExtents;
 			canvasBounds.x -= this->scrollPosition.x;
 			canvasBounds.y -= this->scrollPosition.y;
 			if (this->canvasElements->getBounds() != canvasBounds) {
 				this->canvasElements->setBounds(canvasBounds);
 			}
+			//
+			//--
+			
 
-			auto intersectionViewAndCanvas = canvasBounds.getIntersection(this->getLocalBounds());
+
+			//--
+			//Rubber band the scrollPosition back if off-edge
+			//--
+			//
+			auto zoomedCanvasBounds = canvasElements->getBoundsInParent();
+			auto intersectionViewAndCanvas = zoomedCanvasBounds.getIntersection(this->getLocalBounds());
 			if (intersectionViewAndCanvas.width < this->getWidth() / 3.0f || intersectionViewAndCanvas.height < this->getHeight() / 3.0f) {
-				this->scrollPosition += 0.005f * (this->canvasExtents.getCenter() - this->scrollPosition);
+				this->scrollPosition -= 0.005f * zoomedCanvasBounds.getCenter();
 			}
+			//
+			//--
+		}
+
+		//----------
+		void ElementCanvas::callbackZoomChange(float & zoom) {
+			this->canvasElements->setZoom(exp(zoom));
 		}
 	}
 }

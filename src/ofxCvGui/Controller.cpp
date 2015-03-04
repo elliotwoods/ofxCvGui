@@ -149,10 +149,20 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::draw(ofEventArgs& args) {
-		if (!initialised)
+		if (!initialised) {
 			return;
+		}
+
+		DrawArguments rootDrawArguments;
+		rootDrawArguments.chromeEnabled = this->chromeVisible;
+		rootDrawArguments.naturalBounds = ofGetCurrentViewport();
+		rootDrawArguments.globalTransform = ofMatrix4x4();
+		rootDrawArguments.globalScale = 1.0f;
+		rootDrawArguments.localBounds = ofRectangle(0, 0, rootDrawArguments.naturalBounds.getWidth(), rootDrawArguments.naturalBounds.getHeight());
+		rootDrawArguments.globalBounds = rootDrawArguments.naturalBounds;
+
 		if (this->maximised) {
-            DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
+            DrawArguments arg(rootDrawArguments);
 			this->currentPanel->draw(arg);
 		} else {
 			//highlight panel
@@ -163,8 +173,8 @@ namespace ofxCvGui {
 				ofRect(this->currentPanelBounds);
 				ofPopStyle();
 			}
-            DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
-			this->rootGroup->draw(arg);
+
+			this->rootGroup->draw(rootDrawArguments);
 		}
 	}
 

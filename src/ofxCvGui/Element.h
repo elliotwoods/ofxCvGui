@@ -27,7 +27,7 @@ namespace ofxCvGui {
 		virtual ~Element() { }
 		void update();
 		
-		void draw(const DrawArguments& arguments);
+		void draw(const DrawArguments& arguments); // zoom is considered to act on the element's top-left local corner
 		void mouseAction(MouseArguments& mouse);
 		void keyboardAction(KeyboardArguments& keyboard);
 
@@ -43,10 +43,16 @@ namespace ofxCvGui {
 		void arrange();
 
 		void setPosition(const ofVec2f&);
-		const ofRectangle & getBounds() const;
-		const ofRectangle getLocalBounds() const;
+		const ofRectangle & getBounds() const; // aka natural bounds, unzoomed bounds
+		ofRectangle getLocalBounds() const;
+		ofRectangle getBoundsInParent() const;
 		float getWidth() const;
 		float getHeight() const;
+
+		void setZoom(float);
+		float getZoom() const;
+
+		ofMatrix4x4 getParentToLocalTransform() const;
 		
 		void setCaption(string caption);
 		const string & getCaption() const;
@@ -57,6 +63,7 @@ namespace ofxCvGui {
 		ofxLiquidEvent<MouseArguments> onMouse;
 		ofxLiquidEvent<KeyboardArguments> onKeyboard;
 		ofxLiquidEvent<BoundsChangeArguments> onBoundsChange;
+		ofxLiquidEvent<ZoomChangeArguments> onZoomChange;
 
 		//utility events
 		ofxLiquidEvent<MouseArguments> onMouseReleased;
@@ -76,10 +83,14 @@ namespace ofxCvGui {
 		void setCachedView(bool cachedViewEnabled);
 		void markViewDirty();
 	protected:
+		void updateParentToLocalTransform();
 		void allocateCachedView();
 		void setHitTestOnBounds(bool);
+
 		ofRectangle bounds; ///<bounds relative to parent
-		ofRectangle localBounds; ///<bounds for internal draw functions, i.e. x == y == 0
+		float zoomFactor;
+		ofMatrix4x4 parentToLocalTransform;
+
 		string caption;
 		bool enabled;
 		bool enableScissor;

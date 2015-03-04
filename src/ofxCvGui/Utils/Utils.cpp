@@ -1,9 +1,14 @@
 #include "Utils.h"
+
 #include "Constants.h"
+
 #include "ofxAssets.h"
+
 #include "ofGraphics.h"
 #include "ofAppRunner.h"
 #include "ofAppGLFWWindow.h"
+#include "ofMatrix3x3.h"
+#include "ofMatrix4x4.h"
 
 #include <vector>
 
@@ -237,6 +242,16 @@ namespace ofxCvGui {
 #ifndef OFXCVGUI_DISBALE_SCISSOR
 			glEnable(GL_SCISSOR_TEST);
 #endif
+		}
+
+#pragma mark Math
+		//----------
+		ofRectangle operator*(const ofRectangle & rectangle, const ofMatrix4x4 & transform) {
+			auto topLeft = rectangle.getTopLeft();
+			auto scale = ofVec4f(rectangle.getWidth(), rectangle.getHeight(), 0.0f, 0.0f); // w = 0 so no translate
+			topLeft = topLeft * transform;
+			scale = scale * transform;
+			return ofRectangle(topLeft.x, topLeft.y, scale.x, scale.y);
 		}
 	}
 }

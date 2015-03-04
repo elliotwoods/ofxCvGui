@@ -1,7 +1,10 @@
 #include "ofxCvGui/Element.h"
+#include "ofxCvGui/Utils/Utils.h"
+
 namespace ofxCvGui {
 	//-----------
 	Element::Element() {
+		this->zoomFactor = 1.0f;
 		this->enabled = true;
 		this->enableScissor = false;
 		this->localMouseState = Waiting;
@@ -17,21 +20,24 @@ namespace ofxCvGui {
 			UpdateArguments args;
 			onUpdate.notifyListeners(args);
 		}
-    }
-    
-    //-----------
+	}
+
+	//-----------
 	void Element::draw(const DrawArguments& parentArguments) {
 		if (this->enabled) {
-			auto boundsWithinParent = this->getBounds();
-			ofRectangle globalBounds = boundsWithinParent;
-			globalBounds.x += parentArguments.globalBounds.x;
-			globalBounds.y += parentArguments.globalBounds.y;
+			DrawArguments localArguments;
+			localArguments.chromeEnabled = parentArguments.chromeEnabled;
+			localArguments.naturalBounds = this->getBounds();
+			localArguments.globalTransform = this->getParentToLocalTransform() * parentArguments.globalTransform;
+			localArguments.globalScale = parentArguments.globalScale * this->zoomFactor;
+			localArguments.localBounds = ofRectangle(0, 0, localArguments.naturalBounds.width, localArguments.naturalBounds.height);
+			localArguments.globalBounds = Utils::operator*(localArguments.localBounds, localArguments.globalTransform);
 
 			//only draw if this Element will be shown on the screen (not outside, not scissored out)
-			if (Utils::getScissor().intersects(globalBounds)) {
+			if (Utils::getScissor().intersects(localArguments.globalBounds)) {
 
 				if (this->cachedView) {
-
+					ofLogError("ofxCvGui") << "cached view temporarily not allowed";
 					//--
 					//Cached view mechanism
 					//--
@@ -48,8 +54,10 @@ namespace ofxCvGui {
 						glViewport(0, 0, this->cachedView->getWidth(), this->cachedView->getHeight());
 
 						const auto localBounds = this->getLocalBounds();
-						DrawArguments localArguments(localBounds, localBounds, parentArguments.chromeEnabled);
-						this->onDraw(localArguments);
+
+						//HACKED OUT! need to consider zoom
+						//DrawArguments localArguments(localBounds, localBounds, parentArguments.chromeEnabled);
+						//this->onDraw(localArguments);
 
 						this->cachedView->end();
 
@@ -70,13 +78,16 @@ namespace ofxCvGui {
 					//Direct draw mechanism (default)
 					//--
 					//
-					DrawArguments localArguments(boundsWithinParent, globalBounds, parentArguments.chromeEnabled);
 					ofPushMatrix();
 					ofTranslate(bounds.x, bounds.y);
+					ofScale(this->zoomFactor, this->zoomFactor);
+
 					if (this->enableScissor) {
 						ofxCvGui::Utils::pushScissor(localArguments.globalBounds);
 					}
+
 					this->onDraw(localArguments);
+
 					if (this->enableScissor) {
 						ofxCvGui::Utils::popScissor();
 					}
@@ -88,39 +99,44 @@ namespace ofxCvGui {
 			}
 		}
 	}
-    
-    //-----------
-    void Element::mouseAction(MouseArguments& args) {
-		
+
+	//-----------
+	void Element::mouseAction(MouseArguments& parentMouseArguments) {
+
 		// NOTE : This is one of the most important functions of this entire addon
-		
+
 		if (this->enabled) {
-			auto localArgs = MouseArguments(args, this->getBounds());
-			this->mouseOver = localArgs.isLocal();
-			
+			auto parentToLocalTransform = this->getParentToLocalTransform();
+
+			MouseArguments localMouseArguments = parentMouseArguments;
+			localMouseArguments.local = (ofVec3f) parentMouseArguments.local * parentToLocalTransform.getInverse();
+			localMouseArguments.localNormalised = localMouseArguments.local / ofVec2f(this->getWidth(), this->getHeight());
+			localMouseArguments.movement = parentMouseArguments.movement / ofVec2f(parentToLocalTransform(0, 0), parentToLocalTransform(1, 1));
+
+			this->mouseOver = localMouseArguments.isLocal();
+
 			//some elements might not want to perform a local hit test since their bounds are meaningless (e.g. ElementSlot)
 			auto isHit = this->mouseOver || !this->enableHitTestOnBounds;
-			
-			
-			switch(args.action) {
-				case MouseArguments::Action::Pressed:
+
+			switch (parentMouseArguments.action) {
+			case MouseArguments::Action::Pressed:
 				{
 					//special case for pressed, only pass if local and not already taken
-					if (isHit && !localArgs.isTaken()) {
+					if (isHit && !localMouseArguments.isTaken()) {
 						//pass the mouse event onto Element's event handlers
-						this->onMouse.notifyListenersInReverse(localArgs);
-						
+						this->onMouse.notifyListenersInReverse(localMouseArguments);
+
 						//if we have a mouse released handler, then we must also try and take the click
 						if (!this->onMouseReleased.empty()) {
-							localArgs.takeMousePress(this);
+							localMouseArguments.takeMousePress(this);
 						}
-						
+
 						//check if one of the handlers took ownership of the mouse down event
-						if (localArgs.isTaken()) {
+						if (localMouseArguments.isTaken()) {
 							// if this element or any nested elements took the click, notify upstream arguments of the take
-							auto clickOwner = localArgs.getOwner();
-							args.forceMouseTake(clickOwner); // if this element took, notify upstream
-							
+							auto clickOwner = localMouseArguments.getOwner();
+							parentMouseArguments.forceMouseTake(clickOwner); // if this element took, notify upstream
+
 							if (clickOwner == this) {
 								// if we're the ones who took the mouse down action, let's flag it in our local state
 								this->localMouseState = LocalMouseState::Down;
@@ -133,74 +149,74 @@ namespace ofxCvGui {
 					}
 				}
 				break;
-					
-					
-				case MouseArguments::Action::Dragged:
+
+
+			case MouseArguments::Action::Dragged:
 				{
 					//if mouse is being dragged and went down in this Element, then we're now dragging
 					if (this->localMouseState == LocalMouseState::Down) {
 						this->localMouseState = LocalMouseState::Dragging;
 					}
-					
+
 					//if our local state is dragging or child owns the mouse, then pass through the drag action
 					//this is also true when a child element is being dragged
 					//to check if this element is being dragged, use args.isDragging(myElement) inside your handler
 					if (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::ChildOwnsMouse)) {
-						this->onMouse(localArgs);
+						this->onMouse(localMouseArguments);
 					}
 				}
 				break;
-					
-					
-				case MouseArguments::Action::Released:
+
+
+			case MouseArguments::Action::Released:
 				{
 					//only trigger the onMouseReleased if the mouse release was local
 					if (this->mouseOver && (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::Down))) {
-						this->onMouseReleased(localArgs);
+						this->onMouseReleased(localMouseArguments);
 					}
-					
+
 					//either way, we need to pass this into the Element's handlers and children for consideration unless we and no children owns the mouse
-					if(this->localMouseState != LocalMouseState::Waiting) {
-						this->onMouse(localArgs);
+					if (this->localMouseState != LocalMouseState::Waiting) {
+						this->onMouse(localMouseArguments);
 						this->localMouseState = LocalMouseState::Waiting;
 					}
 				}
 				break;
-					
-					
-				case MouseArguments::Action::DoubleClick:
+
+
+			case MouseArguments::Action::DoubleClick:
 				{
-					this->onMouse(localArgs);
+					this->onMouse(localMouseArguments);
 				}
 				break;
-					
-					
-				case MouseArguments::Action::Moved:
+
+
+			case MouseArguments::Action::Moved:
 				{
-					this->onMouse(localArgs);
+					this->onMouse(localMouseArguments);
 				}
 				break;
-				
-					
-				default:
+
+
+			default:
 				break;
 			}
 		}
-    }
-    
-    //-----------
-    void Element::keyboardAction(KeyboardArguments &arguments) {
+	}
+
+	//-----------
+	void Element::keyboardAction(KeyboardArguments &arguments) {
 		if (this->enabled) {
 			this->onKeyboard(arguments);
 		}
-    }
+	}
 
-    //-----------
+	//-----------
 	void Element::clearMouseState() {
 		this->localMouseState = Waiting;
 	}
 
-    //-----------
+	//-----------
 	Element::LocalMouseState Element::getMouseState() const {
 		return this->localMouseState;
 	}
@@ -223,9 +239,7 @@ namespace ofxCvGui {
 	//-----------
 	void Element::setBounds(const ofRectangle& bounds) {
 		this->bounds = bounds;
-		this->localBounds = bounds;
-		this->localBounds.x = 0;
-		this->localBounds.y = 0;
+		this->updateParentToLocalTransform();
 
 		if (this->cachedView) {
 			this->allocateCachedView();
@@ -270,11 +284,16 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	const ofRectangle Element::getLocalBounds() const {
+	ofRectangle Element::getLocalBounds() const {
 		auto localBounds = this->bounds;
 		localBounds.x = 0.0f;
 		localBounds.y = 0.0f;
 		return localBounds;
+	}
+
+	//-----------
+	ofRectangle Element::getBoundsInParent() const {
+		return Utils::operator*(this->getLocalBounds(), this->getParentToLocalTransform().getInverse());
 	}
 
 	//-----------
@@ -288,11 +307,31 @@ namespace ofxCvGui {
 	}
 
 	//-----------
+	void Element::setZoom(float zoom) {
+		ZoomChangeArguments zoomChangeArguments = { this->zoomFactor, zoom };
+
+		this->zoomFactor = zoom;
+		this->updateParentToLocalTransform();
+
+		this->onZoomChange(zoomChangeArguments);
+	}
+
+	//-----------
+	float Element::getZoom() const {
+		return this->zoomFactor;
+	}
+
+	//-----------
+	ofMatrix4x4 Element::getParentToLocalTransform() const {
+		return this->parentToLocalTransform;
+	}
+
+	//-----------
 	void Element::setCaption(string caption) {
 		this->caption = caption;
 		this->onCaptionChange(caption);
 	}
-	
+
 	//-----------
 	const string & Element::getCaption() const {
 		return this->caption;
@@ -393,6 +432,11 @@ namespace ofxCvGui {
 	//-----------
 	void Element::markViewDirty() {
 		this->needsViewUpdate = true;
+	}
+
+	//-----------
+	void Element::updateParentToLocalTransform() {
+		this->parentToLocalTransform = ofMatrix4x4::newScaleMatrix(this->zoomFactor, this->zoomFactor, 1.0f) * ofMatrix4x4::newTranslationMatrix(this->getBounds().getTopLeft());
 	}
 
 	//-----------

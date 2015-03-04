@@ -2,10 +2,11 @@
 #include "ofRectangle.h"
 #include "ofEvents.h"
 #include "ofTypes.h"
+#include "ofMatrix4x4.h"
 
 namespace ofxCvGui {
 	//-------------
-	class Element; //temporary definition
+	class Element;
 
 	//----------
     struct UpdateArguments {
@@ -14,12 +15,12 @@ namespace ofxCvGui {
     
 	//----------
 	struct DrawArguments {
-		DrawArguments(const ofRectangle& boundsWithinParent, const ofRectangle& globalBounds, bool chromeEnabled);
-        
-		const ofRectangle boundsWithinParent;
-		const ofRectangle globalBounds;
-		const ofRectangle localBounds;
-		const bool chromeEnabled;
+		bool chromeEnabled;
+		ofRectangle naturalBounds; /// bounds within parent as stored locally. before scaling
+		ofMatrix4x4 globalTransform; /// warning : global properties can be relative to an fbo if within a cached view element
+		float globalScale;
+		ofRectangle localBounds;
+		ofRectangle globalBounds;
 	};
 
 	//----------
@@ -44,8 +45,8 @@ namespace ofxCvGui {
 			DoubleClick = 1 << 4
         };
         
+		MouseArguments(); //local
 		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * owner, const ofVec2f& cached = ofVec2f()); ///global
-		MouseArguments(const MouseArguments& parentArguments, const ofRectangle& childBounds); ///local
 		
 		bool isLocal() const; 
 		bool isTaken() const;
@@ -67,12 +68,12 @@ namespace ofxCvGui {
 
 		void * getOwner() const;
 
-		const Action action;
-		const int button;
-		const ofVec2f global;
-		const ofVec2f local;
-		const ofVec2f localNormalised; ///<Texture coordinates
-        const ofVec2f movement;
+		Action action;
+		int button;
+		ofVec2f global;
+		ofVec2f local;
+		ofVec2f localNormalised; ///<Texture coordinates
+        ofVec2f movement;
 
 		friend ostream& operator<<(ostream&, const MouseArguments &);
 	protected:
@@ -107,5 +108,11 @@ namespace ofxCvGui {
 		const ofVec2f localPosition;
 		const ofVec2f globalPosition;
 		const vector<string> files;
+	};
+
+	//----------
+	struct ZoomChangeArguments {
+		float oldZoom;
+		float newZoom;
 	};
 }
