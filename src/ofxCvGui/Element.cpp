@@ -293,7 +293,7 @@ namespace ofxCvGui {
 
 	//-----------
 	ofRectangle Element::getBoundsInParent() const {
-		return Utils::operator*(this->getLocalBounds(), this->getParentToLocalTransform().getInverse());
+		return Utils::operator*(this->getLocalBounds(), this->getParentToLocalTransform());
 	}
 
 	//-----------

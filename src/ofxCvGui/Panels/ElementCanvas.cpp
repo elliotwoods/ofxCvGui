@@ -1,6 +1,8 @@
 #include "ElementCanvas.h"
 #include "../Widgets/Slider.h"
 
+#include "ofAppRunner.h"
+
 namespace ofxCvGui {
 	namespace Panels {
 		//---------
@@ -117,10 +119,16 @@ namespace ofxCvGui {
 			//Rubber band the scrollPosition back if off-edge
 			//--
 			//
+			//NOTE : should really be rubberbanding to edge not center
 			auto zoomedCanvasBounds = canvasElements->getBoundsInParent();
-			auto intersectionViewAndCanvas = zoomedCanvasBounds.getIntersection(this->getLocalBounds());
-			if (intersectionViewAndCanvas.width < this->getWidth() / 3.0f || intersectionViewAndCanvas.height < this->getHeight() / 3.0f) {
-				this->scrollPosition -= 0.005f * zoomedCanvasBounds.getCenter();
+			auto localBounds = this->getLocalBounds();
+			auto intersectionViewAndCanvas = zoomedCanvasBounds.getIntersection(localBounds);
+			auto center = zoomedCanvasBounds.getCenter();
+			if (intersectionViewAndCanvas.width < this->getWidth() / 3.0f) {
+				this->scrollPosition.x += 0.5f * (center.x - this->getWidth() / 2.0f) * ofGetLastFrameTime();
+			}
+			if (intersectionViewAndCanvas.height < this->getHeight() / 3.0f) {
+				this->scrollPosition.y += 0.5f * (center.y - this->getHeight() / 2.0f) * ofGetLastFrameTime();
 			}
 			//
 			//--

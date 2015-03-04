@@ -31,6 +31,7 @@ namespace ofxCvGui {
 
 			ofParameter<float> zoom;
 			ofVec2f scrollPosition; // 0,0 means no scroll. +,+ means canvas moves up left
+			ofVec2f correctiveVelocity;
 
 			ofRectangle canvasExtents;
 		};
