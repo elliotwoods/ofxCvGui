@@ -37,7 +37,6 @@ namespace ofxCvGui {
 			if (Utils::getScissor().intersects(localArguments.globalBounds)) {
 
 				if (this->cachedView) {
-					ofLogError("ofxCvGui") << "cached view temporarily not allowed";
 					//--
 					//Cached view mechanism
 					//--
@@ -55,9 +54,15 @@ namespace ofxCvGui {
 
 						const auto localBounds = this->getLocalBounds();
 
-						//HACKED OUT! need to consider zoom
-						//DrawArguments localArguments(localBounds, localBounds, parentArguments.chromeEnabled);
-						//this->onDraw(localArguments);
+						DrawArguments localArgumentsInFbo;
+						localArgumentsInFbo.chromeEnabled = localArguments.chromeEnabled;
+						localArgumentsInFbo.naturalBounds = localArguments.localBounds;
+						localArgumentsInFbo.globalTransform = ofMatrix4x4();
+						localArgumentsInFbo.globalScale = 1.0f;
+						localArgumentsInFbo.localBounds = localArguments.localBounds;
+						localArgumentsInFbo.globalBounds = localArguments.localBounds;
+
+						this->onDraw(localArgumentsInFbo);
 
 						this->cachedView->end();
 
@@ -272,10 +277,10 @@ namespace ofxCvGui {
 
 	//-----------
 	void Element::setPosition(const ofVec2f& position) {
-		this->bounds.x = position.x;
-		this->bounds.y = position.y;
-		auto arguments = BoundsChangeArguments(this->bounds);
-		this->onBoundsChange(arguments);
+		auto newBounds = this->getBounds();
+		bounds.x = position.x;
+		bounds.y = position.y;
+		this->setBounds(this->bounds); // best to always let setBounds deal with this. even if it means sometimes reallocating
 	}
 
 	//-----------

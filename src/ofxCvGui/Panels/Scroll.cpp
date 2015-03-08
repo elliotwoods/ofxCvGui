@@ -147,7 +147,7 @@ namespace ofxCvGui {
 				y += elementBounds.height + OFXCVGUI_SCROLL_SPACING;
 			}
 			this->length = y;
-			this->elements->setBounds(ofRectangle(0, 0, this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH, this->length));
+			this->elements->setBounds(ofRectangle(0, -floor(position), this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH, this->length));
 		}
 
 		//----------

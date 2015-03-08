@@ -19,6 +19,12 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		Slider::Slider(ofParameter<float> & parameter, Slider::ValueChangeCallback onValueChange) :
+		Slider(parameter) {
+			this->onValueChange += onValueChange;
+		}
+
+		//----------
 		Slider::~Slider() {
 
 		}
