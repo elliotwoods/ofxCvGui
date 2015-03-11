@@ -11,7 +11,6 @@ namespace ofxCvGui {
 			statusFunction(statusFunction) {
 			init(caption);
 		}
-
 		//----------
 		void Indicator::init(string caption) {
 			this->setCaption(caption);
@@ -22,6 +21,11 @@ namespace ofxCvGui {
 				captionFont.drawString(this->caption + " : ", 0, 15);
 
 				auto status = this->statusFunction();
+
+				if (Indicator::colorMap->find(status) == Indicator::colorMap->end()) {
+					ofLogError("ofxCvGui::Indicator") << "Your status has an invalid value. Maybe not initialised?";
+					return;
+				}
 
 				//draw indicator
 				ofPushStyle();

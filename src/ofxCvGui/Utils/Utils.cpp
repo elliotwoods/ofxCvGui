@@ -160,6 +160,12 @@ namespace ofxCvGui {
 			}
 		}
 
+#pragma mark Animation
+		//----------
+		ofColor getBeatingSelectionColor() {
+			return ofColor((sin(ofGetElapsedTimef() * TWO_PI) + 1.0f) * 127, 0, 0);
+		}
+
 #pragma mark Scissor
 		//----------
 		vector<ofRectangle> scissorHistory;

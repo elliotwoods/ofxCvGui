@@ -54,12 +54,6 @@ namespace ofxCvGui {
 				this->editButton->onDraw += [this](DrawArguments & args) {
 					ofxAssets::image("ofxCvGui::edit").draw(args.localBounds);
 				};
-				this->editButton->onMouseReleased += [this](MouseArguments & args) {
-					auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "] (" + this->cachedValue + ")");
-					if (result != "") {
-						this->onEditValue(result);
-					}
-				};
 				this->editButton->addListenersToParent(this);
 				this->setEditable(false);
 			}
@@ -69,15 +63,20 @@ namespace ofxCvGui {
 
 			void setEditable(bool editable) {
 				this->editButton->setEnabled(editable);
+				if (editable) {
+					this->editButton->onMouseReleased.removeListeners(this);
+					this->editButton->onMouseReleased.addListener([this](MouseArguments & args) {
+						auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "] (" + this->cachedValue + ")");
+						if (result != "") {
+							this->onEditValue(result);
+						}
+					}, this);
+				}
 			}
 
 			ofxLiquidEvent<string> onEditValue;
 
 		protected:
-			void init();
-			void update(UpdateArguments &);
-			void draw(DrawArguments &);
-			
 			function<T()> liveValue;
 			string cachedValue;
 			

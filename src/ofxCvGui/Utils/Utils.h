@@ -14,6 +14,9 @@ namespace ofxCvGui {
 
 		string makeString(char key);
 
+#pragma mark Animation
+		ofColor getBeatingSelectionColor();
+
 #pragma mark Scissor
 		ofRectangle getScissor();
 		void applyScissor(const ofRectangle &);

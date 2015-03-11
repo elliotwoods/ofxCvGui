@@ -17,6 +17,7 @@
 #include "ofxCvGui/Widgets/Button.h"
 #include "ofxCvGui/Widgets/LiveValue.h"
 #include "ofxCvGui/Widgets/EditableValue.h"
+#include "ofxCvGui/Widgets/SelectFile.h"
 #include "ofxCvGui/Widgets/MultipleChoice.h"
 #include "ofxCvGui/Widgets/Indicator.h"
 

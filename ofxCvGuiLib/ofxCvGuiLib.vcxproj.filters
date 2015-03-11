@@ -113,6 +113,9 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\TextField.cpp">
       <Filter>src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\SelectFile.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -237,6 +240,9 @@
       <Filter>addons\ofxTextInputField\src</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Widgets\EditableValue.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\SelectFile.h">
       <Filter>src\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

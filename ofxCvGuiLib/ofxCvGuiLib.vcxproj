@@ -56,6 +56,7 @@
     <ClInclude Include="..\src\ofxCvGui\Widgets\EditableValue.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\SelectFile.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Title.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\Indicator.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\LiveValue.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\MultipleChoice.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\SelectFile.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp" />

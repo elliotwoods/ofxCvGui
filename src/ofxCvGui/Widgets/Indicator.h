@@ -13,12 +13,13 @@ namespace ofxCvGui {
 				Error
 			};
 			typedef std::function<Status()> StatusFunction;
-			typedef std::function<bool()> BoolFunction;
+
+			// we would get an ambiguous call if we provide a BoolFunction constructor, so we haven't
 
 			OFXCVGUI_MAKE_ELEMENT_HEADER(Indicator, string caption, StatusFunction statusFunction) {
 				OFXCVGUI_MAKE_ELEMENT_BODY(Indicator, caption, statusFunction);
 			}
-			Indicator(string caption, StatusFunction statusFunction);
+			Indicator(string caption, StatusFunction);
 		protected:
 			void init(string caption);
 			const StatusFunction statusFunction;
