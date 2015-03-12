@@ -6,11 +6,12 @@ using namespace ofxAssets;
 namespace ofxCvGui {
 	namespace Widgets {
 		//----------
-		Toggle::Toggle(ofParameter<bool> & parameter) {
+		Toggle::Toggle(ofParameter<bool> & parameter, char hotKey) {
 			this->setParameter(parameter);
-			this->localAllocation = false;
-			this->init();
 			this->setCaption(this->value->getName());
+			this->localAllocation = false;
+			this->hotKey = hotKey;
+			this->init();
 		}
 
 		//----------
@@ -21,9 +22,10 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		Toggle::Toggle(string caption) {
+		Toggle::Toggle(string caption, char hotKey) {
 			this->setParameter(* new ofParameter<bool>(caption, false));
 			this->localAllocation = true;
+			this->hotKey = hotKey;
 			this->init();
 		}
 
@@ -36,6 +38,18 @@ namespace ofxCvGui {
 
 		//----------
 		void Toggle::init() {
+			if (this->hotKey != 0) {
+				this->setCaption(this->getCaption() + " [" + Utils::makeString(this->hotKey) + "]");
+
+				this->onKeyboard += [this](ofxCvGui::KeyboardArguments & keyArgs) {
+					if (keyArgs.action == ofxCvGui::KeyboardArguments::Action::Pressed) {
+						if (keyArgs.key == this->hotKey) {
+							this->toggle();
+						}
+					}
+				};
+			}
+
 			this->setBounds(ofRectangle(5, 0, 100, 40));
 
 			this->onUpdate += [this] (UpdateArguments & args) {
@@ -130,8 +144,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Toggle::mouseReleased(MouseArguments & args) {
-			this->value->set(!this->value->get());
-			this->notifyValueChange();
+			this->toggle();
 		}
 
 		//----------
@@ -139,6 +152,12 @@ namespace ofxCvGui {
 			this->buttonBounds = args.localBounds;
 			buttonBounds.height -= 10;
 			buttonBounds.width -= 10;
+		}
+
+		//----------
+		void Toggle::toggle() {
+			this->value->set(!this->value->get());
+			this->notifyValueChange();
 		}
 
 		//----------
