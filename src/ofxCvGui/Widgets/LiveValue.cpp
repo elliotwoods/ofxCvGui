@@ -4,6 +4,18 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
+		bool isFinite(float number) {
+			if (number != number) {
+				//NaN case
+				return false;
+			}
+			if (number + 1 == number){
+				//infinite case
+				return false;
+			}
+			return true;
+		}
+
 		//----------
 		LiveValueHistory::LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum) :
 		LiveValue(caption, liveValue) {
@@ -45,9 +57,19 @@ namespace ofxCvGui {
 
 				//damp towards new bounds
 				if (!this->keepZeroAsMinimum) {
-					this->minimum = this->minimum * 0.8 + newMin * 0.2;
+					if (isFinite(this->minimum)) {
+						this->minimum = this->minimum * 0.8 + newMin * 0.2;
+					}
+					else {
+						this->minimum = newMin;
+					}
 				}
-				this->maximum = this->maximum * 0.8 + newMax * 0.2;
+				if (isFinite(this->maximum)) {
+					this->maximum = this->maximum * 0.8 + newMax * 0.2;
+				}
+				else {
+					this->maximum = newMax;
+				}
 
 				//check we have valid min and max
 				if (this->minimum != this->minimum || this->maximum != this->maximum) {
