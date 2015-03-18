@@ -20,6 +20,10 @@ namespace ofxCvGui {
 					this->scrollPosition -= args.movement;
 				}
 			};
+			this->onBoundsChange += [this](ofxCvGui::BoundsChangeArguments & args) {
+				const ofVec2f bottomRight = this->getLocalBounds().getBottomRight();
+				this->zoomControl->setBounds(ofRectangle(bottomRight - ofVec2f(210.0f, 50.0f), bottomRight - ofVec2f(10.0f, 10.0f)));
+			};
 
 			canvasElements->onZoomChange += [this](ofxCvGui::ZoomChangeArguments & args) {
 				const auto zoomRatio = args.newZoom / args.oldZoom;
@@ -39,7 +43,7 @@ namespace ofxCvGui {
 			this->canvasElements->addListenersToParent(this);
 			this->fixedElements->addListenersToParent(this, true);
 
-			this->zoom.set("Zoom", 0, -1, 1);
+			this->zoom.set("Zoom", 0, -3, 1);
 			this->zoomControl = Widgets::Slider::make(this->zoom);
 			this->zoomControl->setBounds(ofRectangle(10, 10, 100, 50));
 			this->zoomControl->addListenersToParent(this->fixedElements);
