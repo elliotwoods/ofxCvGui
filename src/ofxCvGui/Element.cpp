@@ -84,7 +84,7 @@ namespace ofxCvGui {
 					//--
 					//
 					ofPushMatrix();
-					ofTranslate(bounds.x, bounds.y);
+					ofTranslate(floor(bounds.x), floor(bounds.y));
 					ofScale(this->zoomFactor, this->zoomFactor);
 
 					if (this->enableScissor) {
@@ -447,8 +447,8 @@ namespace ofxCvGui {
 	//-----------
 	void Element::allocateCachedView() {
 		ofFbo::Settings fboSettings;
-		fboSettings.width = this->bounds.width;
-		fboSettings.height = this->bounds.height;
+		fboSettings.width = (int) this->bounds.width;
+		fboSettings.height = (int) this->bounds.height;
 		fboSettings.internalformat = GL_RGBA;
 		fboSettings.numSamples = 0;
 

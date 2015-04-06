@@ -85,11 +85,11 @@ namespace ofxCvGui {
 
 		class LiveValueHistory : public LiveValue<float> {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValueHistory, string caption, const function<float()> & liveValueFunction, bool keepZeroAsMinimum) {
+			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValueHistory, string caption, const function<float()> & liveValueFunction, bool keepZeroAsMinimum = true) {
 				OFXCVGUI_MAKE_ELEMENT_BODY(LiveValueHistory, caption, liveValueFunction, keepZeroAsMinimum);
 			}
 
-			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = false);
+			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = true);
 		protected:
 			deque<float> history;
 			bool keepZeroAsMinimum;
