@@ -20,6 +20,11 @@ namespace ofxCvGui {
 			this->asset = & asset;
 		}
 
+		//----------
+		ofAbstractImage * Image::getImage() {
+			return this->asset;
+		}
+
         //----------
 		void Image::drawImage(float width, float height) {
 			if (this->asset) {

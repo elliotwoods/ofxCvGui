@@ -9,6 +9,7 @@ namespace ofxCvGui {
 			Image(ofAbstractImage &);
             virtual ~Image();
 			void setImage(ofAbstractImage &);
+			ofAbstractImage * getImage();
 		protected:
 			void drawImage(float width, float height);
             void drawInfo(DrawArguments& arguments);
