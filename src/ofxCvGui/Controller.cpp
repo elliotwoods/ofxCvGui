@@ -70,11 +70,7 @@ namespace ofxCvGui {
 	//----------
 	void Controller::toggleMaximised() {
 		//if we were fullscreen, move to simply maximised
-		if (this->fullscreen) {
-			this->fullscreen = false;
-			ofSetFullscreen(false);
-			this->maximised = true;
-		} else if (this->maximised)  {
+		if (this->maximised)  {
 			this->maximised = false;
 		} else if (this->currentPanel != PanelPtr() ) {
 			this->maximised = true;
@@ -90,28 +86,22 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::toggleFullscreen() {
-		if (!this->fullscreen && this->currentPanel) {
-			this->setFullscreen(this->currentPanel);
+		if (!this->fullscreen) {
+			this->setFullscreen();
 		} else {
 			this->clearFullscreen();
 		}
 	}
 	
 	//----------
-	void Controller::setFullscreen(PanelPtr panel) {
-		this->currentPanel = panel;
-		this->currentPanelBounds = ofGetCurrentViewport();
+	void Controller::setFullscreen() {
 		this->fullscreen = true;
-		this->maximised = true;
 		ofSetFullscreen(this->fullscreen);
-		panel->setBounds(ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight()));
 	}
 
 	//----------
 	void Controller::clearFullscreen() {
 		this->fullscreen = false;
-		this->maximised = false;
-		this->updateCurrentPanel();
 		ofSetFullscreen(false);
 		this->lastRebuildRequiredFrame = ofGetFrameNum();
 	}
