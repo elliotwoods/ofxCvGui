@@ -9,14 +9,22 @@ namespace ofxCvGui {
 		public:
 			Scroll();
 			void add(ElementPtr);
-			ElementGroupPtr getGroup();
+			virtual void clear();
+			ElementGroupPtr getElementGroup();
+
+			///Scroll functions
+			/// Note : Scroll is positive as you scroll down (first item is off the top)
+			///{
 			void setScroll(float);
+			float getScroll() const;
+			void scrollToInclude(ElementPtr);
+			///{
 		protected:
 			void update();
 			void draw(DrawArguments &);
 			void mouse(MouseArguments &);
 			void keyboard(KeyboardArguments &);
-			void arrange();
+			void arrangeScroll();
 			float getBarLength() const;
 			float getBarY() const;
 
@@ -24,7 +32,6 @@ namespace ofxCvGui {
 			float position;
 			float length;
 			bool onScrollBar;
-			bool dragTaken;
 		};
 	}
 }

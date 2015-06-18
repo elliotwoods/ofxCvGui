@@ -6,11 +6,11 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class Toggle : public Element {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, ofParameter<bool> & parameter) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, parameter);
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, ofParameter<bool> & parameter, char hotKey = 0) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, parameter, hotKey);
 			}
-			Toggle(ofParameter<bool> &);
-			Toggle(string caption);
+			Toggle(ofParameter<bool> &, char hotKey = 0);
+			Toggle(string caption, char hotKey = 0);
 			Toggle();
 			virtual ~Toggle();
 			ofxLiquidEvent<ofParameter<bool>> onValueChange;
@@ -21,15 +21,18 @@ namespace ofxCvGui {
 			void update(UpdateArguments &);
 			void draw(DrawArguments &);
 			void mouseAction(MouseArguments &);
+			void mouseReleased(MouseArguments &);
 			void boundsChange(BoundsChangeArguments &);
+			void toggle();
 			void notifyValueChange();
 
 			bool localAllocation;
 			ofParameter<bool> * value;
 
 			ofRectangle buttonBounds;
-			bool isMouseDown;
 			bool isMouseOver;
+
+			char hotKey;
 		};
 
 		shared_ptr<Toggle> make(ofParameter<bool> &);

@@ -6,11 +6,12 @@ using namespace ofxAssets;
 namespace ofxCvGui {
 	namespace Widgets {
 		//----------
-		Toggle::Toggle(ofParameter<bool> & parameter) {
+		Toggle::Toggle(ofParameter<bool> & parameter, char hotKey) {
 			this->setParameter(parameter);
-			this->localAllocation = false;
-			this->init();
 			this->setCaption(this->value->getName());
+			this->localAllocation = false;
+			this->hotKey = hotKey;
+			this->init();
 		}
 
 		//----------
@@ -21,9 +22,10 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		Toggle::Toggle(string caption) {
+		Toggle::Toggle(string caption, char hotKey) {
 			this->setParameter(* new ofParameter<bool>(caption, false));
 			this->localAllocation = true;
+			this->hotKey = hotKey;
 			this->init();
 		}
 
@@ -36,6 +38,18 @@ namespace ofxCvGui {
 
 		//----------
 		void Toggle::init() {
+			if (this->hotKey != 0) {
+				this->setCaption(this->getCaption() + " [" + Utils::makeString(this->hotKey) + "]");
+
+				this->onKeyboard += [this](ofxCvGui::KeyboardArguments & keyArgs) {
+					if (keyArgs.action == ofxCvGui::KeyboardArguments::Action::Pressed) {
+						if (keyArgs.key == this->hotKey) {
+							this->toggle();
+						}
+					}
+				};
+			}
+
 			this->setBounds(ofRectangle(5, 0, 100, 40));
 
 			this->onUpdate += [this] (UpdateArguments & args) {
@@ -47,12 +61,14 @@ namespace ofxCvGui {
 			this->onMouse += [this] (MouseArguments & args) {
 				this->mouseAction(args);
 			};
+			this->onMouseReleased += [this] (MouseArguments & args) {
+				this->mouseReleased(args);
+			};
 			this->onBoundsChange += [this] (BoundsChangeArguments & args) {
 				this->boundsChange(args);
 			};
 			
 			this->isMouseOver = false;
-			this->isMouseDown = false;
 		}
 
 		//----------
@@ -79,13 +95,14 @@ namespace ofxCvGui {
 			}
 
 			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
+			auto isMouseDown = this->getMouseState() != LocalMouseState::Waiting;
 
 			ofPushStyle();
 			
 			//fill
-			ofSetColor(this->value->get() ^ this->isMouseDown ?  80 : 50);
+			ofSetColor(this->value->get() ^ isMouseDown ?  80 : 50);
 			ofFill();
-			const auto radius = 5.0f;
+			const auto radius = 4.0f;
 			ofRectRounded(this->buttonBounds, radius, radius, radius, radius);
 			
 			//outline
@@ -96,8 +113,7 @@ namespace ofxCvGui {
 			}
 
 			ofSetColor(255);
-			const auto textBounds = font.getStringBoundingBox(this->caption, 0, 0);
-			font.drawString(this->caption, (int) ((this->buttonBounds.width - textBounds.width) / 2.0f), (int) ((this->buttonBounds.height + textBounds.height) / 2.0f));
+			Utils::drawText(this->caption, this->buttonBounds, false);
 			
 			ofPopStyle();
 
@@ -119,16 +135,16 @@ namespace ofxCvGui {
 
 			switch(args.action) {
 			case MouseArguments::Pressed:
-				this->isMouseDown = this->isMouseOver;
-				break;
-			case MouseArguments::Released:
-				if (this->isMouseDown) {
-					this->value->set(! this->value->get());
-					this->notifyValueChange();
+				if (this->isMouseOver) {
+					args.takeMousePress(this);
 				}
-				this->isMouseDown = false;
 				break;
 			}
+		}
+
+		//----------
+		void Toggle::mouseReleased(MouseArguments & args) {
+			this->toggle();
 		}
 
 		//----------
@@ -136,6 +152,12 @@ namespace ofxCvGui {
 			this->buttonBounds = args.localBounds;
 			buttonBounds.height -= 10;
 			buttonBounds.width -= 10;
+		}
+
+		//----------
+		void Toggle::toggle() {
+			this->value->set(!this->value->get());
+			this->notifyValueChange();
 		}
 
 		//----------

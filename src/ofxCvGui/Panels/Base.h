@@ -1,6 +1,5 @@
 #pragma once
 #include "../Element.h"
-//#include "../ElementGroup.h"
 #include "ofRectangle.h"
 
 namespace ofxCvGui {
@@ -12,10 +11,9 @@ namespace ofxCvGui {
 				return shared_ptr<Panels::Base>();
 			}
 			
-			ofxLiquidEvent<FilesDraggedArguments> ofFilesDragged;
+			ofxLiquidEvent<FilesDraggedArguments> onFilesDragged;
 		protected:
 			virtual void drawTitle();
-//			shared_ptr<ElementGroup> elements;
 		};
 	}
 	typedef shared_ptr<Panels::Base> PanelPtr;

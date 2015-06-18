@@ -4,9 +4,23 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
+		bool isFinite(float number) {
+			if (number != number) {
+				//NaN case
+				return false;
+			}
+			if (number + 1 == number){
+				//infinite case
+				return false;
+			}
+			return true;
+		}
+
 		//----------
 		LiveValueHistory::LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum) :
 		LiveValue(caption, liveValue) {
+			this->setScissor(true);
+
 			this->minimum = 0.0f;
 			this->maximum = 1.0f;
 			this->keepZeroAsMinimum = keepZeroAsMinimum;
@@ -43,11 +57,21 @@ namespace ofxCvGui {
 					}
 				}
 
-				//curve towards new bounds
+				//damp towards new bounds
 				if (!this->keepZeroAsMinimum) {
-					this->minimum = this->minimum * 0.8 + newMin * 0.2;
+					if (isFinite(this->minimum)) {
+						this->minimum = this->minimum * 0.8 + newMin * 0.2;
+					}
+					else {
+						this->minimum = newMin;
+					}
 				}
-				this->maximum = this->maximum * 0.8 + newMax * 0.2;
+				if (isFinite(this->maximum)) {
+					this->maximum = this->maximum * 0.8 + newMax * 0.2;
+				}
+				else {
+					this->maximum = newMax;
+				}
 
 				//check we have valid min and max
 				if (this->minimum != this->minimum || this->maximum != this->maximum) {
@@ -64,7 +88,13 @@ namespace ofxCvGui {
 				this->graphFill.lineTo(this->getWidth() - size, 40.0f);
 				int x = 0;
 				for(auto & point : this->history) {
-					auto y = ofMap(point, this->minimum, this->maximum, 40.0f, 0.0f, false);
+					float y = ofMap(point, this->minimum, this->maximum, 40.0f, 0.0f, false);
+
+					//check valid number
+					if (y != y || y <= std::numeric_limits<float>::min() || y >= std::numeric_limits<float>::max()) {
+						continue;
+					}
+					
 					this->graphFill.lineTo(this->getWidth() - size + x, y);
 					this->graphLine.lineTo(this->getWidth() - size + x, y);
 					x++;
@@ -73,6 +103,7 @@ namespace ofxCvGui {
 				this->graphFill.lineTo(this->getWidth() - size, 40.0f);
 				this->graphFill.close();
 			};
+
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				ofPushStyle();
 				
@@ -101,22 +132,27 @@ namespace ofxCvGui {
 					}
 				}
 			}, -1, this);
+
 			this->onMouse += [this] (MouseArguments & args) {
-				if (args.isLocalPressed() && args.local.y < 40) {
-					if (args.button == 0) {
-						this->pause ^= true;
-						if (this->pause) {
-							this->graphLine.clear();
-							this->graphFill.setFillColor(80);
+				if (args.local.y < 40) {
+					if (args.takeMousePress(this)) {
+						switch (args.button) {
+						case 0:
+							this->pause ^= true;
+							if (this->pause) {
+								this->graphLine.clear();
+								this->graphFill.setFillColor(80);
+							}
+							break;
+						case 2:
+							this->history.clear();
+							this->minimum = 0.0f;
+							this->maximum = 1.0f;
+							break;
 						}
-						args.take();
-					} else if (args.button == 2) {
-						this->history.clear();
-						this->minimum = 0.0f;
-						this->maximum = 1.0f;
-						args.take();
 					}
 				}
+				
 				if (args.action == MouseArguments::Action::Moved) {
 					this->showPreviewValue = args.isLocal() && args.local.y < 40;
 					if (this->showPreviewValue) {

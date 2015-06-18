@@ -14,7 +14,7 @@ namespace ofxCvGui {
 			OFXCVGUI_MAKE_ELEMENT_HEADER(Title, string caption, Level level) {
 				OFXCVGUI_MAKE_ELEMENT_BODY(Title, caption, level);
 			}
-			Title(string caption, Level);
+			Title(string caption, Level = Level::H1);
 		protected:
 			const Level level;
 		};

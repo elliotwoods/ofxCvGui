@@ -9,36 +9,68 @@ namespace ofxCvGui {
 		//----------
 		Scroll::Scroll() {
 			this->elements = ElementGroupPtr(new ElementGroup());
-			this->onUpdate += [this] (UpdateArguments & args) { this->update();	};
+			this->elements->setScissor(true);
+
+			this->onUpdate += [this](UpdateArguments & args) { this->update();	};
 			this->onDraw += [this] (DrawArguments & args) { this->draw(args); };
 			this->onMouse += [this] (MouseArguments & args) { this->mouse(args); };
 			this->onKeyboard += [this] (KeyboardArguments & args) { this->keyboard(args); };
-			this->onBoundsChange += [this] (BoundsChangeArguments & args) { this->arrange(); };
+			this->onBoundsChange += [this] (BoundsChangeArguments & args) { this->arrangeScroll(); };
 			this->position = 0.0f;
 			this->length = 0.0f;
 			this->onScrollBar = false;
+
+			this->elements->addListenersToParent(this);
 		}
 
 		//----------
 		void Scroll::add(ElementPtr element) {
 			this->elements->add(element);
-			this->arrange();
+			this->arrangeScroll();
 		}
 
 		//----------
-		ElementGroupPtr Scroll::getGroup() {
+		void Scroll::clear() {
+			this->elements->clear();
+			this->arrangeScroll();
+		}
+
+		//----------
+		ElementGroupPtr Scroll::getElementGroup() {
 			return this->elements;
 		}
 
 		//----------
 		void Scroll::setScroll(float position) {
 			this->position = position;
-			this->elements->setPosition(ofVec2f(0, -position));
+			this->elements->setPosition(ofVec2f(0, -floor(position)));
+		}
+
+		//----------
+		float Scroll::getScroll() const {
+			return this->position;
+		}
+
+		//----------
+		void Scroll::scrollToInclude(ElementPtr element) {
+			const auto elementBounds = element->getBounds();
+			auto correctedElementBounds = elementBounds;
+			correctedElementBounds.y -= this->position;
+
+			if (this->getLocalBounds().getIntersection(correctedElementBounds).getHeight() == 0) {
+				//check if need to scroll up or down
+				if (this->position > correctedElementBounds.y) {
+					//need to scroll up
+					this->setScroll(elementBounds.y);
+				} else {
+					//need to scroll down
+					this->setScroll(elementBounds.height + (elementBounds.y - this->getLocalBounds().height));
+				}
+			}
 		}
 
 		//----------
 		void Scroll::update() {
-			this->elements->update();
 			if (this->localMouseState == LocalMouseState::Waiting) {
 				if (this->position < 0.0f) {
 					this->setScroll(this->position * 0.9f);
@@ -61,60 +93,61 @@ namespace ofxCvGui {
 
 		//----------
 		void Scroll::draw(DrawArguments& args) {
-			this->elements->draw(args);
-
 			float barLength = this->getBarLength();
-			if (barLength > this->getHeight() - 2 * OFXCVGUI_SCROLL_AREA_WIDTH) {
-				return; // no need for scroll
+			if (barLength < this->getHeight() - 2 * OFXCVGUI_SCROLL_AREA_WIDTH) {
+				//draw bar only if we have excess contents which are scrollable
+				float barPosition = this->getBarY();
+
+				ofPushStyle();
+				ofSetColor(255);
+				float x = this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH / 2.0f;
+				ofSetLineWidth(0.0f);
+				ofCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
+				ofCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
+				ofSetLineWidth(OFXCVGUI_SCROLL_BAR_WIDTH);
+				ofLine(x, barPosition, x, barPosition + barLength);
+				ofPopStyle();
 			}
-
-			float barPosition = this->getBarY();
-
-			ofPushStyle();
-			ofSetColor(255);
-			float x = this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH / 2.0f;
-			ofSetLineWidth(0.0f);
-			ofCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
-			ofCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
-			ofSetLineWidth(OFXCVGUI_SCROLL_BAR_WIDTH);
-			ofLine(x, barPosition, x, barPosition + barLength);
-			ofPopStyle();
 		}
 
 		//----------
 		void Scroll::mouse(MouseArguments& args) {
-			this->elements->mouseAction(args);
-			if (args.action == MouseArguments::Pressed) {
+			if (args.takeMousePress(this)) {
 				this->onScrollBar = args.local.x > this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH;
-				this->dragTaken = args.isTaken();
-			} else if (this->getMouseState() == Element::Dragging && this->length > this->getHeight() && !dragTaken) {
-				if (this->onScrollBar) {
-					const float range = this->length - this->getHeight();
-					const float spareScrollSpace = this->getHeight() - this->getBarLength();
-					this->setScroll(this->position + args.movement.y * range / spareScrollSpace);
-				} else {
-					this->setScroll(this->position - args.movement.y);
+			} else if (args.isDragging(this)) {
+				if (this->length > this->getHeight()) {
+					if (this->onScrollBar) {
+						const float range = this->length - this->getHeight();
+						const float spareScrollSpace = this->getHeight() - this->getBarLength();
+						this->setScroll(this->position + args.movement.y * range / spareScrollSpace);
+					}
+					else {
+						this->setScroll(this->position - args.movement.y);
+					}
 				}
 			}
 		}
 
 		//----------
 		void Scroll::keyboard(KeyboardArguments& args) {
-			this->elements->keyboardAction(args);
+
 		}
 
 		//----------
-		void Scroll::arrange() {
+		void Scroll::arrangeScroll() {
 			float y = 0;
 			for(auto element : this->elements->getElements()) {
 				auto elementBounds = element->getBounds();
 				elementBounds.y = y;
 				elementBounds.width = this->getWidth() - (elementBounds.x + OFXCVGUI_SCROLL_AREA_WIDTH);
+				if (elementBounds.width <= 0 || elementBounds.height <= 0) {
+					continue; // sometimes during initialisation this might happen, and it can cause errors
+				}
 				element->setBounds(elementBounds);
 				y += elementBounds.height + OFXCVGUI_SCROLL_SPACING;
 			}
 			this->length = y;
-			this->elements->setBounds(ofRectangle(0, 0, this->getWidth(), this->length));
+			this->elements->setBounds(ofRectangle(0, -floor(position), this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH, this->length));
 		}
 
 		//----------

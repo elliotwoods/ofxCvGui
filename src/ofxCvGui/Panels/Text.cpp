@@ -19,7 +19,6 @@ namespace ofxCvGui {
 
 		//----------
 		void Text::drawText(DrawArguments& arguments) {
-			Utils::drawText(this->caption, 20, 20, true, 30);
 			Utils::drawText(this->text, 10, 70, false);
 		}
 	}

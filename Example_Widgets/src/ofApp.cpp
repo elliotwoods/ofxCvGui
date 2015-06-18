@@ -26,9 +26,7 @@ void ofApp::setup(){
 
 		//special slider with a validator to check for whole values
 		auto luminanceSlider = new Widgets::Slider(this->luminance[i]);
-		luminanceSlider->setValidator([] (float & value) {
-			value = floor(value + 0.5f);
-		});
+		luminanceSlider->addIntValidator();
 		scrollPanel->add(ElementPtr(luminanceSlider));
 
 		scrollPanel->add(ElementPtr(new Widgets::Spacer()));

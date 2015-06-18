@@ -7,23 +7,22 @@ namespace ofxCvGui {
 			this->down = false;
 
 			this->onMouse.addListener([this] (MouseArguments& args) {
-				if (args.isLocalPressed()) {
-					this->down = true;
-				}
-				if (args.action == MouseArguments::Released) {
-					if(this->down && args.isLocal()) {
-						ofVec2f local = args.localNormalised;
-						this->onHit(local);
-					}
-					this->down = false;
+				switch (args.action) {
+				case MouseArguments::Action::Pressed:
+					args.takeMousePress(this);
+					break;
 				}
 			}, this);
 
+			this->onMouseReleased.addListener([this](MouseArguments & args) {
+				this->onButtonHit(args);
+			}, this);
+
 			this->onDraw.addListener([this] (DrawArguments& args) {
-				if (this->down) {
-					this->onDrawDown(args);
-				} else {
+				if (this->getMouseState() == Element::LocalMouseState::Waiting) {
 					this->onDrawUp(args);
+				} else {
+					this->onDrawDown(args);
 				}
 			}, this);
 		}
@@ -32,6 +31,12 @@ namespace ofxCvGui {
 		Button::~Button() {
 			this->onMouse.removeListeners(this);
 			this->onDraw.removeListeners(this);
+			this->onMouseReleased.removeListeners(this);
+		}
+
+		//----------
+		bool Button::isDown() const {
+			return this->getMouseState() != Element::LocalMouseState::Waiting;
 		}
 	}
 }

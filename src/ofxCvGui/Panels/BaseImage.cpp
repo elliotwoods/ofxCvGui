@@ -9,9 +9,10 @@ namespace ofxCvGui {
         ofVec2f BaseImage::scroll = ofVec2f();
         
         //----------
-		BaseImage::DrawCroppedArguments::DrawCroppedArguments(bool zoomed, const ofVec2f & size, const ofVec2f & offsetCropped) {
+		BaseImage::DrawCroppedArguments::DrawCroppedArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped) {
 			this->zoomed = zoomed;
-			this->size = size;
+			this->drawSize = drawSize;
+			this->viewSize = viewSize;
 			this->offsetCropped = offsetCropped;
 		}
 
@@ -44,6 +45,21 @@ namespace ofxCvGui {
         
 		//----------
         void BaseImage::mouseAction(MouseArguments& mouse) {
+			if (mouse.takeMousePress(this)) {
+				if (this->buttonFitBounds.inside(mouse.local)) {
+					this->zoom = ZoomFit;
+				}
+				else if (this->buttonOneBounds.inside(mouse.local)) {
+					this->zoom = ZoomOne;
+				}
+				else if (this->zoomBox.inside(mouse.local)) {
+					this->dragSelection = DragZoomBox;
+				}
+				else {
+					this->dragSelection = DragImage;
+				}
+			}
+
             if (mouse.action == MouseArguments::Dragged && this->zoom != ZoomFit) {
                 if (this->dragSelection == DragImage) {
                     this->scroll += mouse.movement;
@@ -51,18 +67,6 @@ namespace ofxCvGui {
                 } else if (this->dragSelection == DragZoomBox) {
                     this->scroll -= mouse.movement / ofVec2f(zoomBox.width, zoomBox.height) * ofVec2f(this->getImageWidth(), this->getImageHeight());
                     this->scroll = this->getScrollClamped();
-                }
-            }
-            
-            if (mouse.action == MouseArguments::Pressed && mouse.checkCurrentPanel(this)) {
-                if (this->buttonFitBounds.inside(mouse.local)) {
-                    this->zoom = ZoomFit;
-                } else if (this->buttonOneBounds.inside(mouse.local)) {
-                    this->zoom = ZoomOne;
-                } else if (this->zoomBox.inside(mouse.local)) {
-                    this->dragSelection = DragZoomBox;
-                } else {
-                    this->dragSelection = DragImage;
                 }
             }
             
@@ -97,7 +101,7 @@ namespace ofxCvGui {
 		void BaseImage::drawImage(DrawArguments& arguments) {
             if (this->zoom == ZoomFit) {
                 this->drawImage(this->getWidth(), this->getHeight());
-				DrawCroppedArguments args(false, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(0,0));
+				DrawCroppedArguments args(false, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), ofVec2f(0,0));
 				ofPushMatrix();
 				ofScale(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight());
 				this->onDrawCropped(args);
@@ -116,7 +120,7 @@ namespace ofxCvGui {
 				ofPushMatrix();
 				ofTranslate(scrollOffset);
                 this->drawImage(this->getImageWidth(), this->getImageHeight());
-				DrawCroppedArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), scrollOffset);
+				DrawCroppedArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), scrollOffset);
 				this->onDrawCropped(args);
 				ofPopMatrix();
 
@@ -192,7 +196,9 @@ namespace ofxCvGui {
 		void BaseImage::drawTitle() {
 			image("ofxCvGui::zoom_fit").draw(buttonFitBounds);
 			image("ofxCvGui::zoom_one").draw(buttonOneBounds);
-			Utils::drawText(this->caption, 100, 20, true, 30);
+			if (!this->caption.empty()) {
+				Utils::drawText(this->caption, 100, 20, true, 30);
+			}
 			
 			ofPushStyle();
 			ofSetColor(150);

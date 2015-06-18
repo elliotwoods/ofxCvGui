@@ -33,13 +33,20 @@ namespace ofxCvGui {
 
 			this->hitValue.set(caption, false);
 			Toggle::setParameter(this->hitValue);
-			this->onValueChange += [this] (ofParameter<bool> & value) {
-				if (value) {
-					EventArgs dummyArgs;
-					this->onHit(dummyArgs);
+
+			this->onMouseReleased += [this](MouseArguments & args) {
+				EventArgs dummyArgs;
+				this->onHit(dummyArgs);
+				this->needsToDrop = true;
+			};
+			this->onUpdate += [this](UpdateArguments & args) {
+				if (this->needsToDrop) {
 					this->hitValue.set(false);
+					this->needsToDrop = false;
 				}
 			};
+
+			this->needsToDrop = false;
 		}
 	}
 }

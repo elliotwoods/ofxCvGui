@@ -1,6 +1,7 @@
 #pragma once
 #include "../Element.h"
 #include "ofParameter.h"
+#include "ofSystemUtils.h"
 #include "../../../addons/ofxAssets/src/ofxAssets.h"
 
 namespace ofxCvGui {
@@ -13,48 +14,82 @@ namespace ofxCvGui {
 			}
 
 			LiveValue(string caption, function<T()> liveValue) {
+				this->init(caption, liveValue);
+			};
+
+			LiveValue(string caption, const T & liveValue) {
+				this->init(caption, [&liveValue]() {
+					return liveValue;
+				});
+			};
+
+			void init(string caption, function<T()> liveValue) {
 				this->setCaption(caption);
 				this->liveValue = liveValue;
 				this->setBounds(ofRectangle(5, 0, 100, 50));
 
-				this->onUpdate += [this] (UpdateArguments &) {
+				this->onUpdate += [this](UpdateArguments &) {
 					stringstream ss;
 					ss << this->liveValue();
-					this->result = ss.str();
+					this->cachedValue = ss.str();
 				};
-
-				this->onDraw += [this] (DrawArguments & args) {
+				this->onDraw += [this](DrawArguments & args) {
 					auto & captionFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
 					captionFont.drawString(this->caption + " : ", 0, 15);
 
 					auto & valueFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
-					auto valueBounds = valueFont.getStringBoundingBox(result, 0, 0);
-					valueFont.drawString(result, (int) (this->getWidth() - valueBounds.width - 5), 35);
+					auto valueBounds = valueFont.getStringBoundingBox(cachedValue, 0, 0);
+					valueFont.drawString(cachedValue, (int)(this->getWidth() - valueBounds.width - 5), 35);
 
 					ofPushStyle();
 					ofSetLineWidth(1.0f);
 					ofLine(this->getWidth(), 0, this->getWidth(), 40);
-					ofPopStyle();	
+					ofPopStyle();
 				};
-			};
+				this->onBoundsChange += [this](BoundsChangeArguments & args) {
+					this->editButton->setBounds(ofRectangle(args.localBounds.width - 20, 5, 15, 15));
+				};
+
+				this->editButton = make_shared<Element>();
+				this->editButton->onDraw += [this](DrawArguments & args) {
+					ofxAssets::image("ofxCvGui::edit").draw(args.localBounds);
+				};
+				this->editButton->addListenersToParent(this);
+				this->setEditable(false);
+			}
+
 
 			virtual ~LiveValue() { }
-		protected:
-			void init();
-			void update(UpdateArguments &);
-			void draw(DrawArguments &);
 
+			void setEditable(bool editable) {
+				this->editButton->setEnabled(editable);
+				if (editable) {
+					this->editButton->onMouseReleased.removeListeners(this);
+					this->editButton->onMouseReleased.addListener([this](MouseArguments & args) {
+						auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "] (" + this->cachedValue + ")");
+						if (result != "") {
+							this->onEditValue(result);
+						}
+					}, this);
+				}
+			}
+
+			ofxLiquidEvent<string> onEditValue;
+
+		protected:
 			function<T()> liveValue;
-			string result;
+			string cachedValue;
+			
+			shared_ptr<Element> editButton;
 		};
 
 		class LiveValueHistory : public LiveValue<float> {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValueHistory, string caption, const function<float()> & liveValueFunction, bool keepZeroAsMinimum) {
+			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValueHistory, string caption, const function<float()> & liveValueFunction, bool keepZeroAsMinimum = true) {
 				OFXCVGUI_MAKE_ELEMENT_BODY(LiveValueHistory, caption, liveValueFunction, keepZeroAsMinimum);
 			}
 
-			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = false);
+			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = true);
 		protected:
 			deque<float> history;
 			bool keepZeroAsMinimum;

@@ -1,4 +1,5 @@
 #include "ofxCvGui/Controller.h"
+#include "ofxCvGui/InspectController.h"
 #include "ofxAssets.h"
 
 namespace ofxCvGui {
@@ -9,7 +10,9 @@ namespace ofxCvGui {
 		this->fullscreen = false;
 		this->chromeVisible = true;
 		this->lastRebuildRequiredFrame = -10;
-
+		this->mouseOwner = nullptr;
+		this->lastClickOwner = nullptr;
+		this->lastMouseClick = pair<long long, ofMouseEventArgs>(std::numeric_limits<long long>::min(), ofMouseEventArgs());
 		this->cachedWidth = 0.0f;
 		this->cachedHeight = 0.0f;
 	}
@@ -25,24 +28,21 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
-		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 
-#ifdef __DEBUGGING__
-		//if we're still debugging in the build location, copy in latest assets
-		{
-			auto checkDir =	ofDirectory("../../../../../addons/ofxCvGui2/data/assets/");
-			if (checkDir.exists()) {
-				checkDir.copyTo(".");
-			}
-		}
-#endif
 		ofxAssets::AssetRegister.addAddon("ofxCvGui");
 		
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;
 		this->currentPanel = PanelPtr();
 		this->currentPanelBounds = ofGetCurrentViewport();
+
+		//cache fonts
+		ofxAssets::font("ofxCvGui::swisop3", 12);
+		ofxAssets::font("ofxCvGui::swisop3", 14);
+		ofxAssets::font("ofxCvGui::swisop3", 18);
+		ofxAssets::font("ofxCvGui::swisop3", 24);
+
 		this->initialised = true;
 	}
 	
@@ -70,11 +70,7 @@ namespace ofxCvGui {
 	//----------
 	void Controller::toggleMaximised() {
 		//if we were fullscreen, move to simply maximised
-		if (this->fullscreen) {
-			this->fullscreen = false;
-			ofSetFullscreen(false);
-			this->maximised = true;
-		} else if (this->maximised)  {
+		if (this->maximised)  {
 			this->maximised = false;
 		} else if (this->currentPanel != PanelPtr() ) {
 			this->maximised = true;
@@ -90,28 +86,22 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::toggleFullscreen() {
-		if (!this->fullscreen && this->currentPanel) {
-			this->setFullscreen(this->currentPanel);
+		if (!this->fullscreen) {
+			this->setFullscreen();
 		} else {
 			this->clearFullscreen();
 		}
 	}
 	
 	//----------
-	void Controller::setFullscreen(PanelPtr panel) {
-		this->currentPanel = panel;
-		this->currentPanelBounds = ofGetCurrentViewport();
+	void Controller::setFullscreen() {
 		this->fullscreen = true;
-		this->maximised = true;
 		ofSetFullscreen(this->fullscreen);
-		panel->setBounds(ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight()));
 	}
 
 	//----------
 	void Controller::clearFullscreen() {
 		this->fullscreen = false;
-		this->maximised = false;
-		this->updateCurrentPanel();
 		ofSetFullscreen(false);
 		this->lastRebuildRequiredFrame = ofGetFrameNum();
 	}
@@ -130,24 +120,39 @@ namespace ofxCvGui {
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised)
 			return;
-		if ((ofGetFrameNum() - this->lastRebuildRequiredFrame) < 5 || cachedWidth != ofGetWidth() || cachedHeight != ofGetHeight()) {
-			//on windows the event doesn't always fire
-			ofResizeEventArgs args;
-			args.width = ofGetWidth();
-			args.height = ofGetHeight();
-			this->windowResized(args);
-			cachedWidth = ofGetWidth();
-			cachedHeight = ofGetHeight();
+		if ((ofGetFrameNum() - this->lastRebuildRequiredFrame) < 5 || this->cachedWidth != ofGetWidth() || this->cachedHeight != ofGetHeight()) {
+			//on windows the window resize doesn't always fire (e.g. when maximising).
+			//as a temporary fix, we perform all resize events by manually checking for size change
+			this->cachedWidth = ofGetWidth();
+			this->cachedHeight = ofGetHeight();
+
+			ofRectangle bounds(0, 0, this->cachedWidth, this->cachedHeight);
+			rootGroup->setBounds(bounds);
+			if (this->maximised) {
+				currentPanel->setBounds(bounds);
+			}
+			updateCurrentPanel();
 		}
+		InspectController::X().update();
 		rootGroup->update();
 	}
 
 	//----------
 	void Controller::draw(ofEventArgs& args) {
-		if (!initialised)
+		if (!initialised) {
 			return;
+		}
+
+		DrawArguments rootDrawArguments;
+		rootDrawArguments.chromeEnabled = this->chromeVisible;
+		rootDrawArguments.naturalBounds = ofGetCurrentViewport();
+		rootDrawArguments.globalTransform = ofMatrix4x4();
+		rootDrawArguments.globalScale = 1.0f;
+		rootDrawArguments.localBounds = ofRectangle(0, 0, rootDrawArguments.naturalBounds.getWidth(), rootDrawArguments.naturalBounds.getHeight());
+		rootDrawArguments.globalBounds = rootDrawArguments.naturalBounds;
+
 		if (this->maximised) {
-            DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
+            DrawArguments arg(rootDrawArguments);
 			this->currentPanel->draw(arg);
 		} else {
 			//highlight panel
@@ -158,8 +163,8 @@ namespace ofxCvGui {
 				ofRect(this->currentPanelBounds);
 				ofPopStyle();
 			}
-            DrawArguments arg(ofGetCurrentViewport(), ofGetCurrentViewport(), this->chromeVisible);
-			this->rootGroup->draw(arg);
+
+			this->rootGroup->draw(rootDrawArguments);
 		}
 	}
 
@@ -182,7 +187,7 @@ namespace ofxCvGui {
 	void Controller::mouseMoved(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), this->currentPanel));
+		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), this->currentPanel, this->mouseOwner));
 		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else {
@@ -195,30 +200,44 @@ namespace ofxCvGui {
 	void Controller::mousePressed(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(MouseArguments(args, MouseArguments::Pressed, rootGroup->getBounds(), this->currentPanel));
+		auto thisMouseClick = pair<long long, ofMouseEventArgs>(ofGetElapsedTimeMillis(), args);
+
+		bool isDoubleClick = (thisMouseClick.first - this->lastMouseClick.first) < OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS;
+		isDoubleClick &= thisMouseClick.second.distance(this->lastMouseClick.second) < OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX;
+
+		if (isDoubleClick) {
+			this->mouseOwner = this->lastClickOwner;
+		}
+		auto action = MouseArguments(args, isDoubleClick ? MouseArguments::Action::DoubleClick : MouseArguments::Action::Pressed, rootGroup->getBounds(), this->currentPanel, this->mouseOwner);
+
 		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
 			rootGroup->mouseAction(action);
         this->mouseCached = action.global;
+		this->mouseOwner = action.getOwner();
+		this->lastMouseClick = thisMouseClick;
 	}
 	
 	//----------
 	void Controller::mouseReleased(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), this->currentPanel);
+		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), this->currentPanel, this->mouseOwner);
         if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
 			rootGroup->mouseAction(action);
+
+		this->lastClickOwner = this->mouseOwner;
+		this->mouseOwner = nullptr;
 	}
 	
 	//----------
 	void Controller::mouseDragged(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-        MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), this->currentPanel, mouseCached);
+		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), this->currentPanel, this->mouseOwner, mouseCached);
         if (this->maximised)
 			currentPanel->mouseAction(action);
 		else
@@ -242,21 +261,6 @@ namespace ofxCvGui {
 		else
 			rootGroup->keyboardAction(action);
 	}
-	
-	//----------
-	void Controller::windowResized(ofResizeEventArgs & args) {
-		if (!initialised)
-			return;
-		ofRectangle bounds(0,0,ofGetWidth(), ofGetHeight());
-		rootGroup->setBounds(bounds);
-		if (this->maximised) {
-			currentPanel->setBounds(bounds);
-		}
-		updateCurrentPanel();
-		this->cachedWidth = args.width;
-		this->cachedHeight = args.height;
-		this->lastRebuildRequiredFrame = ofGetFrameNum(); // this seems surplus
-	}
 
 	//----------
 	void Controller::filesDragged(ofDragInfo & args) {
@@ -268,7 +272,7 @@ namespace ofxCvGui {
 			auto panelBounds = panel->getBounds();
 			ofVec2f panelTopLeft = panelBounds.getTopLeft();
 			auto newArgs = FilesDraggedArguments((ofVec2f) args.position - panelTopLeft, (ofVec2f) args.position, args.files);
-			panel->ofFilesDragged(newArgs);
+			panel->onFilesDragged(newArgs);
 		}
 	}
 

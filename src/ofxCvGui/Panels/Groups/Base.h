@@ -8,6 +8,8 @@ namespace ofxCvGui {
 			class Base : public ElementGroup_<Panels::Base> {
 			public:
 				virtual ~Base() { }
+			protected:
+				void drawTitle() override { }
 			};
 		}
 	}

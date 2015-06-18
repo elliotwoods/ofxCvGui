@@ -10,8 +10,8 @@ namespace ofxCvGui {
                 Grid();
                 virtual ~Grid();
 				void setColsCount(int cols);
-				void setHeights(vector<float>&);
-				void setWidths(vector<float>&);
+				void setHeights(vector<float>&); ///< Note : You must call arrange() or setBounds(..) after calling this
+				void setWidths(vector<float>&); ///< Note : You must call arrange() or setBounds(..) after calling this
 				PanelPtr const findScreen(const ofVec2f & xy, ofRectangle & currentBounds) override;
 			protected:
 				void boundsChange(BoundsChangeArguments & arguments);
