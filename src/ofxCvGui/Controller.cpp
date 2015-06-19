@@ -69,7 +69,6 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::toggleMaximised() {
-		//if we were fullscreen, move to simply maximised
 		if (this->maximised)  {
 			this->maximised = false;
 		} else if (this->currentPanel != PanelPtr() ) {
