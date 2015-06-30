@@ -6,8 +6,10 @@ using namespace ofxCvGui;
 void ofApp::setup(){
 	ofSetCircleResolution(50);
 	ofEnableSmoothing();
+	ofSetLogLevel(OF_LOG_VERBOSE);
 
 	this->gui.init();
+	auto & assetRegister = ofxAssets::AssetRegister();
 
 	auto drawPanel = this->gui.addBlank();
 	auto scrollPanel = this->gui.addScroll();
