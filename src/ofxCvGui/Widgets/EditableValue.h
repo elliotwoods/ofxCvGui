@@ -11,6 +11,10 @@ namespace ofxCvGui {
 				OFXCVGUI_MAKE_ELEMENT_BODY(EditableValue<Type>, parameter);
 			}
 
+			OFXCVGUI_MAKE_ELEMENT_HEADER(EditableValue<Type>, string caption, Type & value) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(EditableValue<Type>, caption, value);
+			}
+
 			OFXCVGUI_MAKE_ELEMENT_HEADER(EditableValue<Type>, string caption, function<Type()> get, function<void(string)> set) {
 				OFXCVGUI_MAKE_ELEMENT_BODY(EditableValue<Type>, caption, get, set);
 			}
@@ -23,6 +27,15 @@ namespace ofxCvGui {
 					Type userValueTyped;
 					stream >> userValueTyped;
 					parameter.set(userValueTyped);
+				};
+			}
+
+			EditableValue(string name, Type & value) :
+				LiveValue(name, [&value]() { return value; }) {
+				this->setEditable(true);
+				this->onEditValue += [&value](string & userValueString) {
+					stringstream ss(userValueString);
+					ss >> value;
 				};
 			}
 

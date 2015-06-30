@@ -11,7 +11,7 @@ namespace ofxCvGui {
 			this->setBounds(ofRectangle(0, 0, 100, 60));
 			this->onDraw += [this](ofxCvGui::DrawArguments & args) {
 				//draw caption
-				auto & captionFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 12);
+				auto & captionFont = ofxAssets::font(ofxCvGui::defaultTypeface, 12);
 				captionFont.drawString(this->caption + " : ", 0, 15);
 
 				const auto radius = 4.0f;

@@ -17,7 +17,7 @@ namespace ofxCvGui {
 #pragma mark Text
 		//---------
 		ofRectangle drawText(const string& text, float x, float y, bool background, float minHeight, float minWidth, bool scissor) {
-			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
+			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 14);
 			bool hasFont = font.isLoaded();
 
 			if (scissor) {
@@ -48,7 +48,7 @@ namespace ofxCvGui {
 				}
 				bounds.height = MAX(rawHeight, minHeight);
 				if (background)
-					ofRect(bounds);
+					ofDrawRectangle(bounds);
 				ofPopStyle();
 				ofSetColor(255);
 				x = x + font.getSize() / 2;
@@ -60,7 +60,7 @@ namespace ofxCvGui {
 			} else {
 				bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
 				if (background)
-					ofRect(bounds);
+					ofDrawRectangle(bounds);
 				ofPopStyle();
 				ofSetColor(255);
 				ofDrawBitmapString(text, x + 10, y + 20);
@@ -95,7 +95,7 @@ namespace ofxCvGui {
 			//draw ignoring scissor
 			auto scissorEnabled = disableScissor();
 
-			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 14);
+			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 14);
 			bool hasFont = font.isLoaded();
 
 			if (!hasFont) {

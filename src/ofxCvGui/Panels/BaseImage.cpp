@@ -154,14 +154,14 @@ namespace ofxCvGui {
                     ofSetColor(150);
                     ofNoFill();
                     ofSetLineWidth(2.0f);
-                    ofRect(zoomBox);
+					ofDrawRectangle(zoomBox);
                     
                     //draw inner
                     ofEnableAlphaBlending();
                     ofFill();
                     ofSetLineWidth(0.0f);
                     ofSetColor(255, 255, 255, 100);
-                    ofRect(zoomSelection);
+					ofDrawRectangle(zoomSelection);
                     
                     ofPopStyle();
                     
@@ -204,7 +204,7 @@ namespace ofxCvGui {
 			ofSetColor(150);
 			ofSetLineWidth(2.0f);
 			ofNoFill();
-			ofRect(this->zoom == ZoomFit ? buttonFitBounds : buttonOneBounds);
+			ofDrawRectangle(this->zoom == ZoomFit ? buttonFitBounds : buttonOneBounds);
 			ofPopStyle();
 		}
 	}

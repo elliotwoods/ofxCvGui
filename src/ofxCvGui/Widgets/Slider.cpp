@@ -106,7 +106,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Slider::draw(DrawArguments & args) {
-			auto & font = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 13);
+			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 13);
 			image("ofxCvGui::edit").draw(this->editBounds);
 
 			
@@ -152,14 +152,14 @@ namespace ofxCvGui {
 				if (this->mouseHover) {
 					ofPushStyle();
 					ofSetColor(zeroPx < xPx ? 50 : 30);
-					ofRect(zeroPx, 20, xPx - zeroPx, 20);;
+					ofDrawRectangle(zeroPx, 20, xPx - zeroPx, 20);;
 					
 					//we draw as shapes because sometimes we miss the finer features (e.g. "-") with standard funcs
 					
 					ofSetColor(150);
 					
 					auto minValue = this->getCheckedValue(positionToValue(0.0f));
-					auto & smallFont = ofxAssets::AssetRegister.getFont(ofxCvGui::defaultTypeface, 10);
+					auto & smallFont = ofxAssets::font(ofxCvGui::defaultTypeface, 10);
 					smallFont.drawStringAsShapes(ofToString(minValue), 0, 51);
 
 					auto maxValue = this->getCheckedValue(positionToValue(width));

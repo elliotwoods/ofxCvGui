@@ -30,7 +30,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 
-		ofxAssets::AssetRegister.addAddon("ofxCvGui");
+		ofxAssets::Register::X().addAddon("ofxCvGui");
 		
 		rootGroup->setBounds(ofGetCurrentViewport());
 		this->rootGroup = rootGroup;
@@ -170,7 +170,7 @@ namespace ofxCvGui {
 				ofPushStyle();
 				ofEnableAlphaBlending();
 				ofSetColor(40, 40, 40, 100);
-				ofRect(this->currentPanelBounds);
+				ofDrawRectangle(this->currentPanelBounds);
 				ofPopStyle();
 			}
 

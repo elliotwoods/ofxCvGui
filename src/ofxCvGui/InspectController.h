@@ -12,6 +12,7 @@ namespace ofxCvGui {
 	public:
 		/// Listen to this event if you want to populate the insspector when selected 
 		ofxLiquidEvent<InspectArguments> onInspect;
+		bool isBeingInspected() const;
 	};
 
 	class InspectController {

@@ -90,7 +90,7 @@ namespace ofxCvGui {
 					ofSetColor(255);
 					ofSetLineWidth(1);
 					ofNoFill();
-					ofRect(bounds);
+					ofDrawRectangle(bounds);
 					ofPopStyle();
 				}
 			}

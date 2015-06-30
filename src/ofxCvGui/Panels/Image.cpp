@@ -44,15 +44,15 @@ namespace ofxCvGui {
 				int channelCount = 0;
 				if (dynamic_cast<ofImage *>(this->asset)) {
 					bitsPerChannel = 8;
-					channelCount = dynamic_cast<ofImage *>(this->asset)->getPixelsRef().getNumChannels();
+					channelCount = dynamic_cast<ofImage *>(this->asset)->getPixels().getNumChannels();
 				}
 				else if (dynamic_cast<ofFloatImage *>(this->asset)) {
 					bitsPerChannel = 32;
-					channelCount = dynamic_cast<ofFloatImage *>(this->asset)->getPixelsRef().getNumChannels();
+					channelCount = dynamic_cast<ofFloatImage *>(this->asset)->getPixels().getNumChannels();
 				}
 				else if (dynamic_cast<ofShortImage *>(this->asset)) {
 					bitsPerChannel = 16;
-					channelCount = dynamic_cast<ofShortImage *>(this->asset)->getPixelsRef().getNumChannels();
+					channelCount = dynamic_cast<ofShortImage *>(this->asset)->getPixels().getNumChannels();
 				}
 
 				stringstream ss;

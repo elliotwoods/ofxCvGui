@@ -9,6 +9,7 @@ namespace ofxCvGui {
 		public:
 			Draws();
 			Draws(ofBaseDraws &);
+
 			void setDrawObject(ofBaseDraws &);
 			void clearDrawObject();
 			ofBaseDraws * getDrawObject() const;

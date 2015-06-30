@@ -1,6 +1,12 @@
 #include "InspectController.h"
 
 namespace ofxCvGui {
+#pragma mark IInspectable
+	//----------
+	bool IInspectable::isBeingInspected() const {
+		return InspectController::X().getTarget().get() == this;
+	}
+
 #pragma mark InspectController
 	//----------
 	InspectController * InspectController::singleton = nullptr;
