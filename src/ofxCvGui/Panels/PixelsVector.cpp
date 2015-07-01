@@ -38,7 +38,7 @@ namespace ofxCvGui {
 				this->onSelectionChange(selection);
 			}
 
-			if (pixels.size() <= selection) {
+			if ((int) pixels.size() <= selection) {
 				selection = pixels.size() == 0 ? -1 : 0;
 				this->onSelectionChange(selection);
 			}
