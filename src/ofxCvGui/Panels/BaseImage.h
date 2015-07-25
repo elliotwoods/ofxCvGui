@@ -27,7 +27,7 @@ namespace ofxCvGui {
             virtual float getImageHeight() const = 0;
             void mouseAction(MouseArguments &);
             void nudgeZoom(KeyboardArguments &);
-            static ofVec2f scroll;
+            ofVec2f scroll;
             Zoomed zoom;
             ofVec2f getScrollClamped() const;
         private:

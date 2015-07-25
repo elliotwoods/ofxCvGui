@@ -4,10 +4,7 @@
 using namespace ofxAssets;
 
 namespace ofxCvGui {
-	namespace Panels {
-        //----------
-        ofVec2f BaseImage::scroll = ofVec2f();
-        
+	namespace Panels {    
         //----------
 		BaseImage::DrawCroppedArguments::DrawCroppedArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped) {
 			this->zoomed = zoomed;

@@ -17,10 +17,14 @@ namespace ofxCvGui {
 
 	class InspectController {
 	public:
-		InspectController();
-
 		///singleton
 		static InspectController & X();
+		static void setSingleton(shared_ptr<InspectController>);
+		static shared_ptr<InspectController> getSingleton();
+	protected:
+		static shared_ptr<InspectController> singleton;
+	public:
+		InspectController();
 
 		void update();
 
@@ -38,7 +42,6 @@ namespace ofxCvGui {
 		///this is actually triggered from the individual inspectors
 		ofxLiquidEvent<InspectArguments> onClear;
 	protected:
-		static InspectController * singleton;
 		weak_ptr<IInspectable> currentTarget;
 		bool hasTarget;
 

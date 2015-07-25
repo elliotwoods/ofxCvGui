@@ -116,6 +116,9 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\SelectFile.cpp">
       <Filter>src\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ofxSingleton\src\ofxSingleton\Register.cpp">
+      <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -245,6 +248,21 @@
     <ClInclude Include="..\src\ofxCvGui\Widgets\SelectFile.h">
       <Filter>src\Widgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton.h">
+      <Filter>addons\ofxSingleton\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\Singleton.h">
+      <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\Register.h">
+      <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\BaseStore.h">
+      <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\UnmanagedSingleton.h">
+      <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -288,6 +306,15 @@
     </Filter>
     <Filter Include="addons\ofxTextInputField\src">
       <UniqueIdentifier>{e6f97d40-bc7f-4e29-8579-3a70be6755c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxSingleton">
+      <UniqueIdentifier>{36c423fb-d78e-4fdf-87d4-131cbf22d142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxSingleton\src">
+      <UniqueIdentifier>{ce637489-07b6-42f0-8664-8f2adf83b2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxSingleton\src\ofxSingleton">
+      <UniqueIdentifier>{fd4dbf82-3040-4c7c-8d4d-abb383807db6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
