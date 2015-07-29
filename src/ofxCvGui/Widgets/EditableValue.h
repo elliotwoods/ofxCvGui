@@ -20,7 +20,7 @@ namespace ofxCvGui {
 			}
 
 			EditableValue(ofParameter<Type> & parameter) : 
-				LiveValue(parameter.getName(), [&parameter]() {	return parameter;}) {
+				LiveValue<Type>(parameter.getName(), [&parameter]() {	return parameter;}) {
 				this->setEditable(true);
 				this->onEditValue += [&parameter](string & userValueString) {
 					stringstream stream(userValueString);
@@ -31,7 +31,7 @@ namespace ofxCvGui {
 			}
 
 			EditableValue(string name, Type & value) :
-				LiveValue(name, [&value]() { return value; }) {
+				LiveValue<Type>(name, [&value]() { return value; }) {
 				this->setEditable(true);
 				this->onEditValue += [&value](string & userValueString) {
 					stringstream ss(userValueString);
@@ -40,7 +40,7 @@ namespace ofxCvGui {
 			}
 
 			EditableValue(string name, function<Type()> get, function<void(string)> set) :
-				LiveValue(name, get) {
+				LiveValue<Type>(name, get) {
 				this->setEditable(true);
 				this->onEditValue += [set](string & userValueString) {
 					set(userValueString);
