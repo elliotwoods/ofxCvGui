@@ -1,5 +1,8 @@
 #include "InspectController.h"
 
+//----------
+ofxCvGui::InspectController::SingletonStore ofxCvGui::InspectController::singletonStore;
+
 namespace ofxCvGui {
 #pragma mark IInspectable
 	//----------
@@ -7,29 +10,7 @@ namespace ofxCvGui {
 		return InspectController::X().getTarget().get() == this;
 	}
 
-#pragma mark singleton
-	//----------
-	shared_ptr<InspectController> InspectController::singleton;
-
-	//----------
-	InspectController & InspectController::X() {
-		if (!InspectController::singleton) {
-			InspectController::singleton = make_shared<InspectController>();
-		}
-		return * InspectController::singleton;
-	}
-
-	//----------
-	void InspectController::setSingleton(shared_ptr<InspectController> singleton) {
-		InspectController::singleton = singleton;
-	}
-
 #pragma mark InspectController
-	//----------
-	shared_ptr<InspectController> InspectController::getSingleton() {
-		return InspectController::singleton;
-	}
-
 	//----------
 	InspectController::InspectController() {
 		this->hasTarget = false;

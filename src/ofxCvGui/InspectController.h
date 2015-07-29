@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ElementGroup.h"
+#include "ofxSingleton.h"
 
 namespace ofxCvGui {
 	struct InspectArguments {
@@ -15,14 +16,7 @@ namespace ofxCvGui {
 		bool isBeingInspected() const;
 	};
 
-	class InspectController {
-	public:
-		///singleton
-		static InspectController & X();
-		static void setSingleton(shared_ptr<InspectController>);
-		static shared_ptr<InspectController> getSingleton();
-	protected:
-		static shared_ptr<InspectController> singleton;
+	class InspectController : public ofxSingleton::Singleton<InspectController> {
 	public:
 		InspectController();
 
