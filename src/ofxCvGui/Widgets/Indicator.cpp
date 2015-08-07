@@ -47,7 +47,7 @@ namespace ofxCvGui {
 				//draw side line
 				ofPushStyle();
 				ofSetLineWidth(1.0f);
-				ofLine(this->getWidth(), 0, this->getWidth(), 20);
+				ofDrawLine(this->getWidth(), 0, this->getWidth(), 20);
 				ofPopStyle();
 			};
 

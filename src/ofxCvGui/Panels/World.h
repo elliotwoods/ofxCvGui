@@ -3,9 +3,9 @@
 
 #include "ofNode.h"
 
-#define USE_OFXGRABCAM
+#define OFXCVGUI_USE_OFXGRABCAM
 
-#ifdef USE_OFXGRABCAM
+#ifdef OFXCVGUI_USE_OFXGRABCAM
 	//feel free to change this for a different camera type of your choosing
 	#include "../../../addons/ofxGrabCam/src/ofxGrabCam.h"
 	typedef ofxGrabCam CameraType;
@@ -21,11 +21,9 @@ namespace ofxCvGui {
 			World();
 			
 			//camera
-			CameraType & getCamera() { return this->camera; };
-#ifdef USE_OFXGRABCAM
-			void setCursorEnabled(bool cursorEnabled=true) {
-                this->camera.setCursorDraw(cursorEnabled);
-            }
+			CameraType & getCamera();
+#ifdef OFXCVGUI_USE_OFXGRABCAM
+			void setCursorEnabled(bool cursorEnabled = true);
 #endif
             
 			void setGridEnabled(bool gridEnabled);

@@ -37,7 +37,7 @@ namespace ofxCvGui {
 				//draw side line
 				ofPushStyle();
 				ofSetLineWidth(1.0f);
-				ofLine(this->getWidth(), 0, this->getWidth(), this->optionsBounds.getBottom());
+				ofDrawLine(this->getWidth(), 0, this->getWidth(), this->optionsBounds.getBottom());
 				ofPopStyle();
 			};
 			this->onMouse += [this](ofxCvGui::MouseArguments & args) {
@@ -86,7 +86,7 @@ namespace ofxCvGui {
 			this->selectionIndex = selectionIndex;
 			this->clampSelection();
 			if (this->selectionIndex == selectionIndex) {
-				this->onSelectionChange(this->selectionIndex);
+				this->onValueChange(this->selectionIndex);
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace ofxCvGui {
 		//----------
 		void MultipleChoice::entangle(ofParameter<int> & parameter) {
 			//if we change, update the parameter
-			this->onSelectionChange += [&parameter](const int & selection) {
+			this->onValueChange += [&parameter](const int & selection) {
 				parameter.set(selection);
 			};
 

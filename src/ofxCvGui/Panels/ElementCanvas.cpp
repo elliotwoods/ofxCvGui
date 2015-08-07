@@ -140,7 +140,7 @@ namespace ofxCvGui {
 
 		//----------
 		void ElementCanvas::callbackZoomChange(float & zoom) {
-			this->canvasElements->setZoom(exp(zoom));
+			this->canvasElements->setZoom(pow(2, zoom));
 		}
 	}
 }

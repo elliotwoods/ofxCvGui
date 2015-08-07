@@ -1,7 +1,7 @@
 #include "InspectController.h"
 
 //----------
-ofxCvGui::InspectController::SingletonStore ofxCvGui::InspectController::singletonStore;
+OFXSINGLETON_DEFINE(ofxCvGui::InspectController);
 
 namespace ofxCvGui {
 #pragma mark IInspectable

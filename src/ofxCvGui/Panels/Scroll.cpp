@@ -105,7 +105,7 @@ namespace ofxCvGui {
 				ofCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
 				ofCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
 				ofSetLineWidth(OFXCVGUI_SCROLL_BAR_WIDTH);
-				ofLine(x, barPosition, x, barPosition + barLength);
+				ofDrawLine(x, barPosition, x, barPosition + barLength);
 				ofPopStyle();
 			}
 		}
