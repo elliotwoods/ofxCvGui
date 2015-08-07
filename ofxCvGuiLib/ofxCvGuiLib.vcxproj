@@ -22,11 +22,6 @@
     <ClInclude Include="..\..\ofxAssets\src\ofxAssets.h" />
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
     <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h" />
-    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton.h" />
-    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\BaseStore.h" />
-    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\Register.h" />
-    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\Singleton.h" />
-    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\UnmanagedSingleton.h" />
     <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputField.h" />
     <ClInclude Include="..\..\ofxTextInputField\src\ofxTextInputFieldFontRenderer.h" />
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -71,7 +66,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
-    <ClCompile Include="..\..\ofxSingleton\src\ofxSingleton\Register.cpp" />
     <ClCompile Include="..\..\ofxTextInputField\src\ofxTextInputField.cpp" />
     <ClCompile Include="..\src\ofxCvGui.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Builder.cpp" />

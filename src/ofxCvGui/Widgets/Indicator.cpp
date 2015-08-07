@@ -40,7 +40,7 @@ namespace ofxCvGui {
 					ofFill();
 					ofSetColor(Indicator::colorMap->at(status));
 				}
-				ofCircle(this->getWidth() - 20, 10, 5);
+				ofDrawCircle(this->getWidth() - 20, 10, 5);
 
 				ofPopStyle();
 

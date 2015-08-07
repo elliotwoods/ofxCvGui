@@ -19,13 +19,13 @@ namespace ofxCvGui {
 				//draw main background
 				ofPushStyle();
 				ofSetColor(50);
-				ofRectRounded(optionsBounds, radius);
+				ofDrawRectRounded(optionsBounds, radius);
 				ofPopStyle();
 
 				//draw selection
 				ofPushStyle();
 				ofSetColor(80);
-				ofRectRounded(this->getOptionBounds(this->selectionIndex), radius);
+				ofDrawRectRounded(this->getOptionBounds(this->selectionIndex), radius);
 				ofPopStyle();
 
 				//draw options

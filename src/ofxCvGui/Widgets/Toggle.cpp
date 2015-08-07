@@ -103,13 +103,13 @@ namespace ofxCvGui {
 			ofSetColor(this->value->get() ^ isMouseDown ?  80 : 50);
 			ofFill();
 			const auto radius = 4.0f;
-			ofRectRounded(this->buttonBounds, radius, radius, radius, radius);
+			ofDrawRectRounded(this->buttonBounds, radius, radius, radius, radius);
 			
 			//outline
 			if (this->isMouseOver) {
 				ofNoFill();
 				ofSetColor(!this->value->get() ?  80 : 50);
-				ofRectRounded(this->buttonBounds, radius, radius, radius, radius);
+				ofDrawRectRounded(this->buttonBounds, radius, radius, radius, radius);
 			}
 
 			ofSetColor(255);
