@@ -3,7 +3,9 @@
 
 #include "ofNode.h"
 
-#define OFXCVGUI_USE_OFXGRABCAM
+#ifdef HAS_OFXGRABCAM
+	#define OFXCVGUI_USE_OFXGRABCAM
+#endif
 
 #ifdef OFXCVGUI_USE_OFXGRABCAM
 	//feel free to change this for a different camera type of your choosing
