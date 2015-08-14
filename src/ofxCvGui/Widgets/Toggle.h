@@ -9,9 +9,17 @@ namespace ofxCvGui {
 			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, ofParameter<bool> & parameter, char hotKey = 0) {
 				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, parameter, hotKey);
 			}
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, string caption, char hotKey = 0) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, caption, hotKey);
+			}
+			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, string caption, function<bool()> get, function<void(bool)> set, char hotKey = 0) {
+				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, caption, get, set, hotKey);
+			}
 			Toggle(ofParameter<bool> &, char hotKey = 0);
 			Toggle(string caption, char hotKey = 0);
-			Toggle();
+			Toggle(string caption, function<bool()> get, function<void(bool)> set, char hotKey = 0);
+			Toggle(); // you must call sestParameter later
+
 			virtual ~Toggle();
 			ofxLiquidEvent<ofParameter<bool>> onValueChange;
 			void setParameter(ofParameter<bool> &);

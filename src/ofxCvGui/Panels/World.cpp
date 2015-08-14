@@ -24,7 +24,8 @@ namespace ofxCvGui {
 			this->onDraw += [this](DrawArguments & args) {
 				if (this->useFbo) {
 					if (this->fbo.isAllocated()) {
-						bool scissorEnabled = Utils::disableScissor();
+						bool scissorEnabled = Utils::ScissorManager::X().getScissorEnabled();
+						Utils::ScissorManager::X().setScissorEnabled(false);
 
 						this->fbo.begin();
 						ofClear(100);
@@ -34,7 +35,7 @@ namespace ofxCvGui {
 						this->fbo.end();
 
 						if (scissorEnabled) {
-							Utils::enableScissor();
+							Utils::ScissorManager::X().setScissorEnabled(true);
 						}
 						this->fbo.draw(0, 0);
 					}

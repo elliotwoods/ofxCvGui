@@ -15,17 +15,28 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		Toggle::Toggle() {
-			this->value = nullptr;
-			this->localAllocation = false;
+		Toggle::Toggle(string caption, char hotKey) {
+			this->setParameter(*new ofParameter<bool>(caption, false));
+			this->localAllocation = true;
+			this->hotKey = hotKey;
 			this->init();
 		}
 
 		//----------
-		Toggle::Toggle(string caption, char hotKey) {
-			this->setParameter(* new ofParameter<bool>(caption, false));
-			this->localAllocation = true;
-			this->hotKey = hotKey;
+		Toggle::Toggle(string caption, function<bool()> get, function<void(bool)> set, char hotKey) :
+		Toggle(caption, hotKey) {
+			this->onUpdate += [this, get](UpdateArguments &) {
+				this->value->set(get());
+			};
+			this->onValueChange += [this, set](ofParameter<bool> & value) {
+				set(value.get());
+			};
+		}
+
+		//----------
+		Toggle::Toggle() {
+			this->value = nullptr;
+			this->localAllocation = false;
 			this->init();
 		}
 

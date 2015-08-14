@@ -102,8 +102,8 @@ namespace ofxCvGui {
 				ofSetColor(255);
 				float x = this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH / 2.0f;
 				ofSetLineWidth(0.0f);
-				ofCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
-				ofCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
+				ofDrawCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
+				ofDrawCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
 				ofSetLineWidth(OFXCVGUI_SCROLL_BAR_WIDTH);
 				ofDrawLine(x, barPosition, x, barPosition + barLength);
 				ofPopStyle();

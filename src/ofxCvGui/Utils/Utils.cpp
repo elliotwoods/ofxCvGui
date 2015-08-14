@@ -12,6 +12,8 @@
 
 #include <vector>
 
+OFXSINGLETON_DEFINE(ofxCvGui::Utils::ScissorManager);
+
 namespace ofxCvGui {
 	namespace Utils {
 #pragma mark Text
@@ -21,7 +23,7 @@ namespace ofxCvGui {
 			bool hasFont = font.isLoaded();
 
 			if (scissor) {
-				Utils::pushScissor(ofRectangle(x, y, minWidth, minHeight));
+				Utils::ScissorManager::X().pushScissor(ofRectangle(x, y, minWidth, minHeight));
 			}
 
 			ofPushStyle();
@@ -68,7 +70,7 @@ namespace ofxCvGui {
 			ofPopStyle();
 
 			if (scissor) {
-				Utils::popScissor();
+				Utils::ScissorManager::X().popScissor();
 			}
 
 			return bounds;
@@ -93,7 +95,8 @@ namespace ofxCvGui {
 		//---------
 		void drawToolTip(const string & text, const ofVec2f & position) {
 			//draw ignoring scissor
-			auto scissorEnabled = disableScissor();
+			auto scissorEnabled = ScissorManager::X().getScissorEnabled();
+			ScissorManager::X().setScissorEnabled(false);
 
 			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 14);
 			bool hasFont = font.isLoaded();
@@ -127,7 +130,7 @@ namespace ofxCvGui {
 			}
 
 			if (scissorEnabled) {
-				enableScissor();
+				ScissorManager::X().setScissorEnabled(true);
 			}
 		}
 
@@ -166,87 +169,83 @@ namespace ofxCvGui {
 			return ofColor((sin(ofGetElapsedTimef() * TWO_PI) + 1.0f) * 127, 0, 0);
 		}
 
-#pragma mark Scissor
+#pragma mark ScissorManager
+		// NOTE : ScissorManager caches the scissor state to reduce calls to glGet (can cause up to a 30% overhead on app performance)
 		//----------
-		vector<ofRectangle> scissorHistory;
+		ScissorManager::ScissorManager() {
+			this->scissorEnabled = false;
+		}
+
+		//----------
+		bool ScissorManager::getScissorEnabled() const {
+			return this->scissorEnabled;
+		}
+
+		//----------
+		void ScissorManager::setScissorEnabled(bool scissorEnabled) {
+			if (scissorEnabled != this->scissorEnabled) {
+				if (scissorEnabled) {
+#ifndef OFXCVGUI_DISABLE_SCISSOR
+					glEnable(GL_SCISSOR_TEST);
+#endif
+					this->scissorEnabled = true;
+				}
+				else {
+#ifndef OFXCVGUI_DISABLE_SCISSOR
+					//glDisable(GL_SCISSOR_TEST);
+#endif
+					this->scissorEnabled = false;
+				}
+			}
+		}
 		
 		//----------
-		ofRectangle getScissor() {
-			GLint bounds[4];
-			if (getScissorEnabled()) {
-				glGetIntegerv(GL_SCISSOR_BOX, bounds);
-			} else {
-				glGetIntegerv(GL_VIEWPORT, bounds);
-			}
-			auto currentScissor = ofRectangle(bounds[0], bounds[1], bounds[2], bounds[3]);
-			currentScissor.y = ofGetWindowHeight() - currentScissor.y - bounds[3]; // flip coords
-			return currentScissor;
-		}
-			
-		//----------
-		void applyScissor(const ofRectangle & bounds) {
-#ifndef OFXCVGUI_DISBALE_SCISSOR
-			int x = (int) bounds.x;
-			int y = (int) (ofGetWindowHeight() - (bounds.y + bounds.height));
-			int width = (int) bounds.width;
-			int height = (int) bounds.height;
-			glEnable(GL_SCISSOR_TEST);
-			glScissor(x, y, width, height);
-#endif
+		void ScissorManager::pushScissor(const ofRectangle & scissor) {
+			//the last one the stack is the current one
+
+			auto currentScissor = this->getScissor();
+			auto intersectScissor = scissor.getIntersection(currentScissor);
+
+			this->scissorHistory.push_back(intersectScissor);
+			this->setScissor(intersectScissor);
 		}
 
 		//----------
-		void pushScissor(const ofRectangle & bounds) {
-#ifndef OFXCVGUI_DISBALE_SCISSOR
-			const auto currentScissor = getScissor();
-			auto & debugScissorHistory = scissorHistory; // just so we can debug in debug mode. this gets optimised away
-			scissorHistory.push_back(currentScissor);
-			if (scissorHistory.empty()) {
-				applyScissor(bounds);
-			} else {
-				applyScissor(bounds.getIntersection(currentScissor));
-			}
-#endif
-		}
+		void ScissorManager::popScissor() {
+			//the last one the stack is the current one
 
-		//----------
-		void popScissor() {
-#ifndef OFXCVGUI_DISBALE_SCISSOR
 			if (scissorHistory.empty()) {
 				ofLogError("ofxCvGui::popScissor") << "Scissor history is empty";
 				return;
 			}
-			applyScissor(scissorHistory.back());
+
 			scissorHistory.pop_back();
-			if(scissorHistory.empty()) {
-				glDisable(GL_SCISSOR_TEST);
-				glScissor(0, 0, ofGetWidth(), ofGetHeight());
+
+			if (scissorHistory.empty()) {
+				this->setScissorEnabled(false);
+			} else {
+				this->setScissor(scissorHistory.back());
 			}
-#endif
 		}
 
 		//----------
-		bool getScissorEnabled() {
-			GLboolean scissorEnabled;
-			glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled);
-			return scissorEnabled == GL_TRUE;
-		}
-		
-		//----------
-		bool disableScissor() {
-			if (getScissorEnabled()) {
-				glDisable(GL_SCISSOR_TEST);
-				return true;
+		ofRectangle ScissorManager::getScissor() const {
+			if (this->getScissorEnabled() && !this->scissorHistory.empty()) {
+				return this->scissorHistory.back();
 			}
 			else {
-				return false;
+				return ofRectangle(0.0f, 0.0f, ofGetWidth(), ofGetHeight());
 			}
 		}
-
 		//----------
-		void enableScissor() {
-#ifndef OFXCVGUI_DISBALE_SCISSOR
-			glEnable(GL_SCISSOR_TEST);
+		void ScissorManager::setScissor(const ofRectangle & scissor) {
+			this->setScissorEnabled(true);
+#ifndef OFXCVGUI_DISABLE_SCISSOR
+			int x = (int)scissor.x;
+			int y = (int)(ofGetHeight() - (scissor.y + scissor.height));
+			int width = (int)scissor.width;
+			int height = (int)scissor.height;
+			glScissor(x, y, width, height);
 #endif
 		}
 

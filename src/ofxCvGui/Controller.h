@@ -17,10 +17,10 @@ namespace ofxCvGui {
 		void add(PanelPtr panel);
 		void drop(PanelPtr panel);
 		void clear();
-		void toggleMaximised();
 		void toggleFullscreen();
-		void setFullscreen(PanelPtr panel);
-		void clearFullscreen();
+		void toggleMaximised();
+		void setMaximised(PanelPtr panel);
+		void clearMaximised();
 		void showChrome();
 		void hideChrome();
 		PanelGroupPtr getRootGroup();
@@ -39,6 +39,7 @@ namespace ofxCvGui {
 		void mouseDragged(ofMouseEventArgs & args);
 		void keyPressed(ofKeyEventArgs & args);
 		void filesDragged(ofDragInfo & args);
+		void windowResized(ofResizeEventArgs & args);
 		//
 		////
 
@@ -50,7 +51,6 @@ namespace ofxCvGui {
 		PanelPtr currentPanel;
 		ofRectangle currentPanelBounds;
 		bool maximised;
-		bool fullscreen;
         ofVec2f mouseCached;
 		void * mouseOwner;
 		void * lastClickOwner;
@@ -58,6 +58,5 @@ namespace ofxCvGui {
 		bool chromeVisible;
 
 		float cachedWidth, cachedHeight;
-		int lastRebuildRequiredFrame;
 	};
 }

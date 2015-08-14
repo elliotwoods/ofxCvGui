@@ -7,9 +7,7 @@ namespace ofxCvGui {
 	Controller::Controller() {
 		this->initialised = false;
 		this->maximised = false;
-		this->fullscreen = false;
 		this->chromeVisible = true;
-		this->lastRebuildRequiredFrame = -10;
 		this->mouseOwner = nullptr;
 		this->lastClickOwner = nullptr;
 		this->lastMouseClick = pair<long long, ofMouseEventArgs>(std::numeric_limits<long long>::min(), ofMouseEventArgs());
@@ -29,6 +27,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
+		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 
 		ofxAssets::Register::X().addAddon("ofxCvGui");
 		
@@ -66,54 +65,37 @@ namespace ofxCvGui {
 			return;
 		this->rootGroup->clear();
 	}
-
+	
 	//----------
-	void Controller::toggleMaximised() {
-		//if we were fullscreen, move to simply maximised
-		if (this->fullscreen) {
-			this->fullscreen = false;
-			ofSetFullscreen(false);
-			this->maximised = true;
-		} else if (this->maximised)  {
-			this->maximised = false;
-		} else if (this->currentPanel != PanelPtr() ) {
-			this->maximised = true;
-		} else {
-			this->maximised = false;
-		}
-		if (this->maximised) {
-			this->currentPanel->setBounds(ofGetCurrentViewport());
-		} else {
-			this->rootGroup->setBounds(ofGetCurrentViewport());
-		}
+	void Controller::toggleFullscreen() {
+		ofToggleFullscreen();
 	}
 
 	//----------
-	void Controller::toggleFullscreen() {
-		if (!this->fullscreen && this->currentPanel) {
-			this->setFullscreen(this->currentPanel);
+	void Controller::toggleMaximised() {
+		if (!this->maximised) {
+			//maximise current panel
+			this->setMaximised(this->currentPanel);
+			this->currentPanel->setBounds(ofGetCurrentViewport());
 		} else {
-			this->clearFullscreen();
+			//clear maximise
+			this->clearMaximised();
 		}
 	}
 	
 	//----------
-	void Controller::setFullscreen(PanelPtr panel) {
+	void Controller::setMaximised(PanelPtr panel) {
+		this->maximised = true;
 		this->currentPanel = panel;
 		this->currentPanelBounds = ofGetCurrentViewport();
-		this->fullscreen = true;
-		this->maximised = true;
-		ofSetFullscreen(this->fullscreen);
 		panel->setBounds(ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight()));
 	}
 
 	//----------
-	void Controller::clearFullscreen() {
-		this->fullscreen = false;
+	void Controller::clearMaximised() {
 		this->maximised = false;
+		rootGroup->setBounds(ofGetCurrentViewport());
 		this->updateCurrentPanel();
-		ofSetFullscreen(false);
-		this->lastRebuildRequiredFrame = ofGetFrameNum();
 	}
 
 	//----------
@@ -128,20 +110,8 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::update(ofEventArgs& args) {
-		if (!initialised)
+		if (!initialised) {
 			return;
-		if ((ofGetFrameNum() - this->lastRebuildRequiredFrame) < 5 || this->cachedWidth != ofGetWidth() || this->cachedHeight != ofGetHeight()) {
-			//on windows the window resize doesn't always fire (e.g. when maximising).
-			//as a temporary fix, we perform all resize events by manually checking for size change
-			this->cachedWidth = ofGetWidth();
-			this->cachedHeight = ofGetHeight();
-
-			ofRectangle bounds(0, 0, this->cachedWidth, this->cachedHeight);
-			rootGroup->setBounds(bounds);
-			if (this->maximised) {
-				currentPanel->setBounds(bounds);
-			}
-			updateCurrentPanel();
 		}
 		InspectController::X().update();
 		rootGroup->update();
@@ -283,6 +253,17 @@ namespace ofxCvGui {
 			ofVec2f panelTopLeft = panelBounds.getTopLeft();
 			auto newArgs = FilesDraggedArguments((ofVec2f) args.position - panelTopLeft, (ofVec2f) args.position, args.files);
 			panel->onFilesDragged(newArgs);
+		}
+	}
+
+	//----------
+	void Controller::windowResized(ofResizeEventArgs & args) {
+		const auto viewportBounds = ofRectangle(0, 0, args.width, args.height);
+		if (this->maximised) {
+			this->currentPanel->setBounds(viewportBounds);
+		}
+		else {
+			this->rootGroup->setBounds(viewportBounds);
 		}
 	}
 

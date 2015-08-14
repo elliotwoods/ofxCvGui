@@ -109,7 +109,7 @@ namespace ofxCvGui {
 		//----------
 		void PixelsVector::key(KeyboardArguments & args) {
 			if (args.checkCurrentPanel(this)) {
-				int count = this->pixels.size();
+				auto count = static_cast<int>(this->pixels.size());
 				switch (args.key)
 				{
 				case OF_KEY_LEFT:
