@@ -192,7 +192,7 @@ namespace ofxCvGui {
 				}
 				else {
 #ifndef OFXCVGUI_DISABLE_SCISSOR
-					//glDisable(GL_SCISSOR_TEST);
+					glDisable(GL_SCISSOR_TEST);
 #endif
 					this->scissorEnabled = false;
 				}
