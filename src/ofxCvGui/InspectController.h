@@ -25,6 +25,7 @@ namespace ofxCvGui {
 		/// The first person to call this per frame wins the inspector.
 		/// This is to reflect the inverse call order of mouse action trees (top first)
 		void inspect(shared_ptr<IInspectable>);
+		void refresh();
 		void clear();
 		shared_ptr<IInspectable> getTarget() const;
 

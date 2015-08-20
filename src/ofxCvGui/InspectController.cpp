@@ -60,6 +60,11 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	void InspectController::refresh() {
+		this->inspectThisFrame = currentTarget.lock();
+	}
+
+	//----------
 	void InspectController::clear() {
 		this->clearThisFrame = true;
 	}
