@@ -30,7 +30,17 @@ namespace ofxCvGui {
 		//----------
 		void Draws::drawImage(float width, float height) {
 			if (this->drawObject) {
-				this->drawObject->draw(0, 0, width, height);
+				bool avoidDraw = false;
+
+				//check if its allocated if its a texture
+				auto objectAsTexture = dynamic_cast<ofTexture *>(this->drawObject);
+				if (objectAsTexture) {
+					avoidDraw |= ! objectAsTexture->isAllocated();
+				}
+
+				if (!avoidDraw) {
+					this->drawObject->draw(0, 0, width, height);
+				}
 			}
 		}
         

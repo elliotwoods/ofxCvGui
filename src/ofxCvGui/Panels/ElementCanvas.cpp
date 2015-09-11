@@ -29,6 +29,7 @@ namespace ofxCvGui {
 					if (args.action == KeyboardArguments::Action::Pressed) {
 						switch (args.key) {
 						case '+':
+						case '=': //laptops
 							this->zoom = floor(this->zoom + 1.0f);
 							break;
 						case '-':
