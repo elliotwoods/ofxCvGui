@@ -48,7 +48,7 @@ namespace ofxCvGui {
 		void updateCurrentPanel();
 		bool initialised;
 		PanelGroupPtr rootGroup;
-		PanelPtr currentPanel;
+		weak_ptr<Panels::Base> currentPanel;
 		ofRectangle currentPanelBounds;
 		bool maximised;
         ofVec2f mouseCached;
