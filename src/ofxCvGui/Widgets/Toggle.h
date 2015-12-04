@@ -24,6 +24,9 @@ namespace ofxCvGui {
 			ofxLiquidEvent<ofParameter<bool>> onValueChange;
 			void setParameter(ofParameter<bool> &);
 			ofParameter<bool> & getParameter();
+
+			void setHotKey(char);
+			char getHotKey() const;
 		protected:
 			void init();
 			void update(UpdateArguments &);
