@@ -18,7 +18,7 @@ namespace ofxCvGui {
 			Toggle(ofParameter<bool> &, char hotKey = 0);
 			Toggle(string caption, char hotKey = 0);
 			Toggle(string caption, function<bool()> get, function<void(bool)> set, char hotKey = 0);
-			Toggle(); // you must call sestParameter later
+			Toggle(); // you must call setParameter later
 
 			virtual ~Toggle();
 			ofxLiquidEvent<ofParameter<bool>> onValueChange;
