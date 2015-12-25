@@ -21,7 +21,7 @@ namespace ofxCvGui {
 
 			void entangle(ofParameter<int> &); ///< Keep a parameter synchronised
 
-			ofxLiquidEvent<const int> onSelectionChange;
+			ofxLiquidEvent<const int> onValueChange;
 		protected:
 			void clampSelection();
 			ofRectangle getOptionBounds(int optionIndex) const;

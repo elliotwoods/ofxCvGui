@@ -127,7 +127,7 @@ namespace ofxCvGui {
 						ofPushStyle();
 						ofSetColor(150);
 						ofxAssets::font(ofxCvGui::defaultTypeface, 14).drawString(previewValueString, 0, 35);
-						ofCircle(this->hoverX, ofMap(value, this->minimum, this->maximum, 40.0f, 0.0f), 3.0f);
+						ofDrawCircle(this->hoverX, ofMap(value, this->minimum, this->maximum, 40.0f, 0.0f), 3.0f);
 						ofPopStyle();
 					}
 				}

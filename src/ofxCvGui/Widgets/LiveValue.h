@@ -43,7 +43,7 @@ namespace ofxCvGui {
 
 					ofPushStyle();
 					ofSetLineWidth(1.0f);
-					ofLine(this->getWidth(), 0, this->getWidth(), 40);
+					ofDrawLine(this->getWidth(), 0, this->getWidth(), 40);
 					ofPopStyle();
 				};
 				this->onBoundsChange += [this](BoundsChangeArguments & args) {

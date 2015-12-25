@@ -11,17 +11,21 @@ namespace ofxCvGui {
 
 			this->useFbo = false; //default should be false, else we may add listeners twice to the camera
 
+#ifdef OFXCVGUI_USE_OFXGRABCAM
 			this->onUpdate += [this](UpdateArguments & args) {
 				if (this->useFbo) {
 					ofEventArgs dummyArgs;
 					this->camera.update(dummyArgs);
 				}
 			};
+			this->camera.setFixUpDirectionEnabled(true);
+#endif
 
 			this->onDraw += [this](DrawArguments & args) {
 				if (this->useFbo) {
 					if (this->fbo.isAllocated()) {
-						bool scissorEnabled = Utils::disableScissor();
+						bool scissorEnabled = Utils::ScissorManager::X().getScissorEnabled();
+						Utils::ScissorManager::X().setScissorEnabled(false);
 
 						this->fbo.begin();
 						ofClear(100);
@@ -31,7 +35,7 @@ namespace ofxCvGui {
 						this->fbo.end();
 
 						if (scissorEnabled) {
-							Utils::enableScissor();
+							Utils::ScissorManager::X().setScissorEnabled(true);
 						}
 						this->fbo.draw(0, 0);
 					}
@@ -40,6 +44,7 @@ namespace ofxCvGui {
 				}
 			};
 
+#ifdef OFXCVGUI_USE_OFXGRABCAM
 			this->onMouse += [this](MouseArguments & args) {
 				args.takeMousePress(this);
 
@@ -95,6 +100,7 @@ namespace ofxCvGui {
 					this->fbo.unbind();
 				}
 			};
+#endif
 
 			this->onBoundsChange += [this](BoundsChangeArguments & args) {
 				if (this->useFbo) {
@@ -102,6 +108,18 @@ namespace ofxCvGui {
 				}
 			};
 		}
+
+		//----------
+		CameraType & World::getCamera() {
+			return this->camera;
+		}
+
+#ifdef OFXCVGUI_USE_OFXGRABCAM
+		//----------
+		void World::setCursorEnabled(bool cursorEnabled) {
+			this->camera.setCursorDrawEnabled(cursorEnabled);
+		}
+#endif
 
 		//----------
 		void World::drawContent(const ofRectangle & bounds) {
@@ -163,11 +181,15 @@ namespace ofxCvGui {
 
 			this->useFbo = useFbo;
 			if (useFbo) {
-				this->camera.removeListeners();
+#ifdef OFXCVGUI_USE_OFXGRABCAM
+				this->camera.setListenersEnabled(false);
+#endif
 				this->allocateFbo();
 			}
 			else {
-				this->camera.addListeners();
+#ifdef OFXCVGUI_USE_OFXGRABCAM
+				this->camera.setListenersEnabled(true);
+#endif
 			}
 		}
 

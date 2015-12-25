@@ -34,7 +34,7 @@ namespace ofxCvGui {
 			localArguments.globalBounds = Utils::operator*(localArguments.localBounds, localArguments.globalTransform);
 
 			//only draw if this Element will be shown on the screen (not outside, not scissored out)
-			if (Utils::getScissor().intersects(localArguments.globalBounds)) {
+			if (Utils::ScissorManager::X().getScissor().intersects(localArguments.globalBounds)) {
 
 				if (this->cachedView) {
 					//--
@@ -42,7 +42,8 @@ namespace ofxCvGui {
 					//--
 					//
 					if (this->needsViewUpdate) {
-						bool scissorWasEnabled = Utils::disableScissor();
+						bool scissorWasEnabled = Utils::ScissorManager::X().getScissorEnabled();
+						Utils::ScissorManager::X().setScissorEnabled(false);
 
 						//if we need to update the view, then redraw the fbo
 						this->cachedView->begin(true);
@@ -67,7 +68,7 @@ namespace ofxCvGui {
 						this->cachedView->end();
 
 						if (scissorWasEnabled) {
-							Utils::enableScissor();
+							Utils::ScissorManager::X().setScissorEnabled(true);
 						}
 
 						this->needsViewUpdate = false;
@@ -88,13 +89,13 @@ namespace ofxCvGui {
 					ofScale(this->zoomFactor, this->zoomFactor);
 
 					if (this->enableScissor) {
-						ofxCvGui::Utils::pushScissor(localArguments.globalBounds);
+						ofxCvGui::Utils::ScissorManager::X().pushScissor(localArguments.globalBounds);
 					}
 
 					this->onDraw(localArguments);
 
 					if (this->enableScissor) {
-						ofxCvGui::Utils::popScissor();
+						ofxCvGui::Utils::ScissorManager::X().popScissor();
 					}
 					ofPopMatrix();
 					//

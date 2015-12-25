@@ -1,8 +1,8 @@
 #include "Scroll.h"
 
 #define OFXCVGUI_SCROLL_SPACING 2.0f
-#define OFXCVGUI_SCROLL_AREA_WIDTH 15.0f
-#define OFXCVGUI_SCROLL_BAR_WIDTH 3.0f
+#define OFXCVGUI_SCROLL_AREA_WIDTH 20.0f
+#define OFXCVGUI_SCROLL_BAR_WIDTH 5.0f
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -102,10 +102,10 @@ namespace ofxCvGui {
 				ofSetColor(255);
 				float x = this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH / 2.0f;
 				ofSetLineWidth(0.0f);
-				ofCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
-				ofCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
+				ofDrawCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
+				ofDrawCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
 				ofSetLineWidth(OFXCVGUI_SCROLL_BAR_WIDTH);
-				ofLine(x, barPosition, x, barPosition + barLength);
+				ofDrawLine(x, barPosition, x, barPosition + barLength);
 				ofPopStyle();
 			}
 		}

@@ -20,7 +20,7 @@ namespace ofxCvGui {
 			}
 
 			EditableValue(ofParameter<Type> & parameter) : 
-				LiveValue<Type>(parameter.getName(), [&parameter]() {	return parameter;}) {
+				LiveValue<Type>(parameter.getName(), [&parameter]() { return parameter;}) {
 				this->setEditable(true);
 				this->onEditValue += [&parameter](string & userValueString) {
 					stringstream stream(userValueString);

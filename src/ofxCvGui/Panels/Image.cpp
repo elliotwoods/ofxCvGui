@@ -40,25 +40,49 @@ namespace ofxCvGui {
 				if (!arguments.chromeEnabled)
 					return;
 
+				bool unknownType = false;
+				bool allocated = false;
 				int bitsPerChannel = 0;
 				int channelCount = 0;
+
 				if (dynamic_cast<ofImage *>(this->asset)) {
-					bitsPerChannel = 8;
-					channelCount = dynamic_cast<ofImage *>(this->asset)->getPixels().getNumChannels();
+					const auto & pixels = dynamic_cast<ofImage *>(this->asset)->getPixels();
+					allocated = pixels.isAllocated();
+					if (allocated) {
+						channelCount = pixels.getNumChannels();
+						bitsPerChannel = 8;
+					}
 				}
 				else if (dynamic_cast<ofFloatImage *>(this->asset)) {
-					bitsPerChannel = 32;
-					channelCount = dynamic_cast<ofFloatImage *>(this->asset)->getPixels().getNumChannels();
+					const auto & pixels = dynamic_cast<ofFloatImage *>(this->asset)->getPixels();
+					allocated = pixels.isAllocated();
+					if (allocated) {
+						channelCount = pixels.getNumChannels();
+						bitsPerChannel = 32;
+					}
 				}
 				else if (dynamic_cast<ofShortImage *>(this->asset)) {
-					bitsPerChannel = 16;
-					channelCount = dynamic_cast<ofShortImage *>(this->asset)->getPixels().getNumChannels();
+					const auto & pixels = dynamic_cast<ofShortImage *>(this->asset)->getPixels();
+					allocated = pixels.isAllocated();
+					if (allocated) {
+						channelCount = pixels.getNumChannels();
+						bitsPerChannel = 16;
+					}
+				}
+				else {
+					unknownType = true;
 				}
 
 				stringstream ss;
 				ss << this->asset->getWidth() << "x" << this->asset->getHeight();
-				if (bitsPerChannel != 0) {
-					ss << ", " << bitsPerChannel << "bit/" << channelCount << "ch";
+				if (unknownType) {
+					ss << ", unknown type";
+				}
+				else if (!allocated) {
+					ss << ", unallocated";
+				}
+				else {
+					ss << ", " << bitsPerChannel << "bit, " << channelCount << "ch";
 				}
             
 				Utils::drawText(ss.str(), 20, this->getHeight() - 30, true, 20);

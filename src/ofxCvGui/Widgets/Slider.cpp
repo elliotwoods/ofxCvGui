@@ -172,7 +172,7 @@ namespace ofxCvGui {
 
 				ofPushStyle();
 				ofSetColor(50);
-				ofLine(0, 40, this->getWidth(), 40);
+				ofDrawLine(0, 40, this->getWidth(), 40);
 				ofPopStyle();
 
 				ofPushMatrix();
@@ -226,7 +226,7 @@ namespace ofxCvGui {
 				//draw side marker
 				ofPushStyle();
 				ofSetLineWidth(1.0f);
-				ofLine(this->getWidth(), 0, this->getWidth(), 40);
+				ofDrawLine(this->getWidth(), 0, this->getWidth(), 40);
 				ofPopStyle();
 			}
 		}

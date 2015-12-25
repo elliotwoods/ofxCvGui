@@ -8,9 +8,9 @@ namespace ofxCvGui {
 			this->onDraw += [] (DrawArguments & args) {
 				auto center = args.localBounds.getCenter();
 
-				ofCircle(center + ofVec2f(-10.0f, 0.0f), 2.0f);
-				ofCircle(center, 2.0f);
-				ofCircle(center + ofVec2f(+10.0f, 0.0f), 2.0f);
+				ofDrawCircle(center + ofVec2f(-10.0f, 0.0f), 2.0f);
+				ofDrawCircle(center, 2.0f);
+				ofDrawCircle(center + ofVec2f(+10.0f, 0.0f), 2.0f);
 			};
 		}
 	}

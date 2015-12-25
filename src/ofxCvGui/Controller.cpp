@@ -7,9 +7,7 @@ namespace ofxCvGui {
 	Controller::Controller() {
 		this->initialised = false;
 		this->maximised = false;
-		this->fullscreen = false;
 		this->chromeVisible = true;
-		this->lastRebuildRequiredFrame = -10;
 		this->mouseOwner = nullptr;
 		this->lastClickOwner = nullptr;
 		this->lastMouseClick = pair<long long, ofMouseEventArgs>(std::numeric_limits<long long>::min(), ofMouseEventArgs());
@@ -29,6 +27,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
+		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 
 		ofxAssets::Register::X().addAddon("ofxCvGui");
 		
@@ -66,54 +65,40 @@ namespace ofxCvGui {
 			return;
 		this->rootGroup->clear();
 	}
-
+	
 	//----------
-	void Controller::toggleMaximised() {
-		//if we were fullscreen, move to simply maximised
-		if (this->fullscreen) {
-			this->fullscreen = false;
-			ofSetFullscreen(false);
-			this->maximised = true;
-		} else if (this->maximised)  {
-			this->maximised = false;
-		} else if (this->currentPanel != PanelPtr() ) {
-			this->maximised = true;
-		} else {
-			this->maximised = false;
-		}
-		if (this->maximised) {
-			this->currentPanel->setBounds(ofGetCurrentViewport());
-		} else {
-			this->rootGroup->setBounds(ofGetCurrentViewport());
-		}
+	void Controller::toggleFullscreen() {
+		ofToggleFullscreen();
 	}
 
 	//----------
-	void Controller::toggleFullscreen() {
-		if (!this->fullscreen && this->currentPanel) {
-			this->setFullscreen(this->currentPanel);
+	void Controller::toggleMaximised() {
+		if (!this->maximised) {
+			//maximise current panel
+			auto currentPanel = this->currentPanel.lock();
+			if (currentPanel) {
+				this->setMaximised(currentPanel);
+				currentPanel->setBounds(ofGetCurrentViewport());
+			}
 		} else {
-			this->clearFullscreen();
+			//clear maximise
+			this->clearMaximised();
 		}
 	}
 	
 	//----------
-	void Controller::setFullscreen(PanelPtr panel) {
+	void Controller::setMaximised(PanelPtr panel) {
+		this->maximised = true;
 		this->currentPanel = panel;
 		this->currentPanelBounds = ofGetCurrentViewport();
-		this->fullscreen = true;
-		this->maximised = true;
-		ofSetFullscreen(this->fullscreen);
 		panel->setBounds(ofRectangle(0, 0, ofGetScreenWidth(), ofGetScreenHeight()));
 	}
 
 	//----------
-	void Controller::clearFullscreen() {
-		this->fullscreen = false;
+	void Controller::clearMaximised() {
 		this->maximised = false;
+		rootGroup->setBounds(ofGetCurrentViewport());
 		this->updateCurrentPanel();
-		ofSetFullscreen(false);
-		this->lastRebuildRequiredFrame = ofGetFrameNum();
 	}
 
 	//----------
@@ -128,20 +113,8 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::update(ofEventArgs& args) {
-		if (!initialised)
+		if (!initialised) {
 			return;
-		if ((ofGetFrameNum() - this->lastRebuildRequiredFrame) < 5 || this->cachedWidth != ofGetWidth() || this->cachedHeight != ofGetHeight()) {
-			//on windows the window resize doesn't always fire (e.g. when maximising).
-			//as a temporary fix, we perform all resize events by manually checking for size change
-			this->cachedWidth = ofGetWidth();
-			this->cachedHeight = ofGetHeight();
-
-			ofRectangle bounds(0, 0, this->cachedWidth, this->cachedHeight);
-			rootGroup->setBounds(bounds);
-			if (this->maximised) {
-				currentPanel->setBounds(bounds);
-			}
-			updateCurrentPanel();
 		}
 		InspectController::X().update();
 		rootGroup->update();
@@ -161,12 +134,14 @@ namespace ofxCvGui {
 		rootDrawArguments.localBounds = ofRectangle(0, 0, rootDrawArguments.naturalBounds.getWidth(), rootDrawArguments.naturalBounds.getHeight());
 		rootDrawArguments.globalBounds = rootDrawArguments.naturalBounds;
 
+		auto currentPanel = this->currentPanel.lock();
+
 		if (this->maximised) {
             DrawArguments arg(rootDrawArguments);
-			this->currentPanel->draw(arg);
+			currentPanel->draw(arg);
 		} else {
 			//highlight panel
-			if (currentPanel != PanelPtr()) {
+			if (currentPanel) {
 				ofPushStyle();
 				ofEnableAlphaBlending();
 				ofSetColor(40, 40, 40, 100);
@@ -186,7 +161,7 @@ namespace ofxCvGui {
 	//----------
 	PanelPtr Controller::getPanelUnderCursor(const ofVec2f & position) {
 		if (this->maximised) {
-			return currentPanel;
+			return currentPanel.lock();
 		} else {
 			ofRectangle panelBounds = this->rootGroup->getBounds();
 			return this->findPanelUnderCursor(panelBounds, position);
@@ -195,9 +170,11 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::mouseMoved(ofMouseEventArgs & args) {
-		if (!initialised)
+		if (!initialised) {
 			return;
-		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), this->currentPanel, this->mouseOwner));
+		}
+		auto currentPanel = this->currentPanel.lock();
+		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), currentPanel, this->mouseOwner));
 		if (this->maximised)
 			currentPanel->mouseAction(action);
 		else {
@@ -218,12 +195,17 @@ namespace ofxCvGui {
 		if (isDoubleClick) {
 			this->mouseOwner = this->lastClickOwner;
 		}
-		auto action = MouseArguments(args, isDoubleClick ? MouseArguments::Action::DoubleClick : MouseArguments::Action::Pressed, rootGroup->getBounds(), this->currentPanel, this->mouseOwner);
+		auto currentPanel = this->currentPanel.lock();
 
-		if (this->maximised)
+		auto action = MouseArguments(args, isDoubleClick ? MouseArguments::Action::DoubleClick : MouseArguments::Action::Pressed, rootGroup->getBounds(), currentPanel, this->mouseOwner);
+
+		if (this->maximised) {
 			currentPanel->mouseAction(action);
-		else
+		}
+		else {
 			rootGroup->mouseAction(action);
+		}
+
         this->mouseCached = action.global;
 		this->mouseOwner = action.getOwner();
 		this->lastMouseClick = thisMouseClick;
@@ -233,11 +215,15 @@ namespace ofxCvGui {
 	void Controller::mouseReleased(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), this->currentPanel, this->mouseOwner);
-        if (this->maximised)
+
+		auto currentPanel = this->currentPanel.lock();
+		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), currentPanel, this->mouseOwner);
+		if (this->maximised) {
 			currentPanel->mouseAction(action);
-		else
+		}
+		else {
 			rootGroup->mouseAction(action);
+		}
 
 		this->lastClickOwner = this->mouseOwner;
 		this->mouseOwner = nullptr;
@@ -247,12 +233,17 @@ namespace ofxCvGui {
 	void Controller::mouseDragged(ofMouseEventArgs & args) {
 		if (!initialised)
 			return;
-		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), this->currentPanel, this->mouseOwner, mouseCached);
-        if (this->maximised)
+
+		auto currentPanel = this->currentPanel.lock();
+		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), currentPanel, this->mouseOwner, mouseCached);
+		if (this->maximised) {
 			currentPanel->mouseAction(action);
-		else
+		} 
+		else {
 			rootGroup->mouseAction(action);
-        this->mouseCached = action.global;
+		}
+
+		this->mouseCached = action.global;
 	}
 	
 	//----------
@@ -265,11 +256,16 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 
-		KeyboardArguments action(args, KeyboardArguments::Pressed, this->currentPanel);
-		if (this->maximised)
+		auto currentPanel = this->currentPanel.lock();
+		KeyboardArguments action(args, KeyboardArguments::Pressed, currentPanel);
+		if (this->maximised) {
+			//if something is maximised, only it get the key press
 			currentPanel->keyboardAction(action);
-		else
+		}
+		else {
+			//otherwise everything visible gets the key press
 			rootGroup->keyboardAction(action);
+		}
 	}
 
 	//----------
@@ -283,6 +279,19 @@ namespace ofxCvGui {
 			ofVec2f panelTopLeft = panelBounds.getTopLeft();
 			auto newArgs = FilesDraggedArguments((ofVec2f) args.position - panelTopLeft, (ofVec2f) args.position, args.files);
 			panel->onFilesDragged(newArgs);
+		}
+	}
+
+	//----------
+	void Controller::windowResized(ofResizeEventArgs & args) {
+		const auto viewportBounds = ofRectangle(0, 0, args.width, args.height);
+
+		auto currentPanel = this->currentPanel.lock();
+		if (this->maximised) {
+			currentPanel->setBounds(viewportBounds);
+		}
+		else {
+			this->rootGroup->setBounds(viewportBounds);
 		}
 	}
 

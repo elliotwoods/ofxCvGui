@@ -116,6 +116,9 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\SelectFile.cpp">
       <Filter>src\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ofxSingleton\src\ofxSingleton\BaseStore.cpp">
+      <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ofxSingleton\src\ofxSingleton\Register.cpp">
       <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
     </ClCompile>
@@ -251,13 +254,13 @@
     <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton.h">
       <Filter>addons\ofxSingleton\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\Singleton.h">
+    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\BaseStore.h">
       <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\Register.h">
       <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\BaseStore.h">
+    <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\Singleton.h">
       <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\UnmanagedSingleton.h">
@@ -308,13 +311,13 @@
       <UniqueIdentifier>{e6f97d40-bc7f-4e29-8579-3a70be6755c3}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxSingleton">
-      <UniqueIdentifier>{36c423fb-d78e-4fdf-87d4-131cbf22d142}</UniqueIdentifier>
+      <UniqueIdentifier>{85e02b6c-cc4f-43af-8c41-906c874ccf6b}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxSingleton\src">
-      <UniqueIdentifier>{ce637489-07b6-42f0-8664-8f2adf83b2e4}</UniqueIdentifier>
+      <UniqueIdentifier>{163b3530-7cb7-4956-aadd-eb9313083d23}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons\ofxSingleton\src\ofxSingleton">
-      <UniqueIdentifier>{fd4dbf82-3040-4c7c-8d4d-abb383807db6}</UniqueIdentifier>
+      <UniqueIdentifier>{4b64592f-ec96-49c2-8427-da675df53df0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

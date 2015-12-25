@@ -1,6 +1,7 @@
 #pragma once
 #include "ofRectangle.h"
 #include "ofMatrix4x4.h"
+#include "ofxSingleton.h"
 
 //#define OFXCVGUI_DISBALE_SCISSOR
 
@@ -18,14 +19,22 @@ namespace ofxCvGui {
 		ofColor getBeatingSelectionColor();
 
 #pragma mark Scissor
-		ofRectangle getScissor();
-		void applyScissor(const ofRectangle &);
-		void pushScissor(const ofRectangle &);
-		void popScissor();
+		class ScissorManager : public ofxSingleton::Singleton<ScissorManager> {
+		public:
+			ScissorManager();
 
-		bool getScissorEnabled();
-		bool disableScissor();
-		void enableScissor();
+			bool getScissorEnabled() const;
+			void setScissorEnabled(bool);
+
+			void pushScissor(const ofRectangle &);
+			void popScissor();
+
+			ofRectangle getScissor() const;
+		protected:
+			void setScissor(const ofRectangle &);
+			bool scissorEnabled;
+			vector<ofRectangle> scissorHistory;
+		};
 
 #pragma mark Math
 		ofRectangle operator*(const ofRectangle &, const ofMatrix4x4 &);
