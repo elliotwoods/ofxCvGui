@@ -6,6 +6,13 @@ namespace ofxCvGui {
 			//----------
             Grid::Grid() {
 				this->xCountFixed = false;
+
+				//some unecessary but tidy initialisations
+				this->xCount = 0;
+				this->yCount = 0;
+				this->panelWidth = 0.0f;
+				this->panelHeight = 0.0f;
+
 				this->onBoundsChange.addListener([this] (BoundsChangeArguments& args) {
 					this->boundsChange(args);
 				}, this);
