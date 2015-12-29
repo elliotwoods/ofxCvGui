@@ -37,13 +37,13 @@ namespace ofxCvGui {
 			void toggle();
 			void notifyValueChange();
 
-			bool localAllocation;
+			bool localAllocation = false;
 			ofParameter<bool> * value;
 
 			ofRectangle buttonBounds;
-			bool isMouseOver;
+			bool isMouseOver = false;
 
-			char hotKey;
+			char hotKey = 0;
 		};
 
 		shared_ptr<Toggle> make(ofParameter<bool> &);

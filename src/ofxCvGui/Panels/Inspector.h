@@ -5,7 +5,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Inspector : public Scroll {
+		class Inspector : public Scroll, public enable_shared_from_this<Inspector> {
 		public:
 			Inspector();
 			~Inspector();

@@ -12,7 +12,7 @@ namespace ofxCvGui {
 				this->clear();
 				if (target) {
 					InspectArguments args;
-					args.inspector = this->elements;
+					args.inspector = this->shared_from_this();
 					target->onInspect.notifyListenersInReverse(args); // reverse so inherited parameters go to the bottom
 					this->arrange();
 				}
@@ -40,7 +40,7 @@ namespace ofxCvGui {
 			if (this->titleEnabled) {
 				this->elements->add(shared_ptr<Title>(new Title("Inspector", Title::Level::H1)));
 			}
-			InspectArguments inspectArguments = { this->elements };
+			InspectArguments inspectArguments = { this->shared_from_this() };
 			InspectController::X().onClear.notifyListeners(inspectArguments);
 			this->arrange();
 		}

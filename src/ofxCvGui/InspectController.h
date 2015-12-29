@@ -1,11 +1,13 @@
 #pragma once
 
+#include "ofxCvGui/Panels/Inspector.h"
+
 #include "ElementGroup.h"
 #include "ofxSingleton.h"
 
 namespace ofxCvGui {
 	struct InspectArguments {
-		ElementGroupPtr inspector;
+		shared_ptr<Panels::Inspector> inspector;
 	};
 
 	/// inherit this class if your object is inspectable

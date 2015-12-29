@@ -61,8 +61,8 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	shared_ptr<Panels::Scroll> Builder::addScroll(string caption) {
-		auto newPanel = this->makeScroll(caption);
+	shared_ptr<Panels::Widgets> Builder::addWidgets(string caption) {
+		auto newPanel = this->makeWidgets(caption);
 		auto panel = PanelPtr(newPanel);
 		this->controller.add(panel);
 		return newPanel;
@@ -145,14 +145,14 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	shared_ptr<Panels::Scroll> Builder::makeScroll(string caption) {
-		auto newPanel = shared_ptr<Panels::Scroll>( new Panels::Scroll() );
+	shared_ptr<Panels::Widgets> Builder::makeWidgets(string caption) {
+		auto newPanel = shared_ptr<Panels::Widgets>(new Panels::Widgets());
 		LABEL_PANEL_AND_RETURN
 	}
 
 	//----------
 	shared_ptr<Panels::Base> Builder::makeBlank() {
-		return shared_ptr<Panels::Base>( new Panels::Base() );
+		return shared_ptr<Panels::Base>(new Panels::Base());
 	}
 
 	//----------

@@ -14,7 +14,7 @@
 #include "ofxCvGui/Panels/Instructions.h"
 #include "ofxCvGui/Panels/World.h"
 #include "ofxCvGui/Panels/ElementHost.h"
-#include "ofxCvGui/Panels/Scroll.h"
+#include "ofxCvGui/Panels/Widgets.h"
 #include "ofxCvGui/Panels/Inspector.h"
 
 //panels which currently lack factory functions
@@ -35,7 +35,7 @@ namespace ofxCvGui {
 		PanelPtr addBlank(string caption = "");
 		shared_ptr<Panels::World> addWorld(string caption = "");
 		shared_ptr<Panels::ElementHost> addElementHost(string caption = "");
-		shared_ptr<Panels::Scroll> addScroll(string caption = "");
+		shared_ptr<Panels::Widgets> addWidgets(string caption = "");
 		shared_ptr<Panels::Instructions> addInstructions();
 		shared_ptr<Panels::Inspector> addInspector();
 		shared_ptr<Panels::Groups::Grid> addGrid();
@@ -47,7 +47,7 @@ namespace ofxCvGui {
 		static shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption="");
 		static shared_ptr<Panels::World> makeWorld(string caption = "");
 		static shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
-		static shared_ptr<Panels::Scroll> makeScroll(string caption = "");
+		static shared_ptr<Panels::Widgets> makeWidgets(string caption = "");
 		static shared_ptr<Panels::Instructions> makeInstructions();
 		static shared_ptr<Panels::Inspector> makeInspector();
 		static shared_ptr<Panels::Groups::Grid> makeGrid();

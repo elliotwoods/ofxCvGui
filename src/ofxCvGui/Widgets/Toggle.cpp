@@ -9,7 +9,6 @@ namespace ofxCvGui {
 		Toggle::Toggle(ofParameter<bool> & parameter, char hotKey) {
 			this->setParameter(parameter);
 			this->setCaption(this->value->getName());
-			this->localAllocation = false;
 			this->hotKey = hotKey;
 			this->init();
 		}
@@ -36,7 +35,6 @@ namespace ofxCvGui {
 		//----------
 		Toggle::Toggle() {
 			this->value = nullptr;
-			this->localAllocation = false;
 			this->init();
 		}
 
