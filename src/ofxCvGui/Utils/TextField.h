@@ -20,6 +20,7 @@ namespace ofxCvGui {
 
 			void focus();
 			void defocus();
+			bool isFocused() const;
 			
 			ofxTextInputField & getTextInputField();
 
