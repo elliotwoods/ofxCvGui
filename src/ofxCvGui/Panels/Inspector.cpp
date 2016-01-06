@@ -25,7 +25,7 @@ namespace ofxCvGui {
 
 			this->titleEnabled = true;
 		
-			this->clear();
+			this->clear(false);
 		}
 
 		//---------
@@ -35,13 +35,15 @@ namespace ofxCvGui {
 		}
 
 		//---------
-		void Inspector::clear() {
+		void Inspector::clear(bool notifyListeners) {
 			Scroll::clear();
 			if (this->titleEnabled) {
 				this->elements->add(shared_ptr<Title>(new Title("Inspector", Title::Level::H1)));
 			}
-			InspectArguments inspectArguments = { this->shared_from_this() };
-			InspectController::X().onClear.notifyListeners(inspectArguments);
+			if(notifyListeners) {
+				InspectArguments inspectArguments = { this->shared_from_this() };
+				InspectController::X().onClear.notifyListeners(inspectArguments);
+			}
 			this->arrange();
 		}
 
