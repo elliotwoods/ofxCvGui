@@ -66,11 +66,14 @@ namespace ofxCvGui {
 				if (editable) {
 					this->editButton->onMouseReleased.removeListeners(this);
 					this->editButton->onMouseReleased.addListener([this](MouseArguments & args) {
-						auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "] (" + this->cachedValue + ")");
-						if (result != "") {
-							this->onEditValue(result);
-						}
+						this->hitEditBox();
 					}, this);
+				}
+			}
+			void hitEditBox() {
+				auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "] (" + this->cachedValue + ")");
+				if (result != "") {
+					this->onEditValue(result);
 				}
 			}
 
@@ -82,6 +85,11 @@ namespace ofxCvGui {
 			
 			shared_ptr<Element> editButton;
 		};
+		
+		template<> void LiveValue<string>::hitEditBox() {
+			auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "]");
+			this->onEditValue(result);
+		}
 
 		class LiveValueHistory : public LiveValue<float> {
 		public:

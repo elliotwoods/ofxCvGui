@@ -9,7 +9,7 @@ namespace ofxCvGui {
 		public:
 			Scroll();
 			void add(ElementPtr);
-			virtual void clear();
+			void clear();
 			ElementGroupPtr getElementGroup();
 
 			///Scroll functions
