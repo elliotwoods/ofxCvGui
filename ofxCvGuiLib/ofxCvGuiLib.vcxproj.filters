@@ -122,6 +122,15 @@
     <ClCompile Include="..\..\ofxSingleton\src\ofxSingleton\Register.cpp">
       <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\src\audiodecoderbase.cpp">
+      <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\src\audiodecodermediafoundation.cpp">
+      <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAudioDecoder\src\ofxAudioDecoder.cpp">
+      <Filter>addons\ofxAudioDecoder\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -266,6 +275,24 @@
     <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton\UnmanagedSingleton.h">
       <Filter>addons\ofxSingleton\src\ofxSingleton</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ofxAudioDecoder\src\ofxAudioDecoder.h">
+      <Filter>addons\ofxAudioDecoder\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\audiodecoder.h">
+      <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\audiodecoderbase.h">
+      <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\audiodecodermediafoundation.h">
+      <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\apple\CADebugMacros.h">
+      <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\include\apple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\apple\CAStreamBasicDescription.h">
+      <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\include\apple</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -318,6 +345,27 @@
     </Filter>
     <Filter Include="addons\ofxSingleton\src\ofxSingleton">
       <UniqueIdentifier>{4b64592f-ec96-49c2-8427-da675df53df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAudioDecoder">
+      <UniqueIdentifier>{fd0845a6-2b58-4e90-85f8-4499acfb4e4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAudioDecoder\src">
+      <UniqueIdentifier>{827824f4-403c-430e-8fa3-f1cb50849089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAudioDecoder\libs">
+      <UniqueIdentifier>{bdc2c432-d3cf-4dc2-99c5-cefe1e1ab326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAudioDecoder\libs\libaudiodecoder">
+      <UniqueIdentifier>{b5516bb5-24d1-40b1-8d21-e90c6d70be40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAudioDecoder\libs\libaudiodecoder\src">
+      <UniqueIdentifier>{856649cb-1e82-49c5-995d-d80962076d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAudioDecoder\libs\libaudiodecoder\include">
+      <UniqueIdentifier>{ffb43a9b-9285-4182-bda5-90173b675250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAudioDecoder\libs\libaudiodecoder\include\apple">
+      <UniqueIdentifier>{260eb403-54f0-4fd1-a3f6-b4a187dd1a8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -20,6 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ofxAssets\src\ofxAssets.h" />
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\apple\CADebugMacros.h" />
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\apple\CAStreamBasicDescription.h" />
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\audiodecoder.h" />
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\audiodecoderbase.h" />
+    <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\audiodecodermediafoundation.h" />
+    <ClInclude Include="..\..\ofxAudioDecoder\src\ofxAudioDecoder.h" />
     <ClInclude Include="..\..\ofxGrabCam\src\ofxGrabCam.h" />
     <ClInclude Include="..\..\ofxLiquidEvent\src\ofxLiquidEvent.h" />
     <ClInclude Include="..\..\ofxSingleton\src\ofxSingleton.h" />
@@ -70,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
+    <ClCompile Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\src\audiodecoderbase.cpp" />
+    <ClCompile Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\src\audiodecodermediafoundation.cpp" />
+    <ClCompile Include="..\..\ofxAudioDecoder\src\ofxAudioDecoder.cpp" />
     <ClCompile Include="..\..\ofxGrabCam\src\ofxGrabCam.cpp" />
     <ClCompile Include="..\..\ofxSingleton\src\ofxSingleton\BaseStore.cpp" />
     <ClCompile Include="..\..\ofxSingleton\src\ofxSingleton\Register.cpp" />
