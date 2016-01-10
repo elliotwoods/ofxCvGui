@@ -49,10 +49,12 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\ElementHost.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Grid.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Strip.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Image.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Inspector.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Instructions.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\SharedView.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Tree.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
@@ -95,11 +97,14 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Draws.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\ElementCanvas.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\ElementHost.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Base.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Grid.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Strip.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Image.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Inspector.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Instructions.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\SharedView.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Tree.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\World.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />

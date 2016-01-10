@@ -85,10 +85,24 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	shared_ptr<Panels::Tree> Builder::addTree() {
+		auto newPanel = this->makeTree();
+		this->controller.add(newPanel);
+		return newPanel;
+	}
+
+	//----------
 	shared_ptr<Panels::Groups::Grid> Builder::addGrid() {
 		auto newPanel = this->makeGrid();
 		auto panel = PanelPtr(newPanel);
 		this->controller.add(panel);
+		return newPanel;
+	}
+
+	//----------
+	shared_ptr<Panels::Groups::Strip> Builder::addStrip() {
+		auto newPanel = this->makeStrip();
+		this->controller.add(newPanel);
 		return newPanel;
 	}
 
@@ -123,6 +137,10 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	shared_ptr<Panels::Tree> Builder::makeTree() {
+		return make_shared<Panels::Tree>();
+	}
+	//----------
 	shared_ptr<Panels::Inspector> Builder::makeInspector() {
 		return shared_ptr<Panels::Inspector>( new Panels::Inspector() );
 	}
@@ -130,6 +148,11 @@ namespace ofxCvGui {
 	//----------
 	shared_ptr<Panels::Groups::Grid> Builder::makeGrid() {
 		return shared_ptr<Panels::Groups::Grid>( new Panels::Groups::Grid() );
+	}
+
+	//----------
+	shared_ptr<Panels::Groups::Strip> Builder::makeStrip() {
+		return make_shared<Panels::Groups::Strip>();
 	}
 
 	//----------

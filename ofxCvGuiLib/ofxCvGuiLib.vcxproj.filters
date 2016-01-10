@@ -131,6 +131,15 @@
     <ClCompile Include="..\..\ofxAudioDecoder\src\ofxAudioDecoder.cpp">
       <Filter>addons\ofxAudioDecoder\src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Tree.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Strip.cpp">
+      <Filter>src\Panels\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Base.cpp">
+      <Filter>src\Panels\Groups</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -292,6 +301,12 @@
     </ClInclude>
     <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\apple\CAStreamBasicDescription.h">
       <Filter>addons\ofxAudioDecoder\libs\libaudiodecoder\include\apple</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Tree.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Strip.h">
+      <Filter>src\Panels\Groups</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

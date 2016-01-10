@@ -24,6 +24,8 @@ namespace ofxCvGui {
 
 		void layoutGridVertical(float spacing = 0.0f);
 		void layoutGridHorizontal(float spacing = 0.0f);
+
+		ofxLiquidEvent<void> onGroupChange;
 	protected:
 		void updateSet();
 		void mouseActionSet(MouseArguments &);
