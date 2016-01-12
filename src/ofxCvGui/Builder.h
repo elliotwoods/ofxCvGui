@@ -11,6 +11,7 @@
 #include "ofxCvGui/Panels/Image.h"
 #include "ofxCvGui/Panels/Pixels.h"
 #include "ofxCvGui/Panels/PixelsVector.h"
+#include "ofxCvGui/Panels/Texture.h"
 #include "ofxCvGui/Panels/Text.h"
 #include "ofxCvGui/Panels/Instructions.h"
 #include "ofxCvGui/Panels/World.h"
@@ -33,7 +34,8 @@ namespace ofxCvGui {
 		shared_ptr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
 		shared_ptr<Panels::Image> add(ofImage& asset, string caption="");
 		shared_ptr<Panels::Pixels> add(const ofPixels& asset, string caption="");
-		shared_ptr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption="");
+		shared_ptr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption = "");
+		shared_ptr<Panels::Texture> add(const ofTexture & asset, string caption="");
 		PanelPtr addBlank(string caption = "");
 		shared_ptr<Panels::World> addWorld(string caption = "");
 		shared_ptr<Panels::ElementHost> addElementHost(string caption = "");
@@ -49,7 +51,8 @@ namespace ofxCvGui {
 		static shared_ptr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption="");
 		static shared_ptr<Panels::Image> makePanel(ofImage& asset, string caption="");
 		static shared_ptr<Panels::Pixels> makePanel(const ofPixels& asset, string caption="");
-		static shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption="");
+		static shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption = "");
+		static shared_ptr<Panels::Texture> makePanel(const ofTexture & asset, string caption="");
 		static shared_ptr<Panels::World> makeWorld(string caption = "");
 		static shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
 		static shared_ptr<Panels::Widgets> makeWidgets(string caption = "");

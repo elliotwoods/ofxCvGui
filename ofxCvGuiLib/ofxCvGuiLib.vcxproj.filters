@@ -140,6 +140,9 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Groups\Base.cpp">
       <Filter>src\Panels\Groups</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Texture.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Strip.h">
       <Filter>src\Panels\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Texture.h">
+      <Filter>src\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
