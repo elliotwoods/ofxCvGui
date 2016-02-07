@@ -20,6 +20,9 @@ namespace ofxCvGui {
 		this->onBoundsChange.addListener([this](const BoundsChangeArguments & args) {
 			this->arrangeSet(args);
 		}, this);
+		this->onGroupChange.addListener([this]() {
+			this->arrange();
+		}, 10000, this);
 	}
 
 	//----------
@@ -30,6 +33,7 @@ namespace ofxCvGui {
 		this->onKeyboard.removeListeners(this);
 		this->onDraw.removeListeners(this);
 		this->onBoundsChange.removeListeners(this);
+		this->onGroupChange.removeListeners(this);
 	}
 
 	//----------
@@ -78,9 +82,7 @@ namespace ofxCvGui {
 	template<typename T>
 	void ElementGroup_<T>::add(shared_ptr<T> addition) {
 		this->elements.push_back(addition);
-        ofRectangle bounds = this->getBounds();
-		auto args = BoundsChangeArguments(bounds);
-		this->onBoundsChange(args);
+		this->onGroupChange.notifyListeners();
 	}
 
 	//----------
@@ -93,18 +95,14 @@ namespace ofxCvGui {
 				break;
 			}
 
-        ofRectangle bounds = this->getBounds();
-		auto args = BoundsChangeArguments(bounds);
-		this->onBoundsChange(args);
+		this->onGroupChange.notifyListeners();
 	}
 
 	//----------
 	template<typename T>
 	void ElementGroup_<T>::clear() {
 		this->elements.clear();
-        ofRectangle bounds;
-		auto args = BoundsChangeArguments(bounds);
-		this->onBoundsChange(args);
+		this->onGroupChange.notifyListeners();
 	}
 	
 	//----------

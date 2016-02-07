@@ -109,6 +109,11 @@ namespace ofxCvGui {
 		void TextField::defocus() {
 			this->textInputField.endEditing();
 		}
+		
+		//----------
+		bool TextField::isFocused() const {
+			return this->textInputField.isEditing();
+		}
 
 		//----------
 		ofxTextInputField & TextField::getTextInputField() {

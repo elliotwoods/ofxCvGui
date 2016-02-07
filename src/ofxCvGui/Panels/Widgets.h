@@ -6,6 +6,7 @@
 #include "../Widgets/Button.h"
 #include "../Widgets/Toggle.h"
 #include "../Widgets/Slider.h"
+#include "../Widgets/EditableValue.h"
 
 #define OFXCVGUI_PANELS_WIDGETS_MAKE_HEADER(T, ...) shared_ptr<ofxCvGui::Widgets::T> add(__VA_ARGS__)
 #define OFXCVGUI_PANELS_WIDGETS_MAKE_BODY(T, ...) auto widget = ofxCvGui::Widgets::T::make(__VA_ARGS__); \
@@ -31,6 +32,8 @@ namespace ofxCvGui {
 			}
 			
 			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(Slider, ofParameter<float> &);
+			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(EditableValue<string>, ofParameter<string> &);
+			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(EditableValue<int>, ofParameter<int> &);
 			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(Toggle, ofParameter<bool> &);
 		};
 	}

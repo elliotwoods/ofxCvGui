@@ -43,7 +43,10 @@ namespace ofxCvGui {
 		//----------
 		void Scroll::setScroll(float position) {
 			this->position = position;
-			this->elements->setPosition(ofVec2f(0, -floor(position)));
+			position = floor(position);
+			if (this->elements->getBounds().y != -position) {
+				this->elements->setPosition(ofVec2f(0, -position));
+			}
 		}
 
 		//----------
@@ -104,8 +107,7 @@ namespace ofxCvGui {
 				ofSetLineWidth(0.0f);
 				ofDrawCircle(x, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
 				ofDrawCircle(x, barPosition + barLength, OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f);
-				ofSetLineWidth(OFXCVGUI_SCROLL_BAR_WIDTH);
-				ofDrawLine(x, barPosition, x, barPosition + barLength);
+				ofDrawRectangle(x - OFXCVGUI_SCROLL_BAR_WIDTH / 2.0f, barPosition, OFXCVGUI_SCROLL_BAR_WIDTH, barLength);
 				ofPopStyle();
 			}
 		}

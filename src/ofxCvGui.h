@@ -20,6 +20,7 @@
 #include "ofxCvGui/Widgets/SelectFile.h"
 #include "ofxCvGui/Widgets/MultipleChoice.h"
 #include "ofxCvGui/Widgets/Indicator.h"
+#include "ofxCvGui/Widgets/TextField.h"
 
 #include "ofxCvGui/InspectController.h"
 
