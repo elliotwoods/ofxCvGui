@@ -1,3 +1,5 @@
-ofxGrabCam
-ofxCvGui2
 ofxAssets
+ofxCvGui
+ofxGrabCam
+ofxLiquidEvent
+ofxSingleton
