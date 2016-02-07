@@ -4,17 +4,6 @@
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
-		bool Texture::Style::operator==(const Style & other) const {
-			if (other.rangeMaximum != this->rangeMaximum) {
-				return false;
-			}
-			if (other.rangeMinimum != this->rangeMinimum) {
-				return false;
-			}
-			return true;
-		}
-
-		//----------
 		Texture::Texture(const ofTexture & texture) :
 			texture(texture) {
 			this->onDraw += [this](DrawArguments & args) {
@@ -23,25 +12,26 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void Texture::setStyle(const Style & style) {
+		void Texture::setStyle(shared_ptr<Texture::Style> style) {
 			this->style = style;
 		}
 
 		//----------
-		const Texture::Style & Texture::getStyle() const {
+		shared_ptr<Texture::Style> Texture::getStyle() const {
 			return this->style;
 		}
 
 		//----------
 		void Texture::drawImage(float width, float height) {
 			if (this->texture.isAllocated()) {
-				auto isDefaultStyle = this->style == Style();
+				if (this->style) {
+					auto & shader = this->style->shader->get();
 
-				if (!isDefaultStyle) {
-					auto & shader = ofxAssets::shader("ofxCvGui::inputRange");
 					shader.begin();
-					shader.setUniform1f("minimum", this->style.rangeMinimum);
-					shader.setUniform1f("maximum", this->style.rangeMaximum);
+					if(this->style->shader == ofxAssets::Register::X().getShaderPointer("ofxCvGui::inputRange")) {
+						shader.setUniform1f("minimum", this->style->rangeMinimum);
+						shader.setUniform1f("maximum", this->style->rangeMaximum);
+					}
 
 					this->texture.draw(0, 0, width, height);
 

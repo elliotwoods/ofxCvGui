@@ -1,21 +1,22 @@
 #pragma once
 #include "ofxCvGui/Panels/BaseImage.h"
 #include "types/ofBaseTypes.h"
+#include "ofxAssets.h"
 
 namespace ofxCvGui {
 	namespace Panels {
 		class Texture : public Panels::BaseImage {
 		public:
 			struct Style {
-				bool operator==(const Style &) const;
 				float rangeMinimum = 0.0f;
 				float rangeMaximum = 1.0f;
+				shared_ptr<ofxAssets::Shader> shader = ofxAssets::Register::X().getShaderPointer("ofxCvGui::inputRange");
 			};
 
 			Texture(const ofTexture &);
 
-			void setStyle(const Style &);
-			const Style & getStyle() const;
+			void setStyle(shared_ptr<Texture::Style>);
+			shared_ptr<Texture::Style> getStyle() const;
 		protected:
 			void drawImage(float width, float height) override;
 			void drawInfo(DrawArguments &);
@@ -23,7 +24,7 @@ namespace ofxCvGui {
 			float getImageHeight() const override;
 
 			const ofTexture & texture;
-			Style style;
+			shared_ptr<Style> style;
 		};
 	}
 }
