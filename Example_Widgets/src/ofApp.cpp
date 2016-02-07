@@ -1,5 +1,7 @@
 #include "ofApp.h"
 
+#include "ofxAssets.h"
+
 using namespace ofxCvGui;
 
 //--------------------------------------------------------------
@@ -12,7 +14,7 @@ void ofApp::setup(){
 	auto & assetRegister = ofxAssets::AssetRegister();
 
 	auto drawPanel = this->gui.addBlank();
-	auto scrollPanel = this->gui.addScroll();
+	auto scrollPanel = this->gui.addWidgets();
 
 	for(int i=0; i<5; i++) {
 		this->x[i].set("X", ofRandomuf() * 512.0f, 0.0f, 512.0f);
@@ -21,10 +23,10 @@ void ofApp::setup(){
 		this->luminance[i].set("Luminance", floor(ofRandomuf() * 255.0f), 0.0f, 255.0f);
 		this->fill[i].set("Fill", false);
 
-		scrollPanel->add(ElementPtr(new Widgets::Slider(this->x[i])));
-		scrollPanel->add(ElementPtr(new Widgets::Slider(this->y[i])));
-		scrollPanel->add(ElementPtr(new Widgets::Slider(this->radius[i])));
-		scrollPanel->add(ElementPtr(new Widgets::Toggle(this->fill[i])));
+		scrollPanel->add(this->x[i]);
+		scrollPanel->add(this->y[i]);
+		scrollPanel->add(this->radius[i]);
+		scrollPanel->add(this->fill[i]);
 
 		//special slider with a validator to check for whole values
 		auto luminanceSlider = new Widgets::Slider(this->luminance[i]);
@@ -50,9 +52,12 @@ void ofApp::update(){
 
 }
 
+using namespace ofxAssets;
+
 //--------------------------------------------------------------
 void ofApp::draw(){
-	
+	auto & image = image("ofxCvGui::name");
+	image.
 }
 
 //--------------------------------------------------------------
