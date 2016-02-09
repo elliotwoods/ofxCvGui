@@ -33,6 +33,16 @@ namespace ofxCvGui {
 			}
 
 			//----------
+			void Strip::setDirection(Direction direction) {
+				this->direction = direction;
+			}
+
+			//----------
+			Strip::Direction Strip::getDirection() const {
+				return this->direction;
+			}
+
+			//----------
 			void Strip::setCellSizes(const initializer_list<int> & cellSizes) {
 				this->programmaticCellSizes = vector<int>(cellSizes.begin(), cellSizes.end());
 				this->resetUserCellSizes();

@@ -25,6 +25,24 @@
 #include "ofxCvGui/Panels/SharedView.h"
 
 namespace ofxCvGui {
+	shared_ptr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption = "");
+	shared_ptr<Panels::Image> makePanel(ofImage& asset, string caption = "");
+	shared_ptr<Panels::Pixels> makePanel(const ofPixels& asset, string caption = "");
+	shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption = "");
+	shared_ptr<Panels::Texture> makePanel(const ofTexture & asset, string caption = "");
+
+	shared_ptr<Panels::World> makeWorld(string caption = "");
+	shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
+	shared_ptr<Panels::Widgets> makeWidgets(string caption = "");
+	shared_ptr<Panels::Tree> makeTree(string caption = ""); 
+	
+	shared_ptr<Panels::Instructions> makeInstructions();
+	shared_ptr<Panels::Inspector> makeInspector();
+	shared_ptr<Panels::Groups::Grid> makeGrid();
+	shared_ptr<Panels::Groups::Strip> makeStrip(Panels::Groups::Strip::Direction direction = Panels::Groups::Strip::Direction::Horizontal);
+
+	PanelPtr makeBlank(string caption = "");
+
 	class Builder {
 	public:
 		void init();
@@ -45,23 +63,6 @@ namespace ofxCvGui {
 		shared_ptr<Panels::Tree> addTree();
 		shared_ptr<Panels::Groups::Grid> addGrid();
 		shared_ptr<Panels::Groups::Strip> addStrip();
-		
-		
-		//panel factory
-		static shared_ptr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption="");
-		static shared_ptr<Panels::Image> makePanel(ofImage& asset, string caption="");
-		static shared_ptr<Panels::Pixels> makePanel(const ofPixels& asset, string caption="");
-		static shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption = "");
-		static shared_ptr<Panels::Texture> makePanel(const ofTexture & asset, string caption="");
-		static shared_ptr<Panels::World> makeWorld(string caption = "");
-		static shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
-		static shared_ptr<Panels::Widgets> makeWidgets(string caption = "");
-		static shared_ptr<Panels::Instructions> makeInstructions();
-		static shared_ptr<Panels::Inspector> makeInspector();
-		static shared_ptr<Panels::Tree> makeTree();
-		static shared_ptr<Panels::Groups::Grid> makeGrid();
-		static shared_ptr<Panels::Groups::Strip> makeStrip();
-		static PanelPtr makeBlank();
 
 		Controller & getController() { return this->controller; }
 		void clear();

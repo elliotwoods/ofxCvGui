@@ -143,6 +143,27 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Texture.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\BaseAsset.cpp">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Font.cpp">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Image.cpp">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Register.cpp">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Set.cpp">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Shader.cpp">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Sound.cpp">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -314,6 +335,27 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Texture.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\BaseAsset.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Font.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Image.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Register.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Set.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Shader.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Sound.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -387,6 +429,9 @@
     </Filter>
     <Filter Include="addons\ofxAudioDecoder\libs\libaudiodecoder\include\apple">
       <UniqueIdentifier>{260eb403-54f0-4fd1-a3f6-b4a187dd1a8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxAssets\src\ofxAssets">
+      <UniqueIdentifier>{42be907a-1ca0-4dc5-9c5e-4270c528328c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

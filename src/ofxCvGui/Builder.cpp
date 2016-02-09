@@ -1,15 +1,93 @@
 #include "ofxCvGui/Builder.h"
 
-#define MAKE_PANEL_AND_RETURN auto newPanel = this->makePanel(asset, caption); PanelPtr panel(newPanel); controller.add(panel); return newPanel;
+#define MAKE_PANEL_AND_RETURN auto newPanel = makePanel(asset, caption); PanelPtr panel(newPanel); controller.add(panel); return newPanel;
 #define LABEL_PANEL_AND_RETURN newPanel->setCaption(caption); return newPanel;
 namespace ofxCvGui {
+#pragma mark make
+	//----------
+	shared_ptr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption) {
+		auto newPanel = make_shared<Panels::Draws>(asset);
+		LABEL_PANEL_AND_RETURN
+	}
+
+	//----------
+	shared_ptr<Panels::Image> makePanel(ofImage& asset, string caption) {
+		auto newPanel = make_shared<Panels::Image>(asset);
+		LABEL_PANEL_AND_RETURN
+	}
+
+	//----------
+	shared_ptr<Panels::Pixels> makePanel(const ofPixels& asset, string caption) {
+		auto newPanel = make_shared<Panels::Pixels>(asset);
+		LABEL_PANEL_AND_RETURN
+	}
+
+	//----------
+	shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption) {
+		auto newPanel = make_shared<Panels::PixelsVector>(asset);
+		LABEL_PANEL_AND_RETURN
+	}
+
+	//----------
+	shared_ptr<Panels::Texture> makePanel(const ofTexture & asset, string caption) {
+		auto newPanel = make_shared<Panels::Texture>(asset);
+		LABEL_PANEL_AND_RETURN
+	}
+
+	//----------
+	shared_ptr<Panels::World> makeWorld(string caption) {
+		return shared_ptr<Panels::World>(new Panels::World());
+	}
+
+	//----------
+	shared_ptr<Panels::ElementHost> makeElementHost(string caption) {
+		return shared_ptr<Panels::ElementHost>(new Panels::ElementHost());
+	}
+
+	//----------
+	shared_ptr<Panels::Widgets> makeWidgets(string caption) {
+		return shared_ptr<Panels::Widgets>(new Panels::Widgets());
+	}
+
+	//----------
+	shared_ptr<Panels::Tree> makeTree(string caption) {
+		auto newPanel = make_shared<Panels::Tree>();
+		LABEL_PANEL_AND_RETURN
+	}
+
+	//----------
+	shared_ptr<Panels::Instructions> makeInstructions() {
+		return shared_ptr<Panels::Instructions>(new Panels::Instructions());
+	}
+
+	//----------
+	shared_ptr<Panels::Inspector> makeInspector() {
+		return shared_ptr<Panels::Inspector>(new Panels::Inspector());
+	}
+
+	//----------
+	shared_ptr<Panels::Groups::Grid> makeGrid() {
+		return shared_ptr<Panels::Groups::Grid>(new Panels::Groups::Grid());
+	}
+
+	//----------
+	shared_ptr<Panels::Groups::Strip> makeStrip(Panels::Groups::Strip::Direction direction) {
+		return make_shared<Panels::Groups::Strip>(direction);
+	}
+
+	//----------
+	shared_ptr<Panels::Base> makeBlank(string caption) {
+		auto newPanel = shared_ptr<Panels::Base>(new Panels::Base());
+		LABEL_PANEL_AND_RETURN
+	}
+
+#pragma mark Builder
 	//----------
 	void Builder::init() {
 		PanelGroupPtr rootGroup( new Panels::Groups::Grid() );
 		controller.init(rootGroup);
 	}
 	
-#pragma mark add
 	//----------
 	void Builder::add(PanelPtr panel) {
 		controller.add(panel);
@@ -42,7 +120,7 @@ namespace ofxCvGui {
     
 	//----------
 	shared_ptr<Panels::Base> Builder::addBlank(string caption) {
-		auto newPanel = this->makeBlank();
+		auto newPanel = makeBlank(caption);
 		newPanel->setCaption(caption);
 		this->controller.add(newPanel);
 		return newPanel;
@@ -50,136 +128,58 @@ namespace ofxCvGui {
 
 	//----------
 	shared_ptr<Panels::World> Builder::addWorld(string caption) {
-		auto newPanel = this->makeWorld(caption);
+		auto newPanel = makeWorld(caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::ElementHost> Builder::addElementHost(string caption) {
-		auto newPanel = this->makeElementHost(caption);
+		auto newPanel = makeElementHost(caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Widgets> Builder::addWidgets(string caption) {
-		auto newPanel = this->makeWidgets(caption);
+		auto newPanel = makeWidgets(caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Instructions> Builder::addInstructions() {
-		auto newPanel = this->makeInstructions();
+		auto newPanel = makeInstructions();
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Inspector> Builder::addInspector() {
-		auto newPanel = this->makeInspector();
+		auto newPanel = makeInspector();
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Tree> Builder::addTree() {
-		auto newPanel = this->makeTree();
+		auto newPanel = makeTree();
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Groups::Grid> Builder::addGrid() {
-		auto newPanel = this->makeGrid();
+		auto newPanel = makeGrid();
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Groups::Strip> Builder::addStrip() {
-		auto newPanel = this->makeStrip();
+		auto newPanel = makeStrip();
 		this->controller.add(newPanel);
 		return newPanel;
-	}
-
-#pragma mark make
-	//----------
-	shared_ptr<Panels::Draws> Builder::makePanel(ofBaseDraws& asset, string caption) {
-		auto newPanel = make_shared<Panels::Draws>(asset);
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::Image> Builder::makePanel(ofImage& asset, string caption) {
-		auto newPanel = make_shared<Panels::Image>(asset);
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::Pixels> Builder::makePanel(const ofPixels& asset, string caption) {
-		auto newPanel = make_shared<Panels::Pixels>(asset);
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::PixelsVector> Builder::makePanel(const vector<ofPixels>& asset, string caption) {
-		auto newPanel = make_shared<Panels::PixelsVector>(asset);
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::Texture> Builder::makePanel(const ofTexture & asset, string caption) {
-		auto newPanel = make_shared<Panels::Texture>(asset);
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::Instructions> Builder::makeInstructions() {
-		return shared_ptr<Panels::Instructions>( new Panels::Instructions() );
-	}
-
-	//----------
-	shared_ptr<Panels::Tree> Builder::makeTree() {
-		return make_shared<Panels::Tree>();
-	}
-	//----------
-	shared_ptr<Panels::Inspector> Builder::makeInspector() {
-		return shared_ptr<Panels::Inspector>( new Panels::Inspector() );
-	}
-
-	//----------
-	shared_ptr<Panels::Groups::Grid> Builder::makeGrid() {
-		return shared_ptr<Panels::Groups::Grid>( new Panels::Groups::Grid() );
-	}
-
-	//----------
-	shared_ptr<Panels::Groups::Strip> Builder::makeStrip() {
-		return make_shared<Panels::Groups::Strip>();
-	}
-
-	//----------
-	shared_ptr<Panels::World> Builder::makeWorld(string caption) {
-		auto newPanel = shared_ptr<Panels::World>(new Panels::World());
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::ElementHost> Builder::makeElementHost(string caption) {
-		auto newPanel = shared_ptr<Panels::ElementHost>(new Panels::ElementHost());
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::Widgets> Builder::makeWidgets(string caption) {
-		auto newPanel = shared_ptr<Panels::Widgets>(new Panels::Widgets());
-		LABEL_PANEL_AND_RETURN
-	}
-
-	//----------
-	shared_ptr<Panels::Base> Builder::makeBlank() {
-		return shared_ptr<Panels::Base>(new Panels::Base());
 	}
 
 	//----------

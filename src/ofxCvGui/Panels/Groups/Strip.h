@@ -15,6 +15,9 @@ namespace ofxCvGui {
 
 				Strip(Direction = Direction::Horizontal);
 
+				void setDirection(Direction);
+				Direction getDirection() const;
+
 				/// Usage: setSizes({ 50, 10, 100});
 				/// Notes : size of -1 denotes auto-fill
 				void setCellSizes(const initializer_list<int> &);

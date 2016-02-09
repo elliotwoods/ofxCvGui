@@ -20,6 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ofxAssets\src\ofxAssets.h" />
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\BaseAsset.h" />
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Font.h" />
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Image.h" />
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Register.h" />
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Set.h" />
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Shader.h" />
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Sound.h" />
     <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\apple\CADebugMacros.h" />
     <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\apple\CAStreamBasicDescription.h" />
     <ClInclude Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\include\audiodecoder.h" />
@@ -79,6 +86,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets.cpp" />
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\BaseAsset.cpp" />
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Font.cpp" />
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Image.cpp" />
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Register.cpp" />
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Set.cpp" />
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Shader.cpp" />
+    <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Sound.cpp" />
     <ClCompile Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\src\audiodecoderbase.cpp" />
     <ClCompile Include="..\..\ofxAudioDecoder\libs\libaudiodecoder\src\audiodecodermediafoundation.cpp" />
     <ClCompile Include="..\..\ofxAudioDecoder\src\ofxAudioDecoder.cpp" />

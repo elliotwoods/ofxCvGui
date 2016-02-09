@@ -6,6 +6,8 @@ namespace ofxCvGui {
 #pragma mark Tree::Branch
 		//----------
 		Tree::Branch::Branch() {
+			//this->setCachedView(true);
+
 			this->onDraw += [this](DrawArguments & args) {
 				ofPushStyle();
 				{
@@ -59,6 +61,7 @@ namespace ofxCvGui {
 				this->desiredHeight = height; // we cache this value to be applied on next update (onChange will go down the tree and trigger a flag in Tree view)
 				
 				this->toggleButton->setEnabled(!this->branches.empty()); //only show toggle button if we have subbranches
+				this->markViewDirty();
 			};
 
 			this->toggleButton = make_shared<Element>();
