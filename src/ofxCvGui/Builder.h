@@ -19,9 +19,10 @@
 #include "ofxCvGui/Panels/Widgets.h"
 #include "ofxCvGui/Panels/Inspector.h"
 #include "ofxCvGui/Panels/Tree.h"
+#include "ofxCvGui/Panels/ElementCanvas.h"
+
 
 //panels which currently lack factory functions
-#include "ofxCvGui/Panels/ElementCanvas.h"
 #include "ofxCvGui/Panels/SharedView.h"
 
 namespace ofxCvGui {
@@ -33,9 +34,10 @@ namespace ofxCvGui {
 
 	shared_ptr<Panels::World> makeWorld(string caption = "");
 	shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
+	shared_ptr<Panels::ElementCanvas> makeElementCanvas(string caption = "");
 	shared_ptr<Panels::Widgets> makeWidgets(string caption = "");
 	shared_ptr<Panels::Tree> makeTree(string caption = ""); 
-	
+
 	shared_ptr<Panels::Instructions> makeInstructions();
 	shared_ptr<Panels::Inspector> makeInspector();
 	shared_ptr<Panels::Groups::Grid> makeGrid();
@@ -57,6 +59,7 @@ namespace ofxCvGui {
 		PanelPtr addBlank(string caption = "");
 		shared_ptr<Panels::World> addWorld(string caption = "");
 		shared_ptr<Panels::ElementHost> addElementHost(string caption = "");
+		shared_ptr<Panels::ElementCanvas> addElementCanvas(string caption = "");
 		shared_ptr<Panels::Widgets> addWidgets(string caption = "");
 		shared_ptr<Panels::Instructions> addInstructions();
 		shared_ptr<Panels::Inspector> addInspector();

@@ -20,20 +20,31 @@ namespace ofxCvGui {
 		public:
 			using Scroll::add;
 			
+			// Add Widgets::Title
 			OFXCVGUI_PANELS_WIDGETS_MAKE_HEADER(Title, string caption, ofxCvGui::Widgets::Title::Level level) {
 				OFXCVGUI_PANELS_WIDGETS_MAKE_BODY(Title, caption, level);
 			}
+
+			// Add Widgets::Title
 			OFXCVGUI_PANELS_WIDGETS_MAKE_HEADER(Title, string caption) {
 				OFXCVGUI_PANELS_WIDGETS_MAKE_BODY(Title, caption);
 			}
 			
+			// Add Widgets::Button
 			OFXCVGUI_PANELS_WIDGETS_MAKE_HEADER(Button, string caption, function<void()> action) {
 				OFXCVGUI_PANELS_WIDGETS_MAKE_BODY(Button, caption, action);
 			}
 			
+			// Add Widgets::Slider
 			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(Slider, ofParameter<float> &);
+
+			// Add Widgets::EditableValue string
 			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(EditableValue<string>, ofParameter<string> &);
+
+			// Add Widgets::EditableValue int
 			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(EditableValue<int>, ofParameter<int> &);
+
+			// Add Widgets::Toggle
 			OFXCVGUI_PANELS_WIDGETS_MAKE_SIMPLE(Toggle, ofParameter<bool> &);
 		};
 	}

@@ -36,17 +36,26 @@ namespace ofxCvGui {
 
 	//----------
 	shared_ptr<Panels::World> makeWorld(string caption) {
-		return shared_ptr<Panels::World>(new Panels::World());
+		auto newPanel = shared_ptr<Panels::World>(new Panels::World());
+		LABEL_PANEL_AND_RETURN
 	}
 
 	//----------
 	shared_ptr<Panels::ElementHost> makeElementHost(string caption) {
-		return shared_ptr<Panels::ElementHost>(new Panels::ElementHost());
+		auto newPanel = shared_ptr<Panels::ElementHost>(new Panels::ElementHost());
+		LABEL_PANEL_AND_RETURN
+	}
+
+	//----------
+	shared_ptr<Panels::ElementCanvas> makeElementCanvas(string caption) {
+		auto newPanel = shared_ptr<Panels::ElementCanvas>(new Panels::ElementCanvas());
+		LABEL_PANEL_AND_RETURN
 	}
 
 	//----------
 	shared_ptr<Panels::Widgets> makeWidgets(string caption) {
-		return shared_ptr<Panels::Widgets>(new Panels::Widgets());
+		auto newPanel = shared_ptr<Panels::Widgets>(new Panels::Widgets());
+		LABEL_PANEL_AND_RETURN
 	}
 
 	//----------
@@ -136,6 +145,13 @@ namespace ofxCvGui {
 	//----------
 	shared_ptr<Panels::ElementHost> Builder::addElementHost(string caption) {
 		auto newPanel = makeElementHost(caption);
+		this->controller.add(newPanel);
+		return newPanel;
+	}
+
+	//----------
+	shared_ptr<Panels::ElementCanvas> Builder::addElementCanvas(string caption) {
+		auto newPanel = makeElementCanvas(caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
