@@ -20,5 +20,7 @@ namespace ofxCvGui {
 		private:
 			ofBaseDraws * drawObject;
 		};
+
+		shared_ptr<Panels::Draws> make(ofBaseDraws& asset, string caption = "");
 	}
 }

@@ -197,5 +197,11 @@ namespace ofxCvGui {
 		bool World::getUseFbo() const {
 			return this->useFbo;
 		}
+
+		//----------
+		shared_ptr<Panels::World> makeWorld(string caption) {
+			auto newPanel = shared_ptr<Panels::World>(new Panels::World());
+			OFXCVGUI_LABEL_PANEL_AND_RETURN
+		}
 	}
 }

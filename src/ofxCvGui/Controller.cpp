@@ -154,8 +154,14 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	PanelGroupPtr Controller::getRootGroup() {
+	PanelGroupPtr Controller::getRootGroup() const {
 		return this->rootGroup;
+	}
+
+	//----------
+	void Controller::setRootGroup(PanelGroupPtr rootGroup) {
+		this->rootGroup = rootGroup;
+		this->rootGroup->arrange();
 	}
 
 	//----------

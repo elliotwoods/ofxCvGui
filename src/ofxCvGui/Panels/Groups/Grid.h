@@ -19,6 +19,8 @@ namespace ofxCvGui {
 				bool xCountFixed;
 				vector<float> heights, widths;
 			};
+
+			shared_ptr<Grid> makeGrid();
 		}
 	}
 }

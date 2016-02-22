@@ -50,5 +50,11 @@ namespace ofxCvGui {
 		float Pixels::getImageHeight() const {
 			return this->pixels.getHeight();
 		}
+
+		//----------
+		shared_ptr<Panels::Pixels> make(const ofPixels& asset, string caption) {
+			auto newPanel = make_shared<Panels::Pixels>(asset);
+			OFXCVGUI_LABEL_PANEL_AND_RETURN
+		}
 	}
 }

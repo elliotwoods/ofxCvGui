@@ -160,5 +160,11 @@ namespace ofxCvGui {
 		void ElementCanvas::callbackZoomChange(float & zoom) {
 			this->canvasElements->setZoom(pow(2, zoom));
 		}
+
+		//----------
+		shared_ptr<Panels::ElementCanvas> makeElementCanvas(string caption) {
+			auto newPanel = shared_ptr<Panels::ElementCanvas>(new Panels::ElementCanvas());
+			OFXCVGUI_LABEL_PANEL_AND_RETURN
+		}
 	}
 }

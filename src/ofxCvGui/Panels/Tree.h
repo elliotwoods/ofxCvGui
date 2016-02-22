@@ -32,5 +32,7 @@ namespace ofxCvGui {
 			shared_ptr<Branch> rootBranch;
 			bool needsArrange = false;
 		};
+
+		shared_ptr<Panels::Tree> makeTree(string caption = "");
 	}
 }

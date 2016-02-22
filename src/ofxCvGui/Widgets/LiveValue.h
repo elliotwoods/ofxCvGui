@@ -34,10 +34,10 @@ namespace ofxCvGui {
 					this->cachedValue = ss.str();
 				};
 				this->onDraw += [this](DrawArguments & args) {
-					auto & captionFont = ofxAssets::font(ofxCvGui::defaultTypeface, 12);
+					auto & captionFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 12);
 					captionFont.drawString(this->caption + " : ", 0, 15);
 
-					auto & valueFont = ofxAssets::font(ofxCvGui::defaultTypeface, 14);
+					auto & valueFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 14);
 					auto valueBounds = valueFont.getStringBoundingBox(cachedValue, 0, 0);
 					valueFont.drawString(cachedValue, (int)(this->getWidth() - valueBounds.width - 5), 35);
 

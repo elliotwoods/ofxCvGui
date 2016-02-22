@@ -270,6 +270,11 @@ namespace ofxCvGui {
 					}
 				}
 			}
+
+			//----------
+			shared_ptr<Strip> makeStrip(Strip::Direction direction) {
+				return make_shared<Strip>(direction);
+			}
 		}
 	}
 }

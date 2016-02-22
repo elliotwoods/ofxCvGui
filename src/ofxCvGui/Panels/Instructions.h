@@ -8,5 +8,7 @@ namespace ofxCvGui {
 		public:
 			Instructions();
 		};
+
+		shared_ptr<Panels::Instructions> makeInstructions();
 	}
 }

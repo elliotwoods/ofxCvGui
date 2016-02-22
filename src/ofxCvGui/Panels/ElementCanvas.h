@@ -35,5 +35,7 @@ namespace ofxCvGui {
 
 			ofRectangle canvasExtents;
 		};
+
+		shared_ptr<Panels::ElementCanvas> makeElementCanvas(string caption = "");
 	}
 }

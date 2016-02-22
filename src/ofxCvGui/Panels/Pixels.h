@@ -20,5 +20,7 @@ namespace ofxCvGui {
 			ofTexture preview;
             bool refreshPerFrame;
 		};
+
+		shared_ptr<Panels::Pixels> make(const ofPixels& asset, string caption = "");
 	}
 }

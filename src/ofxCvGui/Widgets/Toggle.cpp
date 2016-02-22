@@ -111,7 +111,7 @@ namespace ofxCvGui {
 				return;
 			}
 
-			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 12);
+			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 12);
 			auto isMouseDown = this->getMouseState() != LocalMouseState::Waiting;
 
 			ofPushStyle();

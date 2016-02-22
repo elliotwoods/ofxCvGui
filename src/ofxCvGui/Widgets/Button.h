@@ -20,5 +20,7 @@ namespace ofxCvGui {
 			ofParameter<bool> hitValue;
 			bool needsToDrop;
 		};
+
+		shared_ptr<Button> makeButton(const string & caption, const function<void()> & buttonCallback);
 	}
 }

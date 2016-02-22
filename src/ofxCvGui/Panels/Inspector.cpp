@@ -56,5 +56,10 @@ namespace ofxCvGui {
 		void Inspector::setTitleEnabled(bool titleEnabled) {
 			this->titleEnabled = titleEnabled;
 		}
+
+		//----------
+		shared_ptr<Panels::Inspector> makeInspector() {
+			return shared_ptr<Panels::Inspector>(new Panels::Inspector());
+		}
 	}
 }

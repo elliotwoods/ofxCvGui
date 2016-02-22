@@ -24,14 +24,14 @@ namespace ofxCvGui {
 			}
 
 			//check if we need to increase height
-			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, fontSize);
+			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), fontSize);
 			auto textBounds = font.getStringBoundingBox(this->caption, 0, 30);
 			const auto textBottom = textBounds.getBottom();
 			if (textBottom + 10 > this->getHeight()) {
 				this->setHeight(textBottom + 10);
 			}
 			this->onDraw += [this, fontSize] (ofxCvGui::DrawArguments & args) {
-				auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, fontSize);
+				auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), fontSize);
 				font.drawString(this->caption, 0, 30);
 			};
 		}

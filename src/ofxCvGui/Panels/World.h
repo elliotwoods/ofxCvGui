@@ -51,5 +51,7 @@ namespace ofxCvGui {
 			bool useFbo;
 			ofFbo fbo;
 		};
+
+		shared_ptr<Panels::World> makeWorld(string caption = "");
 	}
 }

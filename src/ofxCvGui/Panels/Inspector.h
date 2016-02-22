@@ -17,5 +17,7 @@ namespace ofxCvGui {
 		protected:
 			bool titleEnabled;
 		};
+
+		shared_ptr<Panels::Inspector> makeInspector();
 	}
 }

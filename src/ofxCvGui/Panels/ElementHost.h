@@ -11,5 +11,7 @@ namespace ofxCvGui {
 		protected:
 			ElementGroupPtr elementGroup;
 		};
+
+		shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
 	}
 }

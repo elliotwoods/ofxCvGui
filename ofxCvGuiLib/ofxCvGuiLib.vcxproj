@@ -63,6 +63,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\SharedView.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Texture.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Tree.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\Widgets.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\World.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Pixels.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
@@ -121,6 +122,7 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\SharedView.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Texture.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Tree.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\Widgets.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\World.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Pixels.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
@@ -183,25 +185,25 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
     <Import Project="ofxCvGui.props" />
-    <Import Project="..\..\ofxAddonLib\ofxAddonLib.props" />
+    <Import Project="..\..\..\addons\ofxAddonLib\ofxAddonLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="ofxCvGui.props" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
-    <Import Project="..\..\ofxAddonLib\ofxAddonLib.props" />
+    <Import Project="..\..\..\addons\ofxAddonLib\ofxAddonLib.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
     <Import Project="ofxCvGui.props" />
-    <Import Project="..\..\ofxAddonLib\ofxAddonLib.props" />
+    <Import Project="..\..\..\addons\ofxAddonLib\ofxAddonLib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="ofxCvGui.props" />
     <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
-    <Import Project="..\..\ofxAddonLib\ofxAddonLib.props" />
+    <Import Project="..\..\..\addons\ofxAddonLib\ofxAddonLib.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

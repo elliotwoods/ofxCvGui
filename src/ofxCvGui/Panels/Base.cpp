@@ -21,5 +21,11 @@ namespace ofxCvGui {
 				Utils::drawText(this->caption, 20, 20, true, 30);
 			}
 		}
+
+		//----------
+		PanelPtr makeBlank(string caption) {
+			auto newPanel = make_shared<Base>();
+			OFXCVGUI_LABEL_PANEL_AND_RETURN
+		}
 	}
 }

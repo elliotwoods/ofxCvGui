@@ -2,8 +2,17 @@
 #include "../Element.h"
 #include "ofRectangle.h"
 
+#define OFXCVGUI_LABEL_PANEL_AND_RETURN newPanel->setCaption(caption); return newPanel;
+
 namespace ofxCvGui {
 	namespace Panels {
+		class Base;
+	}
+	typedef shared_ptr<Panels::Base> PanelPtr;
+
+	namespace Panels {
+		
+
 		class Base : public Element {
 		public:
 			Base();
@@ -15,8 +24,9 @@ namespace ofxCvGui {
 		protected:
 			virtual void drawTitle();
 		};
+
+		PanelPtr makeBlank(string caption = "");
 	}
-	typedef shared_ptr<Panels::Base> PanelPtr;
 	typedef vector<PanelPtr> PanelSet;
 	typedef vector<PanelPtr>::iterator PanelIterator;
 }

@@ -48,5 +48,10 @@ namespace ofxCvGui {
 
 			this->needsToDrop = false;
 		}
+
+		//----------
+		shared_ptr<Button> makeButton(const string & caption, const function<void()> & buttonCallback) {
+			return make_shared<Button>(caption, buttonCallback);
+		}
 	}
 }

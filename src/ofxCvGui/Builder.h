@@ -26,37 +26,20 @@
 #include "ofxCvGui/Panels/SharedView.h"
 
 namespace ofxCvGui {
-	shared_ptr<Panels::Draws> makePanel(ofBaseDraws& asset, string caption = "");
-	shared_ptr<Panels::Image> makePanel(ofImage& asset, string caption = "");
-	shared_ptr<Panels::Pixels> makePanel(const ofPixels& asset, string caption = "");
-	shared_ptr<Panels::PixelsVector> makePanel(const vector<ofPixels>& asset, string caption = "");
-	shared_ptr<Panels::Texture> makePanel(const ofTexture & asset, string caption = "");
-
-	shared_ptr<Panels::World> makeWorld(string caption = "");
-	shared_ptr<Panels::ElementHost> makeElementHost(string caption = "");
-	shared_ptr<Panels::ElementCanvas> makeElementCanvas(string caption = "");
-	shared_ptr<Panels::Widgets> makeWidgets(string caption = "");
-	shared_ptr<Panels::Tree> makeTree(string caption = ""); 
-
-	shared_ptr<Panels::Instructions> makeInstructions();
-	shared_ptr<Panels::Inspector> makeInspector();
-	shared_ptr<Panels::Groups::Grid> makeGrid();
-	shared_ptr<Panels::Groups::Strip> makeStrip(Panels::Groups::Strip::Direction direction = Panels::Groups::Strip::Direction::Horizontal);
-
-	PanelPtr makeBlank(string caption = "");
-
 	class Builder {
 	public:
 		void init();
 		
-		//utility panel adders
 		void add(PanelPtr panel);
+		
 		shared_ptr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
 		shared_ptr<Panels::Image> add(ofImage& asset, string caption="");
 		shared_ptr<Panels::Pixels> add(const ofPixels& asset, string caption="");
 		shared_ptr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption = "");
 		shared_ptr<Panels::Texture> add(const ofTexture & asset, string caption="");
+		
 		PanelPtr addBlank(string caption = "");
+
 		shared_ptr<Panels::World> addWorld(string caption = "");
 		shared_ptr<Panels::ElementHost> addElementHost(string caption = "");
 		shared_ptr<Panels::ElementCanvas> addElementCanvas(string caption = "");

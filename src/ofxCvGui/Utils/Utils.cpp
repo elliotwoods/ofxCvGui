@@ -19,7 +19,7 @@ namespace ofxCvGui {
 #pragma mark Text
 		//---------
 		ofRectangle drawText(const string& text, float x, float y, bool background, float minHeight, float minWidth, bool scissor) {
-			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 14);
+			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 14);
 			bool hasFont = font.isLoaded();
 
 			if (scissor) {
@@ -83,12 +83,15 @@ namespace ofxCvGui {
 
 		//---------
 		void drawProcessingNotice(string message) {
-			auto window = glfwGetCurrentContext();
-			if (window) {
+			auto window = ofGetWindowPtr();
+			auto glfwAppWindow = dynamic_cast<ofAppGLFWWindow*>(window);
+			if (glfwAppWindow) {
+				auto glfwWindow = glfwAppWindow->getGLFWWindow();
 				ofClear(0, 0);
 				drawText(message, 0, 0, true, ofGetHeight(), ofGetWidth());
-				glfwSwapBuffers(window);
-				glFlush();
+				glfwMakeContextCurrent(glfwWindow);
+				glfwSwapBuffers(glfwWindow);
+				glfwPollEvents();
 			}
 		}
 
@@ -98,7 +101,7 @@ namespace ofxCvGui {
 			auto scissorEnabled = ScissorManager::X().getScissorEnabled();
 			ScissorManager::X().setScissorEnabled(false);
 
-			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 14);
+			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 14);
 			bool hasFont = font.isLoaded();
 
 			if (!hasFont) {

@@ -44,6 +44,8 @@ namespace ofxCvGui {
 
 				ElementGroupPtr borders;
 			};
+
+			shared_ptr<Strip> makeStrip(Strip::Direction direction = Strip::Direction::Horizontal);
 		}
 	}
 }

@@ -164,6 +164,9 @@
     <ClCompile Include="..\..\ofxAssets\src\ofxAssets\Sound.cpp">
       <Filter>addons\ofxAssets\src\ofxAssets</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\Widgets.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Sound.h">
       <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\Widgets.h">
+      <Filter>src\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

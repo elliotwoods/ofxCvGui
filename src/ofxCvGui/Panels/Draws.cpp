@@ -63,5 +63,11 @@ namespace ofxCvGui {
 				return 1;
 			}
         }
+
+		//----------
+		shared_ptr<Panels::Draws> make(ofBaseDraws& asset, string caption) {
+			auto newPanel = make_shared<Panels::Draws>(asset);
+			OFXCVGUI_LABEL_PANEL_AND_RETURN
+		}
 	}
 }

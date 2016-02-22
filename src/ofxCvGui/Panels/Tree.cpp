@@ -179,5 +179,11 @@ namespace ofxCvGui {
 		shared_ptr<Tree::Branch> Tree::getRootBranch() {
 			return this->rootBranch;
 		}
+
+		//----------
+		shared_ptr<Panels::Tree> makeTree(string caption) {
+			auto newPanel = make_shared<Panels::Tree>();
+			OFXCVGUI_LABEL_PANEL_AND_RETURN
+		}
 	}
 }

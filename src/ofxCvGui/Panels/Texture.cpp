@@ -68,5 +68,11 @@ namespace ofxCvGui {
 		float Texture::getImageHeight() const {
 			return this->texture.getHeight();
 		}
+
+		//----------
+		shared_ptr<Panels::Texture> make(const ofTexture & asset, string caption) {
+			auto newPanel = make_shared<Panels::Texture>(asset);
+			OFXCVGUI_LABEL_PANEL_AND_RETURN
+		}
 	}
 }

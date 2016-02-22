@@ -100,6 +100,11 @@ namespace ofxCvGui {
 					i++;
 				}
 			}
+
+			//----------
+			shared_ptr<Grid> makeGrid() {
+				return make_shared<Grid>();
+			}
 		}
 	}
 }

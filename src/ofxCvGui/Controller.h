@@ -23,7 +23,10 @@ namespace ofxCvGui {
 		void clearMaximised();
 		void showChrome();
 		void hideChrome();
-		PanelGroupPtr getRootGroup();
+
+		PanelGroupPtr getRootGroup() const;
+		void setRootGroup(PanelGroupPtr);
+
 		PanelPtr getPanelUnderCursor(const ofVec2f & position = ofVec2f(ofGetMouseX(), ofGetMouseY()));
 
 	protected:

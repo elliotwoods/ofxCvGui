@@ -26,5 +26,7 @@ namespace ofxCvGui {
 			const ofTexture & texture;
 			shared_ptr<Style> style;
 		};
+
+		shared_ptr<Panels::Texture> make(const ofTexture & asset, string caption = "");
 	}
 }

@@ -106,7 +106,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Slider::draw(DrawArguments & args) {
-			auto & font = ofxAssets::font(ofxCvGui::defaultTypeface, 13);
+			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 13);
 			image("ofxCvGui::edit").draw(this->editBounds);
 
 			
@@ -159,7 +159,7 @@ namespace ofxCvGui {
 					ofSetColor(150);
 					
 					auto minValue = this->getCheckedValue(positionToValue(0.0f));
-					auto & smallFont = ofxAssets::font(ofxCvGui::defaultTypeface, 10);
+					auto & smallFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 10);
 					smallFont.drawStringAsShapes(ofToString(minValue), 0, 51);
 
 					auto maxValue = this->getCheckedValue(positionToValue(width));
