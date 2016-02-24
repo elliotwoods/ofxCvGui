@@ -460,4 +460,9 @@ namespace ofxCvGui {
 	void Element::setHitTestOnBounds(bool enableHitTestOnBounds) {
 		this->enableHitTestOnBounds = enableHitTestOnBounds;
 	}
+
+	//-----------
+	ElementPtr makeElement() {
+		return make_shared<Element>();
+	}
 }

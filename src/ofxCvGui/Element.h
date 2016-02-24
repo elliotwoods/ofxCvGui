@@ -105,4 +105,5 @@ namespace ofxCvGui {
 	};
 	
 	typedef shared_ptr<Element> ElementPtr;
+	ElementPtr makeElement();
 }
