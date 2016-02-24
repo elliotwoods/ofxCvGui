@@ -47,7 +47,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Toggle::init() {
-			this->setBounds(ofRectangle(5, 0, 100, 40));
+			this->setBounds(ofRectangle(0, 0, 100, 30));
 
 			this->onUpdate += [this] (UpdateArguments & args) {
 				this->update(args);
@@ -60,12 +60,6 @@ namespace ofxCvGui {
 			this->onMouse += [this] (MouseArguments & args) {
 				this->mouseAction(args);
 			};
-			this->onMouseReleased += [this] (MouseArguments & args) {
-				this->mouseReleased(args);
-			};
-			this->onBoundsChange += [this] (BoundsChangeArguments & args) {
-				this->boundsChange(args);
-			};
 
 			this->onKeyboard += [this](ofxCvGui::KeyboardArguments & keyArgs) {
 				if (keyArgs.action == ofxCvGui::KeyboardArguments::Action::Pressed) {
@@ -74,8 +68,6 @@ namespace ofxCvGui {
 					}
 				}
 			};
-			
-			this->isMouseOver = false;
 		}
 
 		//----------
@@ -112,21 +104,20 @@ namespace ofxCvGui {
 			}
 
 			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 12);
-			auto isMouseDown = this->getMouseState() != LocalMouseState::Waiting;
 
 			ofPushStyle();
 			
 			//fill
-			ofSetColor(this->value->get() ^ isMouseDown ?  80 : 50);
+			ofSetColor(this->value->get() ^ this->isMouseDown() ?  80 : 50);
 			ofFill();
 			const auto radius = 4.0f;
-			ofDrawRectRounded(this->buttonBounds, radius, radius, radius, radius);
+			ofDrawRectRounded(args.localBounds, radius, radius, radius, radius);
 			
 			//outline
-			if (this->isMouseOver) {
+			if (this->isMouseOver()) {
 				ofNoFill();
 				ofSetColor(!this->value->get() ?  80 : 50);
-				ofDrawRectRounded(this->buttonBounds, radius, radius, radius, radius);
+				ofDrawRectRounded(args.localBounds, radius, radius, radius, radius);
 			}
 
 			ofSetColor(255);
@@ -134,45 +125,17 @@ namespace ofxCvGui {
 			if (this->hotKey != 0) {
 				caption = caption + " [" + Utils::makeString(this->hotKey) + "]";
 			}
-			Utils::drawText(caption, this->buttonBounds, false);
+			Utils::drawText(caption, args.localBounds, false);
 			
-			ofPopStyle();
-
-			//draw side marker
-			ofPushStyle();
-			ofSetLineWidth(1.0f);
-			ofDrawLine(this->getWidth(), 0, this->getWidth(), this->buttonBounds.getHeight());
 			ofPopStyle();
 		}
 
 		//----------
 		void Toggle::mouseAction(MouseArguments & args) {
-			if (!this->value) {
-				//nothing allocated
-				return;
+			args.takeMousePress(this);
+			if (args.action == MouseArguments::Released) {
+				this->toggle();
 			}
-
-			this->isMouseOver = this->buttonBounds.inside(args.local);
-
-			switch(args.action) {
-			case MouseArguments::Pressed:
-				if (this->isMouseOver) {
-					args.takeMousePress(this);
-				}
-				break;
-			}
-		}
-
-		//----------
-		void Toggle::mouseReleased(MouseArguments & args) {
-			this->toggle();
-		}
-
-		//----------
-		void Toggle::boundsChange(BoundsChangeArguments & args) {
-			this->buttonBounds = args.localBounds;
-			buttonBounds.height -= 10;
-			buttonBounds.width -= 10;
 		}
 
 		//----------

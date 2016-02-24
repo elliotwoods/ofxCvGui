@@ -1,8 +1,11 @@
 #include "Scroll.h"
 
-#define OFXCVGUI_SCROLL_SPACING 2.0f
+#include "ofxCvGui/Utils/Utils.h""
+
+#define OFXCVGUI_SCROLL_SPACING 10.0f
 #define OFXCVGUI_SCROLL_AREA_WIDTH 20.0f
 #define OFXCVGUI_SCROLL_BAR_WIDTH 5.0f
+#define OFXCVGUI_GUTTER_WIDTH 5.0f
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -21,6 +24,21 @@ namespace ofxCvGui {
 			this->onScrollBar = false;
 
 			this->elements->addListenersToParent(this);
+
+			//draw side lines
+			this->elements->onDraw += [this](DrawArguments & args) {
+				for (auto element : this->elements->getElements()) {
+					auto color = ofxCvGui::Utils::toColor(typeid(*element.get()).name());
+					ofPushStyle();
+					{
+						ofSetColor(color);
+						const auto x = args.localBounds.width;
+						const auto & bounds = element->getBounds();
+						ofDrawLine(x, bounds.getTop(), x, bounds.getBottom());
+					}
+					ofPopStyle();
+				}
+			};
 		}
 
 		//----------
@@ -140,8 +158,9 @@ namespace ofxCvGui {
 			float y = 0;
 			for(auto element : this->elements->getElements()) {
 				auto elementBounds = element->getBounds();
+				elementBounds.x = OFXCVGUI_GUTTER_WIDTH;
 				elementBounds.y = y;
-				elementBounds.width = this->getWidth() - (elementBounds.x + OFXCVGUI_SCROLL_AREA_WIDTH);
+				elementBounds.width = this->getWidth() - (elementBounds.x + OFXCVGUI_SCROLL_AREA_WIDTH + OFXCVGUI_GUTTER_WIDTH * 2.0f);
 				if (elementBounds.width <= 0 || elementBounds.height <= 0) {
 					continue; // sometimes during initialisation this might happen, and it can cause errors
 				}

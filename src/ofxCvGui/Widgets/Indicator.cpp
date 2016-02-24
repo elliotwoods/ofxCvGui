@@ -14,7 +14,7 @@ namespace ofxCvGui {
 		//----------
 		void Indicator::init(string caption) {
 			this->setCaption(caption);
-			this->setBounds(ofRectangle(5, 0, 100, 30));
+			this->setBounds(ofRectangle(0, 0, 100, 20));
 			this->onDraw += [this](ofxCvGui::DrawArguments & args) {
 				//draw caption
 				auto & captionFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 12);
@@ -42,12 +42,6 @@ namespace ofxCvGui {
 				}
 				ofDrawCircle(this->getWidth() - 20, 10, 5);
 
-				ofPopStyle();
-
-				//draw side line
-				ofPushStyle();
-				ofSetLineWidth(1.0f);
-				ofDrawLine(this->getWidth(), 0, this->getWidth(), 20);
 				ofPopStyle();
 			};
 

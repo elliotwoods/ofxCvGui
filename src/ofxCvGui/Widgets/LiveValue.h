@@ -9,10 +9,6 @@ namespace ofxCvGui {
 		template<typename T>
 		class LiveValue : public Element {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValue<T>, string caption, const function<T()> & liveValueFunction) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(LiveValue<T>, caption, liveValueFunction);
-			}
-
 			LiveValue(string caption, function<T()> liveValue) {
 				this->init(caption, liveValue);
 			};
@@ -26,7 +22,7 @@ namespace ofxCvGui {
 			void init(string caption, function<T()> liveValue) {
 				this->setCaption(caption);
 				this->liveValue = liveValue;
-				this->setBounds(ofRectangle(5, 0, 100, 50));
+				this->setBounds(ofRectangle(0, 0, 100, 40));
 
 				this->onUpdate += [this](UpdateArguments &) {
 					stringstream ss;
@@ -40,11 +36,6 @@ namespace ofxCvGui {
 					auto & valueFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 14);
 					auto valueBounds = valueFont.getStringBoundingBox(cachedValue, 0, 0);
 					valueFont.drawString(cachedValue, (int)(this->getWidth() - valueBounds.width - 5), 35);
-
-					ofPushStyle();
-					ofSetLineWidth(1.0f);
-					ofDrawLine(this->getWidth(), 0, this->getWidth(), 40);
-					ofPopStyle();
 				};
 				this->onBoundsChange += [this](BoundsChangeArguments & args) {
 					this->editButton->setBounds(ofRectangle(args.localBounds.width - 20, 5, 15, 15));
@@ -93,10 +84,6 @@ namespace ofxCvGui {
 
 		class LiveValueHistory : public LiveValue<float> {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(LiveValueHistory, string caption, const function<float()> & liveValueFunction, bool keepZeroAsMinimum = true) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(LiveValueHistory, caption, liveValueFunction, keepZeroAsMinimum);
-			}
-
 			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = true);
 		protected:
 			deque<float> history;

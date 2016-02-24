@@ -68,7 +68,7 @@ namespace ofxCvGui {
 				ticks.setMode(OF_PRIMITIVE_POINTS);
 			}
 
-			this->setBounds(ofRectangle(5, 0, 100, 55));
+			this->setBounds(ofRectangle(0, 0, 100, 45));
 			this->onUpdate += [this] (UpdateArguments & args) {
 				this->update(args);
 			};
@@ -222,12 +222,6 @@ namespace ofxCvGui {
 				majorTicks.drawVertices();
 
 				ofPopMatrix();
-
-				//draw side marker
-				ofPushStyle();
-				ofSetLineWidth(1.0f);
-				ofDrawLine(this->getWidth(), 0, this->getWidth(), 40);
-				ofPopStyle();
 			}
 		}
 

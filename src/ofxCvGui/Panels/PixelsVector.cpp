@@ -30,7 +30,7 @@ namespace ofxCvGui {
 		//----------
 		void PixelsVector::update() {
 			if (lastCount < pixels.size()) {
-				this->selection = pixels.size() - 1;
+				this->selection = (int) pixels.size() - 1;
 				this->onSelectionChange(selection);
 				lastCount = pixels.size();
 			} else if (lastCount > pixels.size()) {

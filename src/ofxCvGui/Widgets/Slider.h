@@ -9,12 +9,6 @@ namespace ofxCvGui {
 			typedef std::function<void(float &)> Validator;
 			typedef ofxLiquidEvent<ofParameter<float>>::Functor ValueChangeCallback;
 
-			OFXCVGUI_MAKE_ELEMENT_HEADER(Slider, ofParameter<float> & parameter) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(Slider, parameter);
-			}
-			OFXCVGUI_MAKE_ELEMENT_HEADER(Slider, ofParameter<float> & parameter, ValueChangeCallback onValueChange) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(Slider, parameter, onValueChange);
-			}
 			Slider(ofParameter<float> &);
 			Slider(ofParameter<float> &, ValueChangeCallback onValueChange);
 

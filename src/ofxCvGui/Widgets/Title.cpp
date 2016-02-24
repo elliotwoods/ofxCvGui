@@ -7,7 +7,7 @@ namespace ofxCvGui {
 		Title::Title(string caption, Level level) :
 		level(level) {
 			this->setCaption(caption);
-			this->setBounds(ofRectangle(5, 0, 100, 40));
+			this->setBounds(ofRectangle(0, 0, 100, 30));
 			
 			//fix font size
 			int fontSize = 14;

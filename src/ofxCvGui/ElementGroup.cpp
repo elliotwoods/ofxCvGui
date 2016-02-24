@@ -87,6 +87,12 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
+	void ElementGroup_<T>::add(T * addition) {
+		this->add(shared_ptr<T>(addition));
+	}
+
+	//----------
+	template<typename T>
 	void ElementGroup_<T>::drop(shared_ptr<T> element) {
 		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)

@@ -5,6 +5,7 @@
 
 #include "ofxCvGui/Utils/Button.h"
 #include "ofxCvGui/Utils/TextField.h"
+#include "ofxCvGui/Utils/Utils.h"
 
 #include "ofxCvGui/Element.h"
 #include "ofxCvGui/ElementSlot.h"
@@ -39,7 +40,3 @@
 #include "ofxCvGui/Widgets/TextField.h"
 
 #include "ofxCvGui/InspectController.h"
-
-namespace ofxCvGui {
-
-}

@@ -5,10 +5,8 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class MultipleChoice : public Element {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(MultipleChoice, string caption) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(MultipleChoice, caption);
-			}
-			MultipleChoice(string caption);
+			MultipleChoice(const string & caption);
+			MultipleChoice(const string & caption, const initializer_list<string> & options);
 			void addOption(string);
 			void removeOption(string);
 			void clearOptions();
@@ -19,7 +17,21 @@ namespace ofxCvGui {
 			int getSelectionIndex() const;
 			string getSelection() const;
 
-			void entangle(ofParameter<int> &); ///< Keep a parameter synchronised
+			//entangle this multiple choice with an ofParameter<enum>
+			template<typename EnumType>
+			void entangle(ofParameter<EnumType> & parameter) {
+				//if we change, update the parameter
+				this->onValueChange += [&parameter](const int & selection) {
+					parameter.set((EnumType)selection);
+				};
+
+				//if we're out of sync, update ourselves
+				this->onUpdate += [this, &parameter](ofxCvGui::UpdateArguments &) {
+					if ((int) parameter.get() != this->getSelectionIndex()) {
+						this->setSelection(parameter.get());
+					}
+				};
+			}
 
 			ofxLiquidEvent<const int> onValueChange;
 		protected:

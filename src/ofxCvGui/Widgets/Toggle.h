@@ -6,15 +6,6 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class Toggle : public Element {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, ofParameter<bool> & parameter, char hotKey = 0) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, parameter, hotKey);
-			}
-			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, string caption, char hotKey = 0) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, caption, hotKey);
-			}
-			OFXCVGUI_MAKE_ELEMENT_HEADER(Toggle, string caption, function<bool()> get, function<void(bool)> set, char hotKey = 0) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(Toggle, caption, get, set, hotKey);
-			}
 			Toggle(ofParameter<bool> &, char hotKey = 0);
 			Toggle(string caption, char hotKey = 0);
 			Toggle(string caption, function<bool()> get, function<void(bool)> set, char hotKey = 0);
@@ -32,20 +23,13 @@ namespace ofxCvGui {
 			void update(UpdateArguments &);
 			void draw(DrawArguments &);
 			void mouseAction(MouseArguments &);
-			void mouseReleased(MouseArguments &);
-			void boundsChange(BoundsChangeArguments &);
 			void toggle();
 			void notifyValueChange();
 
 			bool localAllocation = false;
 			ofParameter<bool> * value;
 
-			ofRectangle buttonBounds;
-			bool isMouseOver = false;
-
 			char hotKey = 0;
 		};
-
-		shared_ptr<Toggle> make(ofParameter<bool> &);
 	}
 }

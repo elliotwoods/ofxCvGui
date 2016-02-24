@@ -229,7 +229,7 @@ namespace ofxCvGui {
 
 	//-----------
 	bool Element::isMouseDown() const {
-		return this->getMouseState() == LocalMouseState::Down;
+		return this->getMouseState() == LocalMouseState::Down || (this->getMouseState() == LocalMouseState::Dragging && this->isMouseOver());
 	}
 
 	//-----------

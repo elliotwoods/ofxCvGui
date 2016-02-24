@@ -10,11 +10,6 @@
 #include "ofFbo.h"
 #include "../../../addons/ofxLiquidEvent/src/ofxLiquidEvent.h"
 
-#define OFXCVGUI_MAKE_ELEMENT_HEADER(T, ...) static shared_ptr<T> make(__VA_ARGS__)
-#define OFXCVGUI_MAKE_ELEMENT_BODY(T, ...) return shared_ptr<T>(new T(__VA_ARGS__));
-#define OFXCVGUI_MAKE_ELEMENT_GLOBAL_HEADER(T, ...) shared_ptr<T> make(__VA_ARGS__)
-#define OFXCVGUI_MAKE_ELEMENT_GLOBAL_BODY(T, ...) return T::make(__VA_ARGS__);
-
 namespace ofxCvGui {
 	class Element {
 	public:
@@ -27,6 +22,9 @@ namespace ofxCvGui {
 
 		Element();
 		virtual ~Element() { }
+		
+ 		Element(const Element &) = delete;
+
 		void update();
 		
 		void draw(const DrawArguments& arguments); // zoom is considered to act on the element's top-left local corner

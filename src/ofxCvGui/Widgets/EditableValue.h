@@ -7,18 +7,6 @@ namespace ofxCvGui {
 		template<typename Type>
 		class EditableValue : public LiveValue<Type> {
 		public:
-			OFXCVGUI_MAKE_ELEMENT_HEADER(EditableValue<Type>, ofParameter<Type> & parameter) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(EditableValue<Type>, parameter);
-			}
-
-			OFXCVGUI_MAKE_ELEMENT_HEADER(EditableValue<Type>, string caption, Type & value) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(EditableValue<Type>, caption, value);
-			}
-
-			OFXCVGUI_MAKE_ELEMENT_HEADER(EditableValue<Type>, string caption, function<Type()> get, function<void(string)> set) {
-				OFXCVGUI_MAKE_ELEMENT_BODY(EditableValue<Type>, caption, get, set);
-			}
-			
 			EditableValue(ofParameter<Type> & parameter) :
 				LiveValue<Type>(parameter.getName(), [&parameter]() { return parameter;}) {
 				this->setEditable(true);

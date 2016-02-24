@@ -10,9 +10,7 @@ namespace ofxCvGui {
 		//----------
 		Button::Button(string caption, std::function<void ()> action, char hotKey) {
 			this->init(caption, hotKey);
-			this->onHit += [action] (EventArgs &) {
-				action();
-			};
+			this->onHit += action;
 		}
 
 		//----------
@@ -23,8 +21,7 @@ namespace ofxCvGui {
 				this->onKeyboard += [this, hotKey] (ofxCvGui::KeyboardArguments & keyArgs) {
 					if (keyArgs.action == ofxCvGui::KeyboardArguments::Action::Pressed) {
 						if (keyArgs.key == hotKey) {
-							EventArgs dummyArgs;
-							this->onHit(dummyArgs);
+							this->onHit.notifyListeners();
 							this->hitValue.set(false);
 						}
 					}
@@ -35,8 +32,7 @@ namespace ofxCvGui {
 			Toggle::setParameter(this->hitValue);
 
 			this->onMouseReleased += [this](MouseArguments & args) {
-				EventArgs dummyArgs;
-				this->onHit(dummyArgs);
+				this->onHit.notifyListeners();
 				this->needsToDrop = true;
 			};
 			this->onUpdate += [this](UpdateArguments & args) {
@@ -47,11 +43,6 @@ namespace ofxCvGui {
 			};
 
 			this->needsToDrop = false;
-		}
-
-		//----------
-		shared_ptr<Button> makeButton(const string & caption, const function<void()> & buttonCallback) {
-			return make_shared<Button>(caption, buttonCallback);
 		}
 	}
 }

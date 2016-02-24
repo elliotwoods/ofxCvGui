@@ -4,7 +4,7 @@ namespace ofxCvGui {
 	namespace Widgets {
 		//----------
 		Spacer::Spacer() {
-			this->setBounds(ofRectangle(0, 0, 100, 30));
+			this->setBounds(ofRectangle(0, 0, 100, 25));
 			this->onDraw += [] (DrawArguments & args) {
 				auto center = args.localBounds.getCenter();
 

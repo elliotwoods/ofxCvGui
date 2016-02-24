@@ -261,5 +261,26 @@ namespace ofxCvGui {
 			scale = scale * transform;
 			return ofRectangle(topLeft.x, topLeft.y, scale.x, scale.y);
 		}
+
+#pragma mark Color
+		//----------
+		ofColor toColor(const string & text) {
+			static map<string, ofColor> colorMap;
+			auto findColor = colorMap.find(text);
+			if (findColor == colorMap.end()) {
+				auto hash = std::hash<string>()(text);
+				auto hue = hash % 256;
+				auto saturation = (hash >> 8) % 128;
+				auto brightness = (hash >> 12) % 64 + 192;
+
+				ofColor color;
+				color.setHsb(hue, saturation, brightness);
+				colorMap.insert(make_pair(text, color));
+				return color;
+			}
+			else {
+				return findColor->second;
+			}
+		}
 	}
 }

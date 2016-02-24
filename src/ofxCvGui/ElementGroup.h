@@ -16,6 +16,7 @@ namespace ofxCvGui {
 		ElementGroup_();
 		virtual ~ElementGroup_();
 		void add(shared_ptr<T> addition);
+		void add(T * addition);
 		shared_ptr<T> addBlank();
 		void drop(shared_ptr<T> element);
 		void clear();

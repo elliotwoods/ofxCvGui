@@ -4,7 +4,7 @@
 namespace ofxCvGui {
 	namespace Widgets {
 		//----------
-		MultipleChoice::MultipleChoice(string caption) {
+		MultipleChoice::MultipleChoice(const string & caption) {
 			this->selectionIndex = -1;
 			this->setCaption(caption);
 
@@ -33,12 +33,6 @@ namespace ofxCvGui {
 					auto optionBounds = this->getOptionBounds(optionIndex);
 					Utils::drawText(this->options[optionIndex], optionBounds, false);
 				}
-
-				//draw side line
-				ofPushStyle();
-				ofSetLineWidth(1.0f);
-				ofDrawLine(this->getWidth(), 0, this->getWidth(), this->optionsBounds.getBottom());
-				ofPopStyle();
 			};
 			this->onMouse += [this](ofxCvGui::MouseArguments & args) {
 				if (args.takeMousePress(this) || args.isDragging(this) ) {
@@ -56,6 +50,14 @@ namespace ofxCvGui {
 				this->optionsBounds.width = args.localBounds.width - 10.0f;
 				this->optionsBounds.height = args.localBounds.height - 30.0f;
 			};
+		}
+
+		//----------
+		MultipleChoice::MultipleChoice(const string & caption, const initializer_list<string> & options) :
+		MultipleChoice(caption) {
+			for (const auto & option : options) {
+				this->addOption(option);
+			}
 		}
 
 		//----------
@@ -113,21 +115,6 @@ namespace ofxCvGui {
 			} else {
 				return this->options[this->getSelectionIndex()];
 			}
-		}
-
-		//----------
-		void MultipleChoice::entangle(ofParameter<int> & parameter) {
-			//if we change, update the parameter
-			this->onValueChange += [&parameter](const int & selection) {
-				parameter.set(selection);
-			};
-
-			//if we're out of sync, update ourselves
-			this->onUpdate += [this, &parameter](ofxCvGui::UpdateArguments &) {
-				if (parameter.get() != this->getSelectionIndex()) {
-					this->setSelection(parameter.get());
-				}
-			};
 		}
 
 		//----------

@@ -38,5 +38,8 @@ namespace ofxCvGui {
 
 #pragma mark Math
 		ofRectangle operator*(const ofRectangle &, const ofMatrix4x4 &);
+
+#pragma mark Colors
+		ofColor toColor(const string &);
 	}
 }
