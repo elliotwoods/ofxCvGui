@@ -11,7 +11,7 @@ namespace ofxCvGui {
 			void add(ElementPtr);
 
 			template<typename ElementType,
-				typename = std::enable_if_t<std::is_base_of<Element, ElementType>::value> >
+				typename = std::enable_if<std::is_base_of<Element, ElementType>::value> >
 			shared_ptr<ElementType> add(ElementType * element) {
 				auto newElement = shared_ptr<ElementType>(element);
 				this->add(newElement);

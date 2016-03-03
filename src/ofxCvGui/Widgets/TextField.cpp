@@ -10,7 +10,7 @@ namespace ofxCvGui {
 			this->setBounds(ofRectangle(5, 0, 100, 50));
 			this->onDraw += [this](ofxCvGui::DrawArguments & args) {
 				//draw caption
-				auto & captionFont = ofxAssets::font(ofxCvGui::defaultTypeface, 12);
+				auto & captionFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 12);
 				captionFont.drawString(this->caption + " : ", 0, 15);
 				
 				//draw underline
@@ -34,7 +34,7 @@ namespace ofxCvGui {
 			
 			this->textField = make_shared<Utils::TextField>();
 			this->textField->addListenersToParent(this);
-			this->textField->setFont(ofxAssets::font(ofxCvGui::defaultTypeface, 12));
+			this->textField->setFont(ofxAssets::font(ofxCvGui::getDefaultTypeface(), 12));
 			
 			this->onBoundsChange += [this](BoundsChangeArguments & args) {
 				this->textField->setBounds(ofRectangle(10, 20, args.localBounds.width - 20, 20));
