@@ -1,6 +1,6 @@
 #include "Scroll.h"
 
-#include "ofxCvGui/Utils/Utils.h""
+#include "ofxCvGui/Utils/Utils.h"
 
 #define OFXCVGUI_SCROLL_SPACING 10.0f
 #define OFXCVGUI_SCROLL_AREA_WIDTH 20.0f

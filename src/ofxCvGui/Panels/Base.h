@@ -1,5 +1,6 @@
 #pragma once
 #include "../Element.h"
+#include "../ElementGroup.h"
 #include "ofRectangle.h"
 
 #define OFXCVGUI_LABEL_PANEL_AND_RETURN newPanel->setCaption(caption); return newPanel;
@@ -21,8 +22,10 @@ namespace ofxCvGui {
 			}
 			
 			ofxLiquidEvent<FilesDraggedArguments> onFilesDragged;
+			
+			ElementPtr addToolBarElement(const string & imageAssetName, function<void()> && action);
 		protected:
-			virtual void drawTitle();
+			ElementGroupPtr toolBar;
 		};
 
 		PanelPtr makeBlank(string caption = "");

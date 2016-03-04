@@ -1,7 +1,6 @@
 #pragma once
 #include "ofxCvGui/Types.h"
 #include "ofxCvGui/Element.h"
-#include "ofxCvGui/Panels/Base.h"
 #include <vector>
 
 using namespace std;
@@ -44,4 +43,5 @@ namespace ofxCvGui {
 	};
 
 	typedef shared_ptr<ElementGroup> ElementGroupPtr;
+	ElementGroupPtr makeElementGroup();
 }

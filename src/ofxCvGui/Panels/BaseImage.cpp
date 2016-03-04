@@ -4,15 +4,15 @@
 using namespace ofxAssets;
 
 namespace ofxCvGui {
-	namespace Panels {    
-        //----------
-		BaseImage::DrawCroppedArguments::DrawCroppedArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped) {
-			this->zoomed = zoomed;
-			this->drawSize = drawSize;
-			this->viewSize = viewSize;
-			this->offsetCropped = offsetCropped;
-		}
-
+	//----------
+	DrawCroppedArguments::DrawCroppedArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped) {
+		this->zoomed = zoomed;
+		this->drawSize = drawSize;
+		this->viewSize = viewSize;
+		this->offsetCropped = offsetCropped;
+	}
+	
+	namespace Panels {
         //----------
 		BaseImage::Zoomed BaseImage::getZoomed() const {
 			return this->zoom;
@@ -22,56 +22,138 @@ namespace ofxCvGui {
         BaseImage::BaseImage() {
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				this->drawImage(args);
-			}, 0, this);
-
-			this->onMouse.addListener([this] (MouseArguments & args) {
-				this->mouseAction(args);
-			}, this);
+			}, -1, this);
 
             this->zoom = ZoomFit;
-            this->dragSelection = DragNone;
-            this->buttonFitBounds = ofRectangle(20, 20, 30, 30);
-            this->buttonOneBounds = ofRectangle(60, 20, 30, 30);
-            this->zoomBox = ofRectangle(100, 100, 150, 100);
-        }
+
+		
+			//toolbar
+			{
+				auto zoomFit = this->addToolBarElement("ofxCvGui::zoom_fit", [this]() {
+					this->zoom = Zoomed::ZoomFit;
+				});
+				auto zoomOne = this->addToolBarElement("ofxCvGui::zoom_one", [this]() {
+					this->zoom = Zoomed::ZoomOne;
+				});
+				
+				this->onDraw.addListener([this, zoomOne, zoomFit](DrawArguments & args){
+					ofPushStyle();
+					{
+						ofSetColor(150);
+						ofSetLineWidth(2.0f);
+						ofNoFill();
+						switch (this->zoom) {
+							case ZoomOne:
+								ofDrawRectangle(zoomOne->getBounds());
+								break;
+							case ZoomFit:
+								ofDrawRectangle(zoomFit->getBounds());
+								break;
+							default:
+								break;
+						}
+					}
+					ofPopStyle();
+				}, 100, this);
+			}
+			
+			
+			//zoom box
+			auto zoomBox = makeElement();
+			{
+				zoomBox->addListenersToParent(this);
+				zoomBox->setBounds(ofRectangle(100, 100, 150, 100));
+				
+				auto zoomBoxWeak = weak_ptr<Element>(zoomBox);
+				
+				zoomBox->onDraw += [this](DrawArguments & args) {
+					ofRectangle zoomBoxBounds = args.localBounds;
+					ofRectangle zoomSelection;
+					
+					zoomSelection.width = this->getWidth() / this->getImageWidth() * zoomBoxBounds.width;
+					zoomSelection.height = this->getHeight() / this->getImageHeight() * zoomBoxBounds.height;
+					ofVec2f zoomSelectionPos = -this->getScrollClamped() / ofVec2f(this->getImageWidth(), this->getImageHeight()) * ofVec2f(zoomBoxBounds.width, zoomBoxBounds.height);
+					zoomSelection.x = zoomSelectionPos.x;
+					zoomSelection.y = zoomSelectionPos.y;
+					
+					////
+					//draw zoom box
+					//
+					
+					//draw image
+					this->drawImage(args.localBounds.width, args.localBounds.height);
+					
+					ofPushStyle();
+					
+					//draw outer
+					ofSetColor(150);
+					ofNoFill();
+					ofSetLineWidth(2.0f);
+					ofDrawRectangle(args.localBounds);
+					
+					//draw inner
+					ofEnableAlphaBlending();
+					ofFill();
+					ofSetLineWidth(0.0f);
+					ofSetColor(255, 255, 255, 100);
+					ofDrawRectangle(zoomSelection);
+					
+					ofPopStyle();
+					
+					//
+					////
+				};
+				
+				zoomBox->onMouse += [this, zoomBoxWeak](MouseArguments & mouse) {
+					auto zoomBox = zoomBoxWeak.lock();
+					if(zoomBox) {
+						mouse.takeMousePress(zoomBoxWeak.lock());
+						if (mouse.isDragging(zoomBox)) {
+							this->scroll -= mouse.movement / ofVec2f(zoomBox->getWidth(), zoomBox->getHeight()) * ofVec2f(this->getImageWidth(), this->getImageHeight());
+							this->scroll = this->getScrollClamped();
+						}
+					}
+				};
+			}
+			
+			this->onMouse.addListener([this](MouseArguments & args) {
+				args.takeMousePress(this);
+				if(args.isDragging(this)) {
+					this->scroll += args.movement;
+					this->scroll = this->getScrollClamped();
+				}
+			}, -1, this);
+			
+			this->onUpdate += [this, zoomBox](UpdateArguments &) {
+				//update zoom box
+				{
+					auto zoomBoxEnabled = this->zoom == Zoomed::ZoomOne;
+					
+					//also check if there's no need to scale
+					if(zoomBoxEnabled) {
+						if(this->getWidth() >= this->getImageWidth() && this->getHeight() >= this->getImageHeight()) {
+							zoomBoxEnabled = false;
+						}
+					}
+					
+					zoomBox->setEnabled(zoomBoxEnabled);
+					if(zoomBoxEnabled) {
+						auto bounds = zoomBox->getBounds();
+						bounds.height = this->getImageHeight() / this->getImageWidth() * bounds.width;
+						bounds.x = this->getWidth() - bounds.width - 20;
+						bounds.y = this->getHeight() - bounds.height - 20;
+						zoomBox->setBounds(bounds);
+					}
+				}
+			};
+			
+		}
         
         //----------
         BaseImage::~BaseImage() {
 			this->onMouse.removeListeners(this);
-        }
-        
-		//----------
-        void BaseImage::mouseAction(MouseArguments& mouse) {
-			if (mouse.takeMousePress(this)) {
-				if (this->buttonFitBounds.inside(mouse.local)) {
-					this->zoom = ZoomFit;
-				}
-				else if (this->buttonOneBounds.inside(mouse.local)) {
-					this->zoom = ZoomOne;
-				}
-				else if (this->zoomBox.inside(mouse.local)) {
-					this->dragSelection = DragZoomBox;
-				}
-				else {
-					this->dragSelection = DragImage;
-				}
-			}
-
-            if (mouse.action == MouseArguments::Dragged && this->zoom != ZoomFit) {
-                if (this->dragSelection == DragImage) {
-                    this->scroll += mouse.movement;
-                    this->scroll = this->getScrollClamped();
-                } else if (this->dragSelection == DragZoomBox) {
-                    this->scroll -= mouse.movement / ofVec2f(zoomBox.width, zoomBox.height) * ofVec2f(this->getImageWidth(), this->getImageHeight());
-                    this->scroll = this->getScrollClamped();
-                }
-            }
-            
-            if (mouse.action == MouseArguments::Released) {
-                this->dragSelection = DragNone;
-            }
-        }
-        
+		}
+		
         //----------
         void BaseImage::nudgeZoom(KeyboardArguments& key) {
             if (key.checkCurrentPanel(this)) {
@@ -120,51 +202,6 @@ namespace ofxCvGui {
 				DrawCroppedArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), scrollOffset);
 				this->onDrawCropped(args);
 				ofPopMatrix();
-
-                //only draw zoom box if we need to
-                if (needsZoom && arguments.chromeEnabled) {
-                    //update zoom box
-                    zoomBox.height = this->getImageHeight() / this->getImageWidth() * zoomBox.width;
-                    zoomBox.x = this->getWidth() - zoomBox.width - 20;
-                    zoomBox.y = this->getHeight() - zoomBox.height - 20;
-                    
-                    //update zoom selection
-                    zoomSelection.width = this->getWidth() / this->getImageWidth() * zoomBox.width;
-                    zoomSelection.height = this->getHeight() / this->getImageHeight() * zoomBox.height;
-                    ofVec2f zoomSelectionPos = -this->getScrollClamped() / ofVec2f(this->getImageWidth(), this->getImageHeight()) * ofVec2f(zoomBox.width, zoomBox.height);
-                    zoomSelection.x = zoomSelectionPos.x + zoomBox.x;
-                    zoomSelection.y = zoomSelectionPos.y + zoomBox.y;
-                    
-                    ////
-                    //draw zoom box
-                    //
-                    
-                    //draw image
-                    ofPushMatrix();
-                    ofTranslate(zoomBox.x, zoomBox.y);
-                    this->drawImage(zoomBox.width, zoomBox.height);
-                    ofPopMatrix();
-                    
-                    ofPushStyle();
-                    
-                    //draw outer
-                    ofSetColor(150);
-                    ofNoFill();
-                    ofSetLineWidth(2.0f);
-					ofDrawRectangle(zoomBox);
-                    
-                    //draw inner
-                    ofEnableAlphaBlending();
-                    ofFill();
-                    ofSetLineWidth(0.0f);
-                    ofSetColor(255, 255, 255, 100);
-					ofDrawRectangle(zoomSelection);
-                    
-                    ofPopStyle();
-                    
-                    //
-                    ////
-                }
             }
 		}
         
@@ -188,21 +225,5 @@ namespace ofxCvGui {
             scroll.y = floor(scroll.y);
             return scroll;
         }
-		
-		//----------
-		void BaseImage::drawTitle() {
-			image("ofxCvGui::zoom_fit").draw(buttonFitBounds);
-			image("ofxCvGui::zoom_one").draw(buttonOneBounds);
-			if (!this->caption.empty()) {
-				Utils::drawText(this->caption, 100, 20, true, 30);
-			}
-			
-			ofPushStyle();
-			ofSetColor(150);
-			ofSetLineWidth(2.0f);
-			ofNoFill();
-			ofDrawRectangle(this->zoom == ZoomFit ? buttonFitBounds : buttonOneBounds);
-			ofPopStyle();
-		}
 	}
 }

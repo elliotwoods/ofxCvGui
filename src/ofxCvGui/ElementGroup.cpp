@@ -1,4 +1,6 @@
 #include "ofxCvGui/ElementGroup.h"
+#include "ofxCvGui/Panels/Base.h"
+
 namespace ofxCvGui {
 	//----------
 	template<typename T>
@@ -165,6 +167,11 @@ namespace ofxCvGui {
 		for (it = elements.begin(); it != elements.end(); it++) {
 			(**it).arrange();
 		}
+	}
+	
+	//----------
+	ElementGroupPtr makeElementGroup() {
+		return make_shared<ElementGroup>();
 	}
 
 	template class ElementGroup_<Element>;

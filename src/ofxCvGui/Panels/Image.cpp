@@ -1,4 +1,7 @@
 #include "ofxCvGui/Panels/Image.h"
+
+#include "ofSystemUtils.h"
+
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
@@ -8,6 +11,43 @@ namespace ofxCvGui {
 			this->onDraw.addListener([this] (DrawArguments& args) {
 				this->drawInfo(args);
 			}, this);
+			
+			this->addToolBarElement("ofxCvGui::load", [this]() {
+				if(!this->asset) {
+					return;
+				}
+				auto result = ofSystemLoadDialog("Load image");
+				if (result.bSuccess) {
+					if (dynamic_cast<ofImage *>(this->asset)) {
+						static_cast<ofImage *>(this->asset)->load(result.filePath);
+					}
+					if (dynamic_cast<ofShortImage *>(this->asset)) {
+						static_cast<ofShortImage *>(this->asset)->load(result.filePath);
+					}
+					if (dynamic_cast<ofFloatImage *>(this->asset)) {
+						static_cast<ofFloatImage *>(this->asset)->load(result.filePath);
+					}
+				}
+			});
+			
+			this->addToolBarElement("ofxCvGui::save", [this]() {
+				if(!this->asset) {
+					return;
+				}
+				auto defaultFilename = this->caption.empty() ? "image.png" : this->caption + ".png";
+				auto result = ofSystemSaveDialog(defaultFilename, "Save image");
+				if (result.bSuccess) {
+					if (dynamic_cast<ofImage *>(this->asset)) {
+						static_cast<ofImage *>(this->asset)->save(result.filePath);
+					}
+					if (dynamic_cast<ofShortImage *>(this->asset)) {
+						static_cast<ofShortImage *>(this->asset)->save(result.filePath);
+					}
+					if (dynamic_cast<ofFloatImage *>(this->asset)) {
+						static_cast<ofFloatImage *>(this->asset)->save(result.filePath);
+					}
+				}
+			});
 		}
         
 		//----------

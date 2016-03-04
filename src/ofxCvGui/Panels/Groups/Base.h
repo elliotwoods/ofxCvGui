@@ -9,8 +9,6 @@ namespace ofxCvGui {
 			public:
 				virtual ~Base() { }
 				PanelPtr const findScreen(const ofVec2f & xy, ofRectangle & currentBounds) override;
-			protected:
-				void drawTitle() override { }
 			};
 		}
 	}
