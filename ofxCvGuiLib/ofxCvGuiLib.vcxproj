@@ -209,7 +209,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\libs\ofxCvGui\vs2010\</OutDir>
-    <IncludePath>C:\openFrameworks\openFrameworks\libs\openFrameworks;..\src;..\..\..\libs\openFrameworks\;..\..\..\libs\openFrameworks\3d;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\events;..\..\..\libs\openFrameworks\gl;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\math;..\..\..\libs\openFrameworks\sound;..\..\..\..\libs\openFrameworks\types;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\video;$(IncludePath)</IncludePath>
+    <IncludePath>..\src;..\..\..\libs\openFrameworks\;..\..\..\libs\openFrameworks\3d;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\events;..\..\..\libs\openFrameworks\gl;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\math;..\..\..\libs\openFrameworks\sound;..\..\..\..\libs\openFrameworks\types;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\video;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
