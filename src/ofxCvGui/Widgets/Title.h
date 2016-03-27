@@ -7,9 +7,10 @@ namespace ofxCvGui {
 		class Title : public Element {
 		public:
 			enum Level {
-				H1,
-				H2,
-				H3
+				H1 = 0,
+				H2 = 1,
+				H3 = 2,
+				MaxLevel = H3
 			};
 			Title(string caption, Level = Level::H1);
 		protected:

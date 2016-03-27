@@ -11,6 +11,8 @@
 #include "../Widgets/Title.h"
 #include "../Widgets/Toggle.h"
 
+#include "ofParameterGroup.h"
+
 namespace ofxCvGui {
 	namespace Panels {
 		class Widgets : public Scroll {
@@ -19,7 +21,7 @@ namespace ofxCvGui {
 			shared_ptr<ofxCvGui::Widgets::LiveValueHistory> addFps();
 
 			// Widgets::Button
-			shared_ptr<ofxCvGui::Widgets::Button> addButton(const string & caption, const function<void()> & action);
+			shared_ptr<ofxCvGui::Widgets::Button> addButton(const string & caption, const function<void()> & action, char hotKey = 0);
 
 			// Widgets::EditableValue<ValueType>
 			template<typename ValueType>
@@ -69,6 +71,9 @@ namespace ofxCvGui {
 
 			// Add Widgets::Toggle
 			shared_ptr<ofxCvGui::Widgets::Toggle> addToggle(const string & caption, const function<bool()> & get, const function<void(bool)> & set);
+
+			// Add ofParameterGroup
+			void addParameterGroup(ofParameterGroup &, int titleLevel = 0);
 		};
 
 		shared_ptr<Panels::Widgets> makeWidgets(string caption = "");

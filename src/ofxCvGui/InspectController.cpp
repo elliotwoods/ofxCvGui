@@ -13,8 +13,7 @@ namespace ofxCvGui {
 #pragma mark InspectController
 	//----------
 	InspectController::InspectController() {
-		this->hasTarget = false;
-		this->clearThisFrame = false;
+		
 	}
 
 	//----------
@@ -23,19 +22,28 @@ namespace ofxCvGui {
 
 		//if this frame we got a command to clear
 		if (this->clearThisFrame) {
-			this->clearThisFrame = false;
 			this->currentTarget.reset();
 			needsToNotifyListeners = true;
+			this->clearThisFrame = false;
 		}
 
 		//if a selection was made this frame then take it
-		if (this->inspectThisFrame) {
-			if (this->currentTarget.lock() != this->inspectThisFrame) {
+		auto inspectThisFrame = this->inspectThisFrame.lock();
+		if (inspectThisFrame) {
+			if (this->currentTarget.lock() != inspectThisFrame) {
 				this->currentTarget = this->inspectThisFrame;
-				this->inspectThisFrame.reset();
 				needsToNotifyListeners = true;
 			}
 			this->inspectThisFrame.reset();
+		}
+
+		//if a refresh is activated
+		if (this->refreshThisFrame) {
+			if (this->currentTarget.lock()) {
+				//if we have a valid target
+				needsToNotifyListeners = true;
+			}
+ 			this->refreshThisFrame = false;
 		}
 
 		//if our target has been deleted elsewhere, let's drop our attention to it before something weird happens
@@ -53,7 +61,7 @@ namespace ofxCvGui {
 
 	//----------
 	void InspectController::inspect(shared_ptr<IInspectable> target) {
-		if (!this->inspectThisFrame) {
+		if (!this->inspectThisFrame.lock()) {
 			//only set if nothing else has been set this frame
 			this->inspectThisFrame = target;
 		}
@@ -61,7 +69,14 @@ namespace ofxCvGui {
 
 	//----------
 	void InspectController::refresh() {
-		this->inspectThisFrame = currentTarget.lock();
+		this->refreshThisFrame = true;
+	}
+
+	//----------
+	void InspectController::refresh(IInspectable * target) {
+		if (this->currentTarget.lock().get() == target) {
+			this->refresh();
+		}
 	}
 
 	//----------
@@ -92,8 +107,13 @@ namespace ofxCvGui {
 
 	//-----------
 	bool isBeingInspected(IInspectable & target) {
+		return isBeingInspected(&target);
+	}
+
+	//-----------
+	bool isBeingInspected(IInspectable * target) {
 		auto currentInspectTarget = InspectController::X().getTarget();
-		return &target == currentInspectTarget.get();
+		return target == currentInspectTarget.get();
 	}
 
 	//-----------

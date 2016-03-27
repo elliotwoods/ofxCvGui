@@ -1,5 +1,5 @@
 #include "Slider.h"
-#include "../../../addons/ofxAssets/src/ofxAssets.h"
+#include "ofxAssets.h"
 #include "ofSystemUtils.h"
 
 using namespace ofxAssets;

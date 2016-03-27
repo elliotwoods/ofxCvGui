@@ -1,6 +1,6 @@
 #pragma once
 #include "ofxCvGui/Panels/BaseImage.h"
-#include "../../../addons/ofxLiquidEvent/src/ofxLiquidEvent.h"
+#include "ofxLiquidEvent.h"
 
 #include "ofTypes.h"
 #include "ofPixels.h"

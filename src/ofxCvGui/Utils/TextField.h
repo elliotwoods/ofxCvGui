@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Element.h"
-#include "../../../addons/ofxTextInputField/src/ofxTextInputField.h"
+#include "ofxTextInputField.h"
 
 namespace ofxCvGui {
 	namespace Utils {

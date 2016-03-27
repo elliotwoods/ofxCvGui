@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "ofxCvGui/Panels/BaseImage.h"
 #include "types/ofBaseTypes.h"
 

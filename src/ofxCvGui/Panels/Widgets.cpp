@@ -12,8 +12,8 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<ofxCvGui::Widgets::Button> Widgets::addButton(const string & caption, const function<void()> & action) {
-			return this->add(new ofxCvGui::Widgets::Button(caption, action));
+		shared_ptr<ofxCvGui::Widgets::Button> Widgets::addButton(const string & caption, const function<void()> & action, char hotKey) {
+			return this->add(new ofxCvGui::Widgets::Button(caption, action, hotKey));
 		}
 
 		//----------
@@ -68,6 +68,66 @@ namespace ofxCvGui {
 		//----------
 		shared_ptr<ofxCvGui::Widgets::Toggle> Widgets::addToggle(const string & caption, const function<bool()> & get, const function<void(bool)> & set) {
 			return this->add(new ofxCvGui::Widgets::Toggle(caption, get, set));
+		}
+
+		//----------
+		template<typename Type>
+		bool tryAddEditableValue(Widgets * panel, shared_ptr<ofAbstractParameter> parameter) {
+			auto param = dynamic_pointer_cast<ofParameter<int>>(parameter);
+			if (param) {
+				panel->addEditableValue<int>(*param);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		void Widgets::addParameterGroup(ofParameterGroup & parameters, int titleLevel) {
+			if (!parameters.getName().empty()) {
+				titleLevel = min(titleLevel, (int)ofxCvGui::Widgets::Title::Level::MaxLevel);
+				auto titleLevelTyped = static_cast<ofxCvGui::Widgets::Title::Level>(titleLevel);
+				this->addTitle(parameters.getName(), titleLevelTyped);
+			}
+
+			for (auto & parameter : parameters) {
+				{
+					auto param = dynamic_pointer_cast<ofParameter<float>>(parameter);
+					if (param) {
+						if (ofInRange(param->get(), param->getMin(), param->getMax())) {
+							this->addSlider(*param);
+						}
+						else {
+							this->addEditableValue<float>(*param);
+						}
+						continue;
+					}
+				}
+				{
+					auto param = dynamic_pointer_cast<ofParameter<bool>>(parameter);
+					if (param) {
+						this->addToggle(*param);
+						continue;
+					}
+				}
+				if (tryAddEditableValue<uint8_t>(this, parameter)) { continue; }
+				if (tryAddEditableValue<uint16_t>(this, parameter)) { continue; }
+				if (tryAddEditableValue<uint32_t>(this, parameter)) { continue; }
+				if (tryAddEditableValue<uint64_t>(this, parameter)) { continue; }
+
+				if (tryAddEditableValue<int8_t>(this, parameter)) { continue; }
+				if (tryAddEditableValue<int16_t>(this, parameter)) { continue; }
+				if (tryAddEditableValue<int32_t>(this, parameter)) { continue; }
+				if (tryAddEditableValue<int64_t>(this, parameter)) { continue; }
+
+				if (tryAddEditableValue<string>(this, parameter)) { continue; }
+
+				{
+					auto param = dynamic_pointer_cast<ofParameterGroup>(parameter);
+					if (param) {
+						this->addParameterGroup(*param, titleLevel + 1);
+					}
+				}
+			}
 		}
 
 		//----------

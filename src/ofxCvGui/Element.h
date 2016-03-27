@@ -8,7 +8,7 @@
 
 #include "ofGraphics.h"
 #include "ofFbo.h"
-#include "../../../addons/ofxLiquidEvent/src/ofxLiquidEvent.h"
+#include "ofxLiquidEvent.h"
 
 namespace ofxCvGui {
 	class Element {

@@ -36,7 +36,7 @@ namespace ofxCvGui {
 					this->zoom = Zoomed::ZoomOne;
 				});
 				
-				this->onDraw.addListener([this, zoomOne, zoomFit](DrawArguments & args){
+				this->toolBar->onDraw += [this, zoomOne, zoomFit](DrawArguments & args){
 					ofPushStyle();
 					{
 						ofSetColor(150);
@@ -54,7 +54,7 @@ namespace ofxCvGui {
 						}
 					}
 					ofPopStyle();
-				}, 100, this);
+				};
 			}
 			
 			

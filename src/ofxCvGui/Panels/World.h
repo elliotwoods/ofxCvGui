@@ -9,7 +9,7 @@
 
 #ifdef OFXCVGUI_USE_OFXGRABCAM
 	//feel free to change this for a different camera type of your choosing
-	#include "../../../addons/ofxGrabCam/src/ofxGrabCam.h"
+	#include "ofxGrabCam.h"
 	typedef ofxGrabCam CameraType;
 #else
 	#include "ofEasyCam.h"

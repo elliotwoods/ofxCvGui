@@ -2,7 +2,7 @@
 #include "../Element.h"
 #include "ofParameter.h"
 #include "ofSystemUtils.h"
-#include "../../../addons/ofxAssets/src/ofxAssets.h"
+#include "ofxAssets.h"
 
 namespace ofxCvGui {
 	namespace Widgets {

@@ -1,5 +1,5 @@
 #include "Toggle.h"
-#include "../../../addons/ofxAssets/src/ofxAssets.h"
+#include "ofxAssets.h"
 
 using namespace ofxAssets;
 
