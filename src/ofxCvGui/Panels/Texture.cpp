@@ -70,7 +70,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<Panels::Texture> make(const ofTexture & asset, string caption) {
+		shared_ptr<Panels::Texture> makeTexture(const ofTexture & asset, string caption) {
 			auto newPanel = make_shared<Panels::Texture>(asset);
 			OFXCVGUI_LABEL_PANEL_AND_RETURN
 		}

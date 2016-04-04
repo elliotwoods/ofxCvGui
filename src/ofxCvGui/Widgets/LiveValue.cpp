@@ -2,6 +2,17 @@
 
 #include "ofAppRunner.h"
 
+#ifdef TARGET_WIN32
+	#include "psapi.h"
+#endif
+#ifdef  TARGET_OSX
+	#include <mach/vm_statistics.h>
+	#include <mach/mach_types.h>
+	#include <mach/mach_init.h>
+	#include <mach/mach_host.h>
+#endif
+
+
 namespace ofxCvGui {
 	namespace Widgets {
 		bool isFinite(float number) {
@@ -166,6 +177,31 @@ namespace ofxCvGui {
 		shared_ptr<LiveValueHistory> makeFps() {
 			return shared_ptr<LiveValueHistory>(new LiveValueHistory("Framerate", [] () {
 				return ofGetFrameRate();
+			}));
+		}
+
+		//----------
+		shared_ptr<LiveValueHistory> makeMemoryUsage() {
+			return shared_ptr<LiveValueHistory>(new LiveValueHistory("Memory usage [MB]", []() {
+#ifdef TARGET_WIN32
+				PROCESS_MEMORY_COUNTERS pmc;
+				GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
+				return (float)pmc.WorkingSetSize / 1e6;
+#endif
+#ifdef TARGET_OSX
+				struct task_basic_info t_info;
+				mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
+
+				if (KERN_SUCCESS != task_info(mach_task_self(),
+					TASK_BASIC_INFO, (task_info_t)&t_info,
+					&t_info_count))
+				{
+					return 0.0f;
+				}
+				else {
+					return (float) t_info.resident_size / 1000000.0f;
+				}
+#endif
 			}));
 		}
 	}

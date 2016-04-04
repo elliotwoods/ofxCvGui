@@ -19,6 +19,6 @@ namespace ofxCvGui {
 			ofAbstractImage * asset;
 		};
 
-		shared_ptr<Panels::Image> make(ofImage& asset, string caption = "");
+		shared_ptr<Panels::Image> makeImage(ofImage& asset, string caption = "");
 	}
 }

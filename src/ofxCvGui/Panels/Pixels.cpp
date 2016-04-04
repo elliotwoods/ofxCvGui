@@ -28,7 +28,9 @@ namespace ofxCvGui {
 
 		//----------
 		void Pixels::drawImage(float width, float height) {
-			this->preview.draw(0, 0, this->getWidth(), this->getHeight());
+			if (this->preview.isAllocated()) {
+				this->preview.draw(0, 0, this->getWidth(), this->getHeight());
+			}
 		}
 		
 		//----------
@@ -37,7 +39,12 @@ namespace ofxCvGui {
 				return;
             
             stringstream ss;
-            ss << pixels.getWidth() << "x" << pixels.getHeight() << ", " << pixels.getBitsPerChannel() << "bit/" << pixels.getNumChannels() << "ch";
+			if (pixels.isAllocated()) {
+				ss << pixels.getWidth() << "x" << pixels.getHeight() << ", " << pixels.getBitsPerChannel() << "bit/" << pixels.getNumChannels() << "ch";
+			}
+			else {
+				ss << "Unallocated";
+			}
             
             Utils::drawText(ss.str(), 20, this->getHeight() - 30, true, 20);
         }
@@ -52,7 +59,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<Panels::Pixels> make(const ofPixels& asset, string caption) {
+		shared_ptr<Panels::Pixels> makePixels(const ofPixels& asset, string caption) {
 			auto newPanel = make_shared<Panels::Pixels>(asset);
 			OFXCVGUI_LABEL_PANEL_AND_RETURN
 		}

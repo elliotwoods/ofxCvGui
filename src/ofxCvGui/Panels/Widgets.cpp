@@ -1,5 +1,6 @@
 #include "Widgets.h"
 
+
 using namespace ofxCvGui::Widgets;
 
 namespace ofxCvGui {
@@ -7,6 +8,13 @@ namespace ofxCvGui {
 		//----------
 		shared_ptr<ofxCvGui::Widgets::LiveValueHistory> Widgets::addFps() {
 			auto widget = ofxCvGui::Widgets::makeFps();
+			this->add(widget);
+			return widget;
+		}
+
+		//----------
+		shared_ptr<ofxCvGui::Widgets::LiveValueHistory> Widgets::addMemoryUsage() {
+			auto widget = ofxCvGui::Widgets::makeMemoryUsage();
 			this->add(widget);
 			return widget;
 		}

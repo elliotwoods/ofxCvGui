@@ -20,6 +20,9 @@ namespace ofxCvGui {
 			// Widgets::FPS
 			shared_ptr<ofxCvGui::Widgets::LiveValueHistory> addFps();
 
+			//
+			shared_ptr<ofxCvGui::Widgets::LiveValueHistory> addMemoryUsage();
+
 			// Widgets::Button
 			shared_ptr<ofxCvGui::Widgets::Button> addButton(const string & caption, const function<void()> & action, char hotKey = 0);
 

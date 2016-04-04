@@ -100,5 +100,6 @@ namespace ofxCvGui {
 		};
 		
 		shared_ptr<LiveValueHistory> makeFps();
+		shared_ptr<LiveValueHistory> makeMemoryUsage();
 	}
 }

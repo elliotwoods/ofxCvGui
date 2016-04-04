@@ -65,7 +65,7 @@ namespace ofxCvGui {
         }
 
 		//----------
-		shared_ptr<Panels::Draws> make(ofBaseDraws& asset, string caption) {
+		shared_ptr<Panels::Draws> makeBaseDraws(ofBaseDraws& asset, string caption) {
 			auto newPanel = make_shared<Panels::Draws>(asset);
 			OFXCVGUI_LABEL_PANEL_AND_RETURN
 		}

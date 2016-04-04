@@ -14,35 +14,35 @@ namespace ofxCvGui {
 
 	//----------
 	shared_ptr<Panels::Draws> Builder::add(ofBaseDraws& asset, string caption) {
-		auto newPanel = Panels::make(asset, caption);
+		auto newPanel = Panels::makeBaseDraws(asset, caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Image> Builder::add(ofImage& asset, string caption) {
-		auto newPanel = Panels::make(asset, caption);
+		auto newPanel = Panels::makeImage(asset, caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 	
     //----------
 	shared_ptr<Panels::Pixels> Builder::add(const ofPixels& asset, string caption) {
-		auto newPanel = Panels::make(asset, caption);
+		auto newPanel = Panels::makePixels(asset, caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::PixelsVector> Builder::add(const vector<ofPixels>& asset, string caption) {
-		auto newPanel = Panels::make(asset, caption);
+		auto newPanel = Panels::makePixelsVector(asset, caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}
 
 	//----------
 	shared_ptr<Panels::Texture> Builder::add(const ofTexture & asset, string caption) {
-		auto newPanel = Panels::make(asset, caption);
+		auto newPanel = Panels::makeTexture(asset, caption);
 		this->controller.add(newPanel);
 		return newPanel;
 	}

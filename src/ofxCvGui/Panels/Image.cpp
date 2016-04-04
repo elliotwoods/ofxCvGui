@@ -148,7 +148,7 @@ namespace ofxCvGui {
         }
 
 		//----------
-		shared_ptr<Panels::Image> make(ofImage& asset, string caption) {
+		shared_ptr<Panels::Image> makeImage(ofImage& asset, string caption) {
 			auto newPanel = make_shared<Panels::Image>(asset);
 			OFXCVGUI_LABEL_PANEL_AND_RETURN
 		}

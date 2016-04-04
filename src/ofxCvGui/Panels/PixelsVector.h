@@ -38,6 +38,6 @@ namespace ofxCvGui {
             bool refreshPerFrame;
 		};
 
-		shared_ptr<Panels::PixelsVector> make(const vector<ofPixels>& asset, string caption = "");
+		shared_ptr<Panels::PixelsVector> makePixelsVector(const vector<ofPixels>& asset, string caption = "");
 	}
 }

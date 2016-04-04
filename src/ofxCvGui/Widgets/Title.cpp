@@ -25,6 +25,10 @@ namespace ofxCvGui {
 
 			//check if we need to increase height
 			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), fontSize);
+			if (!font.isLoaded()) {
+				ofLogError("ofxCvGui") << "Check ofxCvGui is initialised";
+				return;
+			}
 			auto textBounds = font.getStringBoundingBox(this->caption, 0, 30);
 			const auto textBottom = textBounds.getBottom();
 			if (textBottom + 10 > this->getHeight()) {

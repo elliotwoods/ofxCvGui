@@ -161,7 +161,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<Panels::PixelsVector> make(const vector<ofPixels>& asset, string caption) {
+		shared_ptr<Panels::PixelsVector> makePixelsVector(const vector<ofPixels>& asset, string caption) {
 			auto newPanel = make_shared<Panels::PixelsVector>(asset);
 			OFXCVGUI_LABEL_PANEL_AND_RETURN
 		}
