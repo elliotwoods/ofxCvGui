@@ -120,4 +120,9 @@ namespace ofxCvGui {
 	void addToInspector(ofxCvGui::ElementPtr element) {
 		InspectController::X().addToInspector(element);
 	}
+
+	//-----------
+	void refreshInspector(IInspectable * target) {
+		InspectController::X().refresh(target);
+	}
 }

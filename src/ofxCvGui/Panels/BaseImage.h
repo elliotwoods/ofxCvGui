@@ -4,8 +4,8 @@
 
 namespace ofxCvGui {
 	
-	struct DrawCroppedArguments {
-		DrawCroppedArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped);
+	struct DrawImageArguments {
+		DrawImageArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped);
 		bool zoomed;
 		ofVec2f drawSize;
 		ofVec2f viewSize;
@@ -17,7 +17,7 @@ namespace ofxCvGui {
 		public:
 			enum Zoomed {ZoomOne, ZoomFit};
 
-			ofxLiquidEvent<DrawCroppedArguments> onDrawCropped;
+			ofxLiquidEvent<DrawImageArguments> onDrawImage;
 			Zoomed getZoomed() const;
 		protected:
             BaseImage();

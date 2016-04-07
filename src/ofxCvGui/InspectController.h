@@ -62,4 +62,6 @@ namespace ofxCvGui {
 	bool isBeingInspected(IInspectable *);
 
 	void addToInspector(ofxCvGui::ElementPtr);
+
+	void refreshInspector(IInspectable *);
 }
