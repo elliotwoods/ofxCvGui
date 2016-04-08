@@ -81,9 +81,9 @@ namespace ofxCvGui {
 		//----------
 		template<typename Type>
 		bool tryAddEditableValue(Widgets * panel, shared_ptr<ofAbstractParameter> parameter) {
-			auto param = dynamic_pointer_cast<ofParameter<int>>(parameter);
+			auto param = dynamic_pointer_cast<ofParameter<Type>>(parameter);
 			if (param) {
-				panel->addEditableValue<int>(*param);
+				panel->addEditableValue<Type>(*param);
 				return true;
 			}
 			else {
