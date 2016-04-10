@@ -22,6 +22,14 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		void Texture::setInputRange(float min, float max) {
+			auto style = make_shared<Style>();
+			style->rangeMinimum = min;
+			style->rangeMaximum = max;
+			this->setStyle(style);
+		}
+
+		//----------
 		void Texture::drawImage(float width, float height) {
 			if (this->texture.isAllocated()) {
 				if (this->style) {
@@ -31,6 +39,7 @@ namespace ofxCvGui {
 					if(this->style->shader == ofxAssets::Register::X().getShaderPointer("ofxCvGui::inputRange")) {
 						shader.setUniform1f("minimum", this->style->rangeMinimum);
 						shader.setUniform1f("maximum", this->style->rangeMaximum);
+						shader.setUniformTexture("tex0", this->texture, 0);
 					}
 
 					this->texture.draw(0, 0, width, height);

@@ -129,6 +129,8 @@ namespace ofxCvGui {
 
 				if (tryAddEditableValue<string>(this, parameter)) { continue; }
 
+				if (tryAddEditableValue<ofVec3f>(this, parameter)) { continue; }
+
 				{
 					auto param = dynamic_pointer_cast<ofParameterGroup>(parameter);
 					if (param) {

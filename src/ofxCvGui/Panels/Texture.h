@@ -15,8 +15,9 @@ namespace ofxCvGui {
 
 			Texture(const ofTexture &);
 
-			void setStyle(shared_ptr<Texture::Style>);
-			shared_ptr<Texture::Style> getStyle() const;
+			void setStyle(shared_ptr<Style>);
+			shared_ptr<Style> getStyle() const;
+			void setInputRange(float min, float max);
 		protected:
 			void drawImage(float width, float height) override;
 			void drawInfo(DrawArguments &);
@@ -24,7 +25,7 @@ namespace ofxCvGui {
 			float getImageHeight() const override;
 
 			const ofTexture & texture;
-			shared_ptr<Style> style;
+			shared_ptr<Style> style = nullptr;
 		};
 
 		shared_ptr<Panels::Texture> makeTexture(const ofTexture & asset, string caption = "");
