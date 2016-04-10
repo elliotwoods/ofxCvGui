@@ -362,6 +362,9 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\Widgets.h">
       <Filter>src\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Utils\Sugar.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">

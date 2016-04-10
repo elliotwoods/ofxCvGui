@@ -22,7 +22,7 @@ namespace ofxCvGui {
         BaseImage::BaseImage() {
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				this->drawImage(args);
-			}, -1, this);
+			}, this, -1);
 
             this->zoom = ZoomFit;
 
@@ -122,7 +122,7 @@ namespace ofxCvGui {
 					this->scroll += args.movement;
 					this->scroll = this->getScrollClamped();
 				}
-			}, -1, this);
+			}, this, -1);
 			
 			this->onUpdate += [this, zoomBox](UpdateArguments &) {
 				//update zoom box

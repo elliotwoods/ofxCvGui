@@ -142,7 +142,7 @@ namespace ofxCvGui {
 						ofPopStyle();
 					}
 				}
-			}, -1, this);
+			}, this, -1);
 
 			this->onMouse += [this] (MouseArguments & args) {
 				if (args.local.y < 40) {

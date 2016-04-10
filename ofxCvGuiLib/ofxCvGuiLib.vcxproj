@@ -72,6 +72,7 @@
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
+    <ClInclude Include="..\src\ofxCvGui\Utils\Sugar.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\TextField.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
