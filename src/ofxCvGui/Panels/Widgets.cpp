@@ -91,6 +91,8 @@ namespace ofxCvGui {
 			}
 		}
 		void Widgets::addParameterGroup(ofParameterGroup & parameters, int titleLevel) {
+			this->addSpacer();
+
 			if (!parameters.getName().empty()) {
 				titleLevel = min(titleLevel, (int)ofxCvGui::Widgets::Title::Level::MaxLevel);
 				auto titleLevelTyped = static_cast<ofxCvGui::Widgets::Title::Level>(titleLevel);

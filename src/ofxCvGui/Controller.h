@@ -10,19 +10,27 @@
 
 
 namespace ofxCvGui {
-	class Controller {
+	class Controller : public ofxSingleton::Singleton<Controller> {
 	public:
 		Controller();
 		void init(PanelGroupPtr rootGroup);
+
 		void add(PanelPtr panel);
 		void drop(PanelPtr panel);
 		void clear();
+
 		void toggleFullscreen();
 		void toggleMaximised();
+
 		void setMaximised(PanelPtr panel);
 		void clearMaximised();
+
 		void showChrome();
 		void hideChrome();
+
+		void setActiveDialogue(PanelPtr);
+		PanelPtr getActiveDialogue();
+		void clearActiveDialogue();
 
 		PanelGroupPtr getRootGroup() const;
 		void setRootGroup(PanelGroupPtr);
@@ -46,12 +54,19 @@ namespace ofxCvGui {
 		//
 		////
 
+		void mouseAction(MouseArguments &);
+
 		bool checkInitialised();
 		PanelPtr findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position = ofVec2f(ofGetMouseX(), ofGetMouseY())); ///<input root bounds to get the found panel's bounds. should split  to getGlobalBoundsOfPanel(PanelPtr)
 		void updateCurrentPanel();
 		bool initialised;
+
 		PanelGroupPtr rootGroup;
 		weak_ptr<Panels::Base> currentPanel;
+
+		PanelPtr activeDialogue;
+		ofFbo activeDialogueBackground;
+
 		ofRectangle currentPanelBounds;
 		bool maximised;
         ofVec2f mouseCached;
@@ -62,4 +77,8 @@ namespace ofxCvGui {
 
 		float cachedWidth, cachedHeight;
 	};
+
+	void openDialogue(PanelPtr);
+	void closeDialogue(Panels::Base * );
+	void closeDialogue();
 }

@@ -14,6 +14,7 @@ namespace ofxCvGui {
 					InspectArguments args;
 					args.inspector = this->shared_from_this();
 					target->onPopulateInspector.notifyListenersInReverse(args); // reverse so inherited parameters go to the bottom
+					this->addSpacer();
 					this->arrange();
 				}
 			}, this);

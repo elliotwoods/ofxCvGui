@@ -50,12 +50,11 @@ namespace ofxCvGui {
 		shared_ptr<Panels::Groups::Grid> addGrid();
 		shared_ptr<Panels::Groups::Strip> addStrip();
 
-		Controller & getController() { return this->controller; }
+		Controller & getController() { return Controller::X(); }
 		void clear();
 		void drop(PanelPtr &panel);
 
 	protected:
-		Controller controller;
 		Panels::Groups::Grid * mainGrid;
 		PanelPtr rootPanel;
 	};

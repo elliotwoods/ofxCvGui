@@ -2,6 +2,9 @@
 #include "ofxCvGui/InspectController.h"
 #include "ofxAssets.h"
 
+//----------
+OFXSINGLETON_DEFINE(ofxCvGui::Controller);
+
 namespace ofxCvGui {
 	//----------
 	Controller::Controller() {
@@ -112,12 +115,55 @@ namespace ofxCvGui {
 	}
 	
 	//----------
+	void Controller::setActiveDialogue(PanelPtr panel) {
+		if (panel) {
+			auto bounds = ofGetCurrentViewport();
+
+			//first get a cached draw for the background
+			this->activeDialogueBackground.allocate(bounds.getWidth(), bounds.getHeight());
+			this->activeDialogueBackground.begin();
+			{
+				ofEventArgs dummyArgs;
+				this->draw(dummyArgs);
+			}
+			this->activeDialogueBackground.end();
+
+			//setup the active dialogue
+			this->activeDialogue = panel;
+			
+			//setup the size of the dialogue
+			ofResizeEventArgs resizeArgs = {
+				ofGetViewportWidth(),
+				ofGetViewportHeight()
+			};
+			this->windowResized(resizeArgs);
+		}
+		else {
+			this->activeDialogue.reset();
+		}
+	}
+
+	//----------
+	void Controller::clearActiveDialogue() {
+		this->setActiveDialogue(PanelPtr());
+	}
+
+	//----------
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised) {
 			return;
 		}
 		InspectController::X().update();
-		rootGroup->update();
+
+		if (this->activeDialogue) {
+			this->activeDialogue->update();
+		}
+		else if (this->maximised) {
+			this->currentPanel.lock()->update();
+		}
+		else {
+			rootGroup->update();
+		}
 	}
 
 	//----------
@@ -136,20 +182,48 @@ namespace ofxCvGui {
 
 		auto currentPanel = this->currentPanel.lock();
 
-		if (this->maximised) {
-            DrawArguments arg(rootDrawArguments);
-			currentPanel->draw(arg);
-		} else {
-			//highlight panel
-			if (currentPanel) {
-				ofPushStyle();
+		if (this->activeDialogue) {
+			this->activeDialogueBackground.draw(rootDrawArguments.naturalBounds);
+			ofPushStyle();
+			{
+				//draw light box background
 				ofEnableAlphaBlending();
-				ofSetColor(40, 40, 40, 100);
-				ofDrawRectangle(this->currentPanelBounds);
-				ofPopStyle();
-			}
+				ofSetColor(0, 200);
+				ofDrawRectangle(rootDrawArguments.naturalBounds);
 
-			this->rootGroup->draw(rootDrawArguments);
+				//shadow for dialog
+				ofFill();
+				ofSetColor(0, 100);
+				ofPushMatrix();
+				{
+					ofTranslate(5, 5);
+					ofDrawRectangle(this->activeDialogue->getBounds());
+				}
+				ofPopMatrix();
+
+				//background for dialog
+				ofSetColor(80);
+				ofDrawRectangle(this->activeDialogue->getBounds());
+			}
+			ofPopStyle();
+			this->activeDialogue->draw(rootDrawArguments);
+		}
+		else {
+			if (this->maximised) {
+				currentPanel->draw(rootDrawArguments);
+			}
+			else {
+				//highlight panel
+				if (currentPanel) {
+					ofPushStyle();
+					ofEnableAlphaBlending();
+					ofSetColor(40, 40, 40, 100);
+					ofDrawRectangle(this->currentPanelBounds);
+					ofPopStyle();
+				}
+
+				this->rootGroup->draw(rootDrawArguments);
+			}
 		}
 	}
 
@@ -181,12 +255,10 @@ namespace ofxCvGui {
 		}
 		auto currentPanel = this->currentPanel.lock();
 		MouseArguments action(MouseArguments(args, MouseArguments::Moved, rootGroup->getBounds(), currentPanel, this->mouseOwner));
-		if (this->maximised)
-			currentPanel->mouseAction(action);
-		else {
-			rootGroup->mouseAction(action);
-			this->updateCurrentPanel();
-		}
+
+		this->mouseAction(action);
+
+		this->updateCurrentPanel();
 	}
 	
 	//----------
@@ -201,15 +273,15 @@ namespace ofxCvGui {
 		if (isDoubleClick) {
 			this->mouseOwner = this->lastClickOwner;
 		}
-		auto currentPanel = this->currentPanel.lock();
 
+		auto currentPanel = this->currentPanel.lock();
 		auto action = MouseArguments(args, isDoubleClick ? MouseArguments::Action::DoubleClick : MouseArguments::Action::Pressed, rootGroup->getBounds(), currentPanel, this->mouseOwner);
 
-		if (this->maximised) {
-			currentPanel->mouseAction(action);
+		if (this->activeDialogue && !this->activeDialogue->getBounds().inside(action.local)) {
+			this->clearActiveDialogue();
 		}
 		else {
-			rootGroup->mouseAction(action);
+			this->mouseAction(action);
 		}
 
         this->mouseCached = action.global;
@@ -224,12 +296,8 @@ namespace ofxCvGui {
 
 		auto currentPanel = this->currentPanel.lock();
 		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), currentPanel, this->mouseOwner);
-		if (this->maximised) {
-			currentPanel->mouseAction(action);
-		}
-		else {
-			rootGroup->mouseAction(action);
-		}
+
+		this->mouseAction(action);
 
 		this->lastClickOwner = this->mouseOwner;
 		this->mouseOwner = nullptr;
@@ -242,35 +310,58 @@ namespace ofxCvGui {
 
 		auto currentPanel = this->currentPanel.lock();
 		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), currentPanel, this->mouseOwner, mouseCached);
-		if (this->maximised) {
-			currentPanel->mouseAction(action);
-		} 
-		else {
-			rootGroup->mouseAction(action);
-		}
+		this->mouseAction(action);
 
 		this->mouseCached = action.global;
+	}
+
+	//----------
+	void Controller::mouseAction(MouseArguments & action) {
+		if (this->activeDialogue) {
+			this->activeDialogue->mouseAction(action);
+		}
+		else {
+			auto currentPanel = this->currentPanel.lock();
+			if (this->maximised) {
+				currentPanel->mouseAction(action);
+			}
+			else {
+				rootGroup->mouseAction(action);
+			}
+		}
 	}
 	
 	//----------
 	void Controller::keyPressed(ofKeyEventArgs & args) {
-		if (args.key == 'f')
-			this->toggleFullscreen();
-		if (args.key == 'm')
-			this->toggleMaximised();
-
 		if (!initialised)
 			return;
 
+		if (!this->activeDialogue) {
+			if (args.key == 'f')
+				this->toggleFullscreen();
+			if (args.key == 'm')
+				this->toggleMaximised();
+		}
+
 		auto currentPanel = this->currentPanel.lock();
 		KeyboardArguments action(args, KeyboardArguments::Pressed, currentPanel);
-		if (this->maximised) {
-			//if something is maximised, only it get the key press
-			currentPanel->keyboardAction(action);
+		if (this->activeDialogue) {
+			if (args.key == OF_KEY_ESC) {
+				this->clearActiveDialogue();
+			}
+			else {
+				this->activeDialogue->keyboardAction(action);
+			}
 		}
 		else {
-			//otherwise everything visible gets the key press
-			rootGroup->keyboardAction(action);
+			if (this->maximised) {
+				//if something is maximised, only it get the key press
+				currentPanel->keyboardAction(action);
+			}
+			else {
+				//otherwise everything visible gets the key press
+				rootGroup->keyboardAction(action);
+			}
 		}
 	}
 
@@ -291,13 +382,28 @@ namespace ofxCvGui {
 	//----------
 	void Controller::windowResized(ofResizeEventArgs & args) {
 		const auto viewportBounds = ofRectangle(0, 0, args.width, args.height);
+		if (this->activeDialogue) {
+			const auto padding = 80.0f;
+			ofRectangle bounds = viewportBounds;
+			bounds.x += padding;
+			bounds.y += padding;
+			bounds.width -= padding * 2.0f;
+			bounds.height -= padding * 2.0f;
 
-		auto currentPanel = this->currentPanel.lock();
-		if (this->maximised) {
-			currentPanel->setBounds(viewportBounds);
+			//if bounds are too small, use all of it
+			if (bounds.width < 200 || bounds.height < 200) {
+				bounds = viewportBounds;
+			}
+			this->activeDialogue->setBounds(bounds);
 		}
 		else {
-			this->rootGroup->setBounds(viewportBounds);
+			auto currentPanel = this->currentPanel.lock();
+			if (this->maximised) {
+				currentPanel->setBounds(viewportBounds);
+			}
+			else {
+				this->rootGroup->setBounds(viewportBounds);
+			}
 		}
 	}
 
@@ -306,14 +412,22 @@ namespace ofxCvGui {
 		if (this->initialised)
 			return true;
 		else {
-			ofLogError("ofxCvGui") << "cannot perform this action as gui is not intialised";
+			ofLogError("ofxCvGui") << "cannot perform this action as gui is not initialised";
 			return false;
 		}
 	}
 
 	//----------
 	PanelPtr Controller::findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position) {
-		return PanelPtr(rootGroup->findScreen(position, panelBounds));
+		if (this->activeDialogue) {
+			return activeDialogue;
+		}
+		else if (this->maximised) {
+			return this->currentPanel.lock();
+		}
+		else {
+			return rootGroup->findScreen(position, panelBounds);
+		}
 	}
 
 	//----------
@@ -323,5 +437,27 @@ namespace ofxCvGui {
 			this->currentPanel = this->findPanelUnderCursor(currentPanelBounds);
 			this->currentPanelBounds = currentPanelBounds;
 		}
+	}
+
+	//----------
+	ofxCvGui::PanelPtr Controller::getActiveDialogue() {
+		return this->activeDialogue;
+	}
+
+	//----------
+	void openDialogue(PanelPtr panel) {
+		Controller::X().setActiveDialogue(panel);
+	}
+
+	//----------
+	void closeDialogue(Panels::Base * panel) {
+		if (Controller::X().getActiveDialogue().get() == panel) {
+			Controller::X().clearActiveDialogue();
+		}
+	}
+
+	//----------
+	void closeDialogue() {
+		Controller::X().clearActiveDialogue();
 	}
 }

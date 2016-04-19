@@ -1,6 +1,8 @@
 #include "Texture.h"
 #include "ofxAssets.h"
 
+#include "ofMain.h"
+
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
@@ -32,7 +34,15 @@ namespace ofxCvGui {
 		//----------
 		void Texture::drawImage(float width, float height) {
 			if (this->texture.isAllocated()) {
-				if (this->style) {
+				bool okToUseShader = true;
+				auto mainWindow = std::dynamic_pointer_cast<ofAppGLFWWindow>(ofGetCurrentWindow());
+				if(mainWindow)
+				{
+					if (mainWindow->getSettings().glVersionMajor < 3) {
+						okToUseShader = false;
+					}
+				}
+				if (this->style && okToUseShader) {
 					auto & shader = this->style->shader->get();
 
 					shader.begin();
