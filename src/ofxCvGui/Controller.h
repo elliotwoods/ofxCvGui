@@ -31,6 +31,7 @@ namespace ofxCvGui {
 		void setActiveDialogue(PanelPtr);
 		PanelPtr getActiveDialogue();
 		void clearActiveDialogue();
+		bool isDialogueOpen();
 
 		PanelGroupPtr getRootGroup() const;
 		void setRootGroup(PanelGroupPtr);
@@ -81,4 +82,5 @@ namespace ofxCvGui {
 	void openDialogue(PanelPtr);
 	void closeDialogue(Panels::Base * );
 	void closeDialogue();
+	bool isDialogueOpen();
 }

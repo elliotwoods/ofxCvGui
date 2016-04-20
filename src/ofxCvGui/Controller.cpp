@@ -149,6 +149,11 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	bool Controller::isDialogueOpen() {
+		return (this->activeDialogue.get());
+	}
+
+	//----------
 	void Controller::update(ofEventArgs& args) {
 		if (!initialised) {
 			return;
@@ -459,5 +464,10 @@ namespace ofxCvGui {
 	//----------
 	void closeDialogue() {
 		Controller::X().clearActiveDialogue();
+	}
+
+	//----------
+	bool isDialogueOpen() {
+		return Controller::X().isDialogueOpen();
 	}
 }
