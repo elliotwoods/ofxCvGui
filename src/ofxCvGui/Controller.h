@@ -28,16 +28,17 @@ namespace ofxCvGui {
 		void showChrome();
 		void hideChrome();
 
-		void setActiveDialogue(PanelPtr);
-		PanelPtr getActiveDialogue();
-		void clearActiveDialogue();
-		bool isDialogueOpen();
+		void setActiveDialog(PanelPtr);
+		PanelPtr getActiveDialog();
+		void closeActiveDialog();
+		bool isDialogOpen();
 
 		PanelGroupPtr getRootGroup() const;
 		void setRootGroup(PanelGroupPtr);
 
 		PanelPtr getPanelUnderCursor(const ofVec2f & position = ofVec2f(ofGetMouseX(), ofGetMouseY()));
 
+		ofxLiquidEvent<PanelPtr> onDialogClose;
 	protected:
 		////
 		//actions
@@ -65,8 +66,8 @@ namespace ofxCvGui {
 		PanelGroupPtr rootGroup;
 		weak_ptr<Panels::Base> currentPanel;
 
-		PanelPtr activeDialogue;
-		ofFbo activeDialogueBackground;
+		PanelPtr activeDialog;
+		ofImage activeDialogBackground;
 
 		ofRectangle currentPanelBounds;
 		bool maximised;
@@ -79,8 +80,8 @@ namespace ofxCvGui {
 		float cachedWidth, cachedHeight;
 	};
 
-	void openDialogue(PanelPtr);
-	void closeDialogue(Panels::Base * );
-	void closeDialogue();
-	bool isDialogueOpen();
+	void openDialog(PanelPtr);
+	void closeDialog(Panels::Base * );
+	void closeDialog();
+	bool isDialogOpen();
 }

@@ -41,19 +41,19 @@ void ofApp::setup(){
 
 	auto widgets = this->gui.addWidgets();
 	widgets->addTitle("Dialogue test");
-	widgets->addButton("Open dialogue", [this]() {
+	widgets->addButton("Open dialog", [this]() {
 
 		//--
-		//Build the dialogue
+		//Build the dialog
 		//--
 		//
-		auto dialogue = make_shared<ofxCvGui::Panels::Widgets>();
-		dialogue->addTitle("Dialogue");
-		dialogue->addSpacer();
-		dialogue->addFps();
-		dialogue->addMemoryUsage();
+		auto dialog = make_shared<ofxCvGui::Panels::Widgets>();
+		dialog->addTitle("Dialog");
+		dialog->addSpacer();
+		dialog->addFps();
+		dialog->addMemoryUsage();
 		for (int i = 0; i < 30; i++) {
-			dialogue->addIndicator("Indicator", [i]() {
+			dialog->addIndicator("Indicator", [i]() {
 				if (ofGetFrameNum() % 30 == i) {
 					return ofxCvGui::Widgets::Indicator::Status::Good;
 				}
@@ -62,15 +62,26 @@ void ofApp::setup(){
 				}
 			});
 		}
-		dialogue->addButton("Close", []() {
-			ofxCvGui::Controller::X().clearActiveDialogue();
+		dialog->addButton("Close", []() {
+			ofxCvGui::closeDialog();
 		});
 		//
 		//--
 
-		// Open the dialogue
-		ofxCvGui::openDialogue(dialogue);
+		// Open the Dialog
+		ofxCvGui::openDialog(dialog);
 	});
+
+	//this callback happens when the dialog closes
+	ofxCvGui::Controller::X().onDialogClose += [](ofxCvGui::PanelPtr &) {
+		ofSystemAlertDialog("Dialog closed");
+	};
+	//Note
+	// 1. If you add a listener here, you probably want to remove it later on
+	//	(e.g. if you disappear but the gui is still around and other dialogs
+	//	might open).
+	// 2. You might want to check that the dialog being closed is your dialog
+	//	if you're going to perform any action as a result of it being closed.
 }
 
 //--------------------------------------------------------------

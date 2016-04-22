@@ -115,23 +115,17 @@ namespace ofxCvGui {
 	}
 	
 	//----------
-	void Controller::setActiveDialogue(PanelPtr panel) {
+	void Controller::setActiveDialog(PanelPtr panel) {
 		if (panel) {
 			auto bounds = ofGetCurrentViewport();
 
 			//first get a cached draw for the background
-			this->activeDialogueBackground.allocate(bounds.getWidth(), bounds.getHeight());
-			this->activeDialogueBackground.begin();
-			{
-				ofEventArgs dummyArgs;
-				this->draw(dummyArgs);
-			}
-			this->activeDialogueBackground.end();
+			this->activeDialogBackground.grabScreen(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 
-			//setup the active dialogue
-			this->activeDialogue = panel;
+			//setup the active Dialog
+			this->activeDialog = panel;
 			
-			//setup the size of the dialogue
+			//setup the size of the Dialog
 			ofResizeEventArgs resizeArgs = {
 				ofGetViewportWidth(),
 				ofGetViewportHeight()
@@ -139,18 +133,21 @@ namespace ofxCvGui {
 			this->windowResized(resizeArgs);
 		}
 		else {
-			this->activeDialogue.reset();
+			this->closeActiveDialog();
 		}
 	}
 
 	//----------
-	void Controller::clearActiveDialogue() {
-		this->setActiveDialogue(PanelPtr());
+	void Controller::closeActiveDialog() {
+		if (this->activeDialog) {
+			this->onDialogClose.notifyListeners(this->activeDialog);
+			this->activeDialog.reset();
+		}
 	}
 
 	//----------
-	bool Controller::isDialogueOpen() {
-		return (this->activeDialogue.get());
+	bool Controller::isDialogOpen() {
+		return (this->activeDialog.get());
 	}
 
 	//----------
@@ -160,8 +157,8 @@ namespace ofxCvGui {
 		}
 		InspectController::X().update();
 
-		if (this->activeDialogue) {
-			this->activeDialogue->update();
+		if (this->activeDialog) {
+			this->activeDialog->update();
 		}
 		else if (this->maximised) {
 			this->currentPanel.lock()->update();
@@ -187,8 +184,8 @@ namespace ofxCvGui {
 
 		auto currentPanel = this->currentPanel.lock();
 
-		if (this->activeDialogue) {
-			this->activeDialogueBackground.draw(rootDrawArguments.naturalBounds);
+		if (this->activeDialog) {
+			this->activeDialogBackground.draw(rootDrawArguments.naturalBounds);
 			ofPushStyle();
 			{
 				//draw light box background
@@ -202,16 +199,16 @@ namespace ofxCvGui {
 				ofPushMatrix();
 				{
 					ofTranslate(5, 5);
-					ofDrawRectangle(this->activeDialogue->getBounds());
+					ofDrawRectangle(this->activeDialog->getBounds());
 				}
 				ofPopMatrix();
 
 				//background for dialog
 				ofSetColor(80);
-				ofDrawRectangle(this->activeDialogue->getBounds());
+				ofDrawRectangle(this->activeDialog->getBounds());
 			}
 			ofPopStyle();
-			this->activeDialogue->draw(rootDrawArguments);
+			this->activeDialog->draw(rootDrawArguments);
 		}
 		else {
 			if (this->maximised) {
@@ -282,8 +279,8 @@ namespace ofxCvGui {
 		auto currentPanel = this->currentPanel.lock();
 		auto action = MouseArguments(args, isDoubleClick ? MouseArguments::Action::DoubleClick : MouseArguments::Action::Pressed, rootGroup->getBounds(), currentPanel, this->mouseOwner);
 
-		if (this->activeDialogue && !this->activeDialogue->getBounds().inside(action.local)) {
-			this->clearActiveDialogue();
+		if (this->activeDialog && !this->activeDialog->getBounds().inside(action.local)) {
+			this->closeActiveDialog();
 		}
 		else {
 			this->mouseAction(action);
@@ -322,8 +319,8 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::mouseAction(MouseArguments & action) {
-		if (this->activeDialogue) {
-			this->activeDialogue->mouseAction(action);
+		if (this->activeDialog) {
+			this->activeDialog->mouseAction(action);
 		}
 		else {
 			auto currentPanel = this->currentPanel.lock();
@@ -341,7 +338,7 @@ namespace ofxCvGui {
 		if (!initialised)
 			return;
 
-		if (!this->activeDialogue) {
+		if (!this->activeDialog) {
 			if (args.key == 'f')
 				this->toggleFullscreen();
 			if (args.key == 'm')
@@ -350,12 +347,12 @@ namespace ofxCvGui {
 
 		auto currentPanel = this->currentPanel.lock();
 		KeyboardArguments action(args, KeyboardArguments::Pressed, currentPanel);
-		if (this->activeDialogue) {
+		if (this->activeDialog) {
 			if (args.key == OF_KEY_ESC) {
-				this->clearActiveDialogue();
+				this->closeActiveDialog();
 			}
 			else {
-				this->activeDialogue->keyboardAction(action);
+				this->activeDialog->keyboardAction(action);
 			}
 		}
 		else {
@@ -387,7 +384,7 @@ namespace ofxCvGui {
 	//----------
 	void Controller::windowResized(ofResizeEventArgs & args) {
 		const auto viewportBounds = ofRectangle(0, 0, args.width, args.height);
-		if (this->activeDialogue) {
+		if (this->activeDialog) {
 			const auto padding = 80.0f;
 			ofRectangle bounds = viewportBounds;
 			bounds.x += padding;
@@ -399,7 +396,7 @@ namespace ofxCvGui {
 			if (bounds.width < 200 || bounds.height < 200) {
 				bounds = viewportBounds;
 			}
-			this->activeDialogue->setBounds(bounds);
+			this->activeDialog->setBounds(bounds);
 		}
 		else {
 			auto currentPanel = this->currentPanel.lock();
@@ -424,8 +421,8 @@ namespace ofxCvGui {
 
 	//----------
 	PanelPtr Controller::findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position) {
-		if (this->activeDialogue) {
-			return activeDialogue;
+		if (this->activeDialog) {
+			return activeDialog;
 		}
 		else if (this->maximised) {
 			return this->currentPanel.lock();
@@ -445,29 +442,29 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	ofxCvGui::PanelPtr Controller::getActiveDialogue() {
-		return this->activeDialogue;
+	ofxCvGui::PanelPtr Controller::getActiveDialog() {
+		return this->activeDialog;
 	}
 
 	//----------
-	void openDialogue(PanelPtr panel) {
-		Controller::X().setActiveDialogue(panel);
+	void openDialog(PanelPtr panel) {
+		Controller::X().setActiveDialog(panel);
 	}
 
 	//----------
-	void closeDialogue(Panels::Base * panel) {
-		if (Controller::X().getActiveDialogue().get() == panel) {
-			Controller::X().clearActiveDialogue();
+	void closeDialog(Panels::Base * panel) {
+		if (Controller::X().getActiveDialog().get() == panel) {
+			Controller::X().closeActiveDialog();
 		}
 	}
 
 	//----------
-	void closeDialogue() {
-		Controller::X().clearActiveDialogue();
+	void closeDialog() {
+		Controller::X().closeActiveDialog();
 	}
 
 	//----------
-	bool isDialogueOpen() {
-		return Controller::X().isDialogueOpen();
+	bool isDialogOpen() {
+		return Controller::X().isDialogOpen();
 	}
 }
