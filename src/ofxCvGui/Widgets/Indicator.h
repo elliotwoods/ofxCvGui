@@ -9,8 +9,8 @@ namespace ofxCvGui {
 			enum Status {
 				Clear = 0,
 				Good = 1,
-				Warning,
-				Error
+				Warning = 2,
+				Error = 3
 			};
 			typedef std::function<Status()> StatusFunction;
 

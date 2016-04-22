@@ -22,11 +22,6 @@ namespace ofxCvGui {
 
 				auto status = this->statusFunction();
 
-				if (Indicator::colorMap->find(status) == Indicator::colorMap->end()) {
-					ofLogError("ofxCvGui::Indicator") << "Your status has an invalid value. Maybe not initialised?";
-					return;
-				}
-
 				//draw indicator
 				ofPushStyle();
 
@@ -38,7 +33,12 @@ namespace ofxCvGui {
 				else {
 					ofSetLineWidth(0);
 					ofFill();
-					ofSetColor(Indicator::colorMap->at(status));
+					if (Indicator::colorMap->find(status) == Indicator::colorMap->end()) {
+						ofLogError("ofxCvGui::Indicator") << "Your status has an invalid value. Maybe not initialised?";
+					}
+					else {
+						ofSetColor(Indicator::colorMap->at(status));
+					}
 				}
 				ofDrawCircle(this->getWidth() - 20, 10, 5);
 
@@ -47,10 +47,10 @@ namespace ofxCvGui {
 
 			if (!Indicator::colorMap) {
 				colorMap = new map<Status, ofColor>();
-				colorMap->insert(pair<Status, ofColor>(Status::Clear, ofColor(0, 0)));
 				colorMap->insert(pair<Status, ofColor>(Status::Good, ofColor(100, 200, 100)));
-				colorMap->insert(pair<Status, ofColor>(Status::Warning, ofColor(100, 100, 0)));
-				colorMap->insert(pair<Status, ofColor>(Status::Error, ofColor(100, 0, 0)));
+				colorMap->insert(pair<Status, ofColor>(Status::Good, ofColor(100, 200, 100)));
+				colorMap->insert(pair<Status, ofColor>(Status::Warning, ofColor(255, 255, 0)));
+				colorMap->insert(pair<Status, ofColor>(Status::Error, ofColor(255, 100, 100)));
 			}
 		}
 	}

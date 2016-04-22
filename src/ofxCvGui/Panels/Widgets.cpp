@@ -25,7 +25,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<ofxCvGui::Widgets::Indicator> Widgets::addIndicator(const string & caption, const function<bool()> & get) {
+		shared_ptr<ofxCvGui::Widgets::Indicator> Widgets::addIndicatorBool(const string & caption, const function<bool()> & get) {
 			return this->add(new ofxCvGui::Widgets::Indicator(caption, [get]() {
 				if (get()) {
 					return ofxCvGui::Widgets::Indicator::Status::Good;
@@ -34,6 +34,12 @@ namespace ofxCvGui {
 					return ofxCvGui::Widgets::Indicator::Status::Clear;
 				}
 			}));
+		}
+
+
+		//----------
+		shared_ptr<ofxCvGui::Widgets::Indicator> Widgets::addIndicator(const string & caption, const function<ofxCvGui::Widgets::Indicator::Status()> & get) {
+			return this->add(new ofxCvGui::Widgets::Indicator(caption, get));
 		}
 
 		//----------

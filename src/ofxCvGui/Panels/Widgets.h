@@ -43,7 +43,8 @@ namespace ofxCvGui {
 			}
 
 			// Widgets::Indicator
-			shared_ptr<ofxCvGui::Widgets::Indicator> addIndicator(const string & caption, const function<bool()> & get);
+			shared_ptr<ofxCvGui::Widgets::Indicator> addIndicatorBool(const string & caption, const function<bool()> & get);
+			shared_ptr<ofxCvGui::Widgets::Indicator> addIndicator(const string & caption, const function<ofxCvGui::Widgets::Indicator::Status()> & get);
 
 			// Widgets::LiveValue<ValueType>
 			template<typename ValueType>
