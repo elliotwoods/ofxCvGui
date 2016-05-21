@@ -26,6 +26,9 @@ namespace ofxCvGui {
 
             this->zoom = ZoomFit;
 
+			this->onDrawImage += [this](ofxCvGui::DrawImageArguments & args) {
+				this->drawImage(args.drawSize.x, args.drawSize.y);
+			};
 		
 			//toolbar
 			{
@@ -179,7 +182,6 @@ namespace ofxCvGui {
 		//----------
 		void BaseImage::drawImage(DrawArguments& arguments) {
             if (this->zoom == ZoomFit) {
-                this->drawImage(this->getWidth(), this->getHeight());
 				DrawImageArguments args(false, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), ofVec2f(0,0));
 				ofPushMatrix();
 				ofScale(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight());

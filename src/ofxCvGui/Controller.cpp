@@ -142,6 +142,13 @@ namespace ofxCvGui {
 		if (this->activeDialog) {
 			this->onDialogClose.notifyListeners(this->activeDialog);
 			this->activeDialog.reset();
+
+			//setup the size of the root group
+			ofResizeEventArgs resizeArgs = {
+				ofGetViewportWidth(),
+				ofGetViewportHeight()
+			};
+			this->windowResized(resizeArgs);
 		}
 	}
 
