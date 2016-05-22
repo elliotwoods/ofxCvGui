@@ -9,7 +9,12 @@ namespace ofxCvGui {
 		Texture::Texture(const ofTexture & texture) :
 			texture(texture) {
 			this->onDraw += [this](DrawArguments & args) {
-				this->drawInfo(args);
+				if (this->texture.isAllocated()) {
+					this->drawInfo(args);
+				}
+				else {
+					Utils::drawText("Texture not allocated", args.localBounds);
+				}
 			};
 		}
 
@@ -34,15 +39,7 @@ namespace ofxCvGui {
 		//----------
 		void Texture::drawImage(float width, float height) {
 			if (this->texture.isAllocated()) {
-				bool okToUseShader = true;
-				auto mainWindow = std::dynamic_pointer_cast<ofAppGLFWWindow>(ofGetCurrentWindow());
-				if(mainWindow)
-				{
-					if (mainWindow->getSettings().glVersionMajor < 3) {
-						okToUseShader = false;
-					}
-				}
-				if (this->style && okToUseShader) {
+				if (this->style) {
 					auto & shader = this->style->shader->get();
 
 					shader.begin();

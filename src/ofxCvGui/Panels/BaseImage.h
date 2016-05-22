@@ -19,6 +19,9 @@ namespace ofxCvGui {
 
 			ofxLiquidEvent<DrawImageArguments> onDrawImage;
 			Zoomed getZoomed() const;
+
+			void setMirror(bool);
+			bool getMirror() const;
 		protected:
             BaseImage();
             virtual ~BaseImage();
@@ -27,8 +30,10 @@ namespace ofxCvGui {
             virtual float getImageWidth() const = 0;
             virtual float getImageHeight() const = 0;
             void nudgeZoom(KeyboardArguments &);
+			void applyMirror() const;
             ofVec2f scroll;
             Zoomed zoom;
+			bool mirror = false;
             ofVec2f getScrollClamped() const;
 		};
 	}

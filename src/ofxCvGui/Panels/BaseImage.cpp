@@ -18,7 +18,18 @@ namespace ofxCvGui {
 			return this->zoom;
 		}
 
-        //----------
+		//----------
+		void BaseImage::setMirror(bool mirror) {
+			this->mirror = mirror;
+		}
+
+
+		//----------
+		bool BaseImage::getMirror() const {
+			return this->mirror;
+		}
+
+		//----------
         BaseImage::BaseImage() {
 			this->onDraw.addListener([this] (DrawArguments & args) {
 				this->drawImage(args);
@@ -38,8 +49,12 @@ namespace ofxCvGui {
 				auto zoomOne = this->addToolBarElement("ofxCvGui::zoom_one", [this]() {
 					this->zoom = Zoomed::ZoomOne;
 				});
+
+				auto mirrorToggle = this->addToolBarElement("ofxCvGui::mirror", [this]() {
+					this->mirror ^= true;
+				});
 				
-				this->toolBar->onDraw += [this, zoomOne, zoomFit](DrawArguments & args){
+				this->toolBar->onDraw += [this, zoomOne, zoomFit, mirrorToggle](DrawArguments & args){
 					ofPushStyle();
 					{
 						ofSetColor(150);
@@ -54,6 +69,13 @@ namespace ofxCvGui {
 								break;
 							default:
 								break;
+						}
+
+						if (this->mirror) {
+							ofSetColor(255);
+							ofxAssets::image("ofxCvGui::mirror_selected").draw(mirrorToggle->getBounds());
+							ofSetColor(150);
+							ofDrawRectangle(mirrorToggle->getBounds());
 						}
 					}
 					ofPopStyle();
@@ -84,7 +106,19 @@ namespace ofxCvGui {
 					//
 					
 					//draw image
-					this->drawImage(args.localBounds.width, args.localBounds.height);
+					{
+						ofPushMatrix();
+						{
+							DrawImageArguments drawImageArgs(false
+								, ofVec2f(this->getImageWidth(), this->getImageHeight())
+								, ofVec2f(args.localBounds.width, args.localBounds.height)
+								, ofVec2f(0, 0));
+							ofScale(args.localBounds.width / this->getImageWidth(), args.localBounds.height / this->getImageHeight());
+							this->applyMirror();
+							this->onDrawImage.notifyListeners(drawImageArgs);
+						}
+						ofPopMatrix();
+					}
 					
 					ofPushStyle();
 					
@@ -180,12 +214,23 @@ namespace ofxCvGui {
         }
         
 		//----------
+		void BaseImage::applyMirror() const {
+			if (this->mirror) {
+				ofTranslate(this->getImageWidth(), 0.0f);
+				ofScale(-1.0f, 1.0f, 1.0f);
+			}
+		}
+
+		//----------
 		void BaseImage::drawImage(DrawArguments& arguments) {
             if (this->zoom == ZoomFit) {
 				DrawImageArguments args(false, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), ofVec2f(0,0));
 				ofPushMatrix();
-				ofScale(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight());
-				this->onDrawImage(args);
+				{
+					ofScale(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight());
+					this->applyMirror();
+					this->onDrawImage(args);
+				}
 				ofPopMatrix();
             } else {
                 bool needsZoom = (this->getImageHeight() > this->getHeight() || this->getImageWidth() > this->getWidth());
@@ -199,10 +244,12 @@ namespace ofxCvGui {
                 }
                 
 				ofPushMatrix();
-				ofTranslate(scrollOffset);
-                this->drawImage(this->getImageWidth(), this->getImageHeight());
-				DrawImageArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), scrollOffset);
-				this->onDrawImage(args);
+				{
+					ofTranslate(scrollOffset);
+					DrawImageArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), scrollOffset);
+					this->applyMirror();
+					this->onDrawImage(args);
+				}
 				ofPopMatrix();
             }
 		}
