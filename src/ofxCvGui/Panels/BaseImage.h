@@ -22,6 +22,8 @@ namespace ofxCvGui {
 
 			void setMirror(bool);
 			bool getMirror() const;
+
+			ofMatrix4x4 getPanelToImageTransform() const;
 		protected:
             BaseImage();
             virtual ~BaseImage();

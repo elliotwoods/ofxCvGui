@@ -29,6 +29,29 @@ namespace ofxCvGui {
 			return this->mirror;
 		}
 
+
+		//----------
+		ofMatrix4x4 BaseImage::getPanelToImageTransform() const {
+			ofMatrix4x4 transform;
+			switch (this->zoom) {
+				case ZoomOne:
+				{
+					transform.makeTranslationMatrix(-scroll);
+					break;
+				}
+				case ZoomFit:
+				{
+					transform.makeScaleMatrix(this->getImageWidth() / this->getWidth(), this->getImageHeight() / this->getHeight(), 1.0f);
+					break;
+				}
+				default:
+				{
+					ofLogWarning("ofxCvGui::BaseImage::getViewToImageTransform") << "Zoom level not supported";
+				}
+			}
+			return transform;
+		}
+
 		//----------
         BaseImage::BaseImage() {
 			this->onDraw.addListener([this] (DrawArguments & args) {
