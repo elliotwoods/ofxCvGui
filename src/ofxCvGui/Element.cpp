@@ -116,7 +116,7 @@ namespace ofxCvGui {
 
 			MouseArguments localMouseArguments = parentMouseArguments;
 			localMouseArguments.local = (ofVec3f) parentMouseArguments.local * parentToLocalTransform.getInverse();
-			localMouseArguments.localNormalised = localMouseArguments.local / ofVec2f(this->getWidth(), this->getHeight());
+			localMouseArguments.localNormalized = localMouseArguments.local / ofVec2f(this->getWidth(), this->getHeight());
 			localMouseArguments.movement = parentMouseArguments.movement / ofVec2f(parentToLocalTransform(0, 0), parentToLocalTransform(1, 1));
 
 			this->mouseOver = localMouseArguments.isLocal();

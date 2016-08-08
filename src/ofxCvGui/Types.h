@@ -72,7 +72,7 @@ namespace ofxCvGui {
 		int button;
 		ofVec2f global;
 		ofVec2f local;
-		ofVec2f localNormalised; ///<Texture coordinates
+		ofVec2f localNormalized; ///<Texture coordinates
         ofVec2f movement;
 
 		friend ostream& operator<<(ostream&, const MouseArguments &);

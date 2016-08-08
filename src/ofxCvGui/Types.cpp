@@ -9,7 +9,7 @@ namespace ofxCvGui {
 		button(mouseArgs.button),
 		global(mouseArgs.x, mouseArgs.y),
 		local(mouseArgs.x - rectangle.x, mouseArgs.y - rectangle.y),
-		localNormalised(local / ofVec2f(rectangle.width, rectangle.height)),
+		localNormalized(local / ofVec2f(rectangle.width, rectangle.height)),
         movement(action == Dragged ? global - cached : ofVec2f()),
 		takenBy(takenBy),
         InputArguments(currentPanel)
@@ -18,7 +18,7 @@ namespace ofxCvGui {
 	//----------
 	bool MouseArguments::isLocal() const {
 		ofRectangle testBounds(0, 0, 1, 1);
-		return testBounds.inside(localNormalised);
+		return testBounds.inside(localNormalized);
 	}
 
 	//----------
@@ -78,7 +78,7 @@ namespace ofxCvGui {
 
 	//----------
 	ostream& operator<<(ostream& os, const MouseArguments & args) {
-		os << "[MouseAction : a(" << args.action << "), b(" << args.button << "), g(" << args.global << "), l(" << args.local << "), ln(" << args.localNormalised << "), m(" << args.movement << "), t(" << (args.isTaken() ? "X" : " ") << ")]";
+		os << "[MouseAction : a(" << args.action << "), b(" << args.button << "), g(" << args.global << "), l(" << args.local << "), ln(" << args.localNormalized << "), m(" << args.movement << "), t(" << (args.isTaken() ? "X" : " ") << ")]";
 		return os;
 	}
 

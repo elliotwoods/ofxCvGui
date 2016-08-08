@@ -251,7 +251,7 @@ namespace ofxCvGui {
 				break;
 			case MouseArguments::DoubleClick:
 				if (args.getOwner() == this) {
-					this->value->set(ofMap(args.localNormalised.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
+					this->value->set(ofMap(args.localNormalized.x, 0, 1.0f, this->value->getMin(), this->value->getMax(), true));
 					this->checkValueAndNotifyListeners();
 				}
 				break;
