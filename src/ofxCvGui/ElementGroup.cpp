@@ -95,7 +95,7 @@ namespace ofxCvGui {
 
 	//----------
 	template<typename T>
-	void ElementGroup_<T>::drop(shared_ptr<T> element) {
+	void ElementGroup_<T>::remove(shared_ptr<T> element) {
 		typename vector<shared_ptr<T> >::iterator it;
 		for (it = elements.begin(); it != elements.end(); it++)
 			if (*it == element) {

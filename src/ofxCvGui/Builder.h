@@ -52,7 +52,7 @@ namespace ofxCvGui {
 
 		Controller & getController() { return Controller::X(); }
 		void clear();
-		void drop(PanelPtr &panel);
+		void remove(PanelPtr &panel);
 
 	protected:
 		Panels::Groups::Grid * mainGrid;

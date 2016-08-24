@@ -56,10 +56,10 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	void Controller::drop(PanelPtr panel) {
+	void Controller::remove(PanelPtr panel) {
 		if (!initialised)
 			return;
-		this->rootGroup->drop(panel);
+		this->rootGroup->remove(panel);
 	}
 
 	//----------

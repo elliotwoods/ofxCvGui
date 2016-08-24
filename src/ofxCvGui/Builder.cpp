@@ -119,8 +119,8 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	void Builder::drop(PanelPtr &panel) {
-		Controller::X().drop(panel);
+	void Builder::remove(PanelPtr &panel) {
+		Controller::X().remove(panel);
 	}
 
 	//----------

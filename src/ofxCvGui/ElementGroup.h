@@ -17,7 +17,7 @@ namespace ofxCvGui {
 		void add(shared_ptr<T> addition);
 		void add(T * addition);
 		shared_ptr<T> addBlank();
-		void drop(shared_ptr<T> element);
+		void remove(shared_ptr<T> element);
 		void clear();
 		const vector<shared_ptr<T> > & getElements() const;
 		vector<shared_ptr<T> > & getElements();
