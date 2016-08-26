@@ -65,7 +65,12 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<ofxCvGui::Widgets::Spacer> Widgets::addSpacer() {
+		shared_ptr<ofxCvGui::Widgets::Spacer> Widgets::addSpacer(bool preventDoubles) {
+			if (preventDoubles) {
+				if (this->getElementGroup()->isLastElementOfType<ofxCvGui::Widgets::Spacer>()) {
+					return static_pointer_cast<ofxCvGui::Widgets::Spacer>(this->getElementGroup()->getElements().back());
+				}
+			}
 			return this->add(new ofxCvGui::Widgets::Spacer());
 		}
 
@@ -97,7 +102,7 @@ namespace ofxCvGui {
 			}
 		}
 		void Widgets::addParameterGroup(ofParameterGroup & parameters, int titleLevel) {
-			if (!this->getElementGroup()->getElements().empty()) {
+			if (!this->getElementGroup()->isLastElementOfType<ofxCvGui::Widgets::Title>()) {
 				this->addSpacer();
 			}
 
@@ -148,6 +153,8 @@ namespace ofxCvGui {
 					}
 				}
 			}
+
+			this->addSpacer();
 		}
 
 		//----------

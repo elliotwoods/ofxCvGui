@@ -65,7 +65,7 @@ namespace ofxCvGui {
 			shared_ptr<ofxCvGui::Widgets::Slider> addSlider(ofParameter<float> & parameter);
 			
 			// Widgets::Spacer
-			shared_ptr<ofxCvGui::Widgets::Spacer> addSpacer();
+			shared_ptr<ofxCvGui::Widgets::Spacer> addSpacer(bool preventDoubles = true);
 
 			// Widgets::Title
 			shared_ptr<ofxCvGui::Widgets::Title> addTitle(const string & caption, ofxCvGui::Widgets::Title::Level level = ofxCvGui::Widgets::Title::Level::H1);

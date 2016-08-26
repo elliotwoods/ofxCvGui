@@ -73,7 +73,7 @@ namespace ofxCvGui {
 		void enable();
 		void disable();
 
-		void setScissor(bool);
+		void setScissorEnabled(bool);
 
 		void addListenersToParent(Element *, bool syncBoundsToParent = false);
 		void addListenersToParent(shared_ptr<Element>, bool syncBoundsToParent = false);

@@ -12,7 +12,7 @@ namespace ofxCvGui {
 		//----------
 		Scroll::Scroll() {
 			this->elements = ElementGroupPtr(new ElementGroup());
-			this->elements->setScissor(true);
+			this->elements->setScissorEnabled(true);
 
 			this->onUpdate += [this](UpdateArguments & args) { this->update();	};
 			this->onDraw += [this] (DrawArguments & args) { this->draw(args); };

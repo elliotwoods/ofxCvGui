@@ -109,8 +109,8 @@ namespace ofxCvGui {
 			this->view = view;
 			this->server = server;
 
-			this->view->setScissor(false); //HACK
-			this->setScissor(false); //HACK
+			this->view->setScissorEnabled(false); //HACK
+			this->setScissorEnabled(false); //HACK
 
 			this->onUpdate += [this](ofxCvGui::UpdateArguments &) {
 				if (!this->isFocused() && this->view) {

@@ -7,14 +7,14 @@ namespace ofxCvGui {
 	namespace Panels {
 		//-----------
 		Base::Base() {
-			this->setScissor(true);
+			this->setScissorEnabled(true);
 			
 			this->toolBar = makeElementGroup();
 			this->toolBar->addListenersToParent(this, true);
-			this->toolBar->setScissor(true);
+			this->toolBar->setScissorEnabled(true);
 			
 			auto titleElement = makeElement();
-			titleElement->setScissor(false);
+			titleElement->setScissorEnabled(false);
 			titleElement->onDraw += [this](DrawArguments & args) {
 				if (!this->caption.empty()) {
 					Utils::drawText(this->caption, 0, 0, true, 30);

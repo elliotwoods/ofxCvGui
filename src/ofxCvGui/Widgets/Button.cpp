@@ -15,26 +15,21 @@ namespace ofxCvGui {
 
 		//----------
 		void Button::init(string caption, char hotKey) {
-			if (hotKey != 0) {
-				caption = caption + " [" + Utils::makeString(hotKey) + "]";
-
-				this->onKeyboard += [this, hotKey] (ofxCvGui::KeyboardArguments & keyArgs) {
-					if (keyArgs.action == ofxCvGui::KeyboardArguments::Action::Pressed) {
-						if (keyArgs.key == hotKey) {
-							this->onHit.notifyListeners();
-							this->hitValue.set(false);
-						}
-					}
-				};
-			}
-
 			this->hitValue.set(caption, false);
 			Toggle::setParameter(this->hitValue);
 
-			this->onMouseReleased += [this](MouseArguments & args) {
-				this->onHit.notifyListeners();
-				this->needsToDrop = true;
+			if (hotKey != 0) {
+				Toggle::setHotKey(hotKey);
+			}
+
+			this->onValueChange += [this](ofParameter<bool> & value) {
+				if (value) {
+					//button was pressed
+					this->needsToDrop = true;
+					this->onHit.notifyListeners();
+				}
 			};
+
 			this->onUpdate += [this](UpdateArguments & args) {
 				if (this->needsToDrop) {
 					this->hitValue.set(false);

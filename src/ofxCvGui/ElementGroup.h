@@ -26,6 +26,19 @@ namespace ofxCvGui {
 		void layoutGridHorizontal(float spacing = 0.0f);
 
 		ofxLiquidEvent<void> onGroupChange;
+
+		template<typename ElementType>
+		bool isLastElementOfType() {
+			if (this->elements.empty()) {
+				return false;
+			}
+			if (dynamic_pointer_cast<ElementType>(this->elements.back())) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
 	protected:
 		void updateSet();
 		void mouseActionSet(MouseArguments &);

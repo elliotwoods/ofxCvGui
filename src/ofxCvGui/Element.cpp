@@ -364,7 +364,7 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	void Element::setScissor(bool enableScissor) {
+	void Element::setScissorEnabled(bool enableScissor) {
 		this->enableScissor = enableScissor;
 	}
 

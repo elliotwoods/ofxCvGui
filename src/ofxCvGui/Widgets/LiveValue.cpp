@@ -30,7 +30,7 @@ namespace ofxCvGui {
 		//----------
 		LiveValueHistory::LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum) :
 		LiveValue(caption, liveValue) {
-			this->setScissor(true);
+			this->setScissorEnabled(true);
 
 			this->minimum = 0.0f;
 			this->maximum = 1.0f;
