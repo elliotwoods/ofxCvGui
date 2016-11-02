@@ -140,14 +140,14 @@ namespace ofxCvGui {
 				//apply sizes
 				if (this->direction == Direction::Horizontal) {
 					float x = 0.0f;
-					for (int i = 0; i < count; i++) {
+					for (size_t i = 0; i < count; i++) {
 						auto cellSize = cellSizes[i];
 						this->elements[i]->setBounds(ofRectangle(x, 0, cellSize, args.localBounds.height));
 						x += cellSize;
 					}
 				} else  {
 					float y = 0.0f;
-					for (int i = 0; i < count; i++) {
+					for (size_t i = 0; i < count; i++) {
 						auto cellSize = cellSizes[i];
 						this->elements[i]->setBounds(ofRectangle(0, y, args.localBounds.width, cellSize));
 						y += cellSize;
@@ -163,7 +163,7 @@ namespace ofxCvGui {
 				if (this->handlesEnabled) {
 					auto count = this->elements.size();
 					
-					for (int i = 0; i < count - 1; i++) {
+					for (size_t i = 0; i < count - 1; i++) {
 						auto border = make_shared<Element>();
 						auto borderWeak = weak_ptr<Element>(border);
 
@@ -254,7 +254,7 @@ namespace ofxCvGui {
 				if (this->direction == Direction::Horizontal) {
 					float x = - (float) this->borderSize / 2.0f;
 					auto height = this->getHeight();
-					for (int i = 0; i < this->borders->getElements().size(); i++) {
+					for (size_t i = 0; i < this->borders->getElements().size(); i++) {
 						x += this->getCellSize(i);
 						ofRectangle bounds(x, 0, this->borderSize, height);
 						this->borders->getElements()[i]->setBounds(bounds);
@@ -263,7 +263,7 @@ namespace ofxCvGui {
 				else {
 					float y = - (float) this->borderSize / 2.0f;
 					auto width = this->getWidth();
-					for (int i = 0; i < this->borders->getElements().size(); i++) {
+					for (size_t i = 0; i < this->borders->getElements().size(); i++) {
 						y += this->getCellSize(i);
 						ofRectangle bounds(0, y, width, this->borderSize);
 						this->borders->getElements()[i]->setBounds(bounds);

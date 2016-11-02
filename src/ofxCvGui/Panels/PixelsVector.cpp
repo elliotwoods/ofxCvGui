@@ -150,7 +150,7 @@ namespace ofxCvGui {
 			this->buttons.clear();
 			float x = 20;
 			float y = this->getHeight() - 50;
-			for(int i=0; i<pixels.size(); i++) {
+			for(size_t i=0; i<pixels.size(); i++) {
 				buttons.push_back(ofRectangle(x, y, 30, 30));
 				x += 40;
 				if (x > this->getWidth() - 30) {

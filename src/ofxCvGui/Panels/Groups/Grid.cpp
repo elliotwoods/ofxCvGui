@@ -61,8 +61,8 @@ namespace ofxCvGui {
 				bounds.height = panelHeight;
 
 				float y = 0;
-				int row = 0;
-				int col = 0;
+				size_t row = 0;
+				size_t col = 0;
 				if (this->heights.size() > 0) {
 					bounds.height = heights[0];
 				}
