@@ -41,6 +41,12 @@ namespace ofxCvGui {
 					//Cached view mechanism
 					//--
 					//
+					if (this->getWidth() != this->cachedView->getWidth()
+						|| this->getHeight() != this->cachedView->getHeight()) {
+						this->allocateCachedView();
+						this->needsViewUpdate = true;
+					}
+
 					if (this->needsViewUpdate) {
 						bool scissorWasEnabled = Utils::ScissorManager::X().getScissorEnabled();
 						Utils::ScissorManager::X().setScissorEnabled(false);
@@ -248,7 +254,6 @@ namespace ofxCvGui {
 		this->updateParentToLocalTransform();
 
 		if (this->cachedView) {
-			this->allocateCachedView();
 			this->markViewDirty();
 		}
 
