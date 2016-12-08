@@ -167,6 +167,9 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Widgets.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Utils\Enum.cpp">
+      <Filter>src\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -363,6 +366,9 @@
       <Filter>src\Panels</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Utils\Sugar.h">
+      <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Utils\Enum.h">
       <Filter>src\Utils</Filter>
     </ClInclude>
   </ItemGroup>

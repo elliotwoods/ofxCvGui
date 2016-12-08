@@ -1,6 +1,7 @@
 #include "Inspector.h"
 #include "../Widgets/Title.h"
 #include "../InspectController.h"
+#include "ofxCvGui/Utils/Sugar.h"
 
 namespace ofxCvGui {
 	using namespace Widgets;

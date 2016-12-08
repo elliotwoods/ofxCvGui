@@ -1,5 +1,5 @@
 #include "Widgets.h"
-
+#include "../Utils/Enum.h"
 
 using namespace ofxCvGui::Widgets;
 
@@ -114,6 +114,13 @@ namespace ofxCvGui {
 
 			for (auto & parameter : parameters) {
 				{
+					auto widget = WidgetsBuilder::X().tryBuild(parameter);
+					if (widget) {
+						this->add(widget);
+						continue;
+					}
+				}
+				{
 					auto param = dynamic_pointer_cast<ofParameter<float>>(parameter);
 					if (param) {
 						if (ofInRange(param->get(), param->getMin(), param->getMax())) {
@@ -162,5 +169,18 @@ namespace ofxCvGui {
 			auto newPanel = shared_ptr<Panels::Widgets>(new Panels::Widgets());
 			OFXCVGUI_LABEL_PANEL_AND_RETURN
 		}
+
+		//----------
+		ElementPtr WidgetsBuilder::tryBuild(shared_ptr<ofAbstractParameter> parameter) {
+			for (auto & wrappedBuildFuncton : this->wrappedBuildFunctions) {
+				auto element = wrappedBuildFuncton.second(parameter);
+				if(element) {
+					return element;
+				}
+			}
+			return ElementPtr();
+		}
 	}
 }
+
+OFXSINGLETON_DEFINE_UNMANAGED(ofxCvGui::Panels::WidgetsBuilder);

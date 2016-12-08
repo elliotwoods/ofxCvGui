@@ -7,6 +7,7 @@
 #include "ofxCvGui/Utils/TextField.h"
 #include "ofxCvGui/Utils/Utils.h"
 #include "ofxCvGui/Utils/Sugar.h"
+#include "ofxCvGui/Utils/Enum.h"
 
 #include "ofxCvGui/Element.h"
 #include "ofxCvGui/ElementSlot.h"

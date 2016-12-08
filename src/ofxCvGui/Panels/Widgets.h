@@ -12,6 +12,7 @@
 #include "../Widgets/Toggle.h"
 
 #include "ofParameterGroup.h"
+#include "ofxSingleton.h"
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -78,6 +79,31 @@ namespace ofxCvGui {
 
 			// Add ofParameterGroup
 			void addParameterGroup(ofParameterGroup &, int titleLevel = 0);
+		};
+
+		class WidgetsBuilder : public ofxSingleton::UnmanagedSingleton<WidgetsBuilder> {
+		public:
+			typedef function<ElementPtr(shared_ptr<ofAbstractParameter>)> BuildFunction;
+			template<typename Type>
+			void registerBuilder(function<ElementPtr(ofParameter<Type> & parameter)> buildFunction) {
+				auto typeIdHash = typeid(Type).hash_code();
+				auto entry = this->wrappedBuildFunctions.find(typeIdHash);
+				if (entry == this->wrappedBuildFunctions.end()) {
+					this->wrappedBuildFunctions[typeIdHash] = [buildFunction](shared_ptr<ofAbstractParameter> parameter) {
+						auto tryCast = dynamic_pointer_cast<ofParameter<Type>>(parameter);
+						if (tryCast) {
+							return buildFunction(*tryCast);
+						}
+						else {
+							return ElementPtr();
+						}
+					};
+				}
+			}
+
+			ElementPtr tryBuild(shared_ptr<ofAbstractParameter>);
+		protected:
+			map<size_t, BuildFunction> wrappedBuildFunctions;
 		};
 
 		shared_ptr<Panels::Widgets> makeWidgets(string caption = "");
