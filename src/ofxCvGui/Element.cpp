@@ -424,6 +424,31 @@ namespace ofxCvGui {
 		}
 	}
 
+
+	//----------
+	void Element::addChild(ElementPtr child) {
+		if (this->children.find(child) == this->children.end()) {
+			this->children.insert(child);
+			child->addListenersToParent(this);
+		}
+	}
+
+
+	//----------
+	void Element::removeChild(ElementPtr child) {
+		auto findChild = this->children.find(child);
+		if (findChild != this->children.end()) {
+			child->removeListenersFromParent(this);
+			this->children.erase(findChild);
+		}
+	}
+
+
+	//----------
+	set<ofxCvGui::ElementPtr> Element::getChildren() const {
+		return this->children;
+	}
+
 	//-----------
 	void Element::setCachedView(bool cachedViewEnabled) {
 		if (cachedViewEnabled) {

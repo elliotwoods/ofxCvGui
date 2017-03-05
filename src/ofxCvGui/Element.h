@@ -11,6 +11,8 @@
 #include "ofxLiquidEvent.h"
 
 namespace ofxCvGui {
+	typedef shared_ptr<Element> ElementPtr;
+
 	class Element {
 	public:
 		enum LocalMouseState {
@@ -80,6 +82,10 @@ namespace ofxCvGui {
 		void removeListenersFromParent(Element *);
 		void removeListenersFromParent(shared_ptr<Element>);
 
+		void addChild(ElementPtr);
+		void removeChild(ElementPtr);
+		set<ElementPtr> getChildren() const;
+
 		void setCachedView(bool cachedViewEnabled);
 		void markViewDirty();
 	protected:
@@ -100,8 +106,9 @@ namespace ofxCvGui {
 
 		ofFbo * cachedView = 0;
 		bool needsViewUpdate;
+
+		set<ElementPtr> children;
 	};
 	
-	typedef shared_ptr<Element> ElementPtr;
 	ElementPtr makeElement();
 }
