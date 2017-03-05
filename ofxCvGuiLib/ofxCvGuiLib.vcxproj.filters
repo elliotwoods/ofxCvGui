@@ -167,9 +167,6 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Widgets.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ofxCvGui\Utils\Enum.cpp">
-      <Filter>src\Utils</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />

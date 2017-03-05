@@ -20,7 +20,5 @@ namespace ofxCvGui {
 			ofParameter<string> * parameter = 0;
 			bool disableTextFieldEvents = false;
 		};
-		
-		shared_ptr<TextField> make(ofParameter<string> &);
 	}
 }

@@ -133,9 +133,6 @@
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
-    <ClCompile Include="..\src\ofxCvGui\Utils\Enum.cpp">
-      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</PreprocessToFile>
-    </ClCompile>
     <ClCompile Include="..\src\ofxCvGui\Utils\TextField.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />

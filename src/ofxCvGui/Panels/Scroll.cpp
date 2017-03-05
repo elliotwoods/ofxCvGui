@@ -3,6 +3,8 @@
 #include "ofxCvGui/Utils/Utils.h"
 #include "ofxCvGui/Widgets/Spacer.h"
 
+#include "ofAppRunner.h"
+
 #define OFXCVGUI_SCROLL_SPACING 10.0f
 #define OFXCVGUI_SCROLL_AREA_WIDTH 20.0f
 #define OFXCVGUI_SCROLL_BAR_WIDTH 5.0f
@@ -99,18 +101,23 @@ namespace ofxCvGui {
 		//----------
 		void Scroll::update() {
 			if (this->localMouseState == LocalMouseState::Waiting) {
+				float decay = ofClamp(1.0f - 2.0f * ofGetLastFrameTime(), 0, 1);
+				if (decay < 0.0f) {
+					decay = 0.0f;
+				}
+
 				if (this->position < 0.0f) {
-					this->setScroll(this->position * 0.9f);
+					this->setScroll(this->position * decay);
 				} else {
 					float overflow = this->length - this->getHeight();
 					if (overflow < 0 && this->position > 0.0f) {
 						//less content than screen space
-						this->setScroll(this->position * 0.9f);
+						this->setScroll(this->position * decay);
 					} else {
 						//more content than screen space
 						if (this->position > overflow) {
 							float position = this->position - overflow;
-							position *= 0.9f;
+							position *= decay;
 							this->setScroll(position + overflow);
 						}
 					}
