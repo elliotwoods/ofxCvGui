@@ -5,7 +5,6 @@ namespace ofxCvGui {
 	namespace Widgets {
 		//----------
 		MultipleChoice::MultipleChoice(const string & caption) {
-			this->selectionIndex = -1;
 			this->setCaption(caption);
 
 			this->setBounds(ofRectangle(0, 0, 100, 60));
@@ -63,7 +62,7 @@ namespace ofxCvGui {
 		//----------
 		void MultipleChoice::addOption(string choice) {
 			this->options.push_back(choice);
-			this->clampSelection();
+			this->clampSelection(); // also moves up the selection to 0 if we have allowNullSelection to false 
 		}
 
 		//----------
@@ -85,6 +84,10 @@ namespace ofxCvGui {
 
 		//----------
 		void MultipleChoice::setSelection(int selectionIndex) {
+			if (this->selectionIndex == selectionIndex) {
+				return;
+			}
+
 			this->selectionIndex = selectionIndex;
 			this->clampSelection();
 			if (this->selectionIndex == selectionIndex) {
@@ -97,9 +100,9 @@ namespace ofxCvGui {
 			auto find = std::find(this->options.begin(), this->options.end(), choice);
 			if (find == this->options.end()) {
 				ofLogError("ofxCvGui::Widgets::MultipleChoice") << "Cannot select option [" + choice + "] since it does not exist in the list of options";
-				this->selectionIndex = -1;
+				this->setSelection(-1);
 			} else {
-				this->selectionIndex = (int) (find - this->options.begin());
+				this->setSelection((int)(find - this->options.begin()));
 			}
 		}
 
@@ -117,13 +120,25 @@ namespace ofxCvGui {
 			}
 		}
 
+
+		//----------
+		void MultipleChoice::setAllowNullSelection(bool allowNullSelection) {
+			this->allowNullSelection = allowNullSelection;
+		}
+
+
+		//----------
+		bool MultipleChoice::getAllowNullSelection() const {
+			return this->allowNullSelection;
+		}
+
 		//----------
 		void MultipleChoice::clampSelection() {
 			if (this->options.empty()) {
 				this->selectionIndex = -1;
 			}
 			else {
-				auto clampedSelection = ofClamp(this->selectionIndex, 0, this->options.size() - 1);
+				auto clampedSelection = ofClamp(this->selectionIndex, this->allowNullSelection ? -1 : 0, this->options.size() - 1);
 				if (clampedSelection != this->selectionIndex) {
 					this->setSelection(clampedSelection);
 				}

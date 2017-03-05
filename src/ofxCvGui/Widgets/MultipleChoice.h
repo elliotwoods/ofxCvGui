@@ -17,6 +17,9 @@ namespace ofxCvGui {
 			int getSelectionIndex() const;
 			string getSelection() const;
 
+			void setAllowNullSelection(bool);
+			bool getAllowNullSelection() const;
+
 			//entangle this multiple choice with an ofParameter<enum>
 			template<typename EnumType>
 			void entangle(ofParameter<EnumType> & parameter) {
@@ -39,7 +42,8 @@ namespace ofxCvGui {
 			ofRectangle getOptionBounds(int optionIndex) const;
 
 			vector<string> options;
-			int selectionIndex;
+			int selectionIndex = -1;
+			bool allowNullSelection = false;
 			ofRectangle optionsBounds;
 		};
 	}
