@@ -125,7 +125,7 @@ namespace ofxCvGui {
 				valueString.precision(3);
 			}
 			valueString << actualValue;
-			font.drawString(this->value->getName() + " : " + valueString.str(), 0, 15);
+			font.drawString(this->getCaption() + " : " + valueString.str(), 0, 15);
 			//
 			//--
 			
@@ -298,7 +298,7 @@ namespace ofxCvGui {
 		//----------
 		void Slider::checkValueAndNotifyListeners() {
 			this->value->set(this->getCheckedValue(this->value->get()));
-			this->onValueChange.notifyListeners(* this->value);
+			this->onValueChange.notifyListeners(this->value->get());
 			this->markViewDirty();
 		}
 	}

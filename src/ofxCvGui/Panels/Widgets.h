@@ -52,6 +52,12 @@ namespace ofxCvGui {
 			shared_ptr<ofxCvGui::Widgets::LiveValue<ValueType>> addLiveValue(const string & caption, const function<ValueType(void)> & get) {
 				return this->add(new ofxCvGui::Widgets::LiveValue<ValueType>(caption, get));
 			}
+			template<typename ValueType>
+			shared_ptr<ofxCvGui::Widgets::LiveValue<ValueType>> addLiveValue(ofParameter<ValueType> & parameter) {
+				return this->add(new ofxCvGui::Widgets::LiveValue<ValueType>(parameter.getName(), [& parameter]() {
+					return parameter.get();
+				}));
+			}
 
 			// Widgets::LiveValueHistory
 			shared_ptr<ofxCvGui::Widgets::LiveValueHistory> addLiveValueHistory(const string & caption, const function<float(void)> & get);

@@ -3,40 +3,39 @@
 #include "ofxLiquidEvent.h"
 
 namespace ofxCvGui {
-	
+	enum ImageZoomState { ZoomX1, ZoomX10, Stretch, Fit };
+
 	struct DrawImageArguments {
-		DrawImageArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped);
-		bool zoomed;
-		ofVec2f drawSize;
-		ofVec2f viewSize;
-		ofVec2f offsetCropped;
+		DrawArguments drawArguments;
+		ImageZoomState zoomState;
+		ofRectangle drawBounds;
 	};
 	
 	namespace Panels {
 		class BaseImage : public Base {
 		public:
-			enum Zoomed {ZoomOne, ZoomFit};
 
 			ofxLiquidEvent<DrawImageArguments> onDrawImage;
-			Zoomed getZoomed() const;
+			ImageZoomState getImageZoomState() const;
 
 			void setMirror(bool);
 			bool getMirror() const;
 
 			ofMatrix4x4 getPanelToImageTransform() const;
+
+			float getZoomFactor() const;
 		protected:
             BaseImage();
             virtual ~BaseImage();
-			void drawImage(DrawArguments& arguments);
 			virtual void drawImage(float width, float height) = 0;
             virtual float getImageWidth() const = 0;
             virtual float getImageHeight() const = 0;
             void nudgeZoom(KeyboardArguments &);
-			void applyMirror() const;
+			void clampScroll();
+
             ofVec2f scroll;
-            Zoomed zoom;
+			ImageZoomState zoomState = ImageZoomState::Stretch;
 			bool mirror = false;
-            ofVec2f getScrollClamped() const;
 		};
 	}
 }

@@ -8,6 +8,7 @@ namespace ofxCvGui {
 			MultipleChoice(const string & caption);
 			MultipleChoice(const string & caption, const initializer_list<string> & options);
 			void addOption(string);
+			void addOptions(initializer_list<string>);
 			void removeOption(string);
 			void clearOptions();
 
@@ -31,7 +32,7 @@ namespace ofxCvGui {
 				//if we're out of sync, update ourselves
 				this->onUpdate += [this, &parameter](ofxCvGui::UpdateArguments &) {
 					if ((int) parameter.get() != this->getSelectionIndex()) {
-						this->setSelection(parameter.get());
+						this->setSelection((int) parameter.get());
 					}
 				};
 			}

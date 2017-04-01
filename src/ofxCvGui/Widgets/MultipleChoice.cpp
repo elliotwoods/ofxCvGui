@@ -65,6 +65,14 @@ namespace ofxCvGui {
 			this->clampSelection(); // also moves up the selection to 0 if we have allowNullSelection to false 
 		}
 
+
+		//----------
+		void MultipleChoice::addOptions(initializer_list<string> options) {
+			for (const auto & option : options) {
+				this->addOption(option);
+			}
+		}
+
 		//----------
 		void MultipleChoice::removeOption(string option) {
 			auto find = std::find(this->options.begin(), this->options.end(), option);

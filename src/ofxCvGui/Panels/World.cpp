@@ -19,6 +19,7 @@ namespace ofxCvGui {
 				}
 			};
 			this->camera.setFixUpDirectionEnabled(true);
+			this->camera.setListenersEnabled(false);
 #endif
 
 			this->onDraw += [this](DrawArguments & args) {
@@ -50,34 +51,34 @@ namespace ofxCvGui {
 
 				if (this->useFbo) {
 					this->fbo.bind();
+				}
 
-					args.takeMousePress(this);
+				ofMouseEventArgs ofArgs;
+				(ofVec2f&)ofArgs = this->useFbo ? args.local : args.global;
+				ofArgs.button = args.button;
 
-					ofMouseEventArgs ofArgs;
-					(ofVec2f&)ofArgs = args.local;
-					ofArgs.button = args.button;
+				switch (args.action) {
+				case MouseArguments::Action::Moved:
+					ofArgs.type = ofMouseEventArgs::Type::Moved;
+					this->camera.mouseMoved(ofArgs);
+					break;
+				case MouseArguments::Action::Pressed:
+					ofArgs.type = ofMouseEventArgs::Type::Pressed;
+					this->camera.mousePressed(ofArgs);
+					break;
+				case MouseArguments::Action::Released:
+					ofArgs.type = ofMouseEventArgs::Type::Released;
+					this->camera.mouseReleased(ofArgs);
+					break;
+				case MouseArguments::Action::Dragged:
+					ofArgs.type = ofMouseEventArgs::Type::Dragged;
+					this->camera.mouseDragged(ofArgs);
+					break;
+				default:
+					break;
+				}
 
-					switch (args.action) {
-					case MouseArguments::Action::Moved:
-						ofArgs.type = ofMouseEventArgs::Type::Moved;
-						this->camera.mouseMoved(ofArgs);
-						break;
-					case MouseArguments::Action::Pressed:
-						ofArgs.type = ofMouseEventArgs::Type::Pressed;
-						this->camera.mousePressed(ofArgs);
-						break;
-					case MouseArguments::Action::Released:
-						ofArgs.type = ofMouseEventArgs::Type::Released;
-						this->camera.mouseReleased(ofArgs);
-						break;
-					case MouseArguments::Action::Dragged:
-						ofArgs.type = ofMouseEventArgs::Type::Dragged;
-						this->camera.mouseDragged(ofArgs);
-						break;
-					default:
-						break;
-					}
-
+				if(this->useFbo) {
 					this->fbo.unbind();
 				}
 			};
@@ -85,18 +86,20 @@ namespace ofxCvGui {
 			this->onKeyboard += [this](KeyboardArguments & args) {
 				if (this->useFbo) {
 					this->fbo.bind();
+				}
 
-					ofKeyEventArgs ofArgs;
-					ofArgs.key = args.key;
-					if (args.action == KeyboardArguments::Action::Pressed) {
-						ofArgs.type = ofKeyEventArgs::Type::Pressed;
-						this->camera.keyPressed(ofArgs);
-					}
-					else if (args.action == KeyboardArguments::Action::Released) {
-						ofArgs.type = ofKeyEventArgs::Type::Pressed;
-						this->camera.keyReleased(ofArgs);
-					}
+				ofKeyEventArgs ofArgs;
+				ofArgs.key = args.key;
+				if (args.action == KeyboardArguments::Action::Pressed) {
+					ofArgs.type = ofKeyEventArgs::Type::Pressed;
+					this->camera.keyPressed(ofArgs);
+				}
+				else if (args.action == KeyboardArguments::Action::Released) {
+					ofArgs.type = ofKeyEventArgs::Type::Pressed;
+					this->camera.keyReleased(ofArgs);
+				}
 
+				if (this->useFbo) {
 					this->fbo.unbind();
 				}
 			};

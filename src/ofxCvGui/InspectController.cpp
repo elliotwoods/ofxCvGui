@@ -61,9 +61,14 @@ namespace ofxCvGui {
 
 	//----------
 	void InspectController::inspect(shared_ptr<IInspectable> target) {
+		//only set if nothing else has been set this frame
 		if (!this->inspectThisFrame.lock()) {
-			//only set if nothing else has been set this frame
-			this->inspectThisFrame = target;
+			if (target) {
+				this->inspectThisFrame = target;
+			}
+			else {
+				this->clear();
+			}
 		}
 	}
 

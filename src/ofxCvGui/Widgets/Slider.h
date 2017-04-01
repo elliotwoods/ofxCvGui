@@ -7,7 +7,7 @@ namespace ofxCvGui {
 		class Slider : public Element {
 		public:
 			typedef std::function<void(float &)> Validator;
-			typedef ofxLiquidEvent<ofParameter<float>>::Functor ValueChangeCallback;
+			typedef ofxLiquidEvent<const float &>::Functor ValueChangeCallback;
 
 			Slider(ofParameter<float> &);
 			Slider(ofParameter<float> &, ValueChangeCallback onValueChange);
@@ -17,7 +17,7 @@ namespace ofxCvGui {
 			void addIntValidator();
 			void addStepValidator(float step);
 			void clearValidators();
-			ofxLiquidEvent<ofParameter<float>> onValueChange;
+			ofxLiquidEvent<const float &> onValueChange;
 		protected:
 			void init();
 			void update(UpdateArguments &);
@@ -25,7 +25,6 @@ namespace ofxCvGui {
 			void mouseAction(MouseArguments &);
 			void boundsChange(BoundsChangeArguments &);
 			float getRangeScale() const;
-			void setValue(float);
 			
 			float getCheckedValue(float value);
 			void checkValueAndNotifyListeners();

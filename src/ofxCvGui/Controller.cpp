@@ -8,7 +8,6 @@ OFXSINGLETON_DEFINE(ofxCvGui::Controller);
 namespace ofxCvGui {
 	//----------
 	Controller::Controller() {
-		this->initialised = false;
 		this->maximised = false;
 		this->chromeVisible = true;
 		this->mouseOwner = nullptr;
@@ -44,27 +43,25 @@ namespace ofxCvGui {
 		ofxAssets::font("ofxCvGui::swisop3", 14);
 		ofxAssets::font("ofxCvGui::swisop3", 18);
 		ofxAssets::font("ofxCvGui::swisop3", 24);
-
-		this->initialised = true;
 	}
 	
 	//----------
 	void Controller::add(PanelPtr panel) {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 		this->rootGroup->add(panel);
 	}
 
 	//----------
 	void Controller::remove(PanelPtr panel) {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 		this->rootGroup->remove(panel);
 	}
 
 	//----------
 	void Controller::clear() {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 		this->rootGroup->clear();
 	}
@@ -159,7 +156,7 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::update(ofEventArgs& args) {
-		if (!initialised) {
+		if (!this->rootGroup) {
 			return;
 		}
 		InspectController::X().update();
@@ -177,7 +174,7 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::draw(ofEventArgs& args) {
-		if (!initialised) {
+		if (!this->rootGroup) {
 			return;
 		}
 
@@ -259,7 +256,7 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::mouseMoved(ofMouseEventArgs & args) {
-		if (!initialised) {
+		if (!this->rootGroup) {
 			return;
 		}
 		auto currentPanel = this->currentPanel.lock();
@@ -272,7 +269,7 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::mousePressed(ofMouseEventArgs & args) {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 		auto thisMouseClick = pair<long long, ofMouseEventArgs>(ofGetElapsedTimeMillis(), args);
 
@@ -300,7 +297,7 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::mouseReleased(ofMouseEventArgs & args) {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 
 		auto currentPanel = this->currentPanel.lock();
@@ -314,7 +311,7 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::mouseDragged(ofMouseEventArgs & args) {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 
 		auto currentPanel = this->currentPanel.lock();
@@ -342,7 +339,7 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::keyPressed(ofKeyEventArgs & args) {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 
 		if (!this->activeDialog) {
@@ -376,7 +373,7 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::filesDragged(ofDragInfo & args) {
-		if (!initialised)
+		if (!this->rootGroup)
 			return;
 		auto rootBounds = this->rootGroup->getBounds();
 		auto panel = this->findPanelUnderCursor(rootBounds);
@@ -418,7 +415,7 @@ namespace ofxCvGui {
 
 	//----------
 	bool Controller::checkInitialised() {
-		if (this->initialised)
+		if (this->rootGroup)
 			return true;
 		else {
 			ofLogError("ofxCvGui") << "cannot perform this action as gui is not initialised";

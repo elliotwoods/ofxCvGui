@@ -61,7 +61,6 @@ namespace ofxCvGui {
 		bool checkInitialised();
 		PanelPtr findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position = ofVec2f(ofGetMouseX(), ofGetMouseY())); ///<input root bounds to get the found panel's bounds. should split  to getGlobalBoundsOfPanel(PanelPtr)
 		void updateCurrentPanel();
-		bool initialised;
 
 		PanelGroupPtr rootGroup;
 		weak_ptr<Panels::Base> currentPanel;

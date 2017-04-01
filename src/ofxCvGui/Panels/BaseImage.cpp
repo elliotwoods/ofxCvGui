@@ -3,19 +3,11 @@
 
 using namespace ofxAssets;
 
-namespace ofxCvGui {
-	//----------
-	DrawImageArguments::DrawImageArguments(bool zoomed, const ofVec2f & drawSize, const ofVec2f & viewSize, const ofVec2f & offsetCropped) {
-		this->zoomed = zoomed;
-		this->drawSize = drawSize;
-		this->viewSize = viewSize;
-		this->offsetCropped = offsetCropped;
-	}
-	
+namespace ofxCvGui {	
 	namespace Panels {
         //----------
-		BaseImage::Zoomed BaseImage::getZoomed() const {
-			return this->zoom;
+		ImageZoomState BaseImage::getImageZoomState() const {
+			return this->zoomState;
 		}
 
 		//----------
@@ -32,66 +24,129 @@ namespace ofxCvGui {
 
 		//----------
 		ofMatrix4x4 BaseImage::getPanelToImageTransform() const {
-			ofMatrix4x4 transform;
-			switch (this->zoom) {
-				case ZoomOne:
-				{
-					transform.makeTranslationMatrix(-scroll);
-					break;
-				}
-				case ZoomFit:
-				{
-					transform.makeScaleMatrix(this->getImageWidth() / this->getWidth(), this->getImageHeight() / this->getHeight(), 1.0f);
-					break;
-				}
-				default:
-				{
-					ofLogWarning("ofxCvGui::BaseImage::getViewToImageTransform") << "Zoom level not supported";
-				}
+			float factor = this->getZoomFactor();
+
+			switch (this->zoomState) {
+			case ZoomX10:
+			case ZoomX1:
+			{
+				ofMatrix4x4 transform;
+				transform.scale(factor, factor, 1);
+				transform.translate(-this->scroll); //scroll is in panel coordinates
+				return transform;
 			}
-			return transform;
+
+			case Stretch:
+			{
+				return ofMatrix4x4::newScaleMatrix(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight(), 1.0f);
+			}
+			case Fit:
+			{
+				auto aspectImage = this->getImageWidth() / this->getImageHeight();
+				auto aspectPanel = this->getWidth() / this->getHeight();
+				auto aspectSelection = aspectImage > aspectPanel;
+
+				float scale = aspectSelection
+					? this->getWidth() / this->getImageWidth() //letterbox top/bottom
+					: this->getHeight() / this->getImageHeight(); //letterbox left/right
+
+				ofMatrix4x4 transform;
+				transform.scale(scale, scale, 1.0f);
+				
+				if (aspectSelection) {
+					auto heightOfDrawnImage = this->getImageHeight() * scale;
+					auto offsetFromTop = (this->getHeight() - heightOfDrawnImage) / 2.0f;
+					transform.translate(0.0f, offsetFromTop, 0.0f);
+				}
+				else {
+					auto widthOfDrawnImage = this->getImageWidth() * scale;
+					auto offsetFromLeft = (this->getWidth() - widthOfDrawnImage) / 2.0f;
+					transform.translate(offsetFromLeft, 0.0f, 0.0f);
+				}
+				return transform;
+			}
+			default:
+				ofLogError() << "Zoom state not supported";
+				return ofMatrix4x4();
+			}
+		}
+
+
+		//----------
+		float BaseImage::getZoomFactor() const {
+			switch (this->zoomState) {
+			case ZoomX10:
+				return 10.0f;
+			case ZoomX1:
+				return 1.0f;
+			default:
+				return this->getWidth() / this->getImageWidth(); // shouldn't be here
+			}
 		}
 
 		//----------
         BaseImage::BaseImage() {
-			this->onDraw.addListener([this] (DrawArguments & args) {
-				this->drawImage(args);
+			this->onDraw.addListener([this](DrawArguments & outerArgs) {
+				//transform in and draw the image
+				ofPushMatrix();
+				{
+					auto transform = this->getPanelToImageTransform();
+					ofMultMatrix(transform);
+					DrawImageArguments args{
+						outerArgs
+						, this->zoomState
+						, ofRectangle(0, 0, this->getImageWidth(), this->getImageHeight())
+					};
+					this->onDrawImage.notifyListeners(args);
+				}
+				ofPopMatrix();
 			}, this, -1);
 
-            this->zoom = ZoomFit;
-
-			this->onDrawImage += [this](ofxCvGui::DrawImageArguments & args) {
-				this->drawImage(args.drawSize.x, args.drawSize.y);
+			this->onDrawImage += [this](DrawImageArguments & args) {
+				//draw the actual image from inherited class
+				this->drawImage(args.drawBounds.width, args.drawBounds.height);
 			};
 		
 			//toolbar
 			{
-				auto zoomFit = this->addToolBarElement("ofxCvGui::zoom_fit", [this]() {
-					this->zoom = Zoomed::ZoomFit;
+				auto zoomFitStretch = this->addToolBarElement("ofxCvGui::zoom_fit_stretch", [this]() {
+					this->zoomState = ImageZoomState::Stretch;
+				});
+				auto zoomFitWidth = this->addToolBarElement("ofxCvGui::zoom_fit_width", [this]() {
+					this->zoomState = ImageZoomState::Fit;
 				});
 				auto zoomOne = this->addToolBarElement("ofxCvGui::zoom_one", [this]() {
-					this->zoom = Zoomed::ZoomOne;
+					this->zoomState = ImageZoomState::ZoomX1;
+				});
+				auto zoomTen = this->addToolBarElement("ofxCvGui::zoom_ten", [this]() {
+					this->zoomState = ImageZoomState::ZoomX10;
 				});
 
 				auto mirrorToggle = this->addToolBarElement("ofxCvGui::mirror", [this]() {
 					this->mirror ^= true;
 				});
 				
-				this->toolBar->onDraw += [this, zoomOne, zoomFit, mirrorToggle](DrawArguments & args){
+				this->toolBar->onDraw += [=](DrawArguments & args){
 					ofPushStyle();
 					{
 						ofSetColor(150);
 						ofSetLineWidth(2.0f);
 						ofNoFill();
-						switch (this->zoom) {
-							case ZoomOne:
-								ofDrawRectangle(zoomOne->getBounds());
-								break;
-							case ZoomFit:
-								ofDrawRectangle(zoomFit->getBounds());
-								break;
-							default:
-								break;
+						switch (this->zoomState) {
+						case ImageZoomState::Stretch:
+							ofDrawRectangle(zoomFitStretch->getBounds());
+							break;
+						case ImageZoomState::Fit:
+							ofDrawRectangle(zoomFitWidth->getBounds());
+							break;
+						case ImageZoomState::ZoomX1:
+							ofDrawRectangle(zoomOne->getBounds());
+							break;
+						case ImageZoomState::ZoomX10:
+							ofDrawRectangle(zoomTen->getBounds());
+							break;
+						default:
+							break;
 						}
 
 						if (this->mirror) {
@@ -109,7 +164,6 @@ namespace ofxCvGui {
 			//zoom box
 			auto zoomBox = makeElement();
 			{
-				zoomBox->addListenersToParent(this);
 				zoomBox->setBounds(ofRectangle(100, 100, 150, 100));
 				
 				auto zoomBoxWeak = weak_ptr<Element>(zoomBox);
@@ -118,9 +172,10 @@ namespace ofxCvGui {
 					ofRectangle zoomBoxBounds = args.localBounds;
 					ofRectangle zoomSelection;
 					
-					zoomSelection.width = this->getWidth() / this->getImageWidth() * zoomBoxBounds.width;
-					zoomSelection.height = this->getHeight() / this->getImageHeight() * zoomBoxBounds.height;
-					ofVec2f zoomSelectionPos = -this->getScrollClamped() / ofVec2f(this->getImageWidth(), this->getImageHeight()) * ofVec2f(zoomBoxBounds.width, zoomBoxBounds.height);
+					auto factor = this->getZoomFactor();
+					zoomSelection.width = this->getWidth() / this->getImageWidth() / factor * zoomBoxBounds.width;
+					zoomSelection.height = this->getHeight() / this->getImageHeight() / factor * zoomBoxBounds.height;
+					ofVec2f zoomSelectionPos = -this->scroll / ofVec2f(this->getImageWidth(), this->getImageHeight()) / factor * ofVec2f(zoomBoxBounds.width, zoomBoxBounds.height);
 					zoomSelection.x = zoomSelectionPos.x;
 					zoomSelection.y = zoomSelectionPos.y;
 					
@@ -132,12 +187,13 @@ namespace ofxCvGui {
 					{
 						ofPushMatrix();
 						{
-							DrawImageArguments drawImageArgs(false
-								, ofVec2f(this->getImageWidth(), this->getImageHeight())
-								, ofVec2f(args.localBounds.width, args.localBounds.height)
-								, ofVec2f(0, 0));
-							ofScale(args.localBounds.width / this->getImageWidth(), args.localBounds.height / this->getImageHeight());
-							this->applyMirror();
+							DrawImageArguments drawImageArgs{ args
+								, this->zoomState
+								, ofRectangle(0, 0, this->getImageWidth(), this->getImageHeight()) };
+
+							ofScale(args.localBounds.width / this->getWidth(), args.localBounds.height / this->getHeight());
+
+							ofMultMatrix(this->getPanelToImageTransform());
 							this->onDrawImage.notifyListeners(drawImageArgs);
 						}
 						ofPopMatrix();
@@ -169,35 +225,45 @@ namespace ofxCvGui {
 					if(zoomBox) {
 						mouse.takeMousePress(zoomBoxWeak.lock());
 						if (mouse.isDragging(zoomBox)) {
-							this->scroll -= mouse.movement / ofVec2f(zoomBox->getWidth(), zoomBox->getHeight()) * ofVec2f(this->getImageWidth(), this->getImageHeight());
-							this->scroll = this->getScrollClamped();
+							float factor = this->getZoomFactor();
+
+							this->scroll -= mouse.movement / ofVec2f(zoomBox->getWidth(), zoomBox->getHeight()) * ofVec2f(this->getImageWidth(), this->getImageHeight()) * factor;
+							this->clampScroll();
 						}
 					}
 				};
+
+				this->addChild(zoomBox);
 			}
 			
 			this->onMouse.addListener([this](MouseArguments & args) {
 				args.takeMousePress(this);
 				if(args.isDragging(this)) {
-					this->scroll += args.movement;
-					this->scroll = this->getScrollClamped();
+					this->scroll -= args.movement;
+					this->clampScroll();
 				}
 			}, this, -1);
 			
 			this->onUpdate += [this, zoomBox](UpdateArguments &) {
 				//update zoom box
 				{
-					auto zoomBoxEnabled = this->zoom == Zoomed::ZoomOne;
-					
-					//also check if there's no need to scale
-					if(zoomBoxEnabled) {
-						if(this->getWidth() >= this->getImageWidth() && this->getHeight() >= this->getImageHeight()) {
-							zoomBoxEnabled = false;
-						}
+					bool zoomBoxEnabled;
+					float factor = this->getZoomFactor();
+					switch (this->zoomState) {
+					case ZoomX10:
+					case ZoomX1:
+						zoomBoxEnabled = this->getImageWidth() * factor > this->getWidth() || this->getImageHeight() * factor > this->getHeight();
+						break;
+					case Stretch:
+					case Fit:
+					default:
+						zoomBoxEnabled = false;
+						break;
 					}
-					
+
 					zoomBox->setEnabled(zoomBoxEnabled);
 					if(zoomBoxEnabled) {
+						//set aspect ratio
 						auto bounds = zoomBox->getBounds();
 						bounds.height = this->getImageHeight() / this->getImageWidth() * bounds.width;
 						bounds.x = this->getWidth() - bounds.width - 20;
@@ -206,7 +272,6 @@ namespace ofxCvGui {
 					}
 				}
 			};
-			
 		}
         
         //----------
@@ -232,70 +297,46 @@ namespace ofxCvGui {
                         scroll.x -= amount;
                         break;
                 }
-                scroll = this->getScrollClamped();
+				this->clampScroll();
             }
         }
-        
-		//----------
-		void BaseImage::applyMirror() const {
-			if (this->mirror) {
-				ofTranslate(this->getImageWidth(), 0.0f);
-				ofScale(-1.0f, 1.0f, 1.0f);
-			}
-		}
 
 		//----------
-		void BaseImage::drawImage(DrawArguments& arguments) {
-            if (this->zoom == ZoomFit) {
-				DrawImageArguments args(false, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), ofVec2f(0,0));
-				ofPushMatrix();
-				{
-					ofScale(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight());
-					this->applyMirror();
-					this->onDrawImage(args);
+		void BaseImage::clampScroll() {
+			float factor = this->getZoomFactor();
+
+			switch (this->zoomState) {
+			case ZoomX1:
+			case ZoomX10:
+				break;
+
+			case Stretch:
+			case Fit:
+			default:
+				this->scroll = ofVec2f();
+				return;
+				break;
+			}
+
+			if (scroll.x < 0) {
+				scroll.x = 0;
+			}
+			else {
+				auto rightEdge = (scroll.x + this->getWidth()) / factor;
+				if (rightEdge > this->getImageWidth() && this->getImageWidth() * factor > this->getWidth()) {
+					scroll.x = this->getImageWidth() * factor - this->getWidth();
 				}
-				ofPopMatrix();
-            } else {
-                bool needsZoom = (this->getImageHeight() > this->getHeight() || this->getImageWidth() > this->getWidth());
-                
-                //calc translation
-                ofVec2f scrollOffset;
-                if (needsZoom) {
-                    scrollOffset = this->getScrollClamped();
-                } else {
-                    scrollOffset = ofVec2f(this->getWidth() - this->getImageWidth(), this->getHeight() - this->getImageHeight()) / 2.0f;
-                }
-                
-				ofPushMatrix();
-				{
-					ofTranslate(scrollOffset);
-					DrawImageArguments args(true, ofVec2f(this->getImageWidth(), this->getImageHeight()), ofVec2f(this->getWidth(), this->getHeight()), scrollOffset);
-					this->applyMirror();
-					this->onDrawImage(args);
+			}
+
+			if (scroll.y < 0) {
+				scroll.y = 0;
+			}
+			else {
+				auto bottomEdge = (scroll.y + this->getHeight()) / factor;
+				if (bottomEdge > this->getImageHeight() && this->getImageHeight() * factor > this->getHeight()) {
+					scroll.y = this->getImageHeight() * factor - this->getHeight();
 				}
-				ofPopMatrix();
-            }
+			}
 		}
-        
-		//----------
-        ofVec2f BaseImage::getScrollClamped() const {
-            ofVec2f scroll = this->scroll;
-            if (scroll.x > 0.0f || this->getImageWidth() < this->getWidth()) {
-                scroll.x = 0.0f;
-            }
-            if (scroll.y > 0.0f || this->getImageHeight() < this->getHeight()) {
-                scroll.y = 0.0f;
-            }
-            
-            if (-scroll.x > this->getImageWidth() - this->getWidth()) {
-                scroll.x = -(this->getImageWidth() - this->getWidth());
-            }
-            if (-scroll.y > this->getImageHeight() - this->getHeight()) {
-                scroll.y = -(this->getImageHeight() - this->getHeight());
-            }
-            scroll.x = floor(scroll.x);
-            scroll.y = floor(scroll.y);
-            return scroll;
-        }
 	}
 }
