@@ -46,6 +46,7 @@ namespace ofxCvGui {
 		//
 		void update(ofEventArgs & args);
 		void draw(ofEventArgs & args);
+		void exit(ofEventArgs & args);
 		void mouseMoved(ofMouseEventArgs & args);
 		void mousePressed(ofMouseEventArgs & args);
 		void mouseReleased(ofMouseEventArgs & args);

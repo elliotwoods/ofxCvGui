@@ -31,6 +31,8 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 
+		ofAddListener(ofEvents().exit, this, &Controller::exit, 0);
+
 		ofxAssets::Register::X().addAddon("ofxCvGui");
 		
 		rootGroup->setBounds(ofGetCurrentViewport());
@@ -233,6 +235,22 @@ namespace ofxCvGui {
 		}
 	}
 
+
+	//----------
+	void Controller::exit(ofEventArgs & args) {
+		this->rootGroup.reset();
+
+		ofRemoveListener(ofEvents().update, this, &Controller::update);
+		ofRemoveListener(ofEvents().draw, this, &Controller::draw);
+		ofRemoveListener(ofEvents().mouseMoved, this, &Controller::mouseMoved);
+		ofRemoveListener(ofEvents().mousePressed, this, &Controller::mousePressed);
+		ofRemoveListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
+		ofRemoveListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
+		ofRemoveListener(ofEvents().keyPressed, this, &Controller::keyPressed);
+		ofRemoveListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
+		ofRemoveListener(ofEvents().windowResized, this, &Controller::windowResized);
+	}
+
 	//----------
 	PanelGroupPtr Controller::getRootGroup() const {
 		return this->rootGroup;
@@ -269,8 +287,10 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::mousePressed(ofMouseEventArgs & args) {
-		if (!this->rootGroup)
+		if (!this->rootGroup) {
 			return;
+		}
+
 		auto thisMouseClick = pair<long long, ofMouseEventArgs>(ofGetElapsedTimeMillis(), args);
 
 		bool isDoubleClick = (thisMouseClick.first - this->lastMouseClick.first) < OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS;
@@ -297,8 +317,9 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::mouseReleased(ofMouseEventArgs & args) {
-		if (!this->rootGroup)
+		if (!this->rootGroup) {
 			return;
+		}
 
 		auto currentPanel = this->currentPanel.lock();
 		MouseArguments action(args, MouseArguments::Released, rootGroup->getBounds(), currentPanel, this->mouseOwner);
@@ -311,8 +332,9 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::mouseDragged(ofMouseEventArgs & args) {
-		if (!this->rootGroup)
+		if (!this->rootGroup) {
 			return;
+		}
 
 		auto currentPanel = this->currentPanel.lock();
 		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), currentPanel, this->mouseOwner, mouseCached);
@@ -339,8 +361,9 @@ namespace ofxCvGui {
 	
 	//----------
 	void Controller::keyPressed(ofKeyEventArgs & args) {
-		if (!this->rootGroup)
+		if (!this->rootGroup) {
 			return;
+		}
 
 		if (!this->activeDialog) {
 			if (args.key == 'f')
@@ -373,8 +396,10 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::filesDragged(ofDragInfo & args) {
-		if (!this->rootGroup)
+		if (!this->rootGroup) {
 			return;
+		}
+
 		auto rootBounds = this->rootGroup->getBounds();
 		auto panel = this->findPanelUnderCursor(rootBounds);
 		if (panel != PanelPtr()) {
@@ -387,6 +412,10 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::windowResized(ofResizeEventArgs & args) {
+		if (!this->rootGroup) {
+			return;
+		}
+
 		const auto viewportBounds = ofRectangle(0, 0, args.width, args.height);
 		if (this->activeDialog) {
 			const auto padding = 80.0f;
@@ -425,6 +454,10 @@ namespace ofxCvGui {
 
 	//----------
 	PanelPtr Controller::findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position) {
+		if (!this->rootGroup) {
+			return PanelPtr();
+		}
+
 		if (this->activeDialog) {
 			return activeDialog;
 		}
