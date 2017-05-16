@@ -6,6 +6,14 @@ using namespace ofxCvGui::Widgets;
 namespace ofxCvGui {
 	namespace Panels {
 		//----------
+		shared_ptr<ofxCvGui::Element> Widgets::addBlank() {
+			auto widget = make_shared<Element>();
+			widget->setHeight(40.0f);
+			this->add(widget);
+			return widget;
+		}
+
+		//----------
 		shared_ptr<ofxCvGui::Widgets::LiveValueHistory> Widgets::addFps() {
 			auto widget = ofxCvGui::Widgets::makeFps();
 			this->add(widget);
@@ -36,7 +44,6 @@ namespace ofxCvGui {
 			}));
 		}
 
-
 		//----------
 		shared_ptr<ofxCvGui::Widgets::Indicator> Widgets::addIndicator(const string & caption, const function<ofxCvGui::Widgets::Indicator::Status()> & get) {
 			return this->add(new ofxCvGui::Widgets::Indicator(caption, get));
@@ -47,12 +54,10 @@ namespace ofxCvGui {
 			return this->add(new ofxCvGui::Widgets::LiveValueHistory(caption, get));
 		}
 
-
 		//----------
 		shared_ptr<ofxCvGui::Widgets::MultipleChoice> Widgets::addMultipleChoice(const string & caption) {
 			return this->add(new ofxCvGui::Widgets::MultipleChoice(caption));
 		}
-
 
 		//----------
 		shared_ptr<ofxCvGui::Widgets::MultipleChoice> Widgets::addMultipleChoice(const string & caption, const initializer_list<string> & options) {
@@ -151,7 +156,12 @@ namespace ofxCvGui {
 
 				if (tryAddEditableValue<string>(this, parameter)) { continue; }
 
+				if (tryAddEditableValue<ofVec2f>(this, parameter)) { continue; }
 				if (tryAddEditableValue<ofVec3f>(this, parameter)) { continue; }
+				if (tryAddEditableValue<ofVec4f>(this, parameter)) { continue; }
+
+				if (tryAddEditableValue<ofColor>(this, parameter)) { continue; }
+				if (tryAddEditableValue<ofRectangle>(this, parameter)) { continue; }
 
 				{
 					auto param = dynamic_pointer_cast<ofParameterGroup>(parameter);

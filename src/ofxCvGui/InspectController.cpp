@@ -99,6 +99,11 @@ namespace ofxCvGui {
 		this->onAddWidget.notifyListeners(element);
 	}
 
+	//----------
+	void InspectController::maximise() {
+		this->onMaximise.notifyListeners();
+	}
+
 #pragma mark Global
 	//-----------
 	void inspect(shared_ptr<IInspectable> target) {

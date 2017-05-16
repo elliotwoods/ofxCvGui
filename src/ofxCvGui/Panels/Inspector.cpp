@@ -2,6 +2,7 @@
 #include "../Widgets/Title.h"
 #include "../InspectController.h"
 #include "ofxCvGui/Utils/Sugar.h"
+#include "ofxCvGui/Controller.h"
 
 namespace ofxCvGui {
 	using namespace Widgets;
@@ -25,6 +26,10 @@ namespace ofxCvGui {
 				this->arrange();
 			}, this);
 
+			InspectController::X().onMaximise.addListener([this]() {
+				ofxCvGui::Controller::X().setMaximised(this->shared_from_this());
+			}, this);
+
 			this->titleEnabled = true;
 		
 			this->clear(false);
@@ -34,6 +39,7 @@ namespace ofxCvGui {
 		Inspector::~Inspector() {
 			InspectController::X().onTargetChange.removeListeners(this);
 			InspectController::X().onAddWidget.removeListeners(this);
+			InspectController::X().onMaximise.removeListeners(this);
 		}
 
 		//---------

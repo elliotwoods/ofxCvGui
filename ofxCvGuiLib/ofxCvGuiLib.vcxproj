@@ -237,6 +237,7 @@
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
       <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -265,6 +266,7 @@
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
       <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -291,6 +293,7 @@
       <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -314,6 +317,7 @@
       <AdditionalIncludeDirectories>..\..\..\addons\ofxAssets\src;..\..\..\addons\ofxGrabCam\src;..\..\..\addons\ofxLiquidEvent\src;..\..\..\addons\ofxTextInputField\src;..\..\..\addons\ofxCvGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4250</DisableSpecificWarnings>
       <ObjectFileName>$(IntDir)\%(Directory)\</ObjectFileName>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

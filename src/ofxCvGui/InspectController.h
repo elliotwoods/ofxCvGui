@@ -41,8 +41,12 @@ namespace ofxCvGui {
 
 		void addToInspector(ElementPtr);
 
+		/// Tell all inspectors to attempt to maximise on their next update frame
+		void maximise();
+
 		ofxLiquidEvent<shared_ptr<IInspectable>> onTargetChange;
 		ofxLiquidEvent<ElementPtr> onAddWidget;
+		ofxLiquidEvent<void> onMaximise;
 
 		///this is actually triggered from the individual inspectors
 		ofxLiquidEvent<InspectArguments> onClear;

@@ -18,10 +18,13 @@ namespace ofxCvGui {
 	namespace Panels {
 		class Widgets : public Scroll {
 		public:
-			// Widgets::FPS
+			// Element
+			shared_ptr<ofxCvGui::Element> addBlank();
+
+			// Widgets::LiveValueHistory [FPS]
 			shared_ptr<ofxCvGui::Widgets::LiveValueHistory> addFps();
 
-			//
+			// Widgets::LiveValueHistory [Memory]
 			shared_ptr<ofxCvGui::Widgets::LiveValueHistory> addMemoryUsage();
 
 			// Widgets::Button
@@ -52,6 +55,8 @@ namespace ofxCvGui {
 			shared_ptr<ofxCvGui::Widgets::LiveValue<ValueType>> addLiveValue(const string & caption, const function<ValueType(void)> & get) {
 				return this->add(new ofxCvGui::Widgets::LiveValue<ValueType>(caption, get));
 			}
+
+			// Widgets::LiveValue<ValueType>
 			template<typename ValueType>
 			shared_ptr<ofxCvGui::Widgets::LiveValue<ValueType>> addLiveValue(ofParameter<ValueType> & parameter) {
 				return this->add(new ofxCvGui::Widgets::LiveValue<ValueType>(parameter.getName(), [& parameter]() {

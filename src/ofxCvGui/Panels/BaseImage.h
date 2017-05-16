@@ -33,8 +33,8 @@ namespace ofxCvGui {
             void nudgeZoom(KeyboardArguments &);
 			void clampScroll();
 
-            ofVec2f scroll;
-			ImageZoomState zoomState = ImageZoomState::Stretch;
+            ofVec2f scroll; // in image pixel coordinates
+			ImageZoomState zoomState = ImageZoomState::Fit;
 			bool mirror = false;
 		};
 	}
