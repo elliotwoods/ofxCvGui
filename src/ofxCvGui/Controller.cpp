@@ -233,6 +233,11 @@ namespace ofxCvGui {
 				this->rootGroup->draw(rootDrawArguments);
 			}
 		}
+
+		for (const auto & delayedDrawCommand : this->delayedDrawCommands) {
+			delayedDrawCommand();
+		}
+		this->delayedDrawCommands.clear();
 	}
 
 
@@ -270,6 +275,11 @@ namespace ofxCvGui {
 			ofRectangle panelBounds = this->rootGroup->getBounds();
 			return this->findPanelUnderCursor(panelBounds, position);
 		}
+	}
+
+	//----------
+	void Controller::drawDelayed(function<void()> && drawFunction) {
+		this->delayedDrawCommands.emplace_back(drawFunction);
 	}
 
 	//----------

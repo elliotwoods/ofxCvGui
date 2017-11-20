@@ -39,6 +39,7 @@ namespace ofxCvGui {
 		PanelPtr getPanelUnderCursor(const ofVec2f & position = ofVec2f(ofGetMouseX(), ofGetMouseY()));
 
 		ofxLiquidEvent<PanelPtr> onDialogClose;
+		void drawDelayed(function<void()> && drawFunction);
 	protected:
 		////
 		//actions
@@ -78,6 +79,8 @@ namespace ofxCvGui {
 		bool chromeVisible;
 
 		float cachedWidth, cachedHeight;
+
+		vector<function<void()>> delayedDrawCommands;
 	};
 
 	void openDialog(PanelPtr);
