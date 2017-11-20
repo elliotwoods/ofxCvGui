@@ -94,6 +94,12 @@ namespace ofxCvGui {
 			return this->add(new ofxCvGui::Widgets::Toggle(caption, get, set));
 		}
 
+
+		//----------
+		shared_ptr<ofxCvGui::Widgets::SelectFile> Widgets::addFilePath(ofParameter<filesystem::path> & parameter) {
+			return this->add(new ofxCvGui::Widgets::SelectFile(parameter));
+		}
+
 		//----------
 		template<typename Type>
 		bool tryAddEditableValue(Widgets * panel, shared_ptr<ofAbstractParameter> parameter) {
@@ -144,6 +150,13 @@ namespace ofxCvGui {
 						continue;
 					}
 				}
+				{
+					auto param = dynamic_pointer_cast<ofParameter<filesystem::path>>(parameter);
+					if (param) {
+						this->addFilePath(*param);
+						continue;
+					}
+				}
 				if (tryAddEditableValue<uint8_t>(this, parameter)) { continue; }
 				if (tryAddEditableValue<uint16_t>(this, parameter)) { continue; }
 				if (tryAddEditableValue<uint32_t>(this, parameter)) { continue; }
@@ -161,6 +174,8 @@ namespace ofxCvGui {
 				if (tryAddEditableValue<ofVec4f>(this, parameter)) { continue; }
 
 				if (tryAddEditableValue<ofColor>(this, parameter)) { continue; }
+				if (tryAddEditableValue<ofShortColor>(this, parameter)) { continue; }
+				if (tryAddEditableValue<ofFloatColor>(this, parameter)) { continue; }
 				if (tryAddEditableValue<ofRectangle>(this, parameter)) { continue; }
 
 				{

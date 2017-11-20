@@ -7,12 +7,13 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class SelectFile : public LiveValue<string> {
+		class SelectFile : public LiveValue<filesystem::path> {
 		public:
-			SelectFile(string caption, function<string()> get, function<void(string &)> set);
-			SelectFile(ofParameter<string> &);
+			SelectFile(string caption, function<filesystem::path()> get, function<void(filesystem::path &)> set);
+			SelectFile(ofParameter<filesystem::path> &);
+			ofxLiquidEvent<const filesystem::path &> onValueChange;
 		protected:
-			function<void(string &)> setFunction;
+			function<void(filesystem::path &)> setFunction;
 		};
 	}
 }

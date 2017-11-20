@@ -9,6 +9,7 @@
 #include "../Widgets/Slider.h"
 #include "../Widgets/Spacer.h"
 #include "../Widgets/Title.h"
+#include "../Widgets/SelectFile.h"
 #include "../Widgets/Toggle.h"
 
 #include "ofParameterGroup.h"
@@ -87,6 +88,9 @@ namespace ofxCvGui {
 
 			// Add Widgets::Toggle
 			shared_ptr<ofxCvGui::Widgets::Toggle> addToggle(const string & caption, const function<bool()> & get, const function<void(bool)> & set);
+
+			// Add Widgets::SelectFile
+			shared_ptr<ofxCvGui::Widgets::SelectFile> addFilePath(ofParameter<filesystem::path> & parameter);
 
 			// Add ofParameterGroup
 			void addParameterGroup(ofParameterGroup &, int titleLevel = 0);
