@@ -19,6 +19,12 @@ namespace ofxCvGui {
 				});
 			};
 
+			LiveValue(const ofParameter<T> & parameter) {
+				this->init(parameter.getName(), [&parameter]() {
+					return parameter.get();
+				});
+			}
+
 			void init(string caption, function<T()> liveValue) {
 				this->setCaption(caption);
 				this->liveValue = liveValue;

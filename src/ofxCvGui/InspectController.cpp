@@ -61,13 +61,15 @@ namespace ofxCvGui {
 
 	//----------
 	void InspectController::inspect(shared_ptr<IInspectable> target) {
-		//only set if nothing else has been set this frame
-		if (!this->inspectThisFrame.lock()) {
-			if (target) {
-				this->inspectThisFrame = target;
-			}
-			else {
-				this->clear();
+		if (!this->inspectorLocked) {
+			//only set if nothing else has been set this frame
+			if (!this->inspectThisFrame.lock()) {
+				if (target) {
+					this->inspectThisFrame = target;
+				}
+				else {
+					this->clear();
+				}
 			}
 		}
 	}
@@ -102,6 +104,16 @@ namespace ofxCvGui {
 	//----------
 	void InspectController::maximise() {
 		this->onMaximise.notifyListeners();
+	}
+
+	//----------
+	void InspectController::setInspectorLocked(bool inspectorLocked) {
+		this->inspectorLocked = inspectorLocked;
+	}
+
+	//----------
+	bool InspectController::getInspectorLocked() const {
+		return this->inspectorLocked;
 	}
 
 #pragma mark Global

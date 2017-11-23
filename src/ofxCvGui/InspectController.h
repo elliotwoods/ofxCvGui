@@ -44,6 +44,9 @@ namespace ofxCvGui {
 		/// Tell all inspectors to attempt to maximise on their next update frame
 		void maximise();
 
+		void setInspectorLocked(bool);
+		bool getInspectorLocked() const;
+
 		ofxLiquidEvent<shared_ptr<IInspectable>> onTargetChange;
 		ofxLiquidEvent<ElementPtr> onAddWidget;
 		ofxLiquidEvent<void> onMaximise;
@@ -57,6 +60,7 @@ namespace ofxCvGui {
 		bool hasTarget = false;
 		bool clearThisFrame = false;
 		bool refreshThisFrame = false;
+		bool inspectorLocked = false;
 	};
 
 	void inspect(shared_ptr<IInspectable>);
