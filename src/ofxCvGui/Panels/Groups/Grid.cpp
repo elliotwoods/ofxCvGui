@@ -1,4 +1,4 @@
-#include "ofxCvGui/Panels/Groups/Grid.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 	namespace Panels {

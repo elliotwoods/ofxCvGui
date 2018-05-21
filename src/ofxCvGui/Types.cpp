@@ -1,5 +1,4 @@
-#include "ofxCvGui/Types.h"
-#include "ofxCvGui/Element.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 #pragma mark MouseArguments

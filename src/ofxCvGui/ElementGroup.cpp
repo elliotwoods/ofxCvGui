@@ -1,5 +1,4 @@
-#include "ofxCvGui/ElementGroup.h"
-#include "ofxCvGui/Panels/Base.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 	//----------

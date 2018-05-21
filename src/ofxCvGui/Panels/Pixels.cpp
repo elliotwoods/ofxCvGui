@@ -1,4 +1,5 @@
-#include "ofxCvGui/Panels/Pixels.h"
+#include "pch_ofxCvGui.h"
+
 namespace ofxCvGui {
 	namespace Panels {
 		//----------

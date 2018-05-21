@@ -1,5 +1,4 @@
-#include "MultipleChoice.h"
-#include "ofxAssets.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 	namespace Widgets {

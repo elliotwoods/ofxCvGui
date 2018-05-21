@@ -1,6 +1,5 @@
-#include "Indicator.h"
-#include "../Utils/Constants.h"
-#include "ofxAssets.h"
+#include "pch_ofxCvGui.h"
+
 namespace ofxCvGui {
 	namespace Widgets {
 		//----------

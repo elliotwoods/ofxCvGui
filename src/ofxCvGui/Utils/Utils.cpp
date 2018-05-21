@@ -1,16 +1,4 @@
-#include "Utils.h"
-
-#include "Constants.h"
-
-#include "ofxAssets.h"
-
-#include "ofGraphics.h"
-#include "ofAppRunner.h"
-#include "ofAppGLFWWindow.h"
-#include "ofMatrix3x3.h"
-#include "ofMatrix4x4.h"
-
-#include <vector>
+#include "pch_ofxCvGui.h"
 
 OFXSINGLETON_DEFINE(ofxCvGui::Utils::ScissorManager);
 

@@ -1,6 +1,4 @@
-#include "Slider.h"
-#include "ofxAssets.h"
-#include "ofSystemUtils.h"
+#include "pch_ofxCvGui.h"
 
 using namespace ofxAssets;
 

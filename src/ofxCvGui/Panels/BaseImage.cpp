@@ -1,5 +1,4 @@
-#include "ofxCvGui/Panels/BaseImage.h"
-#include "ofxAssets.h"
+#include "pch_ofxCvGui.h"
 
 using namespace ofxAssets;
 

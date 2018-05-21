@@ -1,4 +1,4 @@
-#include "InspectController.h"
+#include "pch_ofxCvGui.h"
 
 //----------
 OFXSINGLETON_DEFINE(ofxCvGui::InspectController);

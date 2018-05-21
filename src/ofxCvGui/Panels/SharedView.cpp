@@ -1,4 +1,4 @@
-#include "SharedView.h"
+#include "pch_ofxCvGui.h"
 
 using namespace ofxCvGui;
 

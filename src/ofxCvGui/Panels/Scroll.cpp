@@ -1,9 +1,4 @@
-#include "Scroll.h"
-
-#include "ofxCvGui/Utils/Utils.h"
-#include "ofxCvGui/Widgets/Spacer.h"
-
-#include "ofAppRunner.h"
+#include "pch_ofxCvGui.h"
 
 #define OFXCVGUI_SCROLL_SPACING 10.0f
 #define OFXCVGUI_SCROLL_AREA_WIDTH 20.0f
@@ -32,7 +27,7 @@ namespace ofxCvGui {
 			this->elements->onDraw += [this](DrawArguments & args) {
 				for (auto element : this->elements->getElements()) {
 					//don't add a side line for non-interactive widgets
-					if (dynamic_pointer_cast<Widgets::Spacer>(element)) {
+					if (dynamic_pointer_cast<ofxCvGui::Widgets::Spacer>(element)) {
 						continue;
 					}
 

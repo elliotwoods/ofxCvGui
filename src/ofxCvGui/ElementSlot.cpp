@@ -1,4 +1,4 @@
-#include "ElementSlot.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 	//----------

@@ -1,7 +1,4 @@
-#include "ElementCanvas.h"
-#include "../Widgets/Slider.h"
-
-#include "ofAppRunner.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 	namespace Panels {
@@ -63,7 +60,7 @@ namespace ofxCvGui {
 			this->zoom.set("Zoom", 0, -3, 1);
 			this->zoom.addListener(this, &ElementCanvas::callbackZoomChange);
 
-			this->zoomControl = make_shared<Widgets::Slider>(this->zoom);
+			this->zoomControl = make_shared<ofxCvGui::Widgets::Slider>(this->zoom);
 			this->zoomControl->setBounds(ofRectangle(10, 10, 100, 50));
 			this->zoomControl->addListenersToParent(this->fixedElements);
 		}

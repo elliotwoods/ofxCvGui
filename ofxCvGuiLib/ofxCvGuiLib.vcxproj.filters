@@ -167,6 +167,9 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\Widgets.cpp">
       <Filter>src\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\pch_ofxCvGui.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Utils\Enum.h">
       <Filter>src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\pch_ofxCvGui.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

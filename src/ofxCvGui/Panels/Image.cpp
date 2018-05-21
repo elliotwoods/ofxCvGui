@@ -1,6 +1,5 @@
-#include "ofxCvGui/Panels/Image.h"
+#include "pch_ofxCvGui.h"
 
-#include "ofSystemUtils.h"
 
 namespace ofxCvGui {
 	namespace Panels {

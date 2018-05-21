@@ -1,6 +1,4 @@
-#include "LiveValue.h"
-
-#include "ofAppRunner.h"
+#include "pch_ofxCvGui.h"
 
 #ifdef TARGET_WIN32
 	#include "psapi.h"

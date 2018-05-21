@@ -1,4 +1,4 @@
-#include "Base.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 	namespace Panels {

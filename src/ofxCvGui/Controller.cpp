@@ -1,6 +1,4 @@
-#include "ofxCvGui/Controller.h"
-#include "ofxCvGui/InspectController.h"
-#include "ofxAssets.h"
+#include "pch_ofxCvGui.h"
 
 //----------
 OFXSINGLETON_DEFINE(ofxCvGui::Controller);

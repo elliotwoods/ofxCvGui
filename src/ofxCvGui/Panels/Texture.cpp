@@ -1,7 +1,4 @@
-#include "Texture.h"
-#include "ofxAssets.h"
-
-#include "ofMain.h"
+#include "pch_ofxCvGui.h"
 
 namespace ofxCvGui {
 	namespace Panels {
