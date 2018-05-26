@@ -302,7 +302,8 @@ namespace ofxCvGui {
 		auto thisMouseClick = pair<long long, ofMouseEventArgs>(ofGetElapsedTimeMillis(), args);
 
 		bool isDoubleClick = (thisMouseClick.first - this->lastMouseClick.first) < OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS;
-		isDoubleClick &= thisMouseClick.second.distance(this->lastMouseClick.second) < OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX;
+		ofVec2f second = thisMouseClick.second;
+		isDoubleClick &= second.distance(this->lastMouseClick.second) < OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX;
 
 		if (isDoubleClick) {
 			this->mouseOwner = this->lastClickOwner;
