@@ -27,6 +27,7 @@ namespace ofxCvGui {
 			void setScroll(float);
 			float getScroll() const;
 			void scrollToInclude(ElementPtr);
+			float getLength() const;
 			///{
 		protected:
 			void update();

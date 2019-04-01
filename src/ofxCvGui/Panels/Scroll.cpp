@@ -94,6 +94,11 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		float Scroll::getLength() const {
+			return this->length;
+		}
+
+		//----------
 		void Scroll::update() {
 			if (this->localMouseState == LocalMouseState::Waiting) {
 				float decay = ofClamp(1.0f - 2.0f * ofGetLastFrameTime(), 0, 1);
