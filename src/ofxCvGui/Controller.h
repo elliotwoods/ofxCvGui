@@ -36,7 +36,7 @@ namespace ofxCvGui {
 		PanelGroupPtr getRootGroup() const;
 		void setRootGroup(PanelGroupPtr);
 
-		PanelPtr getPanelUnderCursor(const ofVec2f & position = ofVec2f(ofGetMouseX(), ofGetMouseY()));
+		PanelPtr getPanelUnderCursor(const glm::vec2 & position = glm::vec2(ofGetMouseX(), ofGetMouseY()));
 
 		ofxLiquidEvent<PanelPtr> onDialogClose;
 		void drawDelayed(function<void()> && drawFunction);
@@ -61,7 +61,7 @@ namespace ofxCvGui {
 		void mouseAction(MouseArguments &);
 
 		bool checkInitialised();
-		PanelPtr findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position = ofVec2f(ofGetMouseX(), ofGetMouseY())); ///<input root bounds to get the found panel's bounds. should split  to getGlobalBoundsOfPanel(PanelPtr)
+		PanelPtr findPanelUnderCursor(ofRectangle & panelBounds, const glm::vec2 & position = glm::vec2(ofGetMouseX(), ofGetMouseY())); ///<input root bounds to get the found panel's bounds. should split  to getGlobalBoundsOfPanel(PanelPtr)
 		void updateCurrentPanel();
 
 		PanelGroupPtr rootGroup;
@@ -72,7 +72,7 @@ namespace ofxCvGui {
 
 		ofRectangle currentPanelBounds;
 		bool maximised;
-        ofVec2f mouseCached;
+		glm::vec2 mouseCached;
 		void * mouseOwner;
 		void * lastClickOwner;
 		pair<long long, ofMouseEventArgs> lastMouseClick; ///<timestamp in millis

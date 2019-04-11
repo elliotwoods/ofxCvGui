@@ -23,7 +23,8 @@ namespace ofxCvGui {
 
 			this->onMouse += [this](ofxCvGui::MouseArguments & args) {
 				ofMouseEventArgs ofArgs;
-				(ofVec2f&)ofArgs = args.local;
+				(glm::vec2&)ofArgs = args.local;
+
 				ofArgs.button = args.button;
 
 				switch (args.action) {

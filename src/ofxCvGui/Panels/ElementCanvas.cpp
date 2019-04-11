@@ -18,8 +18,11 @@ namespace ofxCvGui {
 				}
 			};
 			this->onBoundsChange += [this](ofxCvGui::BoundsChangeArguments & args) {
-				const ofVec2f bottomRight = this->getLocalBounds().getBottomRight();
-				this->zoomControl->setBounds(ofRectangle(bottomRight - ofVec2f(210.0f, 50.0f), bottomRight - ofVec2f(10.0f, 10.0f)));
+				const auto bottomRight = this->getLocalBounds().getBottomRight();
+				this->zoomControl->setBounds(ofRectangle(
+					bottomRight - glm::vec2(210.0f, 50.0f)
+					, bottomRight - glm::vec2(10.0f, 10.0f))
+				);
 			};
 			this->onKeyboard += [this](KeyboardArguments & args) {
 				if (args.checkCurrentPanel(this)) {
@@ -45,7 +48,9 @@ namespace ofxCvGui {
 				// MP = midPoint
 				// TL = top left
 
-				auto MP = ofVec2f(this->getWidth() / 2.0f, this->getHeight() / 2.0f);
+				auto MP = glm::vec2(this->getWidth() / 2.0f
+					, this->getHeight() / 2.0f);
+
 				auto TL = -this->getScrollPosition();
 				auto MP_TL = TL - MP;
 				auto MP_TL_new = MP_TL * zoomRatio;
@@ -76,12 +81,12 @@ namespace ofxCvGui {
 		}
 
 		//---------
-		void ElementCanvas::setScrollPosition(const ofVec2f & scrollPosition) {
+		void ElementCanvas::setScrollPosition(const glm::vec2 & scrollPosition) {
 			this->scrollPosition = scrollPosition;
 		}
 
 		//---------
-		const ofVec2f & ElementCanvas::getScrollPosition() const {
+		const glm::vec2 & ElementCanvas::getScrollPosition() const {
 			return this->scrollPosition;
 		}
 
@@ -100,8 +105,8 @@ namespace ofxCvGui {
 			//Calculate canvas extents
 			//--
 			//
-			ofVec2f topLeft(0, 0);
-			ofVec2f bottomRight(thisBounds.getWidth(), thisBounds.getHeight());
+			glm::vec2 topLeft(0, 0);
+			glm::vec2 bottomRight(thisBounds.getWidth(), thisBounds.getHeight());
 
 			for (auto element : this->canvasElements->getElements()) {
 				auto elementBottomRight = element->getBounds().getBottomRight();

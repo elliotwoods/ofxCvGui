@@ -64,7 +64,7 @@ namespace ofxCvGui {
 						DrawArguments localArgumentsInFbo;
 						localArgumentsInFbo.chromeEnabled = localArguments.chromeEnabled;
 						localArgumentsInFbo.naturalBounds = localArguments.localBounds;
-						localArgumentsInFbo.globalTransform = ofMatrix4x4();
+						localArgumentsInFbo.globalTransform = glm::mat4();
 						localArgumentsInFbo.globalScale = 1.0f;
 						localArgumentsInFbo.localBounds = localArguments.localBounds;
 						localArgumentsInFbo.globalBounds = localArguments.localBounds;
@@ -121,9 +121,9 @@ namespace ofxCvGui {
 			auto parentToLocalTransform = this->getParentToLocalTransform();
 
 			MouseArguments localMouseArguments = parentMouseArguments;
-			localMouseArguments.local = (ofVec3f) parentMouseArguments.local * parentToLocalTransform.getInverse();
-			localMouseArguments.localNormalized = localMouseArguments.local / ofVec2f(this->getWidth(), this->getHeight());
-			localMouseArguments.movement = parentMouseArguments.movement / ofVec2f(parentToLocalTransform(0, 0), parentToLocalTransform(1, 1));
+			localMouseArguments.local = glm::inverse(parentToLocalTransform) * glm::vec4(parentMouseArguments.local, 0.0f, 1.0f);
+			localMouseArguments.localNormalized = localMouseArguments.local / glm::vec2(this->getWidth(), this->getHeight());
+			localMouseArguments.movement = parentMouseArguments.movement / glm::vec2(parentToLocalTransform[0][0], parentToLocalTransform[1][1]);
 
 			this->mouseOver = localMouseArguments.isLocal();
 
@@ -282,7 +282,7 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	void Element::setPosition(const ofVec2f& position) {
+	void Element::setPosition(const glm::vec2 & position) {
 		auto newBounds = this->getBounds();
 		bounds.x = position.x;
 		bounds.y = position.y;
@@ -333,7 +333,7 @@ namespace ofxCvGui {
 	}
 
 	//-----------
-	ofMatrix4x4 Element::getParentToLocalTransform() const {
+	glm::mat4x4 Element::getParentToLocalTransform() const {
 		return this->parentToLocalTransform;
 	}
 
@@ -472,7 +472,11 @@ namespace ofxCvGui {
 
 	//-----------
 	void Element::updateParentToLocalTransform() {
-		this->parentToLocalTransform = ofMatrix4x4::newScaleMatrix(this->zoomFactor, this->zoomFactor, 1.0f) * ofMatrix4x4::newTranslationMatrix(this->getBounds().getTopLeft());
+		this->parentToLocalTransform = glm::scale(glm::vec3(this->zoomFactor
+			, this->zoomFactor
+			, 1.0f))
+			
+			* glm::translate(this->getBounds().getTopLeft());
 	}
 
 	//-----------

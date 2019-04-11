@@ -54,7 +54,8 @@ namespace ofxCvGui {
 				}
 
 				ofMouseEventArgs ofArgs;
-				(ofVec2f&)ofArgs = this->useFbo ? args.local : args.global;
+				(glm::vec2 &) ofArgs = this->useFbo ? args.local : args.global;
+
 				ofArgs.button = args.button;
 
 				switch (args.action) {

@@ -1,7 +1,8 @@
 #pragma once
 #include "ofRectangle.h"
-#include "ofMatrix4x4.h"
 #include "ofxSingleton.h"
+
+#include <glm/glm.hpp>
 
 //#define OFXCVGUI_DISBALE_SCISSOR
 
@@ -11,7 +12,7 @@ namespace ofxCvGui {
 		ofRectangle drawText(const string& text, float x, float y, bool background = true, float minHeight = 15, float minWidth = 0, bool scissor = false);
 		ofRectangle drawText(const string& text, const ofRectangle & bounds, bool background = true, bool scissor = false);
 		void drawProcessingNotice(string message);
-		void drawToolTip(const string & text, const ofVec2f & position);
+		void drawToolTip(const string & text, const glm::vec2 & position);
 
 		string makeString(char key);
 
@@ -37,7 +38,7 @@ namespace ofxCvGui {
 		};
 
 #pragma mark Math
-		ofRectangle operator*(const ofRectangle &, const ofMatrix4x4 &);
+		ofRectangle operator*(const ofRectangle &, const glm::mat4 &);
 
 #pragma mark Colors
 		ofColor toColor(const string &);

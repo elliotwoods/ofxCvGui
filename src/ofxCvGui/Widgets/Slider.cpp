@@ -61,7 +61,7 @@ namespace ofxCvGui {
 				this->tenTicks = new ofMesh();
 				auto & ticks = * this->tenTicks;
 				for(float x = 0.0f; x< 1.0f; x+= 0.1f) {
-					ticks.addVertex(ofVec3f(x, 0.0f, 0.0f));
+					ticks.addVertex(glm::vec3(x, 0.0f, 0.0f));
 				}
 				ticks.setMode(OF_PRIMITIVE_POINTS);
 			}
@@ -202,7 +202,7 @@ namespace ofxCvGui {
 				if (innerMagnitude > 0.0f) {
 					//postitive ticks
 					for (float tick = 0.0f; tick <= value->getMax(); tick += innerMagnitude) {
-						majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
+						majorTicks.addVertex(glm::vec3(tick, 0.0f, 0.0f));
 						majorTicks.addColor(255);
 					}
 					//negative ticks
@@ -210,7 +210,7 @@ namespace ofxCvGui {
 						if (tick == 0.0f) {
 							continue;
 						}
-						majorTicks.addVertex(ofVec3f(tick, 0.0f, 0.0f));
+						majorTicks.addVertex(glm::vec3(tick, 0.0f, 0.0f));
 						majorTicks.addColor(0);
 					}
 				}

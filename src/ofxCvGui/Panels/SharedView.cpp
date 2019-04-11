@@ -66,7 +66,7 @@ namespace ofxCvGui {
 		}
 
 		//---------
-		PanelPtr const SharedViewServer::findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) {
+		PanelPtr const SharedViewServer::findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) {
 			auto client = this->focus.lock();
 			if (client) {
 				return client->getHostedView()->findScreen(xy, currentPanelBounds);
@@ -145,7 +145,7 @@ namespace ofxCvGui {
 		}
 
 		//---------
-		PanelPtr const SharedViewClient::findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) {
+		PanelPtr const SharedViewClient::findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) {
 			if (this->view) {
 				return this->view->findScreen(xy, currentPanelBounds);
 			} else {

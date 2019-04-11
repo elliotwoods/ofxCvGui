@@ -2,7 +2,8 @@
 #include "ofRectangle.h"
 #include "ofEvents.h"
 #include "ofTypes.h"
-#include "ofMatrix4x4.h"
+
+#include <glm/glm.hpp>
 
 namespace ofxCvGui {
 	//-------------
@@ -17,7 +18,7 @@ namespace ofxCvGui {
 	struct DrawArguments {
 		bool chromeEnabled;
 		ofRectangle naturalBounds; /// bounds within parent as stored locally. before scaling
-		ofMatrix4x4 globalTransform; /// warning : global properties can be relative to an fbo if within a cached view element
+		glm::mat4 globalTransform; /// warning : global properties can be relative to an fbo if within a cached view element
 		float globalScale;
 		ofRectangle localBounds;
 		ofRectangle globalBounds;
@@ -46,7 +47,12 @@ namespace ofxCvGui {
         };
         
 		MouseArguments(); //local
-		MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * owner, const ofVec2f& cached = ofVec2f()); ///global
+		MouseArguments(const ofMouseEventArgs& mouseArgs
+			, Action action
+			, const ofRectangle& rectangle
+			, const shared_ptr<void>& currentPanel
+			, void * owner
+			, const glm::vec2 & cached = glm::vec2()); ///global
 		
 		bool isLocal() const; 
 		bool isTaken() const;
@@ -70,10 +76,10 @@ namespace ofxCvGui {
 
 		Action action;
 		int button;
-		ofVec2f global;
-		ofVec2f local;
-		ofVec2f localNormalized; ///<Texture coordinates
-        ofVec2f movement;
+		glm::vec2 global;
+		glm::vec2 local;
+		glm::vec2 localNormalized; ///<Texture coordinates
+		glm::vec2 movement;
 
 		friend ostream& operator<<(ostream&, const MouseArguments &);
 	protected:
@@ -87,7 +93,9 @@ namespace ofxCvGui {
             Pressed, Released
         };
         
-		KeyboardArguments(const ofKeyEventArgs& keyboardArgs, Action action, shared_ptr<void> currentPanel);
+		KeyboardArguments(const ofKeyEventArgs& keyboardArgs
+			, Action action
+			, shared_ptr<void> currentPanel);
         
 		const Action action;
 		const int key;
@@ -104,9 +112,12 @@ namespace ofxCvGui {
 	//----------
 	class FilesDraggedArguments {
 	public:
-		FilesDraggedArguments(const ofVec2f & localPosition, const ofVec2f & globalPosition, const vector<string> & files);
-		const ofVec2f localPosition;
-		const ofVec2f globalPosition;
+		FilesDraggedArguments(const glm::vec2 & localPosition
+			, const glm::vec2 & globalPosition
+			, const vector<string> & files);
+
+		const glm::vec2 localPosition;
+		const glm::vec2 globalPosition;
 		const vector<string> files;
 	};
 

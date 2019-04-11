@@ -8,7 +8,7 @@ namespace ofxCvGui {
 			class Base : public ElementGroup_<Panels::Base> {
 			public:
 				virtual ~Base() { }
-				PanelPtr const findScreen(const ofVec2f & xy, ofRectangle & currentBounds) override;
+				PanelPtr const findScreen(const glm::vec2 & xy, ofRectangle & currentBounds) override;
 			};
 		}
 	}

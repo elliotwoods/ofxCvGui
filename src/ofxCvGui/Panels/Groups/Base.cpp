@@ -4,10 +4,10 @@ namespace ofxCvGui {
 	namespace Panels {
 		namespace Groups {
 			//----------
-			const PanelPtr Base::findScreen(const ofVec2f & xy, ofRectangle & currentBounds) {
+			const PanelPtr Base::findScreen(const glm::vec2 & xy, ofRectangle & currentBounds) {
 				for (auto panel : this->elements) {
 					if (panel->getBounds().inside(xy)) {
-						ofVec2f localXY = xy - ofVec2f(panel->getBounds().x, panel->getBounds().y);
+						auto localXY = xy - glm::vec2(panel->getBounds().x, panel->getBounds().y);
 						auto searchCurrentBounds = panel->getBounds();
 						searchCurrentBounds.x += currentBounds.x;
 						searchCurrentBounds.y += currentBounds.y;

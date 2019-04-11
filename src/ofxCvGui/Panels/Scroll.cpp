@@ -66,7 +66,7 @@ namespace ofxCvGui {
 			this->position = position;
 			position = floor(position);
 			if (this->elements->getBounds().y != -position) {
-				this->elements->setPosition(ofVec2f(0, -position));
+				this->elements->setPosition(glm::vec2(0, -position));
 			}
 		}
 

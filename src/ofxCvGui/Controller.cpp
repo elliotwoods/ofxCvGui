@@ -181,7 +181,7 @@ namespace ofxCvGui {
 		DrawArguments rootDrawArguments;
 		rootDrawArguments.chromeEnabled = this->chromeVisible;
 		rootDrawArguments.naturalBounds = ofGetCurrentViewport();
-		rootDrawArguments.globalTransform = ofMatrix4x4();
+		rootDrawArguments.globalTransform = glm::mat4();
 		rootDrawArguments.globalScale = 1.0f;
 		rootDrawArguments.localBounds = ofRectangle(0, 0, rootDrawArguments.naturalBounds.getWidth(), rootDrawArguments.naturalBounds.getHeight());
 		rootDrawArguments.globalBounds = rootDrawArguments.naturalBounds;
@@ -266,7 +266,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	PanelPtr Controller::getPanelUnderCursor(const ofVec2f & position) {
+	PanelPtr Controller::getPanelUnderCursor(const glm::vec2 & position) {
 		if (this->maximised) {
 			return currentPanel.lock();
 		} else {
@@ -302,7 +302,12 @@ namespace ofxCvGui {
 		auto thisMouseClick = pair<long long, ofMouseEventArgs>(ofGetElapsedTimeMillis(), args);
 
 		bool isDoubleClick = (thisMouseClick.first - this->lastMouseClick.first) < OFXCVGUI_DOUBLECLICK_TIME_THRESHOLD_MS;
-		isDoubleClick &= thisMouseClick.second.distance(this->lastMouseClick.second) < OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX;
+
+		auto distanceSinceLastClick = glm::distance(
+			(glm::vec2) thisMouseClick.second,
+			(glm::vec2) this->lastMouseClick.second
+		);
+		isDoubleClick &= distanceSinceLastClick < OFXCVGUI_DOUBLECLICK_SPACE_THRESHOLD_PX;
 
 		if (isDoubleClick) {
 			this->mouseOwner = this->lastClickOwner;
@@ -412,8 +417,8 @@ namespace ofxCvGui {
 		auto panel = this->findPanelUnderCursor(rootBounds);
 		if (panel != PanelPtr()) {
 			auto panelBounds = panel->getBounds();
-			ofVec2f panelTopLeft = panelBounds.getTopLeft();
-			auto newArgs = FilesDraggedArguments((ofVec2f) args.position - panelTopLeft, (ofVec2f) args.position, args.files);
+			auto panelTopLeft = panelBounds.getTopLeft();
+			auto newArgs = FilesDraggedArguments((glm::vec2) args.position - panelTopLeft, (glm::vec2) args.position, args.files);
 			panel->onFilesDragged(newArgs);
 		}
 	}
@@ -461,7 +466,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	PanelPtr Controller::findPanelUnderCursor(ofRectangle & panelBounds, const ofVec2f & position) {
+	PanelPtr Controller::findPanelUnderCursor(ofRectangle & panelBounds, const glm::vec2 & position) {
 		if (!this->rootGroup) {
 			return PanelPtr();
 		}

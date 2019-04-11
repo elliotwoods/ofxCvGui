@@ -17,7 +17,7 @@ namespace ofxCvGui {
 		class Base : public Element {
 		public:
 			Base();
-			virtual const shared_ptr<Panels::Base> findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) {
+			virtual const shared_ptr<Panels::Base> findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) {
 				return shared_ptr<Panels::Base>();
 			}
 			

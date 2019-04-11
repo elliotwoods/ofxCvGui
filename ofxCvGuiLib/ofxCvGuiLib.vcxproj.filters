@@ -374,6 +374,9 @@
     <ClInclude Include="..\src\pch_ofxCvGui.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Watchdog.h">
+      <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">

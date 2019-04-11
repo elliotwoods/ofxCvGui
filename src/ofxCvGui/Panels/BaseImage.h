@@ -21,7 +21,7 @@ namespace ofxCvGui {
 			void setMirror(bool);
 			bool getMirror() const;
 
-			ofMatrix4x4 getPanelToImageTransform() const;
+			glm::mat4x4 getPanelToImageTransform() const;
 
 			float getZoomFactor() const;
 		protected:
@@ -33,7 +33,7 @@ namespace ofxCvGui {
             void nudgeZoom(KeyboardArguments &);
 			void clampScroll();
 
-            ofVec2f scroll; // in image pixel coordinates
+			glm::vec2 scroll; // in image pixel coordinates
 			ImageZoomState zoomState = ImageZoomState::Fit;
 			bool mirror = false;
 		};

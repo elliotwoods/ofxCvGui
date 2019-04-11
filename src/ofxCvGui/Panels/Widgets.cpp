@@ -169,9 +169,9 @@ namespace ofxCvGui {
 
 				if (tryAddEditableValue<string>(this, parameter)) { continue; }
 
-				if (tryAddEditableValue<ofVec2f>(this, parameter)) { continue; }
-				if (tryAddEditableValue<ofVec3f>(this, parameter)) { continue; }
-				if (tryAddEditableValue<ofVec4f>(this, parameter)) { continue; }
+				if (tryAddEditableValue<glm::vec2>(this, parameter)) { continue; }
+				if (tryAddEditableValue<glm::vec3>(this, parameter)) { continue; }
+				if (tryAddEditableValue<glm::vec4>(this, parameter)) { continue; }
 
 				if (tryAddEditableValue<ofColor>(this, parameter)) { continue; }
 				if (tryAddEditableValue<ofShortColor>(this, parameter)) { continue; }

@@ -44,7 +44,7 @@ namespace ofxCvGui {
 		void setHeight(float);
 		void arrange();
 
-		void setPosition(const ofVec2f&);
+		void setPosition(const glm::vec2 &);
 		const ofRectangle & getBounds() const; // aka natural bounds, unzoomed bounds
 		ofRectangle getLocalBounds() const;
 		ofRectangle getBoundsInParent() const;
@@ -54,7 +54,7 @@ namespace ofxCvGui {
 		void setZoom(float);
 		float getZoom() const;
 
-		ofMatrix4x4 getParentToLocalTransform() const;
+		glm::mat4x4 getParentToLocalTransform() const;
 		
 		void setCaption(string caption);
 		const string & getCaption() const;
@@ -95,7 +95,7 @@ namespace ofxCvGui {
 
 		ofRectangle bounds; ///<bounds relative to parent
 		float zoomFactor;
-		ofMatrix4x4 parentToLocalTransform;
+		glm::mat4 parentToLocalTransform;
 
 		string caption;
 		bool enabled;

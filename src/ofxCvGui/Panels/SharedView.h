@@ -14,7 +14,7 @@ namespace ofxCvGui {
 		class SharedViewServer : public ofxCvGui::Panels::Base {
 		public:
 			SharedViewServer();
-			ofxCvGui::PanelPtr const findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) override;
+			ofxCvGui::PanelPtr const findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) override;
 			void setFocus(shared_ptr<SharedViewClient>);
 			void clearFocus();
 			bool isFocused(shared_ptr<SharedViewClient>) const;
@@ -27,7 +27,7 @@ namespace ofxCvGui {
 		class SharedViewClient : public ofxCvGui::Panels::Base, public std::enable_shared_from_this<SharedViewClient> {
 		public:
 			SharedViewClient(ofxCvGui::PanelPtr view, shared_ptr<SharedViewServer>);
-			ofxCvGui::PanelPtr const findScreen(const ofVec2f & xy, ofRectangle & currentPanelBounds) override;
+			ofxCvGui::PanelPtr const findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) override;
 			void focusView();
 			bool isFocused();
 			PanelPtr getHostedView();

@@ -3,13 +3,19 @@
 namespace ofxCvGui {
 #pragma mark MouseArguments
 	//----------
-	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs, Action action, const ofRectangle& rectangle, const shared_ptr<void>& currentPanel, void * takenBy, const ofVec2f& cached) :
+	MouseArguments::MouseArguments(const ofMouseEventArgs& mouseArgs
+		, Action action
+		, const ofRectangle& rectangle
+		, const shared_ptr<void>& currentPanel
+		, void * takenBy
+		, const glm::vec2 & cached) :
+
 		action(action),
 		button(mouseArgs.button),
 		global(mouseArgs.x, mouseArgs.y),
 		local(mouseArgs.x - rectangle.x, mouseArgs.y - rectangle.y),
-		localNormalized(local / ofVec2f(rectangle.width, rectangle.height)),
-        movement(action == Dragged ? global - cached : ofVec2f()),
+		localNormalized(local / glm::vec2(rectangle.width, rectangle.height)),
+        movement(action == Dragged ? global - cached : glm::vec2()),
 		takenBy(takenBy),
         InputArguments(currentPanel)
 	{ }
@@ -98,7 +104,9 @@ namespace ofxCvGui {
 
 #pragma mark FilesDraggedArguments
 	//----------
-	FilesDraggedArguments::FilesDraggedArguments(const ofVec2f & localPosition, const ofVec2f & globalPosition, const vector<string> & files) :
+	FilesDraggedArguments::FilesDraggedArguments(const glm::vec2 & localPosition
+		, const glm::vec2 & globalPosition
+		, const vector<string> & files) :
 		localPosition(localPosition), globalPosition(globalPosition), files(files)
 	{ }
 }

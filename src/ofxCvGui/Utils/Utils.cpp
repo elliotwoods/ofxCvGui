@@ -2,6 +2,8 @@
 
 OFXSINGLETON_DEFINE(ofxCvGui::Utils::ScissorManager);
 
+#include <GLFW/glfw3.h>
+
 namespace ofxCvGui {
 	namespace Utils {
 #pragma mark Text
@@ -84,7 +86,7 @@ namespace ofxCvGui {
 		}
 
 		//---------
-		void drawToolTip(const string & text, const ofVec2f & position) {
+		void drawToolTip(const string & text, const glm::vec2 & position) {
 			//draw ignoring scissor
 			auto scissorEnabled = ScissorManager::X().getScissorEnabled();
 			ScissorManager::X().setScissorEnabled(false);
@@ -98,18 +100,18 @@ namespace ofxCvGui {
 				const auto rawBounds = font.getStringBoundingBox(text, 0, 0);
 				const auto halfTextWidth = rawBounds.getWidth() / 2.0f;
 				const auto textHeight = rawBounds.getHeight() - rawBounds.y;
-				const ofVec2f textDrawAnchor(position.x - (halfTextWidth + rawBounds.x), position.y - (rawBounds.getHeight() + rawBounds.y) - 15);
+				const glm::vec2 textDrawAnchor(position.x - (halfTextWidth + rawBounds.x), position.y - (rawBounds.getHeight() + rawBounds.y) - 15);
 
 				ofPath bubble;
 				bubble.setStrokeColor(ofColor(0));
 				bubble.setStrokeWidth(1.0f);
 				bubble.moveTo(position);
-				bubble.lineTo(position + ofVec2f(-5, -5));
-				bubble.lineTo(position + ofVec2f(-halfTextWidth - 10, -5));
-				bubble.lineTo(position + ofVec2f(-halfTextWidth - 10, -5 - textHeight - 10));
-				bubble.lineTo(position + ofVec2f(+halfTextWidth + 10, -5 - textHeight - 10));
-				bubble.lineTo(position + ofVec2f(+halfTextWidth + 10, -5));
-				bubble.lineTo(position + ofVec2f(+5, -5));
+				bubble.lineTo(position + glm::vec2(-5, -5));
+				bubble.lineTo(position + glm::vec2(-halfTextWidth - 10, -5));
+				bubble.lineTo(position + glm::vec2(-halfTextWidth - 10, -5 - textHeight - 10));
+				bubble.lineTo(position + glm::vec2(+halfTextWidth + 10, -5 - textHeight - 10));
+				bubble.lineTo(position + glm::vec2(+halfTextWidth + 10, -5));
+				bubble.lineTo(position + glm::vec2(+5, -5));
 				bubble.close();				
 				bubble.draw();
 
@@ -242,11 +244,14 @@ namespace ofxCvGui {
 
 #pragma mark Math
 		//----------
-		ofRectangle operator*(const ofRectangle & rectangle, const ofMatrix4x4 & transform) {
+		ofRectangle operator*(const ofRectangle & rectangle, const glm::mat4x4 & transform) {
 			auto topLeft = rectangle.getTopLeft();
-			auto scale = ofVec4f(rectangle.getWidth(), rectangle.getHeight(), 0.0f, 0.0f); // w = 0 so no translate
-			topLeft = topLeft * transform;
-			scale = scale * transform;
+			auto scale = glm::vec4(rectangle.getWidth()
+				, rectangle.getHeight()
+				, 0.0f
+				, 0.0f); // w = 0 so no translate
+			topLeft = transform * glm::vec4(topLeft, 1);
+			scale = transform * scale;
 			return ofRectangle(topLeft.x, topLeft.y, scale.x, scale.y);
 		}
 

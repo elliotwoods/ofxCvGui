@@ -17,8 +17,8 @@ namespace ofxCvGui {
 			/// Elements which are fixed above the canvas
 			ElementGroupPtr getFixedElementGroup(); 
 
-			void setScrollPosition(const ofVec2f &);
-			const ofVec2f & getScrollPosition() const;
+			void setScrollPosition(const glm::vec2 &);
+			const glm::vec2 & getScrollPosition() const;
 
 			const ofRectangle & getCanvasExtents() const;
 		protected:
@@ -30,8 +30,8 @@ namespace ofxCvGui {
 			ElementPtr zoomControl;
 
 			ofParameter<float> zoom;
-			ofVec2f scrollPosition; // 0,0 means no scroll. +,+ means canvas moves up left
-			ofVec2f correctiveVelocity;
+			glm::vec2 scrollPosition; // 0,0 means no scroll. +,+ means canvas moves up left
+			glm::vec2 correctiveVelocity;
 
 			ofRectangle canvasExtents;
 		};

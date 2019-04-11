@@ -22,23 +22,26 @@ namespace ofxCvGui {
 
 
 		//----------
-		ofMatrix4x4 BaseImage::getPanelToImageTransform() const {
+		glm::mat4 BaseImage::getPanelToImageTransform() const {
 			float factor = this->getZoomFactor();
 
-			ofMatrix4x4 transform;
+			glm::mat4 transform;
 
 			switch (this->zoomState) {
 			case ZoomX10:
 			case ZoomX1:
 			{
-				transform.translate(-this->scroll); //scroll is in screen coordinates
-				transform.scale(factor, factor, 1);
+				transform = glm::scale(glm::vec3(factor, factor, 1.0f));
+				transform = glm::translate(glm::vec3(-this->scroll, 0.0f)) * transform; //scroll is in screen coordinates
 				break;
 			}
 
 			case Stretch:
 			{
-				transform.scale(this->getWidth() / this->getImageWidth(), this->getHeight() / this->getImageHeight(), 1.0f);
+				transform = glm::scale(glm::vec3(this->getWidth() / this->getImageWidth()
+					, this->getHeight() / this->getImageHeight()
+					, 1.0f
+				));
 				break;
 			}
 			case Fit:
@@ -51,28 +54,33 @@ namespace ofxCvGui {
 					? this->getWidth() / this->getImageWidth() //letterbox top/bottom
 					: this->getHeight() / this->getImageHeight(); //letterbox left/right
 
-				transform.scale(scale, scale, 1.0f);
+				transform = glm::scale(glm::vec3(scale, scale, 1.0f)) * transform;
 				
 				if (aspectSelection) {
 					auto heightOfDrawnImage = this->getImageHeight() * scale;
 					auto offsetFromTop = (this->getHeight() - heightOfDrawnImage) / 2.0f;
-					transform.translate(0.0f, offsetFromTop, 0.0f);
+					transform = glm::translate(glm::vec3(0.0f, offsetFromTop, 0.0f))
+						* transform;
 				}
 				else {
 					auto widthOfDrawnImage = this->getImageWidth() * scale;
 					auto offsetFromLeft = (this->getWidth() - widthOfDrawnImage) / 2.0f;
-					transform.translate(offsetFromLeft, 0.0f, 0.0f);
+					transform = glm::translate(glm::vec3(offsetFromLeft, 0.0f, 0.0f))
+						* transform;
 				}
 				break;
 			}
 			default:
 				ofLogError() << "Zoom state not supported";
-				return ofMatrix4x4();
+				return glm::mat4();
 			}
 
 			if (this->mirror) {
-				transform.preMultScale(ofVec3f(-1, 1, 1));
-				transform.preMultTranslate(ofVec3f(-this->getImageWidth(), 0, 0));
+				const auto flipScale = glm::scale(glm::vec3(-1, 1, 1));
+				const auto flipTranslate = glm::translate(glm::vec3(-this->getImageWidth(), 0, 0));
+
+				transform = flipTranslate * flipScale * transform;
+				transform = glm::translate(glm::vec3(+this->getImageWidth(), 0, 0)) * glm::scale(glm::vec3(-1, 1, 1)) * transform;
 			}
 
 			return transform;
@@ -216,7 +224,7 @@ namespace ofxCvGui {
 					ofPushMatrix();
 					{
 						ofScale(zoomBoxBounds.width / this->getImageWidth(), zoomBoxBounds.height / this->getImageHeight());
-						ofMultMatrix(this->getPanelToImageTransform().getInverse());
+						ofMultMatrix(glm::inverse(this->getPanelToImageTransform()));
 						ofDrawRectangle(0, 0, this->getWidth(), this->getHeight());
 					}
 					ofPopMatrix();
@@ -234,7 +242,10 @@ namespace ofxCvGui {
 						if (mouse.isDragging(zoomBox)) {
 							float factor = this->getZoomFactor();
 
-							auto change = mouse.movement / ofVec2f(zoomBox->getWidth(), zoomBox->getHeight()) * ofVec2f(this->getImageWidth(), this->getImageHeight());
+							auto change = mouse.movement
+								/ glm::vec2(zoomBox->getWidth(), zoomBox->getHeight())
+								* glm::vec2(this->getImageWidth(), this->getImageHeight());
+
 							if (this->mirror) {
 								change.x *= -1.0f;
 							}
@@ -324,7 +335,7 @@ namespace ofxCvGui {
 			case Stretch:
 			case Fit:
 			default:
-				this->scroll = ofVec2f();
+				this->scroll = glm::vec2();
 				return;
 				break;
 			}
