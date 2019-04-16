@@ -1,6 +1,4 @@
 #pragma once
-#include <functional>
-#include <set>
 
 #include "Types.h"
 #include "Utils/Utils.h"
@@ -10,8 +8,11 @@
 #include "ofFbo.h"
 #include "ofxLiquidEvent.h"
 
+#include <functional>
+#include <set>
+
 namespace ofxCvGui {
-	typedef shared_ptr<Element> ElementPtr;
+	typedef std::shared_ptr<Element> ElementPtr;
 
 	class Element {
 	public:
@@ -56,9 +57,9 @@ namespace ofxCvGui {
 
 		glm::mat4x4 getParentToLocalTransform() const;
 		
-		void setCaption(string caption);
-		const string & getCaption() const;
-		ofxLiquidEvent<string> onCaptionChange;
+		void setCaption(std::string caption);
+		const std::string & getCaption() const;
+		ofxLiquidEvent<std::string> onCaptionChange;
 		
 		ofxLiquidEvent<UpdateArguments> onUpdate;
 		ofxLiquidEvent<DrawArguments> onDraw;
@@ -78,13 +79,13 @@ namespace ofxCvGui {
 		void setScissorEnabled(bool);
 
 		void addListenersToParent(Element *, bool syncBoundsToParent = false);
-		void addListenersToParent(shared_ptr<Element>, bool syncBoundsToParent = false);
+		void addListenersToParent(std::shared_ptr<Element>, bool syncBoundsToParent = false);
 		void removeListenersFromParent(Element *);
-		void removeListenersFromParent(shared_ptr<Element>);
+		void removeListenersFromParent(std::shared_ptr<Element>);
 
 		void addChild(ElementPtr);
 		void removeChild(ElementPtr);
-		set<ElementPtr> getChildren() const;
+		std::set<ElementPtr> getChildren() const;
 
 		void setCachedView(bool cachedViewEnabled);
 		void markViewDirty();
@@ -97,7 +98,7 @@ namespace ofxCvGui {
 		float zoomFactor;
 		glm::mat4 parentToLocalTransform;
 
-		string caption;
+		std::string caption;
 		bool enabled;
 		bool enableScissor;
 		bool enableHitTestOnBounds;
@@ -107,7 +108,7 @@ namespace ofxCvGui {
 		ofFbo * cachedView = 0;
 		bool needsViewUpdate;
 
-		set<ElementPtr> children;
+		std::set<ElementPtr> children;
 	};
 	
 	ElementPtr makeElement();

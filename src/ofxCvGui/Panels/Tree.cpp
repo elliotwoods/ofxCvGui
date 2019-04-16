@@ -75,12 +75,12 @@ namespace ofxCvGui {
 
 					if (this->collapsed) {
 						//draw a plus
-						ofLine(7, 10, 13, 10);
-						ofLine(10, 7, 10, 13);
+						ofDrawLine(7, 10, 13, 10);
+						ofDrawLine(10, 7, 10, 13);
 					}
 					else {
 						//draw a minus
-						ofLine(7, 10, 13, 10);
+						ofDrawLine(7, 10, 13, 10);
 					}
 				}
 				ofPopStyle();

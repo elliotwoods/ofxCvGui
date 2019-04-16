@@ -1,5 +1,7 @@
 #include "pch_ofxCvGui.h"
 
+using namespace std;
+
 namespace ofxCvGui {
 #pragma mark MouseArguments
 	//----------

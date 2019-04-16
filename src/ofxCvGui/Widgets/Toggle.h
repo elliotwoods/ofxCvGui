@@ -7,8 +7,8 @@ namespace ofxCvGui {
 		class Toggle : public Element {
 		public:
 			Toggle(ofParameter<bool> &, char hotKey = 0);
-			Toggle(string caption, char hotKey = 0);
-			Toggle(string caption, function<bool()> get, function<void(bool)> set, char hotKey = 0);
+			Toggle(std::string caption, char hotKey = 0);
+			Toggle(std::string caption, function<bool()> get, function<void(bool)> set, char hotKey = 0);
 			Toggle(); // you must call setParameter later
 
 			virtual ~Toggle();

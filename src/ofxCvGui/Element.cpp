@@ -1,5 +1,6 @@
 #include "pch_ofxCvGui.h"
 
+using namespace std;
 
 namespace ofxCvGui {
 	//-----------
@@ -52,7 +53,7 @@ namespace ofxCvGui {
 						Utils::ScissorManager::X().setScissorEnabled(false);
 
 						//if we need to update the view, then redraw the fbo
-						this->cachedView->begin(true);
+						this->cachedView->begin();
 
 						ofClear(20, 0);
 

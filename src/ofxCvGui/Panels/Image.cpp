@@ -82,7 +82,7 @@ namespace ofxCvGui {
 				bool unknownType = false;
 				bool allocated = false;
 				int bitsPerChannel = 0;
-				int channelCount = 0;
+				size_t channelCount = 0;
 
 				if (dynamic_cast<ofImage *>(this->asset)) {
 					const auto & pixels = dynamic_cast<ofImage *>(this->asset)->getPixels();

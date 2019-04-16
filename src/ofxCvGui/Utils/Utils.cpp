@@ -4,8 +4,11 @@ OFXSINGLETON_DEFINE(ofxCvGui::Utils::ScissorManager);
 
 #include <GLFW/glfw3.h>
 
+using namespace std;
+
 namespace ofxCvGui {
 	namespace Utils {
+
 #pragma mark Text
 		//---------
 		ofRectangle drawText(const string& text, float x, float y, bool background, float minHeight, float minWidth, bool scissor) {

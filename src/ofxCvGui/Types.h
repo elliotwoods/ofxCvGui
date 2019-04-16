@@ -27,8 +27,8 @@ namespace ofxCvGui {
 	//----------
     class InputArguments {
     public:
-        InputArguments(const shared_ptr<void>& currentPanel) : currentPanel(currentPanel) { }
-        const shared_ptr<void> currentPanel;
+        InputArguments(const std::shared_ptr<void>& currentPanel) : currentPanel(currentPanel) { }
+        const std::shared_ptr<void> currentPanel;
         
         bool checkCurrentPanel(void * panel) {
             return currentPanel.get() == panel;
@@ -50,7 +50,7 @@ namespace ofxCvGui {
 		MouseArguments(const ofMouseEventArgs& mouseArgs
 			, Action action
 			, const ofRectangle& rectangle
-			, const shared_ptr<void>& currentPanel
+			, const std::shared_ptr<void>& currentPanel
 			, void * owner
 			, const glm::vec2 & cached = glm::vec2()); ///global
 		
@@ -59,7 +59,7 @@ namespace ofxCvGui {
 
 		/// If the click is local and available then take it and return true, else return false
 		bool takeMousePress(void * element);
-		bool takeMousePress(shared_ptr<Element>);
+		bool takeMousePress(std::shared_ptr<Element>);
 
 		/// Not taken, or is something other than a mouse down action
 		bool mightStillBeUseful() const;
@@ -68,9 +68,9 @@ namespace ofxCvGui {
 		void forceMouseTake(void * element);
 
 		bool isDragging(void * element) const;
-		bool isDragging(shared_ptr<Element>) const;
+		bool isDragging(std::shared_ptr<Element>) const;
 		bool isDoubleClicked(void * element) const;
-		bool isDoubleClicked(shared_ptr<Element>) const;
+		bool isDoubleClicked(std::shared_ptr<Element>) const;
 
 		void * getOwner() const;
 
@@ -81,7 +81,7 @@ namespace ofxCvGui {
 		glm::vec2 localNormalized; ///<Texture coordinates
 		glm::vec2 movement;
 
-		friend ostream& operator<<(ostream&, const MouseArguments &);
+		friend std::ostream& operator<<(std::ostream&, const MouseArguments &);
 	protected:
 		void * takenBy;
 	};
@@ -95,7 +95,7 @@ namespace ofxCvGui {
         
 		KeyboardArguments(const ofKeyEventArgs& keyboardArgs
 			, Action action
-			, shared_ptr<void> currentPanel);
+			, std::shared_ptr<void> currentPanel);
         
 		const Action action;
 		const int key;
@@ -114,11 +114,11 @@ namespace ofxCvGui {
 	public:
 		FilesDraggedArguments(const glm::vec2 & localPosition
 			, const glm::vec2 & globalPosition
-			, const vector<string> & files);
+			, const std::vector<std::string> & files);
 
 		const glm::vec2 localPosition;
 		const glm::vec2 globalPosition;
-		const vector<string> files;
+		const std::vector<std::string> files;
 	};
 
 	//----------

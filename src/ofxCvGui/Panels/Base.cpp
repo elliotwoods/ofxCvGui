@@ -1,5 +1,6 @@
 #include "pch_ofxCvGui.h"
 
+using namespace std;
 using namespace ofxAssets;
 
 namespace ofxCvGui {
