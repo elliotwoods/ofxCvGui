@@ -8,6 +8,8 @@
 #include "ofFbo.h"
 #include "ofxLiquidEvent.h"
 
+#include "ofVectorMath.h"
+
 #include <functional>
 #include <set>
 

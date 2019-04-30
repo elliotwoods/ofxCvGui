@@ -2,8 +2,7 @@
 #include "ofRectangle.h"
 #include "ofEvents.h"
 #include "ofTypes.h"
-
-#include <glm/glm.hpp>
+#include "ofVectorMath.h"
 
 namespace ofxCvGui {
 	//-------------
