@@ -26,6 +26,8 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
+        ofAddListener(ofEvents().keyReleased, this, &Controller::keyReleased);    
+
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 
@@ -174,6 +176,10 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::draw(ofEventArgs& args) {
+        
+//        ofEnableDepthTest();
+      
+        
 		if (!this->rootGroup) {
 			return;
 		}
@@ -236,6 +242,8 @@ namespace ofxCvGui {
 			delayedDrawCommand();
 		}
 		this->delayedDrawCommands.clear();
+        
+//         ofDisableDepthTest();
 	}
 
 
@@ -250,6 +258,7 @@ namespace ofxCvGui {
 		ofRemoveListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
 		ofRemoveListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofRemoveListener(ofEvents().keyPressed, this, &Controller::keyPressed);
+        ofRemoveListener(ofEvents().keyReleased, this, &Controller::keyReleased);
 		ofRemoveListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 		ofRemoveListener(ofEvents().windowResized, this, &Controller::windowResized);
 	}
@@ -373,6 +382,31 @@ namespace ofxCvGui {
 	}
 	
 	//----------
+    void Controller::keyReleased(ofKeyEventArgs & args) {
+        if (!this->rootGroup) {
+            return;
+        }
+        auto currentPanel = this->currentPanel.lock();
+        KeyboardArguments action(args, KeyboardArguments::Released, currentPanel);
+        if (this->activeDialog) {
+//            if (args.key == OF_KEY_ESC) {
+//                this->closeActiveDialog();
+//            }
+//            else {
+                this->activeDialog->keyboardAction(action);
+//            }
+        }
+        else {
+            if (this->maximised) {
+                //if something is maximised, only it get the key press
+                currentPanel->keyboardAction(action);
+            }
+            else {
+                //otherwise everything visible gets the key press
+                rootGroup->keyboardAction(action);
+            }
+        }
+    }
 	void Controller::keyPressed(ofKeyEventArgs & args) {
 		if (!this->rootGroup) {
 			return;

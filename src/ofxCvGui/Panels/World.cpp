@@ -89,21 +89,21 @@ namespace ofxCvGui {
 					this->fbo.bind();
 				}
 
-				ofKeyEventArgs ofArgs;
-				ofArgs.key = args.key;
-				if (args.action == KeyboardArguments::Action::Pressed) {
-					ofArgs.type = ofKeyEventArgs::Type::Pressed;
-					this->camera.keyPressed(ofArgs);
-				}
-				else if (args.action == KeyboardArguments::Action::Released) {
-					ofArgs.type = ofKeyEventArgs::Type::Pressed;
-					this->camera.keyReleased(ofArgs);
-				}
-
-				if (this->useFbo) {
-					this->fbo.unbind();
-				}
-			};
+                ofKeyEventArgs ofArgs;
+                ofArgs.key = args.key;
+                if (args.action == KeyboardArguments::Action::Pressed) {
+                    ofArgs.type = ofKeyEventArgs::Type::Pressed;
+                    this->camera.keyPressed(ofArgs);
+                }
+                else if (args.action == KeyboardArguments::Action::Released) {
+                        ofArgs.type = ofKeyEventArgs::Type::Released;
+                        this->camera.keyReleased(ofArgs);
+                    }
+                
+                if (this->useFbo) {
+                    this->fbo.unbind();
+                }
+            };
 #endif
 
 			this->onBoundsChange += [this](BoundsChangeArguments & args) {
