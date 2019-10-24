@@ -26,8 +26,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
-        ofAddListener(ofEvents().keyReleased, this, &Controller::keyReleased);    
-
+        ofAddListener(ofEvents().keyReleased, this, &Controller::keyReleased);
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
 		ofAddListener(ofEvents().windowResized, this, &Controller::windowResized);
 
@@ -176,10 +175,6 @@ namespace ofxCvGui {
 
 	//----------
 	void Controller::draw(ofEventArgs& args) {
-        
-//        ofEnableDepthTest();
-      
-        
 		if (!this->rootGroup) {
 			return;
 		}
@@ -242,8 +237,6 @@ namespace ofxCvGui {
 			delayedDrawCommand();
 		}
 		this->delayedDrawCommands.clear();
-        
-//         ofDisableDepthTest();
 	}
 
 
@@ -389,12 +382,7 @@ namespace ofxCvGui {
         auto currentPanel = this->currentPanel.lock();
         KeyboardArguments action(args, KeyboardArguments::Released, currentPanel);
         if (this->activeDialog) {
-//            if (args.key == OF_KEY_ESC) {
-//                this->closeActiveDialog();
-//            }
-//            else {
-                this->activeDialog->keyboardAction(action);
-//            }
+            this->activeDialog->keyboardAction(action);
         }
         else {
             if (this->maximised) {
