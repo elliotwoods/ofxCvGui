@@ -96,7 +96,7 @@ namespace ofxCvGui {
 					this->camera.keyPressed(ofArgs);
 				}
 				else if (args.action == KeyboardArguments::Action::Released) {
-					ofArgs.type = ofKeyEventArgs::Type::Pressed;
+					ofArgs.type = ofKeyEventArgs::Type::Released;
 					this->camera.keyReleased(ofArgs);
 				}
 
