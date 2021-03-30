@@ -27,46 +27,60 @@ namespace ofxCvGui {
 				Utils::ScissorManager::X().pushScissor(ofRectangle(x, y, minWidth, minHeight));
 			}
 
-			ofPushStyle();
-			ofPushStyle();
-			ofSetColor(backgroundColor);
-			ofFill();
 			ofRectangle bounds(x, y, 0, 0);
-			bool multiline = ofIsStringInString(text, "\n");
 
-			if (hasFont) {
-				ofRectangle rawBounds = font.getStringBoundingBox(text, x, y);
-				float rawWidth = rawBounds.width;
-				float rawHeight;
-				if (!multiline)
-					rawHeight = font.getStringBoundingBox("Hy", x, y).height;
-				else
-					rawHeight = rawBounds.height + font.getLineHeight() * 0.5f;
-				bounds.x = x;
-				bounds.y = y;
-				bounds.width = rawWidth + font.getSize();
-				if (bounds.width < minWidth) {
-					x += (minWidth - bounds.width) / 2.0f;
-					bounds.width = minWidth;
+			ofPushStyle();
+			{
+				ofPushStyle();
+				ofSetColor(backgroundColor);
+				ofFill();
+				bool multiline = ofIsStringInString(text, "\n");
+
+				if (hasFont) {
+					ofRectangle rawBounds = font.getStringBoundingBox(text, x, y);
+					float rawWidth = rawBounds.width;
+					float rawHeight;
+					if (!multiline)
+						rawHeight = font.getStringBoundingBox("Hy", x, y).height;
+					else
+						rawHeight = rawBounds.height + font.getLineHeight() * 0.5f;
+					bounds.x = x;
+					bounds.y = y;
+					bounds.width = rawWidth + font.getSize();
+					if (bounds.width < minWidth) {
+						x += (minWidth - bounds.width) / 2.0f;
+						bounds.width = minWidth;
+					}
+					bounds.height = MAX(rawHeight, minHeight);
+					if (background)
+						ofDrawRectangle(bounds);
+					ofPopStyle();
+					if (backgroundColor.getBrightness() > 200) {
+						ofSetColor(0);
+					}
+					else {
+						ofSetColor(255);
+					}
+					x = x + font.getSize() / 2;
+					if (!multiline)
+						y = y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f;
+					else
+						y = y + font.getLineHeight();
+					font.drawString(text, (int)x, (int)y);
 				}
-				bounds.height = MAX(rawHeight, minHeight);
-				if (background)
-					ofDrawRectangle(bounds);
-				ofPopStyle();
-				ofSetColor(255);
-				x = x + font.getSize() / 2;
-				if (!multiline)
-					y = y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f;
-				else
-					y = y + font.getLineHeight();
-				font.drawString(text, (int) x, (int) y);
-			} else {
-				bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
-				if (background)
-					ofDrawRectangle(bounds);
-				ofPopStyle();
-				ofSetColor(255);
-				ofDrawBitmapString(text, x + 10, y + 20);
+				else {
+					bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
+					if (background)
+						ofDrawRectangle(bounds);
+					ofPopStyle();
+					if (backgroundColor.getBrightness() > 200) {
+						ofSetColor(0);
+					}
+					else {
+						ofSetColor(255);
+					}
+					ofDrawBitmapString(text, x + 10, y + 20);
+				}
 			}
 			ofPopStyle();
 
@@ -210,7 +224,6 @@ namespace ofxCvGui {
 					, drawText(textAnnotation.text, 0, 0, true, 15, 0, false) // get the bounds by calling the draw command now
 					, textAnnotation.position
 					, textAnnotation.color
-					, textAnnotation.applyDepth
 					, textAnnotation.worldViewTransform
 					});
 			}

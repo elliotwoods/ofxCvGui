@@ -32,7 +32,6 @@ namespace ofxCvGui {
 				std::string text;
 				glm::vec3 position;
 				ofColor color;
-				bool applyDepth = false;
 				glm::mat4x4 worldViewTransform = ofGetCurrentMatrix(ofMatrixMode::OF_MATRIX_MODELVIEW);
 			};
 			struct DrawAnnotation {
@@ -40,7 +39,6 @@ namespace ofxCvGui {
 				ofRectangle bounds;
 				glm::vec3 position;
 				ofColor color;
-				bool applyDepth = false;
 				glm::mat4x4 worldViewTransform = ofGetCurrentMatrix(ofMatrixMode::OF_MATRIX_MODELVIEW);
 			};
 
