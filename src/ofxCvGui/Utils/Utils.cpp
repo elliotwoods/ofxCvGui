@@ -1,6 +1,8 @@
 #include "pch_ofxCvGui.h"
 
+OFXSINGLETON_DEFINE(ofxCvGui::Utils::AnnotationManager);
 OFXSINGLETON_DEFINE(ofxCvGui::Utils::ScissorManager);
+
 
 #include <GLFW/glfw3.h>
 
@@ -11,8 +13,14 @@ namespace ofxCvGui {
 
 #pragma mark Text
 		//---------
-		ofRectangle drawText(const string& text, float x, float y, bool background, float minHeight, float minWidth, bool scissor) {
-			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 14);
+		ofRectangle drawText(const string& text
+			, float x, float y
+			, bool background
+			, float minHeight, float minWidth
+			, bool scissor
+			, const ofColor & backgroundColor) {
+
+			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), OFXCVGUI_TEXT_SIZE);
 			bool hasFont = font.isLoaded();
 
 			if (scissor) {
@@ -21,7 +29,7 @@ namespace ofxCvGui {
 
 			ofPushStyle();
 			ofPushStyle();
-			ofSetColor(0x46);
+			ofSetColor(backgroundColor);
 			ofFill();
 			ofRectangle bounds(x, y, 0, 0);
 			bool multiline = ofIsStringInString(text, "\n");
@@ -157,6 +165,199 @@ namespace ofxCvGui {
 			default:
 				return string("") + key;
 			}
+		}
+
+		//----------
+		AnnotationManager::AnnotationManager() {
+
+		}
+
+		//----------
+		void AnnotationManager::clear() {
+			this->textAnnotations.clear();
+			this->drawAnnotations.clear();
+		}
+
+		//----------
+		void AnnotationManager::annotate(const std::string& text, const glm::vec3& position, const ofColor & color) {
+			this->annotate({
+				text
+				, position
+				, color
+				});
+		}
+		//----------
+		void AnnotationManager::annotate(const TextAnnotation& textAnnotation) {
+			this->textAnnotations.push_back(textAnnotation);
+		}
+
+		//----------
+		void AnnotationManager::annotate(const DrawAnnotation& drawAnnotation) {
+			this->drawAnnotations.push_back(drawAnnotation);
+		}
+
+		//----------
+		void AnnotationManager::renderAndClearAnnotations(const ofCamera & camera
+			, const ofRectangle & viewport) {
+			const float stepSize = 10;
+
+			// Convert the text annotations into draw annotations
+			for (const auto& textAnnotation : this->textAnnotations) {
+				this->annotate({
+					[textAnnotation]() {
+						drawText(textAnnotation.text, 0, 0, true, 15, 0, false, textAnnotation.color);
+					}
+					, drawText(textAnnotation.text, 0, 0, true, 15, 0, false) // get the bounds by calling the draw command now
+					, textAnnotation.position
+					, textAnnotation.color
+					, textAnnotation.applyDepth
+					, textAnnotation.worldViewTransform
+					});
+			}
+
+			// Store existing drawn animations
+			std::vector<ofRectangle> existingAnnotationBounds; // don't draw over existing annotations
+
+			// Function to try and draw
+			auto tryDrawAnnotation = [&](const DrawAnnotation& drawAnnotation, float x, float y, glm::vec3 & target, bool onLeftSide) {
+				
+				// Get bounds for what we'll draw
+				auto bounds = drawAnnotation.bounds;
+				if (onLeftSide) {
+					x -= bounds.width;
+				}
+				y -= bounds.height / 2;
+				bounds.x += x;
+				bounds.y += y;
+
+				// Check bounds doesn't overlap other rectangles
+				{
+					for (const auto& existing : existingAnnotationBounds)
+					{
+						if (!bounds.getIntersection(existing).isEmpty()) {
+							// There is an intersection
+							return false;
+						}
+					}
+				}
+
+				// Draw the annotation
+				{
+					ofPushMatrix();
+					{
+						ofTranslate(x, y);
+						drawAnnotation.drawCall();
+					}
+					ofPopMatrix();
+				}
+
+				// Draw the underline and point to target
+				{
+					ofPushStyle();
+					{
+						ofSetColor(drawAnnotation.color);
+
+						if (onLeftSide) {
+							ofDrawLine(glm::vec2(bounds.getRight(), bounds.y + bounds.height / 2), target);
+						}
+						else {
+							ofDrawLine(glm::vec2(bounds.getLeft(), bounds.y + bounds.height / 2), target);
+						}
+					}
+					ofPopStyle();
+					
+				}
+
+				existingAnnotationBounds.push_back(bounds);
+
+				return true;
+			};
+
+			auto cameraViewInverse = glm::inverse(camera.getModelViewMatrix());
+
+			// Draw the annotations
+			for (const auto& drawAnnotation : this->drawAnnotations) {
+				glm::vec4 objectSpace{
+					drawAnnotation.position.x
+					, drawAnnotation.position.y
+					, drawAnnotation.position.z
+					, 1.0f
+				};
+				auto worldSpace = cameraViewInverse * drawAnnotation.worldViewTransform * objectSpace;
+				worldSpace /= worldSpace.w;
+				auto screenPosition = camera.worldToScreen(worldSpace, viewport);
+
+				// Ignore if outside of screen
+				if (!viewport.inside(screenPosition)) {
+					continue;
+				}
+
+				bool drawn = false;
+				float x;
+
+				// Try to draw on the right
+				x = screenPosition.x + stepSize;
+				if (x < viewport.getRight()) {
+					// Try to draw to the right below
+					{
+						for (float y = screenPosition.y; y < viewport.getBottom(); y += stepSize) {
+							if (tryDrawAnnotation(drawAnnotation, x, y, screenPosition, false)) {
+								drawn = true;
+								break;
+							}
+						}
+						if (drawn) {
+							continue;
+						}
+					}
+
+					// Try to draw to the right above
+					{
+						for (float y = screenPosition.y - stepSize; y < viewport.getBottom(); y -= stepSize) {
+							if (tryDrawAnnotation(drawAnnotation, x, y, screenPosition, false)) {
+								drawn = true;
+								break;
+							}
+						}
+						if (drawn) {
+							continue;
+						}
+					}
+				}
+
+				// Try to draw on the left
+				x = screenPosition.x - stepSize;
+				if (x > viewport.getLeft()) {
+					// Try to draw to the right below
+					{
+						for (float y = screenPosition.y; y < viewport.getBottom(); y += stepSize) {
+							if (tryDrawAnnotation(drawAnnotation, x, y, screenPosition, true)) {
+								drawn = true;
+								break;
+							}
+						}
+						if (drawn) {
+							continue;
+						}
+					}
+
+					// Try to draw to the right above
+					{
+						for (float y = screenPosition.y - stepSize; y < viewport.getBottom(); y -= stepSize) {
+							if (tryDrawAnnotation(drawAnnotation, x, y, screenPosition, true)) {
+								drawn = true;
+								break;
+							}
+						}
+						if (drawn) {
+							continue;
+						}
+					}
+				}
+			}
+
+			// Clear the annotations
+			this->clear();
 		}
 
 #pragma mark Animation

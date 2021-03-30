@@ -128,20 +128,24 @@ namespace ofxCvGui {
 		//----------
 		void World::drawContent(const ofRectangle & bounds) {
 			this->camera.begin(bounds);
+			{
+				if (this->gridEnabled) {
+					ofPushStyle();
+					ofSetColor(this->gridColor);
+					ofDrawGrid(gridScale, 5.0f, this->gridLabelsEnabled);
+					ofPopStyle();
+				}
 
-			if (this->gridEnabled) {
-				ofPushStyle();
-				ofSetColor(this->gridColor);
-				ofDrawGrid(gridScale, 5.0f, this->gridLabelsEnabled);
-				ofPopStyle();
+				vector<ofNode*>::iterator it;
+				for (it = this->nodes.begin(); it != this->nodes.end(); it++)
+					(**it).draw();
+				this->onDrawWorld.notifyListeners(this->camera);
+
 			}
-
-			vector<ofNode*>::iterator it;
-			for (it = this->nodes.begin(); it != this->nodes.end(); it++)
-				(**it).draw();
-			this->onDrawWorld.notifyListeners(this->camera);
-
 			this->camera.end();
+
+			// Draw annotations on top of 3D view
+			Utils::AnnotationManager::X().renderAndClearAnnotations(this->camera, bounds);
 		}
 
 		//----------
