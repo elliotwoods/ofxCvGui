@@ -10,7 +10,7 @@ using namespace std;
 
 namespace ofxCvGui {
 	namespace Panels {
-		class PixelsVector : public Panels::BaseImage {
+		class OFXCVGUI_API_ENTRY PixelsVector : public Panels::BaseImage {
 		public:
 			PixelsVector(const vector<ofPixels>& pixels);
             ~PixelsVector();

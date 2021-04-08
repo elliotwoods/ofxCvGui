@@ -10,7 +10,7 @@
 
 
 namespace ofxCvGui {
-	class Controller : public ofxSingleton::Singleton<Controller> {
+	class OFXCVGUI_API_ENTRY Controller : public ofxSingleton::Singleton<Controller> {
 	public:
 		Controller();
 		void init(PanelGroupPtr rootGroup);
@@ -84,8 +84,8 @@ namespace ofxCvGui {
 		vector<function<void()>> delayedDrawCommands;
 	};
 
-	void openDialog(PanelPtr);
-	void closeDialog(Panels::Base * );
-	void closeDialog();
-	bool isDialogOpen();
+	void OFXCVGUI_API_ENTRY openDialog(PanelPtr);
+	void OFXCVGUI_API_ENTRY closeDialog(Panels::Base * );
+	void OFXCVGUI_API_ENTRY closeDialog();
+	bool OFXCVGUI_API_ENTRY isDialogOpen();
 }

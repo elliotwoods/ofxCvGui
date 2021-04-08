@@ -225,7 +225,7 @@ namespace ofxCvGui {
 					planeXZ.mapTexCoords(roomMinimum.x, roomSpan.z, roomMaximum.x, 0);
 
 					ofTranslate(roomMinimum.x + roomSpan.x * 0.5, roomMaximum.y, 0);
-					ofRotate(90, -1, 0, 0);
+					ofRotateDeg(90, -1, 0, 0);
 
 					//floor
 					glCullFace(GL_BACK);
@@ -246,7 +246,7 @@ namespace ofxCvGui {
 					planeYZ.mapTexCoords(roomMinimum.z, roomSpan.y, roomMaximum.z, 0);
 
 					ofTranslate(0, roomMaximum.y - roomSpan.y * 0.5, roomMaximum.z - roomSpan.z * 0.5);
-					ofRotate(-90, 0, 1, 0);
+					ofRotateDeg(-90, 0, 1, 0);
 
 					//left wall
 					glCullFace(GL_BACK);

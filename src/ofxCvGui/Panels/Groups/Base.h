@@ -5,7 +5,7 @@
 namespace ofxCvGui {
 	namespace Panels {
 		namespace Groups {
-			class Base : public ElementGroup_<Panels::Base> {
+			class OFXCVGUI_API_ENTRY Base : public ElementGroup_<Panels::Base> {
 			public:
 				virtual ~Base() { }
 				PanelPtr const findScreen(const glm::vec2 & xy, ofRectangle & currentBounds) override;

@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class Spacer : public Element {
+		class OFXCVGUI_API_ENTRY Spacer : public Element {
 		public:
 			Spacer();
 		};

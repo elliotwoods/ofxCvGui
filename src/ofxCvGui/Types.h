@@ -4,6 +4,8 @@
 #include "ofTypes.h"
 #include "ofVectorMath.h"
 
+#include "ofxCvGui/Utils/Constants.h"
+
 namespace ofxCvGui {
 	//-------------
 	class Element;
@@ -35,7 +37,7 @@ namespace ofxCvGui {
     };
     
 	//----------
-	class MouseArguments : public InputArguments {
+	class OFXCVGUI_API_ENTRY MouseArguments : public InputArguments {
     public:
         enum Action {
             Pressed = 1 << 0,
@@ -86,7 +88,7 @@ namespace ofxCvGui {
 	};
 
 	//----------
-	class KeyboardArguments : public InputArguments {
+	class OFXCVGUI_API_ENTRY KeyboardArguments : public InputArguments {
     public:
         enum Action {
             Pressed, Released
@@ -101,7 +103,7 @@ namespace ofxCvGui {
 	};
 	
 	//----------
-	class BoundsChangeArguments {
+	class OFXCVGUI_API_ENTRY BoundsChangeArguments {
 	public:
 		BoundsChangeArguments(const ofRectangle & bounds);
 		const ofRectangle bounds;
@@ -109,7 +111,7 @@ namespace ofxCvGui {
 	};
 
 	//----------
-	class FilesDraggedArguments {
+	class OFXCVGUI_API_ENTRY FilesDraggedArguments {
 	public:
 		FilesDraggedArguments(const glm::vec2 & localPosition
 			, const glm::vec2 & globalPosition
@@ -121,7 +123,7 @@ namespace ofxCvGui {
 	};
 
 	//----------
-	struct ZoomChangeArguments {
+	struct OFXCVGUI_API_ENTRY ZoomChangeArguments {
 		float oldZoom;
 		float newZoom;
 	};

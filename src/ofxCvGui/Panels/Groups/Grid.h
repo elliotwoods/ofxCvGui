@@ -5,7 +5,7 @@
 namespace ofxCvGui {
 	namespace Panels {
 		namespace Groups {
-			class Grid : public Groups::Base {
+			class OFXCVGUI_API_ENTRY Grid : public Groups::Base {
 			public:
                 Grid();
                 virtual ~Grid();

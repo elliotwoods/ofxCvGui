@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class Toggle : public Element {
+		class OFXCVGUI_API_ENTRY Toggle : public Element {
 		public:
 			Toggle(ofParameter<bool> &, char hotKey = 0);
 			Toggle(std::string caption, char hotKey = 0);

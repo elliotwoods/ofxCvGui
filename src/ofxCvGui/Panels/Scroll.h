@@ -5,7 +5,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Scroll : public Base {
+		class OFXCVGUI_API_ENTRY Scroll : public Base {
 		public:
 			Scroll();
 			void add(ElementPtr);

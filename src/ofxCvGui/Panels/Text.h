@@ -5,7 +5,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Text : public Panels::Base {
+		class OFXCVGUI_API_ENTRY Text : public Panels::Base {
 		public:
 			Text(string text = "");
             virtual ~Text();

@@ -11,7 +11,7 @@ namespace ofxCvGui {
 
 		class SharedViewClient;
 
-		class SharedViewServer : public ofxCvGui::Panels::Base {
+		class OFXCVGUI_API_ENTRY SharedViewServer : public ofxCvGui::Panels::Base {
 		public:
 			SharedViewServer();
 			ofxCvGui::PanelPtr const findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) override;
@@ -24,7 +24,7 @@ namespace ofxCvGui {
 			weak_ptr<SharedViewClient> focusThisFrame;
 		};
 
-		class SharedViewClient : public ofxCvGui::Panels::Base, public std::enable_shared_from_this<SharedViewClient> {
+		class OFXCVGUI_API_ENTRY SharedViewClient : public ofxCvGui::Panels::Base, public std::enable_shared_from_this<SharedViewClient> {
 		public:
 			SharedViewClient(ofxCvGui::PanelPtr view, shared_ptr<SharedViewServer>);
 			ofxCvGui::PanelPtr const findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) override;

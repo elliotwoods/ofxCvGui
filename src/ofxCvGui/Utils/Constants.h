@@ -1,12 +1,19 @@
 #pragma once
 #include <string>
+#include "ofConstants.h"
 
-#ifdef OFXCVGUI_EXPORT_ENABLED
-	#define OFXCVGUI_API_ENTRY __declspec(dllexport)
+#ifdef TARGET_WIN32
+#	if defined(OFXCVGUI_EXPORTS_ENABLE)
+#		define OFXCVGUI_API_ENTRY __declspec(dllexport)
+#	elif defined(OFXCVGUI_IMPORTS_ENABLE)
+#		define OFXCVGUI_API_ENTRY __declspec(dllimport)
+#	else
+#		define OFXCVGUI_API_ENTRY
+#	endif
 #else
-	#define OFXCVGUI_API_ENTRY
+#	define OFXCVGUI_API_ENTRY
 #endif
 
 namespace ofxCvGui {
-	std::string getDefaultTypeface();
+	std::string OFXCVGUI_API_ENTRY getDefaultTypeface();
 }

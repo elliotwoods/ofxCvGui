@@ -11,7 +11,7 @@ namespace ofxCvGui {
 	};
 
 	/// inherit this class if your object is inspectable
-	class IInspectable {
+	class OFXCVGUI_API_ENTRY IInspectable {
 	public:
 		/// Listen to this event if you want to populate the insspector when selected 
 		ofxLiquidEvent<InspectArguments> onPopulateInspector;
@@ -20,7 +20,7 @@ namespace ofxCvGui {
 
 	/// The inspect controller determines what is being inspected and fires events
 	///  when the target changes (e.g. these events are subscribed to by an Inspector).
-	class InspectController : public ofxSingleton::Singleton<InspectController> {
+	class OFXCVGUI_API_ENTRY InspectController : public ofxSingleton::Singleton<InspectController> {
 	public:
 		InspectController();
 
@@ -63,13 +63,13 @@ namespace ofxCvGui {
 		bool inspectorLocked = false;
 	};
 
-	void inspect(shared_ptr<IInspectable>);
+	void OFXCVGUI_API_ENTRY inspect(shared_ptr<IInspectable>);
 
-	bool isBeingInspected(shared_ptr<IInspectable>);
-	bool isBeingInspected(IInspectable &);
-	bool isBeingInspected(IInspectable *);
+	bool OFXCVGUI_API_ENTRY isBeingInspected(shared_ptr<IInspectable>);
+	bool OFXCVGUI_API_ENTRY isBeingInspected(IInspectable &);
+	bool OFXCVGUI_API_ENTRY isBeingInspected(IInspectable *);
 
-	void addToInspector(ofxCvGui::ElementPtr);
+	void OFXCVGUI_API_ENTRY addToInspector(ofxCvGui::ElementPtr);
 
-	void refreshInspector(IInspectable *);
+	void OFXCVGUI_API_ENTRY refreshInspector(IInspectable *);
 }

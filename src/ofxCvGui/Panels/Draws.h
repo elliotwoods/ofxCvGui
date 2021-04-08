@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Draws : public Panels::BaseImage {
+		class OFXCVGUI_API_ENTRY Draws : public Panels::BaseImage {
 		public:
 			Draws();
 			Draws(ofBaseDraws &);

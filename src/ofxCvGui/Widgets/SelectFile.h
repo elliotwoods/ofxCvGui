@@ -7,7 +7,7 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class SelectFile : public LiveValue<filesystem::path> {
+		class OFXCVGUI_API_ENTRY SelectFile : public LiveValue<filesystem::path> {
 		public:
 			SelectFile(string caption, function<filesystem::path()> get, function<void(filesystem::path &)> set);
 			SelectFile(ofParameter<filesystem::path> &);

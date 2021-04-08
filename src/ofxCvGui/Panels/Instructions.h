@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Instructions : public Text {
+		class OFXCVGUI_API_ENTRY Instructions : public Text {
 		public:
 			Instructions();
 		};

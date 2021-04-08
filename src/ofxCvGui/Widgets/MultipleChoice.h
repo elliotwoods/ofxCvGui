@@ -3,7 +3,7 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class MultipleChoice : public Element {
+		class OFXCVGUI_API_ENTRY MultipleChoice : public Element {
 		public:
 			MultipleChoice(const string & caption);
 			MultipleChoice(const string & caption, const initializer_list<string> & options);

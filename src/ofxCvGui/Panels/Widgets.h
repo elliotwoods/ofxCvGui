@@ -17,7 +17,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Widgets : public Scroll {
+		class OFXCVGUI_API_ENTRY Widgets : public Scroll {
 		public:
 			// Element
 			shared_ptr<ofxCvGui::Element> addBlank();

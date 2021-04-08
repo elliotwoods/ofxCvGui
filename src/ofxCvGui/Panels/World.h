@@ -18,7 +18,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class World : public Panels::Base {
+		class OFXCVGUI_API_ENTRY World : public Panels::Base {
 		public:
 			World();
 			

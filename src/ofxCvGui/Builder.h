@@ -26,7 +26,7 @@
 #include "ofxCvGui/Panels/SharedView.h"
 
 namespace ofxCvGui {
-	class Builder {
+	class OFXCVGUI_API_ENTRY Builder {
 	public:
 		void init();
 		

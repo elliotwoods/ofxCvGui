@@ -3,7 +3,6 @@
 #include "Types.h"
 #include "Utils/Utils.h"
 #include "Utils/Constants.h"
-
 #include "ofGraphics.h"
 #include "ofFbo.h"
 #include "ofxLiquidEvent.h"
@@ -16,7 +15,7 @@
 namespace ofxCvGui {
 	typedef std::shared_ptr<Element> ElementPtr;
 
-	class Element {
+	class OFXCVGUI_API_ENTRY Element {
 	public:
 		enum LocalMouseState {
 			Waiting = 1,

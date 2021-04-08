@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Image : public Panels::BaseImage {
+		class OFXCVGUI_API_ENTRY Image : public Panels::BaseImage {
 		public:
 			Image(ofAbstractImage &);
             virtual ~Image();

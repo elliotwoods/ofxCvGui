@@ -3,7 +3,7 @@
 #include "Element.h"
 
 namespace ofxCvGui {
-	class ElementSlot : public Element {
+	class OFXCVGUI_API_ENTRY ElementSlot : public Element {
 	public:
 		ElementSlot();
 		void setElement(shared_ptr<Element>);

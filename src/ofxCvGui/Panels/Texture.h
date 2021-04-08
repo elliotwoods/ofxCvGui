@@ -5,7 +5,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Texture : public Panels::BaseImage {
+		class OFXCVGUI_API_ENTRY Texture : public Panels::BaseImage {
 		public:
 			struct Style {
 				float rangeMinimum = 0.0f;

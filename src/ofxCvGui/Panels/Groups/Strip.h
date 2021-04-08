@@ -6,7 +6,7 @@
 namespace ofxCvGui {
 	namespace Panels {
 		namespace Groups {
-			class Strip : public Groups::Base {
+			class OFXCVGUI_API_ENTRY Strip : public Groups::Base {
 			public:
 				enum Direction {
 					Horizontal = 0,

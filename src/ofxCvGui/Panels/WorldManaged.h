@@ -16,7 +16,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class WorldManaged : public Panels::Base {
+		class OFXCVGUI_API_ENTRY WorldManaged : public Panels::Base {
 		public:
 
 #ifdef OFXCVGUI_USE_OFXGRABCAM

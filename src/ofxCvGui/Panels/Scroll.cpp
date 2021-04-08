@@ -45,23 +45,27 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::add(ElementPtr element) {
 			this->elements->add(element);
 			this->arrangeScroll();
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::clear() {
 			this->elements->clear();
 			this->arrangeScroll();
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		ElementGroupPtr Scroll::getElementGroup() {
 			return this->elements;
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::setScroll(float position) {
 			this->position = position;
 			position = floor(position);
@@ -71,11 +75,13 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		float Scroll::getScroll() const {
 			return this->position;
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::scrollToInclude(ElementPtr element) {
 			const auto elementBounds = element->getBounds();
 			auto correctedElementBounds = elementBounds;
@@ -94,11 +100,13 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		float Scroll::getLength() const {
 			return this->length;
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::update() {
 			if (this->localMouseState == LocalMouseState::Waiting) {
 				float decay = ofClamp(1.0f - 2.0f * ofGetLastFrameTime(), 0, 1);
@@ -126,6 +134,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::draw(DrawArguments& args) {
 			float barLength = this->getBarLength();
 			if (barLength < this->getHeight() - 2 * OFXCVGUI_SCROLL_AREA_WIDTH) {
@@ -144,6 +153,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::mouse(MouseArguments& args) {
 			if (args.takeMousePress(this)) {
 				this->onScrollBar = args.local.x > this->getWidth() - OFXCVGUI_SCROLL_AREA_WIDTH;
@@ -162,11 +172,13 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::keyboard(KeyboardArguments& args) {
 
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		void Scroll::arrangeScroll() {
 			float y = 0;
 			for(auto element : this->elements->getElements()) {
@@ -185,6 +197,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		float Scroll::getBarLength() const {
 			float barPossibleLength = this->getHeight() - OFXCVGUI_SCROLL_AREA_WIDTH * 2.0f;
 			float pct = this->getHeight() / this->length; //fraction visible
@@ -192,6 +205,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		OFXCVGUI_API_ENTRY
 		float Scroll::getBarY() const {
 			float barPossibleLength = this->getHeight() - OFXCVGUI_SCROLL_AREA_WIDTH * 2.0f;
 			float scrollPct = this->position / (this->length - this->getHeight()); //fraction scrolled

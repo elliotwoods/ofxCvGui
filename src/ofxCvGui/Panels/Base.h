@@ -9,14 +9,12 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Base;
+		class OFXCVGUI_API_ENTRY Base;
 	}
 	typedef shared_ptr<Panels::Base> PanelPtr;
 
 	namespace Panels {
-		
-
-		class Base : public Element {
+		class OFXCVGUI_API_ENTRY Base : public Element {
 		public:
 			Base();
 			virtual const shared_ptr<Panels::Base> findScreen(const glm::vec2 & xy, ofRectangle & currentPanelBounds) {

@@ -5,7 +5,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Pixels : public Panels::BaseImage {
+		class OFXCVGUI_API_ENTRY Pixels : public Panels::BaseImage {
 		public:
 			Pixels(const ofPixels& pixels);
             ~Pixels();

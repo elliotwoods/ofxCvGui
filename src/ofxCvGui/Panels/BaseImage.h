@@ -12,7 +12,7 @@ namespace ofxCvGui {
 	};
 	
 	namespace Panels {
-		class BaseImage : public Base {
+		class OFXCVGUI_API_ENTRY BaseImage : public Base {
 		public:
 
 			ofxLiquidEvent<DrawImageArguments> onDrawImage;

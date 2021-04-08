@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class Title : public Element {
+		class OFXCVGUI_API_ENTRY Title : public Element {
 		public:
 			enum Level {
 				H1 = 0,

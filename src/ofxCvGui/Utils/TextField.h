@@ -5,7 +5,7 @@
 
 namespace ofxCvGui {
 	namespace Utils {
-		class TextField : public Element {
+		class OFXCVGUI_API_ENTRY TextField : public Element {
 		public:
 			TextField();
 			~TextField();

@@ -5,7 +5,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Inspector : public Widgets, public enable_shared_from_this<Inspector> {
+		class OFXCVGUI_API_ENTRY Inspector : public Widgets, public enable_shared_from_this<Inspector> {
 		public:
 			Inspector();
 			~Inspector();

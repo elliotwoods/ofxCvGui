@@ -3,7 +3,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class Tree : public Panels::Scroll {
+		class OFXCVGUI_API_ENTRY Tree : public Panels::Scroll {
 		public:
 			class Branch : public Element {
 			public:

@@ -7,7 +7,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class ElementCanvas : public Base {
+		class OFXCVGUI_API_ENTRY ElementCanvas : public Base {
 		public:
 			ElementCanvas();
 

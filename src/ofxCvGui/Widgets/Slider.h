@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class Slider : public Element {
+		class OFXCVGUI_API_ENTRY Slider : public Element {
 		public:
 			typedef std::function<void(float &)> Validator;
 			typedef ofxLiquidEvent<const float &>::Functor ValueChangeCallback;

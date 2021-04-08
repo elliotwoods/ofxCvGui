@@ -3,7 +3,7 @@
 
 namespace ofxCvGui {
 	namespace Utils {
-		class Button : public Element {
+		class OFXCVGUI_API_ENTRY Button : public Element {
 		public:
 			Button();
 			~Button();

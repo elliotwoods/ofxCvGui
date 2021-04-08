@@ -48,7 +48,7 @@ namespace ofxCvGui {
 		vector<shared_ptr<T> > elements;
 	};
 
-	class ElementGroup : public ElementGroup_<Element> {
+	class OFXCVGUI_API_ENTRY ElementGroup : public ElementGroup_<Element> {
 	protected:
 		void drawElement(const DrawArguments& arguments) {
 			this->drawSet(arguments);
@@ -56,5 +56,5 @@ namespace ofxCvGui {
 	};
 
 	typedef shared_ptr<ElementGroup> ElementGroupPtr;
-	ElementGroupPtr makeElementGroup();
+	ElementGroupPtr OFXCVGUI_API_ENTRY makeElementGroup();
 }

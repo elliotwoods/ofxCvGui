@@ -19,16 +19,16 @@
 namespace ofxCvGui {
 	namespace Utils {
 #pragma mark Text
-		ofRectangle drawText(const std::string& text, float x, float y, bool background = true, float minHeight = 15, float minWidth = 0, bool scissor = false, const ofColor & backgroundColor = ofColor(OFXCVGUI_TEXT_BACKGROUND));
-		ofRectangle drawText(const std::string& text, const ofRectangle & bounds, bool background = true, bool scissor = false);
-		void drawProcessingNotice(std::string message);
-		void drawToolTip(const std::string & text, const glm::vec2 & position);
-		std::string makeString(char key);
+		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text, float x, float y, bool background = true, float minHeight = 15, float minWidth = 0, bool scissor = false, const ofColor & backgroundColor = ofColor(OFXCVGUI_TEXT_BACKGROUND));
+		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text, const ofRectangle & bounds, bool background = true, bool scissor = false);
+		void OFXCVGUI_API_ENTRY drawProcessingNotice(std::string message);
+		void OFXCVGUI_API_ENTRY drawToolTip(const std::string & text, const glm::vec2 & position);
+		std::string OFXCVGUI_API_ENTRY makeString(char key);
 
 		/// <summary>
 		/// A deferred system for rendering annotations to 3D views
 		/// </summary>
-		class AnnotationManager : public ofxSingleton::Singleton<AnnotationManager> {
+		class OFXCVGUI_API_ENTRY AnnotationManager : public ofxSingleton::Singleton<AnnotationManager> {
 		public:
 			struct TextAnnotation {
 				std::string text;
@@ -59,10 +59,10 @@ namespace ofxCvGui {
 		};
 
 #pragma mark Animation
-		ofColor getBeatingSelectionColor();
+		ofColor OFXCVGUI_API_ENTRY getBeatingSelectionColor();
 
 #pragma mark Scissor
-		class ScissorManager : public ofxSingleton::Singleton<ScissorManager> {
+		class OFXCVGUI_API_ENTRY ScissorManager : public ofxSingleton::Singleton<ScissorManager> {
 		public:
 			ScissorManager();
 
@@ -80,9 +80,9 @@ namespace ofxCvGui {
 		};
 
 #pragma mark Math
-		ofRectangle operator*(const ofRectangle &, const glm::mat4 &);
+		ofRectangle OFXCVGUI_API_ENTRY operator*(const ofRectangle &, const glm::mat4 &);
 
 #pragma mark Colors
-		ofColor toColor(const std::string &);
+		ofColor OFXCVGUI_API_ENTRY toColor(const std::string &);
 	}
 }

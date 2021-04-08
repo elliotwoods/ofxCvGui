@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		class Indicator : public Element {
+		class OFXCVGUI_API_ENTRY Indicator : public Element {
 		public:
 			enum Status {
 				Clear = 0,

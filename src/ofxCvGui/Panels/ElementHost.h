@@ -4,7 +4,7 @@
 
 namespace ofxCvGui {
 	namespace Panels {
-		class ElementHost : public Base {
+		class OFXCVGUI_API_ENTRY ElementHost : public Base {
 		public:
 			ElementHost();
 			ElementGroupPtr getElementGroup();
