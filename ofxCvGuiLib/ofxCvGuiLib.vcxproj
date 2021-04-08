@@ -70,6 +70,7 @@
     <ClInclude Include="..\src\ofxCvGui\Panels\PixelsVector.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Scroll.h" />
     <ClInclude Include="..\src\ofxCvGui\Panels\Text.h" />
+    <ClInclude Include="..\src\ofxCvGui\Panels\WorldManaged.h" />
     <ClInclude Include="..\src\ofxCvGui\Types.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="..\src\ofxCvGui\Panels\PixelsVector.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Scroll.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Panels\Text.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Panels\WorldManaged.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Types.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />

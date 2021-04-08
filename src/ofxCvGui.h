@@ -28,6 +28,7 @@
 #include "ofxCvGui/Panels/Inspector.h"
 #include "ofxCvGui/Panels/Tree.h"
 #include "ofxCvGui/Panels/ElementCanvas.h"
+#include "ofxCvGui/Panels/WorldManaged.h"
 
 #include "ofxCvGui/Widgets/Title.h"
 #include "ofxCvGui/Widgets/Spacer.h"

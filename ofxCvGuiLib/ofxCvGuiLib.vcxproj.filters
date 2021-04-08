@@ -170,6 +170,9 @@
     <ClCompile Include="..\src\pch_ofxCvGui.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Panels\WorldManaged.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui.h" />
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ofxAssets\src\ofxAssets\Watchdog.h">
       <Filter>addons\ofxAssets\src\ofxAssets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Panels\WorldManaged.h">
+      <Filter>src\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

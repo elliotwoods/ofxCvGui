@@ -3,6 +3,8 @@
 
 #include "ofRectangle.h"
 #include "ofColor.h"
+#include "ofCamera.h"
+#include "ofGraphics.h"
 
 #include <glm/glm.hpp>
 
