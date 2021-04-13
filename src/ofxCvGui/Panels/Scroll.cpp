@@ -169,6 +169,9 @@ namespace ofxCvGui {
 					}
 				}
 			}
+			else if (args.action == MouseArguments::Action::Scrolled) {
+				this->setScroll(this->getScroll() - args.scroll.y * 30);
+			}
 		}
 
 		//----------

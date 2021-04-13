@@ -25,6 +25,7 @@ namespace ofxCvGui {
 		ofAddListener(ofEvents().mousePressed, this, &Controller::mousePressed);
 		ofAddListener(ofEvents().mouseReleased, this, &Controller::mouseReleased);
 		ofAddListener(ofEvents().mouseDragged, this, &Controller::mouseDragged);
+		ofAddListener(ofEvents().mouseScrolled, this, &Controller::mouseScrolled);
 		ofAddListener(ofEvents().keyPressed, this, &Controller::keyPressed);	
         ofAddListener(ofEvents().keyReleased, this, &Controller::keyReleased);
 		ofAddListener(ofEvents().fileDragEvent, this, &Controller::filesDragged);
@@ -354,8 +355,20 @@ namespace ofxCvGui {
 		auto currentPanel = this->currentPanel.lock();
 		MouseArguments action(args, MouseArguments::Dragged, rootGroup->getBounds(), currentPanel, this->mouseOwner, mouseCached);
 		this->mouseAction(action);
-
 		this->mouseCached = action.global;
+	}
+
+	//----------
+	void Controller::mouseScrolled(ofMouseEventArgs& args) {
+		if (!this->rootGroup) {
+			return;
+		}
+
+		auto panelUnderCursor = this->getPanelUnderCursor(args);
+		if (panelUnderCursor) {
+			MouseArguments action(args, MouseArguments::Scrolled, rootGroup->getBounds(), panelUnderCursor, this->mouseOwner, mouseCached);
+			this->mouseAction(action);
+		}
 	}
 
 	//----------

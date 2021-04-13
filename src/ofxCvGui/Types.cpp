@@ -10,16 +10,16 @@ namespace ofxCvGui {
 		, const ofRectangle& rectangle
 		, const shared_ptr<void>& currentPanel
 		, void * takenBy
-		, const glm::vec2 & cached) :
-
-		action(action),
-		button(mouseArgs.button),
-		global(mouseArgs.x, mouseArgs.y),
-		local(mouseArgs.x - rectangle.x, mouseArgs.y - rectangle.y),
-		localNormalized(local / glm::vec2(rectangle.width, rectangle.height)),
-        movement(action == Dragged ? global - cached : glm::vec2()),
-		takenBy(takenBy),
-        InputArguments(currentPanel)
+		, const glm::vec2 & cached)
+		: action(action)
+		, button(mouseArgs.button)
+		, global(mouseArgs.x, mouseArgs.y)
+		, local(mouseArgs.x - rectangle.x, mouseArgs.y - rectangle.y)
+		, localNormalized(local / glm::vec2(rectangle.width, rectangle.height))
+        , movement(action == Dragged ? global - cached : glm::vec2())
+		, takenBy(takenBy)
+        , InputArguments(currentPanel)
+		, scroll(mouseArgs.scrollX, mouseArgs.scrollY)
 	{ }
 
 	//----------

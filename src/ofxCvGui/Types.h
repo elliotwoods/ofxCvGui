@@ -44,7 +44,8 @@ namespace ofxCvGui {
 			Released = 1 << 1,
 			Moved = 1 << 2,
 			Dragged = 1 << 3,
-			DoubleClick = 1 << 4
+			DoubleClick = 1 << 4,
+			Scrolled = 1 << 5
         };
         
 		MouseArguments(); //local
@@ -81,6 +82,7 @@ namespace ofxCvGui {
 		glm::vec2 local;
 		glm::vec2 localNormalized; ///<Texture coordinates
 		glm::vec2 movement;
+		glm::vec2 scroll;
 
 		friend std::ostream& operator<<(std::ostream&, const MouseArguments &);
 	protected:

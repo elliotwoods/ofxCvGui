@@ -210,6 +210,11 @@ namespace ofxCvGui {
 				}
 				break;
 
+			case MouseArguments::Action::Scrolled:
+				{
+					this->onMouse(localMouseArguments);
+				}
+			break;
 
 			default:
 				break;
