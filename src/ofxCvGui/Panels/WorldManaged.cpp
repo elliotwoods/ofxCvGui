@@ -10,7 +10,7 @@ namespace ofxCvGui {
 			ofDisableArbTex();
 			{
 				this->gridTexture.enableMipmap();
-				this->gridTexture.loadData(ofxAssets::image("ofxRulr::grid-10").getPixels());
+				this->gridTexture.loadData(ofxAssets::image("ofxCvGui::grid-10").getPixels());
 				this->gridTexture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 				this->gridTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_NEAREST);
 			}
@@ -19,11 +19,19 @@ namespace ofxCvGui {
 #ifdef OFXCVGUI_USE_OFXGRABCAM
 			this->parameters.showCursor.addListener(this, &WorldManaged::showCursorCallback);
 			this->camera.setCursorDrawEnabled(this->parameters.showCursor.get());
-#endif
-#ifdef OFXCVGUI_USE_OFXGRABCAM
+		
 			this->onUpdate += [this](UpdateArguments& args) {
 				ofEventArgs dummyArgs;
 				this->camera.update(dummyArgs);
+
+				if (!this->cachedDark && this->parameters.grid.dark.get()) {
+					this->gridTexture.loadData(ofxAssets::image("ofxCvGui::grid-10-dark"));
+					this->cachedDark = true;
+				}
+				else if (this->cachedDark && !this->parameters.grid.dark.get()) {
+					this->gridTexture.loadData(ofxAssets::image("ofxCvGui::grid-10"));
+					this->cachedDark = false;
+				}
 			};
 			this->camera.setFixUpDirectionEnabled(true);
 			this->camera.setListenersEnabled(false);
@@ -38,6 +46,7 @@ namespace ofxCvGui {
 				args.takeMousePress(this);
 
 				ofMouseEventArgs ofArgs;
+				(glm::vec2&)ofArgs = args.global;
 
 				ofArgs.button = args.button;
 

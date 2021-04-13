@@ -39,18 +39,12 @@ namespace ofxCvGui {
 					ofParameter<glm::vec3> roomMin{ "Room min", {-1, -1, -1} };
 					ofParameter<glm::vec3> roomMax{ "Room max", {1, 1, 1} };
 
-					Grid() {
-						this->setName("Grid");
-						this->add(enabled, dark, roomMin, roomMax);
-					}
+					PARAM_DECLARE("Grid", enabled, dark, roomMin, roomMax);
 				} grid;
 
 				ofParameter<bool> showCursor;
 
-				Parameters() {
-					this->setName("WorldManaged");
-					this->add(grid, showCursor);
-				}
+				PARAM_DECLARE("WorldManaged", grid, showCursor);
 			} parameters;
 
 		protected:
@@ -58,6 +52,7 @@ namespace ofxCvGui {
 			void drawGrid();
 			void showCursorCallback(bool&);
 
+			bool cachedDark = false;
 			CameraType camera;
 			ofTexture gridTexture;
 		};
