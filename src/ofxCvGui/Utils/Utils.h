@@ -53,9 +53,12 @@ namespace ofxCvGui {
 
 			void renderAndClearAnnotations(const ofCamera & camera
 				, const ofRectangle & viewport);
+
+			void setEnabled(bool);
 		protected:
 			std::vector<TextAnnotation> textAnnotations;
 			std::vector<DrawAnnotation> drawAnnotations;
+			bool enabled = true;
 		};
 
 #pragma mark Animation

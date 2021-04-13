@@ -194,6 +194,9 @@ namespace ofxCvGui {
 
 		//----------
 		void AnnotationManager::annotate(const std::string& text, const glm::vec3& position, const ofColor & color) {
+			if (!this->enabled) {
+				return;
+			}
 			this->annotate({
 				text
 				, position
@@ -202,11 +205,17 @@ namespace ofxCvGui {
 		}
 		//----------
 		void AnnotationManager::annotate(const TextAnnotation& textAnnotation) {
+			if (!this->enabled) {
+				return;
+			}
 			this->textAnnotations.push_back(textAnnotation);
 		}
 
 		//----------
 		void AnnotationManager::annotate(const DrawAnnotation& drawAnnotation) {
+			if (!this->enabled) {
+				return;
+			}
 			this->drawAnnotations.push_back(drawAnnotation);
 		}
 
@@ -371,6 +380,13 @@ namespace ofxCvGui {
 
 			// Clear the annotations
 			this->clear();
+		}
+
+		//----------
+		void
+			AnnotationManager::setEnabled(bool enabled)
+		{
+			this->enabled = enabled;
 		}
 
 #pragma mark Animation

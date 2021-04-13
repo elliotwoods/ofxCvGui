@@ -21,17 +21,7 @@ namespace ofxCvGui {
 			this->camera.setCursorDrawEnabled(this->parameters.showCursor.get());
 		
 			this->onUpdate += [this](UpdateArguments& args) {
-				ofEventArgs dummyArgs;
-				this->camera.update(dummyArgs);
-
-				if (!this->cachedDark && this->parameters.grid.dark.get()) {
-					this->gridTexture.loadData(ofxAssets::image("ofxCvGui::grid-10-dark"));
-					this->cachedDark = true;
-				}
-				else if (this->cachedDark && !this->parameters.grid.dark.get()) {
-					this->gridTexture.loadData(ofxAssets::image("ofxCvGui::grid-10"));
-					this->cachedDark = false;
-				}
+				this->update();
 			};
 			this->camera.setFixUpDirectionEnabled(true);
 			this->camera.setListenersEnabled(false);
@@ -85,6 +75,13 @@ namespace ofxCvGui {
 				}
 			};
 #endif
+
+			this->onBoundsChange += [this](BoundsChangeArguments&) {
+				this->needsReflectionAllocate = true;
+			};
+			this->parameters.reflections.resolutionListener = this->parameters.reflections.resolution.newListener([this](const int&) {
+				this->needsReflectionAllocate = true;
+				});
 		}
 
 		shared_ptr<Panels::WorldManaged> makeWorldManaged(string caption) {
@@ -99,10 +96,100 @@ namespace ofxCvGui {
 			return this->camera;
 		}
 
+		//---------
+		void
+			WorldManaged::update()
+		{
+			ofEventArgs dummyArgs;
+			this->camera.update(dummyArgs);
+
+			if (!this->cachedDark && this->parameters.grid.dark.get()) {
+				this->gridTexture.loadData(ofxAssets::image("ofxCvGui::grid-10-dark"));
+				this->cachedDark = true;
+			}
+			else if (this->cachedDark && !this->parameters.grid.dark.get()) {
+				this->gridTexture.loadData(ofxAssets::image("ofxCvGui::grid-10"));
+				this->cachedDark = false;
+			}
+		}
+
 		//----------
 		void
 			WorldManaged::drawContent(const ofRectangle& bounds)
 		{
+			auto& roomMin = this->parameters.grid.roomMin.get();
+			auto& roomMax = this->parameters.grid.roomMax.get();
+
+			if (this->parameters.reflections.enabled) {
+				if (this->needsReflectionAllocate) {
+					ofFbo::Settings settings;
+					{
+						settings.width = this->getWidth() / this->parameters.reflections.resolution;
+						settings.height = this->getHeight() / this->parameters.reflections.resolution;
+						settings.numSamples = 4;
+						settings.internalformat = GL_RGBA;
+					}
+
+					for (int i = 0; i < 2; i++) {
+						this->reflection[i].allocate(settings);
+					}
+					this->needsReflectionAllocate = false;
+				}
+
+				// Render into the buffer
+				this->reflection[0].begin(ofFboMode::OF_FBOMODE_NODEFAULTS);
+				{
+					ofClear(0, 255);
+					Utils::AnnotationManager::X().setEnabled(false);
+					ofPushView();
+					{
+						ofSetMatrixMode(ofMatrixMode::OF_MATRIX_PROJECTION);
+						ofLoadMatrix(this->camera.getProjectionMatrix());
+						ofSetMatrixMode(ofMatrixMode::OF_MATRIX_MODELVIEW);
+						ofLoadMatrix(this->camera.getModelViewMatrix());
+
+						ofScale(1, -1, 1);
+						ofTranslate(0,  -roomMin.y * 2, 0);
+						this->onDrawWorld.notifyListeners();
+					}
+					ofPopView();
+					Utils::AnnotationManager::X().setEnabled(true);
+				}
+				this->reflection[0].end();
+
+				// Blur the buffer
+				for (int i = 0; i < this->parameters.reflections.blurIterations.get(); i++) {
+					this->reflection[1].begin();
+					{
+						auto& texture = this->reflection[0].getTextureReference();
+
+						ofClear(0, 0);
+						auto shader = ofxAssets::shader("ofxCvGui::blurX");
+						shader.begin();
+						{
+							shader.setUniform1f("blurAmnt", this->parameters.reflections.blur.get());
+							texture.draw(0, 0);
+						}
+						shader.end();
+					}
+					this->reflection[1].end();
+
+					this->reflection[0].begin();
+					{
+						ofClear(0, 0);
+						auto shader = ofxAssets::shader("ofxCvGui::blurX");
+						shader.begin();
+						{
+							shader.setUniform1f("blurAmnt", this->parameters.reflections.blur.get());
+							this->reflection[0].draw(0, 0);
+						}
+						shader.end();
+					}
+					this->reflection[0].end();
+				}
+				
+			}
+
 			this->camera.begin(bounds);
 			{
 				if (this->parameters.grid.enabled) {
@@ -110,7 +197,6 @@ namespace ofxCvGui {
 				}
 
 				this->onDrawWorld.notifyListeners(this->camera);
-
 			}
 			this->camera.end();
 
@@ -236,15 +322,30 @@ namespace ofxCvGui {
 					ofTranslate(roomMinimum.x + roomSpan.x * 0.5, roomMaximum.y, 0);
 					ofRotateDeg(90, -1, 0, 0);
 
-					//floor
+					//ceiling
 					glCullFace(GL_BACK);
 					ofTranslate(0, roomSpan.z * 0.5 - roomMaximum.z, 0);
 					planeXZ.draw();
 
-					//ceiling
+					//floor
 					glCullFace(GL_FRONT);
 					ofTranslate(0, 0, -roomSpan.y);
-					planeXZ.draw();
+					if (this->parameters.reflections.enabled) {
+						auto& shader = ofxAssets::shader("ofxCvGui::reflection");
+						auto& reflectionTexture = this->reflection[0].getTexture();
+						shader.begin();
+						{
+							shader.setUniform2f("resolution", { this->getWidth(), this->getHeight() });
+							shader.setUniform1f("resolutionDivider", this->parameters.reflections.resolution.get());
+							shader.setUniform1f("reflectionBrightness", this->parameters.reflections.brightness.get());
+							shader.setUniformTexture("reflection", reflectionTexture, 1);
+							planeXZ.draw();
+						}
+						shader.end();
+					}
+					else {
+						planeXZ.draw();
+					}
 				}
 				ofPopMatrix();
 				//

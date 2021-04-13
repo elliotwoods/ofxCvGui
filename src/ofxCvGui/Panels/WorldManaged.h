@@ -33,7 +33,7 @@ namespace ofxCvGui {
 			ofxLiquidEvent<ofCamera> onDrawWorld;
 
 			struct Parameters : ofParameterGroup{
-				struct Grid : ofParameterGroup {
+				struct : ofParameterGroup {
 					ofParameter<bool> enabled{ "Enabled", true };
 					ofParameter<bool> dark{ "Dark", false };
 					ofParameter<glm::vec3> roomMin{ "Room min", {-1, -1, -1} };
@@ -42,12 +42,23 @@ namespace ofxCvGui {
 					PARAM_DECLARE("Grid", enabled, dark, roomMin, roomMax);
 				} grid;
 
+				struct : ofParameterGroup {
+					ofParameter<bool> enabled{ "Enabled", true };
+					ofParameter<int> resolution{ "Resolution/x", 2 };
+					ofParameter<float> blur{ "Blur", 1.5, 0, 4 };
+					ofParameter<int> blurIterations{ "Blur iterations", 2};
+					ofParameter<float> brightness{ "Brightness", 0.5f };
+					PARAM_DECLARE("Reflections", enabled, resolution, blur, blurIterations, brightness);
+					ofEventListener resolutionListener;
+				} reflections;
+
 				ofParameter<bool> showCursor;
 
-				PARAM_DECLARE("WorldManaged", grid, showCursor);
+				PARAM_DECLARE("Reflections", grid, reflections, showCursor);
 			} parameters;
 
 		protected:
+			void update();
 			void drawContent(const ofRectangle& bounds);
 			void drawGrid();
 			void showCursorCallback(bool&);
@@ -55,6 +66,9 @@ namespace ofxCvGui {
 			bool cachedDark = false;
 			CameraType camera;
 			ofTexture gridTexture;
+
+			ofFbo reflection[2]; // ping pong for blur
+			bool needsReflectionAllocate = true;
 		};
 
 		shared_ptr<Panels::WorldManaged> makeWorldManaged(string caption = "");
