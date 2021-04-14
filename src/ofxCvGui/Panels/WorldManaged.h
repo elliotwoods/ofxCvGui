@@ -52,7 +52,7 @@ namespace ofxCvGui {
 					ofEventListener resolutionListener;
 				} reflections;
 
-				ofParameter<bool> showCursor;
+				ofParameter<bool> showCursor{ "Show cursor", true };
 
 				PARAM_DECLARE("Reflections", grid, reflections, showCursor);
 			} parameters;
