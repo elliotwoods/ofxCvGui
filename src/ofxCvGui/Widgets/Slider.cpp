@@ -157,13 +157,13 @@ namespace ofxCvGui {
 					ofSetColor(150);
 					
 					auto minValue = this->getCheckedValue(positionToValue(0.0f));
-					auto & smallFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 10);
-					smallFont.drawStringAsShapes(ofToString(minValue), 0, 51);
+					auto & smallFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 11);
+					smallFont.drawString(ofToString(minValue), 0, 51);
 
 					auto maxValue = this->getCheckedValue(positionToValue(width));
 					auto maxTextString = ofToString(maxValue);
 					auto maxTextBounds = smallFont.getStringBoundingBox(maxTextString, 0.0f, 0.0f);
-					smallFont.drawStringAsShapes(maxTextString, this->getWidth() - maxTextBounds.getRight(), 51);
+					smallFont.drawString(maxTextString, this->getWidth() - maxTextBounds.getRight(), 51);
 					
 					ofPopStyle();
 				}
