@@ -181,6 +181,11 @@ namespace ofxCvGui {
 			}
 		}
 
+		//---------
+		void drawTextAnnotation(const std::string& text, const glm::vec3& position, const ofColor& color) {
+			AnnotationManager::X().annotate(text, position, color);
+		}
+
 		//----------
 		AnnotationManager::AnnotationManager() {
 
