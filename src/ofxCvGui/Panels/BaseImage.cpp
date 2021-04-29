@@ -347,9 +347,9 @@ namespace ofxCvGui {
 				scroll.x = 0.0f;
 			}
 			else {
-				auto rightEdge = (scroll.x + this->getWidth() / factor);
-				if (rightEdge > this->getImageWidth()) {
-					scroll.x = this->getImageWidth() - this->getWidth() / factor;
+				auto rightEdge = (scroll.x + this->getWidth());
+				if (rightEdge > this->getImageWidth() * factor) {
+					scroll.x = this->getImageWidth() * factor - this->getWidth();
 				}
 			}
 
@@ -360,9 +360,9 @@ namespace ofxCvGui {
 				scroll.y = 0.0f;
 			}
 			else {
-				auto bottomEdge = (scroll.y + this->getHeight() / factor);
-				if (bottomEdge > this->getImageHeight()) {
-					scroll.y = this->getImageHeight() - this->getHeight() / factor;
+				auto bottomEdge = (scroll.y + this->getHeight());
+				if (bottomEdge > this->getImageHeight() * factor) {
+					scroll.y = this->getImageHeight() * factor - this->getHeight();
 				}
 			}
 		}
