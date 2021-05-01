@@ -54,7 +54,7 @@ namespace ofxCvGui {
 
 				ofParameter<bool> showCursor{ "Show cursor", true };
 
-				PARAM_DECLARE("Reflections", grid, reflections, showCursor);
+				PARAM_DECLARE("WorldManaged", grid, reflections, showCursor);
 			} parameters;
 
 		protected:

@@ -212,7 +212,9 @@ namespace ofxCvGui {
 
 			case MouseArguments::Action::Scrolled:
 				{
-					this->onMouse(localMouseArguments);
+					if(this->getBounds().inside(parentMouseArguments.local)) {
+						this->onMouse(localMouseArguments);
+					}
 				}
 			break;
 

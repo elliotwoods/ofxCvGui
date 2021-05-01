@@ -319,6 +319,12 @@ namespace ofxCvGui {
 					continue;
 				}
 
+				// move to local coordinates after testing if inside viewport
+				{
+					screenPosition.x -= viewport.x;
+					screenPosition.y -= viewport.y;
+				}
+
 				bool drawn = false;
 				float x;
 

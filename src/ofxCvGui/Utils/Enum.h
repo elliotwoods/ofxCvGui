@@ -12,6 +12,8 @@ namespace ofxCvGui {
 	class BaseEnum {
 	public:
 		virtual const vector<string> & getOptionStrings() const = 0;
+		virtual string toString() const = 0;
+		virtual bool fromString(const string&) = 0;
 	};
 }
 
@@ -26,6 +28,9 @@ public: \
 	} \
 	NAME() { this->innerValue = (Options) 0; this->registerBuilder(); } \
 	NAME(Options value) { this->innerValue = value; this->registerBuilder(); } \
+	void operator()(const NAME & other) { \
+		this->innerValue = other.innerValue; \
+	} \
 	Options get() const { \
 		return this->innerValue; \
 	} \
@@ -40,6 +45,19 @@ public: \
 	} \
 	operator Options &() { \
 		return this->innerValue; \
+	} \
+	string toString() const { \
+		return this->optionStrings.at(this->innerValue); \
+	} \
+	bool fromString(const string & valueString) { \
+		for (uint32_t optionIndex = 0; optionIndex < this->optionStrings.size(); optionIndex++) { \
+			const auto & optionString = this->optionStrings[optionIndex]; \
+			if (optionString == valueString) { \
+				this->set((Options)optionIndex); \
+				return true; \
+			} \
+		} \
+		return false; \
 	} \
 protected: \
 	void registerBuilder() { \
@@ -70,3 +88,8 @@ protected: \
 	Options innerValue; \
 	vector<string> optionStrings { OFXCVGUI_UNWRAP STRINGS }; \
 };
+
+
+
+ostream& operator<<(ostream& stream, const ofxCvGui::BaseEnum& value);
+istream& operator>>(istream& stream, ofxCvGui::BaseEnum& value);

@@ -197,13 +197,33 @@ namespace ofxCvGui {
 
 		//----------
 		ElementPtr WidgetsBuilder::tryBuild(shared_ptr<ofAbstractParameter> parameter) {
-			for (auto & wrappedBuildFuncton : this->wrappedBuildFunctions) {
-				auto element = wrappedBuildFuncton.second(parameter);
+			for (auto & managedType : this->managedTypes) {
+				auto element = managedType.second.build(parameter);
 				if(element) {
 					return element;
 				}
 			}
 			return ElementPtr();
+		}
+
+		//----------
+		bool WidgetsBuilder::trySerialize(shared_ptr<ofAbstractParameter> parameter, string& valueString) {
+			for (auto& managedType : this->managedTypes) {
+				if (managedType.second.serialize(parameter, valueString)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		//----------
+		bool WidgetsBuilder::tryDeserialize(shared_ptr<ofAbstractParameter> parameter, const string& valueString) {
+			for (auto& managedType : this->managedTypes) {
+				if (managedType.second.deserialize(parameter, valueString)) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

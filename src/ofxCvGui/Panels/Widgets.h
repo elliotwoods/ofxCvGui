@@ -99,12 +99,23 @@ namespace ofxCvGui {
 		class WidgetsBuilder : public ofxSingleton::UnmanagedSingleton<WidgetsBuilder> {
 		public:
 			typedef function<ElementPtr(shared_ptr<ofAbstractParameter>)> BuildFunction;
+			typedef function<bool(shared_ptr<ofAbstractParameter>, const string&)> DeserializeFunction;
+			typedef function<bool(shared_ptr<ofAbstractParameter>, string &)> SerializeFunction;
+			
+			struct ManagedType {
+				BuildFunction build;
+				DeserializeFunction deserialize;
+				SerializeFunction serialize;
+			};
+
 			template<typename Type>
 			void registerBuilder(function<ElementPtr(ofParameter<Type> & parameter)> buildFunction) {
 				auto typeIdHash = typeid(Type).hash_code();
-				auto entry = this->wrappedBuildFunctions.find(typeIdHash);
-				if (entry == this->wrappedBuildFunctions.end()) {
-					this->wrappedBuildFunctions[typeIdHash] = [buildFunction](shared_ptr<ofAbstractParameter> parameter) {
+				auto entry = this->managedTypes.find(typeIdHash);
+				if (entry == this->managedTypes.end()) {
+					ManagedType managedType;
+
+					managedType.build = [buildFunction](shared_ptr<ofAbstractParameter> parameter) {
 						auto tryCast = dynamic_pointer_cast<ofParameter<Type>>(parameter);
 						if (tryCast) {
 							return buildFunction(*tryCast);
@@ -113,12 +124,39 @@ namespace ofxCvGui {
 							return ElementPtr();
 						}
 					};
+
+					managedType.deserialize = [](shared_ptr<ofAbstractParameter> parameter, const string& valueString) {
+						auto tryCast = dynamic_pointer_cast<ofParameter<Type>>(parameter);
+						if (tryCast) {
+							// Especially for enums, we need to take a copy of the original before setting a new value
+							auto value = tryCast->get();
+							if (value.fromString(valueString)) {
+								tryCast->set(value);
+								return true;
+							}
+						}
+						return false;
+					};
+
+					managedType.serialize = [](shared_ptr<ofAbstractParameter> parameter, string& valueString) {
+						auto tryCast = dynamic_pointer_cast<ofParameter<Type>>(parameter);
+						if (tryCast) {
+							valueString = tryCast->get().toString();
+							return true;
+						}
+						return false;
+					};
+
+					this->managedTypes[typeIdHash] = managedType;
 				}
 			}
 
 			ElementPtr tryBuild(shared_ptr<ofAbstractParameter>);
+			bool trySerialize(shared_ptr<ofAbstractParameter>, string&);
+			bool tryDeserialize(shared_ptr<ofAbstractParameter>, const string&);
+
 		protected:
-			map<size_t, BuildFunction> wrappedBuildFunctions;
+			map<size_t, ManagedType> managedTypes;
 		};
 
 		shared_ptr<Panels::Widgets> makeWidgets(string caption = "");
