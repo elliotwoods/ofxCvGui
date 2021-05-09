@@ -20,7 +20,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	shared_ptr<Panels::Image> Builder::add(ofImage& asset, string caption) {
+	shared_ptr<Panels::Image> Builder::add(ofAbstractImage& asset, string caption) {
 		auto newPanel = Panels::makeImage(asset, caption);
 		Controller::X().add(newPanel);
 		return newPanel;

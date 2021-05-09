@@ -14,12 +14,10 @@ namespace ofxCvGui {
 			this->mirror = mirror;
 		}
 
-
 		//----------
 		bool BaseImage::getMirror() const {
 			return this->mirror;
 		}
-
 
 		//----------
 		glm::mat4 BaseImage::getPanelToImageTransform() const {
@@ -86,7 +84,6 @@ namespace ofxCvGui {
 			return transform;
 		}
 
-
 		//----------
 		float BaseImage::getZoomFactor() const {
 			switch (this->zoomState) {
@@ -100,7 +97,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-        BaseImage::BaseImage() {
+		BaseImage::BaseImage() {
 			this->onDraw.addListener([this](DrawArguments & outerArgs) {
 				//transform in and draw the image
 				ofPushMatrix();
@@ -260,7 +257,7 @@ namespace ofxCvGui {
 			
 			this->onMouse.addListener([this](MouseArguments & args) {
 				args.takeMousePress(this);
-				if(args.isDragging(this)) {
+				if(args.isDragging(this) && args.button == 0) {
 					this->scroll -= args.movement / this->getZoomFactor();
 					this->clampScroll();
 				}

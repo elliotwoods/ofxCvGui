@@ -315,7 +315,9 @@ namespace ofxCvGui {
 				auto screenPosition = camera.worldToScreen(worldSpace, viewport);
 
 				// Ignore if outside of screen
-				if (!viewport.inside(screenPosition)) {
+				if (!viewport.inside(screenPosition) 
+					|| screenPosition.z < -1.0f
+					|| screenPosition.z > 1.0f) {
 					continue;
 				}
 

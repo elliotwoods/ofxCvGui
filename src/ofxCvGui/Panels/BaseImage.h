@@ -14,7 +14,6 @@ namespace ofxCvGui {
 	namespace Panels {
 		class OFXCVGUI_API_ENTRY BaseImage : public Base {
 		public:
-
 			ofxLiquidEvent<DrawImageArguments> onDrawImage;
 			ImageZoomState getImageZoomState() const;
 

@@ -33,7 +33,7 @@ namespace ofxCvGui {
 		void add(PanelPtr panel);
 		
 		shared_ptr<Panels::Draws> add(ofBaseDraws& asset, string caption="");
-		shared_ptr<Panels::Image> add(ofImage& asset, string caption="");
+		shared_ptr<Panels::Image> add(ofAbstractImage& asset, string caption="");
 		shared_ptr<Panels::Pixels> add(const ofPixels& asset, string caption="");
 		shared_ptr<Panels::PixelsVector> add(const vector<ofPixels>& asset, string caption = "");
 		shared_ptr<Panels::Texture> add(const ofTexture & asset, string caption="");

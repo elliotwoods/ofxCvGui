@@ -161,7 +161,7 @@ namespace ofxCvGui {
 				for (int i = 0; i < this->parameters.reflections.blurIterations.get(); i++) {
 					this->reflection[1].begin();
 					{
-						auto& texture = this->reflection[0].getTextureReference();
+						auto& texture = this->reflection[0].getTexture();
 
 						ofClear(0, 0);
 						auto shader = ofxAssets::shader("ofxCvGui::blurX");
