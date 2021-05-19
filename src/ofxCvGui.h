@@ -43,3 +43,11 @@
 #include "ofxCvGui/Widgets/TextField.h"
 
 #include "ofxCvGui/InspectController.h"
+
+#include "ofxCvGui/Utils/Button.h"
+#include "ofxCvGui/Utils/Constants.h"
+#include "ofxCvGui/Utils/Debugger.h"
+#include "ofxCvGui/Utils/Enum.h"
+#include "ofxCvGui/Utils/Sugar.h"
+#include "ofxCvGui/Utils/TextField.h"
+#include "ofxCvGui/Utils/Utils.h"

@@ -7,7 +7,7 @@ namespace ofxCvGui {
 			this->canvasElements = shared_ptr<ElementGroup>(new ElementGroup);
 			this->fixedElements = shared_ptr<ElementGroup>(new ElementGroup);
 
-			this->onUpdate += [this](ofxCvGui::UpdateArguments &) {
+			this->onUpdate += [this](ofxCvGui::UpdateArguments&) {
 				this->update();
 			};
 

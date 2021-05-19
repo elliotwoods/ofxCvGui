@@ -1,4 +1,5 @@
 #include "pch_ofxCvGui.h"
+#include "ofxCvGui/Utils/Debugger.h"
 
 using namespace std;
 
@@ -18,14 +19,35 @@ namespace ofxCvGui {
 	//-----------
 	void Element::update() {
 		if (this->enabled) {
+#ifdef _DEBUG
+			auto drawTimings = Utils::Debugger::X().parameters.draw.timings.get();
+			std::chrono::high_resolution_clock::time_point* timeStart;
+			if (drawTimings) {
+				timeStart = new std::chrono::high_resolution_clock::time_point(std::chrono::high_resolution_clock::now());
+			}
+#endif
 			UpdateArguments args;
 			onUpdate.notifyListeners(args);
+#ifdef _DEBUG
+			if (drawTimings) {
+				auto timeNanos = std::chrono::high_resolution_clock::now() - *timeStart;
+				this->debug.updateTime = std::chrono::duration_cast<std::chrono::milliseconds>(timeNanos).count();
+				delete timeStart;
+			}
+#endif
 		}
 	}
 
 	//-----------
 	void Element::draw(const DrawArguments& parentArguments) {
 		if (this->enabled) {
+#ifdef _DEBUG
+			auto drawTimings = Utils::Debugger::X().parameters.draw.timings.get();
+			std::chrono::high_resolution_clock::time_point * timeStart;
+			if (drawTimings) {
+				timeStart = new std::chrono::high_resolution_clock::time_point(std::chrono::high_resolution_clock::now());
+			}
+#endif
 			DrawArguments localArguments;
 			localArguments.chromeEnabled = parentArguments.chromeEnabled;
 			localArguments.naturalBounds = this->getBounds();
@@ -36,7 +58,6 @@ namespace ofxCvGui {
 
 			//only draw if this Element will be shown on the screen (not outside, not scissored out)
 			if (Utils::ScissorManager::X().getScissor().intersects(localArguments.globalBounds)) {
-
 				if (this->cachedView) {
 					//--
 					//Cached view mechanism
@@ -110,6 +131,16 @@ namespace ofxCvGui {
 
 				}
 			}
+
+#ifdef _DEBUG
+			if (drawTimings) {
+				auto drawTimeNanos = std::chrono::high_resolution_clock::now() - *timeStart;
+				this->debug.drawTime = std::chrono::duration_cast<std::chrono::milliseconds>(drawTimeNanos).count();
+				auto message = "D : " + ofToString(this->debug.drawTime) + " / U : " + ofToString(this->debug.updateTime);
+				ofDrawBitmapStringHighlight(message, bounds.x, bounds.y + 20);
+				delete timeStart;
+			}
+#endif
 		}
 	}
 

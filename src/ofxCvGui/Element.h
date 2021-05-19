@@ -110,6 +110,13 @@ namespace ofxCvGui {
 		bool needsViewUpdate;
 
 		std::set<ElementPtr> children;
+
+#ifdef _DEBUG
+		struct {
+			uint32_t drawTime = 0;
+			uint32_t updateTime = 0;
+		} debug;
+#endif
 	};
 	
 	ElementPtr makeElement();

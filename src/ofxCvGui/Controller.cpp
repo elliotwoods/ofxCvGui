@@ -412,6 +412,10 @@ namespace ofxCvGui {
 		if (!this->rootGroup) {
 			return;
 		}
+		if (args.key == 0) {
+			// This sometimes happens with mouse button 4
+			return;
+		}
 
 		if (!this->activeDialog) {
 			if (args.key == 'f')

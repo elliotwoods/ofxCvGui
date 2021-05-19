@@ -258,7 +258,7 @@ namespace ofxCvGui {
 			this->onMouse.addListener([this](MouseArguments & args) {
 				args.takeMousePress(this);
 				if(args.isDragging(this) && args.button == 0) {
-					this->scroll -= args.movement / this->getZoomFactor();
+					this->scroll -= args.movement;
 					this->clampScroll();
 				}
 			}, this, -1);
