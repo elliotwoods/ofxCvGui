@@ -15,7 +15,9 @@ namespace ofxCvGui {
 		class OFXCVGUI_API_ENTRY BaseImage : public Base {
 		public:
 			ofxLiquidEvent<DrawImageArguments> onDrawImage;
+			
 			ImageZoomState getImageZoomState() const;
+			void setImageZoomState(ImageZoomState);
 
 			void setMirror(bool);
 			bool getMirror() const;
@@ -23,6 +25,9 @@ namespace ofxCvGui {
 			glm::mat4x4 getPanelToImageTransform() const;
 
 			float getZoomFactor() const;
+
+			const glm::vec2& getScroll() const;
+			void setScroll(const glm::vec2&);
 		protected:
             BaseImage();
             virtual ~BaseImage();

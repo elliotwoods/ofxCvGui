@@ -10,6 +10,11 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		void BaseImage::setImageZoomState(ImageZoomState imageZoomState) {
+			this->zoomState = imageZoomState;
+		}
+
+		//----------
 		void BaseImage::setMirror(bool mirror) {
 			this->mirror = mirror;
 		}
@@ -94,6 +99,16 @@ namespace ofxCvGui {
 			default:
 				return this->getWidth() / this->getImageWidth(); // shouldn't be here
 			}
+		}
+
+		//----------
+		const glm::vec2& BaseImage::getScroll() const {
+			return this->scroll;
+		}
+
+		//----------
+		void BaseImage::setScroll(const glm::vec2& scroll) {
+			this->scroll = scroll;
 		}
 
 		//----------

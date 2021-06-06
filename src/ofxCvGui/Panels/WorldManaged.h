@@ -48,7 +48,8 @@ namespace ofxCvGui {
 					ofParameter<float> blur{ "Blur", 1.5, 0, 4 };
 					ofParameter<int> blurIterations{ "Blur iterations", 2};
 					ofParameter<float> brightness{ "Brightness", 0.5f };
-					PARAM_DECLARE("Reflections", enabled, resolution, blur, blurIterations, brightness);
+					ofParameter<bool> flipFloor{ "Flip floor", false };
+					PARAM_DECLARE("Reflections", enabled, resolution, blur, blurIterations, brightness, flipFloor);
 					ofEventListener resolutionListener;
 				} reflections;
 

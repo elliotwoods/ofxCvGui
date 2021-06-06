@@ -149,7 +149,12 @@ namespace ofxCvGui {
 						ofLoadMatrix(this->camera.getModelViewMatrix());
 
 						ofScale(1, -1, 1);
-						ofTranslate(0,  -roomMin.y * 2, 0);
+						if (!this->parameters.reflections.flipFloor.get()) {
+							ofTranslate(0, -roomMin.y * 2, 0);
+						}
+						else {
+							ofTranslate(0, -roomMax.y * 2, 0);
+						}
 						this->onDrawWorld.notifyListeners();
 					}
 					ofPopView();
@@ -325,12 +330,27 @@ namespace ofxCvGui {
 					//ceiling
 					glCullFace(GL_BACK);
 					ofTranslate(0, roomSpan.z * 0.5 - roomMaximum.z, 0);
-					planeXZ.draw();
+					if (this->parameters.reflections.enabled && this->parameters.reflections.flipFloor.get()) {
+						auto& shader = ofxAssets::shader("ofxCvGui::reflection");
+						auto& reflectionTexture = this->reflection[0].getTexture();
+						shader.begin();
+						{
+							shader.setUniform2f("resolution", { this->getWidth(), this->getHeight() });
+							shader.setUniform1f("resolutionDivider", this->parameters.reflections.resolution.get());
+							shader.setUniform1f("reflectionBrightness", this->parameters.reflections.brightness.get());
+							shader.setUniformTexture("reflection", reflectionTexture, 1);
+							planeXZ.draw();
+						}
+						shader.end();
+					}
+					else {
+						planeXZ.draw();
+					}
 
 					//floor
 					glCullFace(GL_FRONT);
 					ofTranslate(0, 0, -roomSpan.y);
-					if (this->parameters.reflections.enabled) {
+					if (this->parameters.reflections.enabled && !this->parameters.reflections.flipFloor.get()) {
 						auto& shader = ofxAssets::shader("ofxCvGui::reflection");
 						auto& reflectionTexture = this->reflection[0].getTexture();
 						shader.begin();
