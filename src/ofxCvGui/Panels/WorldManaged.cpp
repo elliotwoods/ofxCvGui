@@ -128,6 +128,8 @@ namespace ofxCvGui {
 						settings.height = this->getHeight() / this->parameters.reflections.resolution;
 						settings.numSamples = 4;
 						settings.internalformat = GL_RGBA;
+						settings.useDepth = true;
+						settings.depthStencilInternalFormat = GL_DEPTH_COMPONENT24;
 					}
 
 					for (int i = 0; i < 2; i++) {
@@ -139,6 +141,8 @@ namespace ofxCvGui {
 				// Render into the buffer
 				this->reflection[0].begin(ofFboMode::OF_FBOMODE_NODEFAULTS);
 				{
+					glEnable(GL_DEPTH_TEST);
+
 					ofClear(0, 255);
 					Utils::AnnotationManager::X().setEnabled(false);
 					ofPushView();
@@ -155,10 +159,14 @@ namespace ofxCvGui {
 						else {
 							ofTranslate(0, -roomMax.y * 2, 0);
 						}
+
+						this->drawGrid(false);
 						this->onDrawWorld.notifyListeners();
 					}
 					ofPopView();
 					Utils::AnnotationManager::X().setEnabled(true);
+
+					glDisable(GL_DEPTH_TEST);
 				}
 				this->reflection[0].end();
 
@@ -198,7 +206,7 @@ namespace ofxCvGui {
 			this->camera.begin(bounds);
 			{
 				if (this->parameters.grid.enabled) {
-					this->drawGrid();
+					this->drawGrid(false);
 				}
 
 				this->onDrawWorld.notifyListeners(this->camera);
@@ -211,38 +219,46 @@ namespace ofxCvGui {
 
 		//----------
 		void
-			WorldManaged::drawGrid()
+			WorldManaged::drawGrid(bool forReflection)
 		{
 			const auto& roomMinimum = this->parameters.grid.roomMin.get();
 			const auto& roomMaximum = this->parameters.grid.roomMax.get();
 			const auto roomSpan = roomMaximum - roomMinimum;
 
-			//--
-			//axes
-			//--
-			//
-			ofPushStyle();
-			ofSetLineWidth(2.0f);
-			//
-			//x
-			ofSetColor(200, 100, 100);
-			ofPushMatrix();
-			ofTranslate(0, roomMaximum.y, roomMaximum.z);
-			ofDrawLine(roomMinimum.x, 0, roomMaximum.x, 0);
-			ofPopMatrix();
-			//
-			//y
-			ofSetColor(100, 200, 100);
-			ofDrawLine(0, roomMaximum.y, roomMaximum.z, 0, roomMinimum.y, roomMaximum.z);
-			//
-			//z
-			ofSetColor(100, 200, 100);
-			ofDrawLine(0, roomMaximum.y, roomMaximum.z, 0, roomMaximum.y, roomMinimum.z);
-			//
-			ofPopStyle();
-			//
-			//--
+			// Flip the culling when drawing the reflection
+			auto front = !forReflection
+				? GL_FRONT
+				: GL_BACK;
+			auto back = !forReflection
+				? GL_BACK
+				: GL_FRONT;
 
+			if (!forReflection) {
+				//--
+				//axes
+				//--
+				//
+				ofPushStyle();
+				ofSetLineWidth(2.0f);
+				//
+				//x
+				ofSetColor(200, 100, 100);
+				ofPushMatrix();
+				ofTranslate(0, roomMaximum.y, roomMaximum.z);
+				ofDrawLine(roomMinimum.x, 0, roomMaximum.x, 0);
+				ofPopMatrix();
+				//
+				//y
+				ofSetColor(100, 200, 100);
+				ofDrawLine(0, roomMaximum.y, roomMaximum.z, 0, roomMinimum.y, roomMaximum.z);
+				//
+				//z
+				ofSetColor(100, 200, 100);
+				ofDrawLine(0, roomMaximum.y, roomMaximum.z, 0, roomMaximum.y, roomMinimum.z);
+				//
+				ofPopStyle();
+				//
+				//--
 
 
 #ifdef OFXCVGUI_USE_OFXGRABCAM
@@ -250,42 +266,43 @@ namespace ofxCvGui {
 			//cursor lines
 			//--
 			//
-			ofPushStyle();
-			{
-				const auto cursorPosition = camera.getCursorWorld();
-				//
-				if (this->parameters.grid.dark) {
-					ofSetColor(100);
+				ofPushStyle();
+				{
+					const auto cursorPosition = camera.getCursorWorld();
+					//
+					if (this->parameters.grid.dark) {
+						ofSetColor(100);
+					}
+					else {
+						ofSetColor(0);
+					}
+					ofSetLineWidth(2.0f);
+					//front wall
+					ofDrawLine(cursorPosition.x, roomMaximum.y, roomMinimum.z, cursorPosition.x, roomMinimum.y, roomMinimum.z); //x
+					ofDrawLine(roomMinimum.x, cursorPosition.y, roomMinimum.z, roomMaximum.x, cursorPosition.y, roomMinimum.z); //y
+					//back wall
+					ofDrawLine(cursorPosition.x, roomMaximum.y, roomMaximum.z, cursorPosition.x, roomMinimum.y, roomMaximum.z); //x
+					ofDrawLine(roomMinimum.x, cursorPosition.y, roomMaximum.z, roomMaximum.x, cursorPosition.y, roomMaximum.z); //y
+					//
+					//floor
+					ofDrawLine(cursorPosition.x, roomMaximum.y, roomMinimum.z, cursorPosition.x, roomMaximum.y, roomMaximum.z); //x
+					ofDrawLine(roomMinimum.x, roomMaximum.y, cursorPosition.z, roomMaximum.x, roomMaximum.y, cursorPosition.z); //z
+					//ceiling
+					ofDrawLine(cursorPosition.x, roomMinimum.y, roomMinimum.z, cursorPosition.x, roomMinimum.y, roomMaximum.z); //x
+					ofDrawLine(roomMinimum.x, roomMinimum.y, cursorPosition.z, roomMaximum.x, roomMinimum.y, cursorPosition.z); //z
+					//
+					//left wall
+					ofDrawLine(roomMinimum.x, cursorPosition.y, roomMinimum.z, roomMinimum.x, cursorPosition.y, roomMaximum.z); //y
+					ofDrawLine(roomMinimum.x, roomMinimum.y, cursorPosition.z, roomMinimum.x, roomMaximum.y, cursorPosition.z); //z
+					//right wall
+					ofDrawLine(roomMaximum.x, cursorPosition.y, roomMinimum.z, roomMaximum.x, cursorPosition.y, roomMaximum.z); //y
+					ofDrawLine(roomMaximum.x, roomMinimum.y, cursorPosition.z, roomMaximum.x, roomMaximum.y, cursorPosition.z); //z
+					//
 				}
-				else {
-					ofSetColor(0);
-				}
-				ofSetLineWidth(2.0f);
-				//front wall
-				ofDrawLine(cursorPosition.x, roomMaximum.y, roomMinimum.z, cursorPosition.x, roomMinimum.y, roomMinimum.z); //x
-				ofDrawLine(roomMinimum.x, cursorPosition.y, roomMinimum.z, roomMaximum.x, cursorPosition.y, roomMinimum.z); //y
-				//back wall
-				ofDrawLine(cursorPosition.x, roomMaximum.y, roomMaximum.z, cursorPosition.x, roomMinimum.y, roomMaximum.z); //x
-				ofDrawLine(roomMinimum.x, cursorPosition.y, roomMaximum.z, roomMaximum.x, cursorPosition.y, roomMaximum.z); //y
+				ofPopStyle();
 				//
-				//floor
-				ofDrawLine(cursorPosition.x, roomMaximum.y, roomMinimum.z, cursorPosition.x, roomMaximum.y, roomMaximum.z); //x
-				ofDrawLine(roomMinimum.x, roomMaximum.y, cursorPosition.z, roomMaximum.x, roomMaximum.y, cursorPosition.z); //z
-				//ceiling
-				ofDrawLine(cursorPosition.x, roomMinimum.y, roomMinimum.z, cursorPosition.x, roomMinimum.y, roomMaximum.z); //x
-				ofDrawLine(roomMinimum.x, roomMinimum.y, cursorPosition.z, roomMaximum.x, roomMinimum.y, cursorPosition.z); //z
-				//
-				//left wall
-				ofDrawLine(roomMinimum.x, cursorPosition.y, roomMinimum.z, roomMinimum.x, cursorPosition.y, roomMaximum.z); //y
-				ofDrawLine(roomMinimum.x, roomMinimum.y, cursorPosition.z, roomMinimum.x, roomMaximum.y, cursorPosition.z); //z
-				//right wall
-				ofDrawLine(roomMaximum.x, cursorPosition.y, roomMinimum.z, roomMaximum.x, cursorPosition.y, roomMaximum.z); //y
-				ofDrawLine(roomMaximum.x, roomMinimum.y, cursorPosition.z, roomMaximum.x, roomMaximum.y, cursorPosition.z); //z
-				//
+				//--
 			}
-			ofPopStyle();
-			//
-			//--
 #endif
 
 
@@ -295,7 +312,15 @@ namespace ofxCvGui {
 			//--
 			//
 			glEnable(GL_CULL_FACE);
-			this->gridTexture.bind();
+
+			if (!forReflection) {
+				this->gridTexture.bind();
+			}
+			else {
+				ofPushStyle();
+				ofSetColor(0);
+			}
+
 			{
 				//
 				//front/back walls
@@ -305,12 +330,12 @@ namespace ofxCvGui {
 					planeXY.mapTexCoords(roomMinimum.x, roomSpan.y, roomMaximum.x, 0);
 
 					//front
-					glCullFace(GL_FRONT);
+					glCullFace(front);
 					ofTranslate(roomMinimum.x + roomSpan.x * 0.5, roomMaximum.y - roomSpan.y * 0.5, roomMinimum.z);
 					planeXY.draw();
 
 					//back
-					glCullFace(GL_BACK);
+					glCullFace(back);
 					ofTranslate(0, 0, roomSpan.z);
 					planeXY.draw();
 
@@ -328,9 +353,9 @@ namespace ofxCvGui {
 					ofRotateDeg(90, -1, 0, 0);
 
 					//ceiling
-					glCullFace(GL_BACK);
+					glCullFace(back);
 					ofTranslate(0, roomSpan.z * 0.5 - roomMaximum.z, 0);
-					if (this->parameters.reflections.enabled && this->parameters.reflections.flipFloor.get()) {
+					if (this->parameters.reflections.enabled && this->parameters.reflections.flipFloor.get() && !forReflection) {
 						auto& shader = ofxAssets::shader("ofxCvGui::reflection");
 						auto& reflectionTexture = this->reflection[0].getTexture();
 						shader.begin();
@@ -348,9 +373,9 @@ namespace ofxCvGui {
 					}
 
 					//floor
-					glCullFace(GL_FRONT);
+					glCullFace(front);
 					ofTranslate(0, 0, -roomSpan.y);
-					if (this->parameters.reflections.enabled && !this->parameters.reflections.flipFloor.get()) {
+					if (this->parameters.reflections.enabled && !this->parameters.reflections.flipFloor.get() && !forReflection) {
 						auto& shader = ofxAssets::shader("ofxCvGui::reflection");
 						auto& reflectionTexture = this->reflection[0].getTexture();
 						shader.begin();
@@ -379,19 +404,25 @@ namespace ofxCvGui {
 					ofRotateDeg(-90, 0, 1, 0);
 
 					//left wall
-					glCullFace(GL_BACK);
+					glCullFace(back);
 					ofTranslate(0, 0, -roomMinimum.x);
 					planeYZ.draw();
 
 					//right wall
-					glCullFace(GL_FRONT);
+					glCullFace(front);
 					ofTranslate(0, 0, -roomSpan.x);
 					planeYZ.draw();
 				}
 				ofPopMatrix();
 				//
 			}
-			this->gridTexture.unbind();
+			if (!forReflection) {
+				this->gridTexture.unbind();
+			}
+			else {
+				ofPopStyle();
+			}
+
 			glDisable(GL_CULL_FACE);
 			//
 			//--

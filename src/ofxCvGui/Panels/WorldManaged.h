@@ -61,7 +61,7 @@ namespace ofxCvGui {
 		protected:
 			void update();
 			void drawContent(const ofRectangle& bounds);
-			void drawGrid();
+			void drawGrid(bool forReflection);
 			void showCursorCallback(bool&);
 
 			bool cachedDark = false;
