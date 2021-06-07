@@ -142,6 +142,7 @@ namespace ofxCvGui {
 				this->reflection[0].begin(ofFboMode::OF_FBOMODE_NODEFAULTS);
 				{
 					glEnable(GL_DEPTH_TEST);
+					glClear(GL_DEPTH_BUFFER_BIT);
 
 					ofClear(0, 255);
 					Utils::AnnotationManager::X().setEnabled(false);
@@ -160,8 +161,8 @@ namespace ofxCvGui {
 							ofTranslate(0, -roomMax.y * 2, 0);
 						}
 
-						this->drawGrid(false);
 						this->onDrawWorld.notifyListeners();
+						this->drawGrid(false);
 					}
 					ofPopView();
 					Utils::AnnotationManager::X().setEnabled(true);

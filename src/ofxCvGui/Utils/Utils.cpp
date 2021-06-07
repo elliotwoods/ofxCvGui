@@ -55,7 +55,7 @@ namespace ofxCvGui {
 					if (background)
 						ofDrawRectangle(bounds);
 					ofPopStyle();
-					if (backgroundColor.getBrightness() > 200) {
+					if (backgroundColor.getBrightness() > 150) {
 						ofSetColor(0);
 					}
 					else {
