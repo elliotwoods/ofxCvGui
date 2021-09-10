@@ -186,7 +186,7 @@ namespace ofxCvGui {
 				GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
 				return (float)pmc.WorkingSetSize / 1e6;
 #endif
-#ifdef TARGET_OSX
+#if defined TARGET_OSX || defined TARGET_LINUX
 				struct task_basic_info t_info;
 				mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
 
