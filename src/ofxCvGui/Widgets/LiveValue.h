@@ -83,7 +83,8 @@ namespace ofxCvGui {
 			shared_ptr<Element> editButton;
 		};
 		
-		template<> void LiveValue<string>::hitEditBox() {
+		template<>
+		inline void LiveValue<string>::hitEditBox() {
 			auto result = ofSystemTextBoxDialog("Set [" + this->getCaption() + "]");
 			this->onEditValue(result);
 		}
