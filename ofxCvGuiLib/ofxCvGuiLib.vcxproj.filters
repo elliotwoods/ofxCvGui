@@ -181,6 +181,9 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Debugger.cpp">
       <Filter>src\ofxCvGui\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\EditableValue.cpp">
+      <Filter>src\ofxCvGui\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h">

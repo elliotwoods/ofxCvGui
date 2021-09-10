@@ -42,13 +42,14 @@ namespace ofxCvGui {
 		};
 		
 		//specialisation for ofParameter<string>
-		template<> EditableValue<string>::EditableValue(ofParameter<string> & parameter) :
-		LiveValue<string>(parameter.getName(), [&parameter]() { return parameter;}) {
-			this->setEditable(true);
-			this->onEditValue += [&parameter, this](string & userValueString) {
-				parameter.set(userValueString);
-				this->onValueChange.notifyListeners(userValueString);
-			};
-		}
+		template<>
+		class EditableValue<string> : public LiveValue<string> {
+		public:
+			EditableValue(ofParameter<string>&);
+			EditableValue(string name, string& value);
+			EditableValue(string name, function<string()> get, function<void(string)> set);
+
+			ofxLiquidEvent<const string> onValueChange;
+		};
 	}
 }
