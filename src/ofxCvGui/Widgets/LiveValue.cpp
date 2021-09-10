@@ -185,8 +185,7 @@ namespace ofxCvGui {
 				PROCESS_MEMORY_COUNTERS pmc;
 				GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
 				return (float)pmc.WorkingSetSize / 1e6;
-#endif
-#if defined TARGET_OSX || defined TARGET_LINUX
+#elif defined TARGET_OSX
 				struct task_basic_info t_info;
 				mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
 
@@ -199,6 +198,8 @@ namespace ofxCvGui {
 				else {
 					return (float) t_info.resident_size / 1000000.0f;
 				}
+#else
+				return 0.0f;
 #endif
 			}));
 		}
