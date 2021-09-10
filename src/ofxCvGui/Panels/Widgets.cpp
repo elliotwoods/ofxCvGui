@@ -65,6 +65,11 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		shared_ptr<ofxCvGui::Widgets::MultipleChoice> Widgets::addMultipleChoice(const string& caption, const vector<string>& options) {
+			return this->add(new ofxCvGui::Widgets::MultipleChoice(caption, options));
+		}
+
+		//----------
 		shared_ptr<ofxCvGui::Widgets::Slider> Widgets::addSlider(ofParameter<float> & parameter) {
 			return this->add(new ofxCvGui::Widgets::Slider(parameter));
 		}

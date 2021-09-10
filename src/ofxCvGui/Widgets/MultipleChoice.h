@@ -5,8 +5,9 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class OFXCVGUI_API_ENTRY MultipleChoice : public Element {
 		public:
-			MultipleChoice(const string & caption);
-			MultipleChoice(const string & caption, const initializer_list<string> & options);
+			MultipleChoice(const string& caption);
+			MultipleChoice(const string& caption, const initializer_list<string>& options);
+			MultipleChoice(const string& caption, const vector<string> & options);
 			void addOption(string);
 			void addOptions(initializer_list<string>);
 			void removeOption(string);

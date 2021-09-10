@@ -59,6 +59,14 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		MultipleChoice::MultipleChoice(const string& caption, const vector<string>& options) :
+			MultipleChoice(caption) {
+			for (const auto& option : options) {
+				this->addOption(option);
+			}
+		}
+
+		//----------
 		void MultipleChoice::addOption(string choice) {
 			this->options.push_back(choice);
 			this->clampSelection(); // also moves up the selection to 0 if we have allowNullSelection to false 

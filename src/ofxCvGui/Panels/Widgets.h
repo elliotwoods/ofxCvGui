@@ -74,6 +74,9 @@ namespace ofxCvGui {
 			// Widgets::MultipleChoice
 			shared_ptr<ofxCvGui::Widgets::MultipleChoice> addMultipleChoice(const string & caption, const initializer_list<string> & options);
 
+			// Widgets::MultipleChoice
+			shared_ptr<ofxCvGui::Widgets::MultipleChoice> addMultipleChoice(const string& caption, const vector<string>& options);
+
 			// Widgets::Slider
 			shared_ptr<ofxCvGui::Widgets::Slider> addSlider(ofParameter<float> & parameter);
 			
