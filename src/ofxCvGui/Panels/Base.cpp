@@ -10,8 +10,12 @@ namespace ofxCvGui {
 			this->setScissorEnabled(true);
 			
 			this->toolBar = makeElementGroup();
-			this->toolBar->addListenersToParent(this, true);
+			this->addChild(this->toolBar);
+			this->onBoundsChange += [this](ofxCvGui::BoundsChangeArguments& args) {
+				this->toolBar->setBounds(args.localBounds);
+			};
 			this->toolBar->setScissorEnabled(true);
+			this->toolBar->setCaption("Toolbar"); // For debug purposes
 			
 			auto titleElement = makeElement();
 			titleElement->setScissorEnabled(false);

@@ -28,6 +28,11 @@ namespace ofxCvGui {
 #endif
 			UpdateArguments args;
 			onUpdate.notifyListeners(args);
+
+			for (const auto& child : this->children) {
+				child->update();
+			}
+
 #ifdef _DEBUG
 			if (drawTimings) {
 				auto timeNanos = std::chrono::high_resolution_clock::now() - *timeStart;
@@ -92,6 +97,9 @@ namespace ofxCvGui {
 						localArgumentsInFbo.globalBounds = localArguments.localBounds;
 
 						this->onDraw(localArgumentsInFbo);
+						for (const auto& child : this->children) {
+							child->draw(localArgumentsInFbo); // <--Not sure if this is right
+						}
 
 						this->cachedView->end();
 
@@ -121,6 +129,9 @@ namespace ofxCvGui {
 					}
 
 					this->onDraw(localArguments);
+					for (const auto& child : this->children) {
+						child->draw(localArguments);
+					}
 
 					if (this->enableScissor) {
 						ofxCvGui::Utils::ScissorManager::X().popScissor();
@@ -168,6 +179,9 @@ namespace ofxCvGui {
 					//special case for pressed, only pass if local and not already taken
 					if (isHit && !localMouseArguments.isTaken()) {
 						//pass the mouse event onto Element's event handlers
+						for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
+							(*it)->mouseAction(localMouseArguments);
+						}
 						this->onMouse.notifyListenersInReverse(localMouseArguments);
 
 						//if we have a mouse released handler, then we must also try and take the click
@@ -206,6 +220,9 @@ namespace ofxCvGui {
 					//this is also true when a child element is being dragged
 					//to check if this element is being dragged, use args.isDragging(myElement) inside your handler
 					if (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::ChildOwnsMouse)) {
+						for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
+							(*it)->mouseAction(localMouseArguments);
+						}
 						this->onMouse(localMouseArguments);
 					}
 				}
@@ -216,11 +233,17 @@ namespace ofxCvGui {
 				{
 					//only trigger the onMouseReleased if the mouse release was local
 					if (this->mouseOver && (this->localMouseState & (LocalMouseState::Dragging | LocalMouseState::Down))) {
+						for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
+							(*it)->mouseAction(localMouseArguments);
+						}
 						this->onMouseReleased(localMouseArguments);
 					}
 
 					//either way, we need to pass this into the Element's handlers and children for consideration unless we and no children owns the mouse
 					if (this->localMouseState != LocalMouseState::Waiting) {
+						for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
+							(*it)->mouseAction(localMouseArguments);
+						}
 						this->onMouse(localMouseArguments);
 						this->localMouseState = LocalMouseState::Waiting;
 					}
@@ -230,6 +253,9 @@ namespace ofxCvGui {
 
 			case MouseArguments::Action::DoubleClick:
 				{
+					for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
+						(*it)->mouseAction(localMouseArguments);
+					}
 					this->onMouse(localMouseArguments);
 				}
 				break;
@@ -237,6 +263,9 @@ namespace ofxCvGui {
 
 			case MouseArguments::Action::Moved:
 				{
+					for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
+						(*it)->mouseAction(localMouseArguments);
+					}
 					this->onMouse(localMouseArguments);
 				}
 				break;
@@ -244,6 +273,9 @@ namespace ofxCvGui {
 			case MouseArguments::Action::Scrolled:
 				{
 					if(this->getBounds().inside(parentMouseArguments.local)) {
+						for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
+							(*it)->mouseAction(localMouseArguments);
+						}
 						this->onMouse(localMouseArguments);
 					}
 				}
@@ -259,6 +291,9 @@ namespace ofxCvGui {
 	void Element::keyboardAction(KeyboardArguments &arguments) {
 		if (this->enabled) {
 			this->onKeyboard(arguments);
+			for (const auto& child : this->children) {
+				child->keyboardAction(arguments);
+			}
 		}
 	}
 
@@ -466,25 +501,43 @@ namespace ofxCvGui {
 
 	//----------
 	void Element::addChild(ElementPtr child) {
-		if (this->children.find(child) == this->children.end()) {
-			this->children.insert(child);
-			child->addListenersToParent(this);
+		// Add at end
+		this->addChild(child, this->children.size());
+	}
+
+	//----------
+	void Element::addChild(ElementPtr child, size_t zOrder) {
+		auto findChild = find(this->children.begin(), this->children.end(), child);
+		if (findChild != this->children.end()) {
+			ofLogWarning("ofxCvGui::Element") << "Cannot add duplicate children to element";
+			return;
+		}
+
+		if (zOrder < 0) {
+			zOrder = 0;
+		}
+		if (zOrder > this->children.size()) {
+			zOrder = this->children.size();
+		}
+		if (zOrder == this->children.size()) {
+			this->children.push_back(child);
+		}
+		else {
+			auto insertPosition = this->children.begin() + zOrder;
+			this->children.insert(insertPosition, child);
 		}
 	}
 
-
 	//----------
 	void Element::removeChild(ElementPtr child) {
-		auto findChild = this->children.find(child);
+		auto findChild = std::find(this->children.begin(), this->children.end(), child);
 		if (findChild != this->children.end()) {
-			child->removeListenersFromParent(this);
 			this->children.erase(findChild);
 		}
 	}
 
-
 	//----------
-	set<ofxCvGui::ElementPtr> Element::getChildren() const {
+	vector<ofxCvGui::ElementPtr> Element::getChildren() const {
 		return this->children;
 	}
 

@@ -85,8 +85,9 @@ namespace ofxCvGui {
 		void removeListenersFromParent(std::shared_ptr<Element>);
 
 		void addChild(ElementPtr);
+		void addChild(ElementPtr, size_t zOrder);
 		void removeChild(ElementPtr);
-		std::set<ElementPtr> getChildren() const;
+		std::vector<ElementPtr> getChildren() const;
 
 		void setCachedView(bool cachedViewEnabled);
 		void markViewDirty();
@@ -109,7 +110,7 @@ namespace ofxCvGui {
 		ofFbo * cachedView = 0;
 		bool needsViewUpdate;
 
-		std::set<ElementPtr> children;
+		std::vector<ElementPtr> children;
 
 #ifdef _DEBUG
 		struct {
