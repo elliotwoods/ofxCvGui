@@ -35,7 +35,7 @@ namespace ofxCvGui {
 			struct Parameters : ofParameterGroup{
 				struct : ofParameterGroup {
 					ofParameter<bool> enabled{ "Enabled", true };
-					ofParameter<bool> dark{ "Dark", false };
+					ofParameter<bool> dark{ "Dark", true };
 					ofParameter<glm::vec3> roomMin{ "Room min", {-1, -1, -1} };
 					ofParameter<glm::vec3> roomMax{ "Room max", {1, 1, 1} };
 
@@ -63,6 +63,9 @@ namespace ofxCvGui {
 			void drawContent(const ofRectangle& bounds);
 			void drawGrid(bool forReflection);
 			void showCursorCallback(bool&);
+
+			void save();
+			void load();
 
 			bool cachedDark = false;
 			CameraType camera;

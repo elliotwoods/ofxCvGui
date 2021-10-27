@@ -17,9 +17,6 @@ namespace ofxCvGui {
 			this->onMouse += [this] (MouseArguments & args) { this->mouse(args); };
 			this->onKeyboard += [this] (KeyboardArguments & args) { this->keyboard(args); };
 			this->onBoundsChange += [this] (BoundsChangeArguments & args) { this->arrangeScroll(); };
-			this->position = 0.0f;
-			this->length = 0.0f;
-			this->onScrollBar = false;
 
 			this->elements->addListenersToParent(this);
 
@@ -118,10 +115,14 @@ namespace ofxCvGui {
 					this->setScroll(this->position * decay);
 				} else {
 					float overflow = this->length - this->getHeight();
-					if (overflow < 0 && this->position > 0.0f) {
+					if (overflow < 0) {
 						//less content than screen space
-						this->setScroll(this->position * decay);
-					} else {
+						if (this->position > 0.0f) {
+							// Only damp one way (don't bounce)
+							this->setScroll(this->position * decay);
+						}
+					} else 
+					{
 						//more content than screen space
 						if (this->position > overflow) {
 							float position = this->position - overflow;

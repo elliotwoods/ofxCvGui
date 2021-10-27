@@ -13,12 +13,50 @@ namespace ofxCvGui {
 #pragma mark InspectController
 	//----------
 	InspectController::InspectController() {
-		
+		this->onClear += [this](InspectArguments& args) {
+			auto inspector = args.inspector;
+			if (this->getHistorySize() > 0) {
+				inspector->addButton("<< Go back", [this]() {
+					this->back();
+					});
+				inspector->addSpacer();
+			}
+		};
 	}
 
 	//----------
 	void InspectController::update() {
 		bool needsToNotifyListeners = false;
+
+		//if we got a command to go back then service it
+		if (this->goBackThisFrame) {
+			bool foundValidInspectableInHistory = false;
+
+			if (!this->history.empty()) {
+				auto it = this->history.rbegin();
+
+				for (; it != this->history.rend(); it++) {
+					auto inspectable = it->lock();
+
+					// Only inspect if it's a valid pointer
+					if (inspectable) {
+						// erase everything after the highest valid
+						this->history.erase(std::next(it).base(), this->history.end());
+						this->currentTarget = inspectable;
+						needsToNotifyListeners = true;
+						foundValidInspectableInHistory = true;
+						break;
+					}
+				}
+			}
+
+			if (!foundValidInspectableInHistory) {
+				this->history.clear();
+				this->clearThisFrame = true;
+			}
+			this->goBackThisFrame = false;
+		}
+
 
 		//if this frame we got a command to clear
 		if (this->clearThisFrame) {
@@ -31,10 +69,19 @@ namespace ofxCvGui {
 		auto inspectThisFrame = this->inspectThisFrame.lock();
 		if (inspectThisFrame) {
 			if (this->currentTarget.lock() != inspectThisFrame) {
+				if (this->currentTarget.lock()) {
+					this->history.push_back(this->currentTarget);
+				}
 				this->currentTarget = this->inspectThisFrame;
 				needsToNotifyListeners = true;
 			}
 			this->inspectThisFrame.reset();
+		}
+
+		//trim history
+		if (this->history.size() > this->historyMaxSize) {
+			this->history.erase(this->history.begin()
+				, this->history.begin() + (this->history.size() - this->historyMaxSize));
 		}
 
 		//if a refresh is activated
@@ -43,7 +90,7 @@ namespace ofxCvGui {
 				//if we have a valid target
 				needsToNotifyListeners = true;
 			}
- 			this->refreshThisFrame = false;
+			this->refreshThisFrame = false;
 		}
 
 		//if our target has been deleted elsewhere, let's drop our attention to it before something weird happens
@@ -75,12 +122,17 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	void InspectController::back() {
+		this->goBackThisFrame = true;
+	}
+
+	//----------
 	void InspectController::refresh() {
 		this->refreshThisFrame = true;
 	}
 
 	//----------
-	void InspectController::refresh(IInspectable * target) {
+	void InspectController::refresh(IInspectable* target) {
 		if (this->currentTarget.lock().get() == target) {
 			this->refresh();
 		}
@@ -90,7 +142,7 @@ namespace ofxCvGui {
 	void InspectController::clear() {
 		this->clearThisFrame = true;
 	}
-	
+
 	//----------
 	shared_ptr<IInspectable> InspectController::getTarget() const {
 		return this->currentTarget.lock();
@@ -114,6 +166,21 @@ namespace ofxCvGui {
 	//----------
 	bool InspectController::getInspectorLocked() const {
 		return this->inspectorLocked;
+	}
+
+	//----------
+	size_t InspectController::getHistorySize() const {
+		return this->history.size();
+	}
+
+	//----------
+	size_t InspectController::getHistoryMaxSize() const {
+		return this->historyMaxSize;
+	}
+
+	//----------
+	void InspectController::setHistoryMaxSize(size_t value) {
+		this->historyMaxSize = value;
 	}
 
 #pragma mark Global

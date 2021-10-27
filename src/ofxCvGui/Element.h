@@ -62,6 +62,8 @@ namespace ofxCvGui {
 		const std::string & getCaption() const;
 		ofxLiquidEvent<std::string> onCaptionChange;
 		
+		void addToolTip(const std::string&);
+
 		ofxLiquidEvent<UpdateArguments> onUpdate;
 		ofxLiquidEvent<DrawArguments> onDraw;
 		ofxLiquidEvent<MouseArguments> onMouse;

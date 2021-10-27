@@ -82,6 +82,16 @@ namespace ofxCvGui {
 			this->parameters.reflections.resolutionListener = this->parameters.reflections.resolution.newListener([this](const int&) {
 				this->needsReflectionAllocate = true;
 				});
+
+			// Setup the toolbar
+			{
+				this->addToolBarElement("ofxCvGui::save", [this]() {
+					this->save();
+					});
+				this->addToolBarElement("ofxCvGui::load", [this]() {
+					this->load();
+					});
+			}
 		}
 
 		shared_ptr<Panels::WorldManaged> makeWorldManaged(string caption) {
@@ -435,6 +445,52 @@ namespace ofxCvGui {
 #ifdef OFXCVGUI_USE_OFXGRABCAM
 			this->camera.setCursorDrawEnabled(cursorEnabled);
 #endif
+		}
+
+		//----------
+		void WorldManaged::save()
+		{
+			auto result = ofSystemSaveDialog(this->getCaption() + "camera.txt", "Save camera");
+			if (result.bSuccess) {
+				ofFile file(result.filePath, ofFile::WriteOnly, false);
+				file << this->camera.getOrientationQuat();
+				file << this->camera.getPosition();
+				file << this->camera.getNearClip();
+				file << this->camera.getFarClip();
+			}
+		}
+
+		//----------
+		void WorldManaged::load()
+		{
+			auto result = ofSystemLoadDialog("Load camera");
+			if (result.bSuccess) {
+				ofFile file(result.filePath, ofFile::ReadOnly, false);
+
+				{
+					glm::quat value;
+					file >> value;
+					this->camera.setOrientation(value);
+				}
+
+				{
+					glm::vec3 value;
+					file >> value;
+					this->camera.setPosition(value);
+				}
+
+				{
+					float value;
+					file >> value;
+					this->camera.setNearClip(value);
+				}
+
+				{
+					float value;
+					file >> value;
+					this->camera.setFarClip(value);
+				}
+			}
 		}
 	}
 }

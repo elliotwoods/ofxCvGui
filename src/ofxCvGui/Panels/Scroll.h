@@ -39,9 +39,9 @@ namespace ofxCvGui {
 			float getBarY() const;
 
 			ElementGroupPtr elements;
-			float position;
-			float length;
-			bool onScrollBar;
+			float position = 0.0f;
+			float length = 0.0f;
+			bool onScrollBar = false;
 		};
 	}
 }

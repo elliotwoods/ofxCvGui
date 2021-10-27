@@ -30,6 +30,9 @@ namespace ofxCvGui {
 		/// This is to reflect the inverse call order of mouse action trees (top first)
 		void inspect(shared_ptr<IInspectable>);
 
+		/// Go backwards through history
+		void back();
+
 		/// Refresh whatever is currently being inspected
 		void refresh();
 
@@ -47,6 +50,10 @@ namespace ofxCvGui {
 		void setInspectorLocked(bool);
 		bool getInspectorLocked() const;
 
+		size_t getHistorySize() const;
+		size_t getHistoryMaxSize() const;
+		void setHistoryMaxSize(size_t); // If you are making an 'insepctor stack', then make sure the history size is large enough for the stack size (and avoid recursive stacks)
+
 		ofxLiquidEvent<shared_ptr<IInspectable>> onTargetChange;
 		ofxLiquidEvent<ElementPtr> onAddWidget;
 		ofxLiquidEvent<void> onMaximise;
@@ -59,8 +66,12 @@ namespace ofxCvGui {
 
 		bool hasTarget = false;
 		bool clearThisFrame = false;
+		bool goBackThisFrame = false;
 		bool refreshThisFrame = false;
 		bool inspectorLocked = false;
+
+		std::vector<weak_ptr<IInspectable>> history;
+		size_t historyMaxSize = 30;
 	};
 
 	void OFXCVGUI_API_ENTRY inspect(shared_ptr<IInspectable>);

@@ -418,6 +418,15 @@ namespace ofxCvGui {
 	}
 
 	//-----------
+	void Element::addToolTip(const string& text) {
+		this->onDraw += [this, text](ofxCvGui::DrawArguments& args) {
+			if (this->isMouseOver()) {
+				ofxCvGui::Utils::drawToolTip(text, { args.localBounds.width / 2.0f, 0.0f });
+			}
+		};
+	}
+
+	//-----------
 	const string & Element::getCaption() const {
 		return this->caption;
 	}
