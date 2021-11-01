@@ -14,6 +14,7 @@ namespace ofxCvGui {
 		virtual const vector<string> & getOptionStrings() const = 0;
 		virtual string toString() const = 0;
 		virtual bool fromString(const string&) = 0;
+		virtual bool fromIndex(const uint32_t&) = 0;
 	};
 }
 
@@ -56,6 +57,13 @@ public: \
 				this->set((Options)optionIndex); \
 				return true; \
 			} \
+		} \
+		return false; \
+	} \
+	bool fromIndex(const uint32_t& index) { \
+		if(index < this->optionStrings.size()) { \
+			this->set((Options)index); \
+			return true; \
 		} \
 		return false; \
 	} \

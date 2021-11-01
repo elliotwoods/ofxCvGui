@@ -76,6 +76,7 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Constants.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Debugger.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Enum.h" />
+    <ClInclude Include="..\src\ofxCvGui\Utils\InspectParameterGroup.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Sugar.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\TextField.h" />
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Constants.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Debugger.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Enum.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Utils\InspectParameterGroup.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\TextField.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />

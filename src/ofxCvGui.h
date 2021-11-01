@@ -51,3 +51,4 @@
 #include "ofxCvGui/Utils/Sugar.h"
 #include "ofxCvGui/Utils/TextField.h"
 #include "ofxCvGui/Utils/Utils.h"
+#include "ofxCvGui/Utils/InspectParameterGroup.h"

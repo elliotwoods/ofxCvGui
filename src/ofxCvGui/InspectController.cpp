@@ -26,7 +26,7 @@ namespace ofxCvGui {
 
 	//----------
 	void InspectController::update() {
-		bool needsToNotifyListeners = false;
+		bool notifyInspectorsOfTargetChange = false;
 
 		//if we got a command to go back then service it
 		if (this->goBackThisFrame) {
@@ -43,7 +43,7 @@ namespace ofxCvGui {
 						// erase everything after the highest valid
 						this->history.erase(std::next(it).base(), this->history.end());
 						this->currentTarget = inspectable;
-						needsToNotifyListeners = true;
+						notifyInspectorsOfTargetChange = true;
 						foundValidInspectableInHistory = true;
 						break;
 					}
@@ -58,10 +58,10 @@ namespace ofxCvGui {
 		}
 
 
-		//if this frame we got a command to clear
+		//if this frame we got a command to clear the target selection
 		if (this->clearThisFrame) {
 			this->currentTarget.reset();
-			needsToNotifyListeners = true;
+			notifyInspectorsOfTargetChange = true;
 			this->clearThisFrame = false;
 		}
 
@@ -73,7 +73,7 @@ namespace ofxCvGui {
 					this->history.push_back(this->currentTarget);
 				}
 				this->currentTarget = this->inspectThisFrame;
-				needsToNotifyListeners = true;
+				notifyInspectorsOfTargetChange = true;
 			}
 			this->inspectThisFrame.reset();
 		}
@@ -84,22 +84,35 @@ namespace ofxCvGui {
 				, this->history.begin() + (this->history.size() - this->historyMaxSize));
 		}
 
+		//clear out owned inspectables if they are now no longer visible
+		for (auto it = this->ownedInspectables.begin(); it != this->ownedInspectables.end();) {
+			if (*it == currentTarget.lock() && *it) {
+				// This is in use
+				it++;
+				continue;
+			}
+			else {
+				// This is no longer in use
+				it = this->ownedInspectables.erase(it);
+			}
+		}
+
 		//if a refresh is activated
 		if (this->refreshThisFrame) {
 			if (this->currentTarget.lock()) {
 				//if we have a valid target
-				needsToNotifyListeners = true;
+				notifyInspectorsOfTargetChange = true;
 			}
 			this->refreshThisFrame = false;
 		}
 
 		//if our target has been deleted elsewhere, let's drop our attention to it before something weird happens
 		if (this->currentTarget.expired() && this->hasTarget) {
-			needsToNotifyListeners = true;
+			notifyInspectorsOfTargetChange = true;
 		}
 
 		//notify inspectors of any change in target
-		if (needsToNotifyListeners) {
+		if (notifyInspectorsOfTargetChange) {
 			auto target = this->currentTarget.lock();
 			this->hasTarget = (bool)target;
 			this->onTargetChange(target);
@@ -119,6 +132,12 @@ namespace ofxCvGui {
 				}
 			}
 		}
+	}
+
+	//----------
+	void InspectController::inspectWithOwnership(shared_ptr<IInspectable> target) {
+		this->ownedInspectables.insert(target);
+		this->inspect(target);
 	}
 
 	//----------
@@ -187,6 +206,11 @@ namespace ofxCvGui {
 	//-----------
 	void inspect(shared_ptr<IInspectable> target) {
 		InspectController::X().inspect(target);
+	}
+
+	//-----------
+	void inspectWithOwnership(shared_ptr<IInspectable> target) {
+		InspectController::X().inspectWithOwnership(target);
 	}
 
 	//-----------

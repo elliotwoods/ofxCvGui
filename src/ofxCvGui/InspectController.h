@@ -29,6 +29,7 @@ namespace ofxCvGui {
 		/// The first person to call this per frame wins the inspector.
 		/// This is to reflect the inverse call order of mouse action trees (top first)
 		void inspect(shared_ptr<IInspectable>);
+		void inspectWithOwnership(shared_ptr<IInspectable>);
 
 		/// Go backwards through history
 		void back();
@@ -63,6 +64,7 @@ namespace ofxCvGui {
 	protected:
 		weak_ptr<IInspectable> currentTarget;
 		weak_ptr<IInspectable> inspectThisFrame;
+		set<shared_ptr<IInspectable>> ownedInspectables;
 
 		bool hasTarget = false;
 		bool clearThisFrame = false;
@@ -75,6 +77,7 @@ namespace ofxCvGui {
 	};
 
 	void OFXCVGUI_API_ENTRY inspect(shared_ptr<IInspectable>);
+	void OFXCVGUI_API_ENTRY inspectWithOwnership(shared_ptr<IInspectable>);
 
 	bool OFXCVGUI_API_ENTRY isBeingInspected(shared_ptr<IInspectable>);
 	bool OFXCVGUI_API_ENTRY isBeingInspected(IInspectable &);
