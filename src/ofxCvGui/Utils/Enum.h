@@ -13,6 +13,7 @@ namespace ofxCvGui {
 	public:
 		virtual const vector<string> & getOptionStrings() const = 0;
 		virtual string toString() const = 0;
+		virtual uint32_t toIndex() const = 0;
 		virtual bool fromString(const string&) = 0;
 		virtual bool fromIndex(const uint32_t&) = 0;
 	};
@@ -47,8 +48,11 @@ public: \
 	operator Options &() { \
 		return this->innerValue; \
 	} \
-	string toString() const { \
+	string toString() const override { \
 		return this->optionStrings.at(this->innerValue); \
+	} \
+	uint32_t toIndex() const override { \
+		return (uint32_t) this->innerValue; \
 	} \
 	bool fromString(const string & valueString) { \
 		for (uint32_t optionIndex = 0; optionIndex < this->optionStrings.size(); optionIndex++) { \

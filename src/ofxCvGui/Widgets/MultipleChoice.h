@@ -26,7 +26,7 @@ namespace ofxCvGui {
 
 			//entangle this multiple choice with an ofParameter<enum>
 			template<typename EnumType>
-			void entangle(ofParameter<EnumType> & parameter) {
+			void entangleBasicEnum(ofParameter<EnumType> & parameter) {
 				//if we change, update the parameter
 				this->onValueChange += [&parameter](const int & selection) {
 					parameter.set((EnumType)selection);
@@ -35,7 +35,27 @@ namespace ofxCvGui {
 				//if we're out of sync, update ourselves
 				this->onUpdate += [this, &parameter](ofxCvGui::UpdateArguments &) {
 					if ((int) parameter.get() != this->getSelectionIndex()) {
-						this->setSelection((int) parameter.get());
+						this->setSelection((uint32_t) parameter.get());
+					}
+				};
+			}
+
+			template<typename ManagedEnumType>
+			void entangleManagedEnum(ofParameter<ManagedEnumType>& parameter) {
+				// on widget value change
+				this->onValueChange += [&parameter](const int& selection) {
+					auto enumValue = parameter.get();
+					enumValue.fromIndex((uint32_t) selection);
+					parameter.set(enumValue);
+				};
+
+				// widget update
+				this->onUpdate += [this, &parameter](ofxCvGui::UpdateArguments&) {
+					auto parameterValueIndex = (int)parameter.get().toIndex();
+					//if widget is out of sync
+					if ((int) parameterValueIndex != this->getSelectionIndex()) {
+						// update widget
+						this->setSelection((int) parameterValueIndex);
 					}
 				};
 			}
