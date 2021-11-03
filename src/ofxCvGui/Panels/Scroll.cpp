@@ -11,6 +11,7 @@ namespace ofxCvGui {
 		Scroll::Scroll() {
 			this->elements = ElementGroupPtr(new ElementGroup());
 			this->elements->setScissorEnabled(true);
+			this->addChild(this->elements);
 
 			this->onUpdate += [this](UpdateArguments & args) { this->update();	};
 			this->onDraw += [this] (DrawArguments & args) { this->draw(args); };
@@ -18,9 +19,7 @@ namespace ofxCvGui {
 			this->onKeyboard += [this] (KeyboardArguments & args) { this->keyboard(args); };
 			this->onBoundsChange += [this] (BoundsChangeArguments & args) { this->arrangeScroll(); };
 
-			this->elements->addListenersToParent(this);
-
-			//draw side lines
+			// draw the side lines
 			this->elements->onDraw += [this](DrawArguments & args) {
 				for (auto element : this->elements->getElements()) {
 					//don't add a side line for non-interactive widgets

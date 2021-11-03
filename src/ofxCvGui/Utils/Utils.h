@@ -19,8 +19,24 @@
 namespace ofxCvGui {
 	namespace Utils {
 #pragma mark Text
-		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text, float x, float y, bool background = true, float minHeight = 15, float minWidth = 0, bool scissor = false, const ofColor & backgroundColor = ofColor(OFXCVGUI_TEXT_BACKGROUND));
-		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text, const ofRectangle & bounds, bool background = true, bool scissor = false);
+		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text
+			, float x
+			, float y
+			, bool background = true
+			, float minHeight = 15
+			, float minWidth = 0
+			, bool scissor = false
+			, const ofColor backgroundColor = ofColor(OFXCVGUI_TEXT_BACKGROUND)
+			, string typeface = ofxCvGui::getDefaultTypeface());
+
+		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text
+			, const ofRectangle& bounds
+			, bool background = true
+			, bool scissor = false);
+
+		ofRectangle OFXCVGUI_API_ENTRY drawGlyph(const std::string& glyph
+			, const ofRectangle & bounds);
+
 		void OFXCVGUI_API_ENTRY drawProcessingNotice(std::string message);
 		void OFXCVGUI_API_ENTRY drawToolTip(const std::string & text, const glm::vec2 & position);
 		std::string OFXCVGUI_API_ENTRY makeString(char key);

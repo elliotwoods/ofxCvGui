@@ -9,7 +9,7 @@ namespace ofxCvGui {
 			MultipleChoice(const string& caption, const initializer_list<string>& options);
 			MultipleChoice(const string& caption, const vector<string> & options);
 			void addOption(string);
-			void addOptions(initializer_list<string>);
+			void addOptions(vector<string>);
 			void removeOption(string);
 			void clearOptions();
 
@@ -21,6 +21,8 @@ namespace ofxCvGui {
 
 			void setAllowNullSelection(bool);
 			bool getAllowNullSelection() const;
+
+			void setGlyphs(const vector<string>&);
 
 			//entangle this multiple choice with an ofParameter<enum>
 			template<typename EnumType>
@@ -41,12 +43,16 @@ namespace ofxCvGui {
 			ofxLiquidEvent<const int> onValueChange;
 		protected:
 			void clampSelection();
-			ofRectangle getOptionBounds(int optionIndex) const;
+			void rebuildOptions();
 
 			vector<string> options;
+			vector<string> glyphs;
+			shared_ptr<Element> optionsElement = make_shared<Element>();
+
 			int selectionIndex = -1;
 			bool allowNullSelection = false;
-			ofRectangle optionsBounds;
+
+			static const float radius;
 		};
 	}
 }

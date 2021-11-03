@@ -18,9 +18,10 @@ namespace ofxCvGui {
 			, bool background
 			, float minHeight, float minWidth
 			, bool scissor
-			, const ofColor & backgroundColor) {
+			, const ofColor backgroundColor
+			, string typeface) {
 
-			auto & font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), OFXCVGUI_TEXT_SIZE);
+			auto & font = ofxAssets::font(typeface, OFXCVGUI_TEXT_SIZE);
 			bool hasFont = font.isLoaded();
 
 			if (scissor) {
@@ -94,6 +95,35 @@ namespace ofxCvGui {
 		//---------
 		ofRectangle drawText(const string & text, const ofRectangle & bounds, bool background, bool scissor) {
 			return drawText(text, bounds.x, bounds.y, background, bounds.height, bounds.width, scissor);
+		}
+
+		//---------
+		ofRectangle drawGlyph(const string& glyph, const ofRectangle& bounds) {
+			auto glyphTypeface = ofxCvGui::getGlyphTypeface();
+			
+			// ensure glyphs are loaded
+			{
+				auto fonts = ofxAssets::Register::X().getFonts();
+				auto findFont = fonts.find(glyphTypeface);
+				if (findFont != fonts.end()) {
+					findFont->second->setFullCharacterSetEnabled(true);
+				}
+			}
+
+			auto& font = ofxAssets::font(glyphTypeface, OFXCVGUI_TEXT_SIZE);
+
+			// calculate position
+			auto priorBounds = font.getStringBoundingBox(glyph, bounds.x, bounds.y);
+			auto offset = bounds.getCenter() - priorBounds.getCenter();
+
+			// draw
+			font.drawString(glyph, bounds.x + offset.x, bounds.y + offset.y);
+
+			// calculate corrected bounds for return
+			auto correctedBounds = priorBounds;
+			correctedBounds.x += offset.x;
+			correctedBounds.y += offset.y;
+			return correctedBounds;
 		}
 
 		//---------

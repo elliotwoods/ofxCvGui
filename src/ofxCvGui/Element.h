@@ -89,7 +89,7 @@ namespace ofxCvGui {
 		void addChild(ElementPtr);
 		void addChild(ElementPtr, size_t zOrder);
 		void removeChild(ElementPtr);
-		std::vector<ElementPtr> getChildren() const;
+		std::vector<ElementPtr> & getChildren();
 
 		void setCachedView(bool cachedViewEnabled);
 		void markViewDirty();
@@ -99,6 +99,7 @@ namespace ofxCvGui {
 		void setHitTestOnBounds(bool);
 
 		ofRectangle bounds; ///<bounds relative to parent
+		bool needsArrange = false;
 		float zoomFactor;
 		glm::mat4 parentToLocalTransform;
 

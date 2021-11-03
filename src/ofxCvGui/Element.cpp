@@ -26,6 +26,13 @@ namespace ofxCvGui {
 				timeStart = new std::chrono::high_resolution_clock::time_point(std::chrono::high_resolution_clock::now());
 			}
 #endif
+			// Perform the bounds change actions max once per frame
+			if (this->needsArrange) {
+				auto arguments = BoundsChangeArguments(this->bounds);
+				this->onBoundsChange(arguments);
+				this->needsArrange = false;
+			}
+
 			UpdateArguments args;
 			onUpdate.notifyListeners(args);
 
@@ -331,14 +338,12 @@ namespace ofxCvGui {
 			this->markViewDirty();
 		}
 
-		auto arguments = BoundsChangeArguments(this->bounds);
-		this->onBoundsChange(arguments);
+		this->arrange();
 	}
 
 	//-----------
 	void Element::arrange() {
-		auto arguments = BoundsChangeArguments(this->bounds);
-		this->onBoundsChange(arguments);
+		this->needsArrange = true;
 	}
 
 	//-----------
@@ -546,7 +551,7 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	vector<ofxCvGui::ElementPtr> Element::getChildren() const {
+	vector<ofxCvGui::ElementPtr> & Element::getChildren() {
 		return this->children;
 	}
 

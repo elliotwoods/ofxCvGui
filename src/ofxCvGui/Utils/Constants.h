@@ -16,4 +16,6 @@
 
 namespace ofxCvGui {
 	std::string OFXCVGUI_API_ENTRY getDefaultTypeface();
+	std::string OFXCVGUI_API_ENTRY getGlyphTypeface();
+	
 }
