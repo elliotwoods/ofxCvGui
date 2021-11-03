@@ -27,7 +27,8 @@ namespace ofxCvGui {
 			, float minWidth = 0
 			, bool scissor = false
 			, const ofColor backgroundColor = ofColor(OFXCVGUI_TEXT_BACKGROUND)
-			, string typeface = ofxCvGui::getDefaultTypeface());
+			, string typeface = ofxCvGui::getDefaultTypeface()
+			, bool dontActuallyDrawAnything = false);
 
 		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text
 			, const ofRectangle& bounds
@@ -40,7 +41,15 @@ namespace ofxCvGui {
 		void OFXCVGUI_API_ENTRY drawProcessingNotice(std::string message);
 		void OFXCVGUI_API_ENTRY drawToolTip(const std::string & text, const glm::vec2 & position);
 		std::string OFXCVGUI_API_ENTRY makeString(char key);
-		void OFXCVGUI_API_ENTRY drawTextAnnotation(const std::string& text, const glm::vec3& position, const ofColor & = ofColor(40));
+
+		void OFXCVGUI_API_ENTRY drawTextAnnotation(const std::string& text
+			, const glm::vec3& position
+			, const ofColor & = ofColor(40));
+
+		void OFXCVGUI_API_ENTRY drawGraphicAnnotation(const std::function<void()>& drawCall
+			, const ofRectangle& bounds
+			, const glm::vec3& position
+			, const ofColor & = ofColor(40));
 
 		/// <summary>
 		/// A deferred system for rendering annotations to 3D views

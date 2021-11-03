@@ -19,7 +19,8 @@ namespace ofxCvGui {
 			, float minHeight, float minWidth
 			, bool scissor
 			, const ofColor backgroundColor
-			, string typeface) {
+			, string typeface
+			, bool dontActuallyDrawAnything) {
 
 			auto & font = ofxAssets::font(typeface, OFXCVGUI_TEXT_SIZE);
 			bool hasFont = font.isLoaded();
@@ -53,8 +54,11 @@ namespace ofxCvGui {
 						bounds.width = minWidth;
 					}
 					bounds.height = MAX(rawHeight, minHeight);
-					if (background)
-						ofDrawRectangle(bounds);
+					if (background) {
+						if (!dontActuallyDrawAnything) {
+							ofDrawRectangle(bounds);
+						}
+					}
 					ofPopStyle();
 					if (backgroundColor.getBrightness() > 150) {
 						ofSetColor(0);
@@ -63,16 +67,23 @@ namespace ofxCvGui {
 						ofSetColor(255);
 					}
 					x = x + font.getSize() / 2;
-					if (!multiline)
+					if (!multiline) {
 						y = y + (bounds.height + rawHeight * 2.0f / 3.0f) / 2.0f;
-					else
+					}
+					else {
 						y = y + font.getLineHeight();
-					font.drawString(text, (int)x, (int)y);
+					}
+					if (!dontActuallyDrawAnything) {
+						font.drawString(text, (int)x, (int)y);
+					}
 				}
 				else {
 					bounds = ofRectangle(x, y, text.length() * 10 + 20, 30);
-					if (background)
-						ofDrawRectangle(bounds);
+					if (background) {
+						if (!dontActuallyDrawAnything) {
+							ofDrawRectangle(bounds);
+						}
+					}
 					ofPopStyle();
 					if (backgroundColor.getBrightness() > 200) {
 						ofSetColor(0);
@@ -80,7 +91,9 @@ namespace ofxCvGui {
 					else {
 						ofSetColor(255);
 					}
-					ofDrawBitmapString(text, x + 10, y + 20);
+					if (!dontActuallyDrawAnything) {
+						ofDrawBitmapString(text, x + 10, y + 20);
+					}
 				}
 			}
 			ofPopStyle();
@@ -216,6 +229,29 @@ namespace ofxCvGui {
 			AnnotationManager::X().annotate(text, position, color);
 		}
 
+		//---------
+		void drawGraphicAnnotation(const std::function<void()>& drawCall
+			, const ofRectangle& bounds
+			, const glm::vec3& position
+			, const ofColor& color) {
+			AnnotationManager::X().annotate(Utils::AnnotationManager::DrawAnnotation{
+				[bounds, drawCall, color]() {
+					// Draw background to graphic
+					ofPushStyle();
+					{
+						ofFill();
+						ofSetColor(color);
+						ofDrawRectangle(bounds);
+					}
+					ofPopStyle();
+					drawCall();
+				}
+				, bounds
+				, position
+				, color
+				});
+		}
+
 		//----------
 		AnnotationManager::AnnotationManager() {
 
@@ -232,7 +268,7 @@ namespace ofxCvGui {
 			if (!this->enabled) {
 				return;
 			}
-			this->annotate({
+			this->annotate(TextAnnotation {
 				text
 				, position
 				, color
@@ -261,11 +297,20 @@ namespace ofxCvGui {
 
 			// Convert the text annotations into draw annotations
 			for (const auto& textAnnotation : this->textAnnotations) {
-				this->annotate({
+				this->annotate(DrawAnnotation {
 					[textAnnotation]() {
 						drawText(textAnnotation.text, 0, 0, true, 15, 0, false, textAnnotation.color);
 					}
-					, drawText(textAnnotation.text, 0, 0, true, 15, 0, false) // get the bounds by calling the draw command now
+					, drawText(textAnnotation.text
+						, 0
+						, 0
+						, true
+						, 15
+						, 0
+						, false
+						, ofColor(0)
+						, ofxCvGui::getDefaultTypeface()
+						, true) // get the bounds by calling the draw command now
 					, textAnnotation.position
 					, textAnnotation.color
 					, textAnnotation.worldViewTransform
