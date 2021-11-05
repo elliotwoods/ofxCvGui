@@ -1,5 +1,5 @@
 #pragma once
-#include "Widgets.h"
+#include "ofxCvGui/Panels/Widgets.h"
 
 #include <set>
 

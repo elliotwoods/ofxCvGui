@@ -87,6 +87,7 @@
     <ClInclude Include="..\src\ofxCvGui\Widgets\SelectFile.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Slider.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Spacer.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\SubMenu.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Title.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\LiveValue.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Toggle.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="..\src\ofxCvGui\Widgets\SelectFile.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Slider.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Spacer.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\SubMenu.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Title.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Toggle.cpp" />
     <ClCompile Include="..\src\pch_ofxCvGui.cpp">

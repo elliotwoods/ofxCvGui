@@ -16,9 +16,13 @@ namespace ofxCvGui {
 		this->onClear += [this](InspectArguments& args) {
 			auto inspector = args.inspector;
 			if (this->getHistorySize() > 0) {
-				inspector->addButton("<< Go back", [this]() {
+				auto button = inspector->addButton("Back", [this]() {
 					this->back();
-					});
+					}, OF_KEY_BACKSPACE);
+				button->onDraw += [](ofxCvGui::DrawArguments& args) {
+					ofRectangle bounds(0, 0, 30, args.localBounds.height);
+					Utils::drawGlyph(u8"\uf104", bounds);
+				};
 				inspector->addSpacer();
 			}
 		};

@@ -10,6 +10,7 @@
 #include "../Widgets/Spacer.h"
 #include "../Widgets/Title.h"
 #include "../Widgets/SelectFile.h"
+#include "../Widgets/SubMenu.h"
 #include "../Widgets/Toggle.h"
 
 #include "ofParameterGroup.h"
@@ -82,6 +83,10 @@ namespace ofxCvGui {
 			
 			// Widgets::Spacer
 			shared_ptr<ofxCvGui::Widgets::Spacer> addSpacer(bool preventDoubles = true);
+
+			// Widgets::SubMenu
+			shared_ptr<ofxCvGui::Widgets::SubMenuInspectable> addSubMenu(const string& caption, std::shared_ptr<IInspectable>, char hotKey = 0);
+			shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> addSubMenu(const string& caption, const std::function<void(InspectArguments&)>&, char hotKey = 0);
 
 			// Widgets::Title
 			shared_ptr<ofxCvGui::Widgets::Title> addTitle(const string & caption, ofxCvGui::Widgets::Title::Level level = ofxCvGui::Widgets::Title::Level::H1);

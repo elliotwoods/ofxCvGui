@@ -187,6 +187,9 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\InspectParameterGroup.cpp">
       <Filter>src\ofxCvGui\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxCvGui\Widgets\SubMenu.cpp">
+      <Filter>src\ofxCvGui\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\ofxCvGui\Panels\Groups\Base.h">
@@ -404,6 +407,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ofxCvGui\Utils\InspectParameterGroup.h">
       <Filter>src\ofxCvGui\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxCvGui\Widgets\SubMenu.h">
+      <Filter>src\ofxCvGui\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
