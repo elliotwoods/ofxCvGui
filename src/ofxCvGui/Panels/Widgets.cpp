@@ -85,14 +85,25 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<ofxCvGui::Widgets::SubMenuInspectable> Widgets::addSubMenu(const string& caption, std::shared_ptr<IInspectable> inspectable, char hotKey) {
-			return this->add(new ofxCvGui::Widgets::SubMenuInspectable(caption, inspectable, hotKey));
+		shared_ptr<ofxCvGui::Widgets::SubMenuInspectable> Widgets::addSubMenu(const string& caption
+			, std::shared_ptr<IInspectable> inspectable
+			, bool ownInspectable
+			, char hotKey) {
+			return this->add(new ofxCvGui::Widgets::SubMenuInspectable(caption
+				, inspectable
+				, ownInspectable
+				, hotKey));
 		}
 
 		//----------
-		shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> Widgets::addSubMenu(const string& caption, const std::function<void(InspectArguments&)>& inspectFunction, char hotKey) {
-			return this->add(new ofxCvGui::Widgets::SubMenuFunctional(caption, inspectFunction, hotKey));
-
+		shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> Widgets::addSubMenu(const string& caption
+			, const std::function<void(InspectArguments&)>& inspectFunction
+			, bool ownInspectable
+			, char hotKey) {
+			return this->add(new ofxCvGui::Widgets::SubMenuFunctional(caption
+				, inspectFunction
+				, ownInspectable
+				, hotKey));
 		}
 
 		//----------

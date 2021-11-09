@@ -11,6 +11,7 @@ namespace ofxCvGui {
 		public:
 			SubMenuInspectable(const std::string& caption
 				, std::shared_ptr<IInspectable>
+				, bool ownInspectable = false
 				, char hotKey = 0);
 		};
 
@@ -18,6 +19,7 @@ namespace ofxCvGui {
 		public:
 			SubMenuFunctional(const std::string& caption
 				, const std::function<void(InspectArguments&)>&
+				, bool ownInspectable = false
 				, char hotKey = 0);
 		};
 	}

@@ -18,12 +18,21 @@ namespace ofxCvGui {
 		//--------
 		SubMenuInspectable::SubMenuInspectable(const std::string& caption
 			, std::shared_ptr<IInspectable> inspectable
+			, bool ownInspectable
 			, char hotKey)
 			: Button(caption, hotKey)
 		{
-			this->onHit += [inspectable]() {
-				ofxCvGui::inspect(inspectable);
-			};
+			if (ownInspectable) {
+				this->onHit += [inspectable]() {
+					ofxCvGui::inspectWithOwnership(inspectable);
+				};
+			}
+			else {
+				this->onHit += [inspectable]() {
+					ofxCvGui::inspect(inspectable);
+				};
+			}
+			
 
 			// Draw an arrow icon
 			this->onDraw += [](ofxCvGui::DrawArguments& args) {
@@ -37,8 +46,9 @@ namespace ofxCvGui {
 		//--------
 		SubMenuFunctional::SubMenuFunctional(const std::string& caption
 			, const std::function<void(InspectArguments&)>& inspectFunction
+			, bool ownInspectable
 			, char hotKey)
-			: SubMenuInspectable(caption, make_shared<TemporaryInspectable>(inspectFunction), hotKey)
+			: SubMenuInspectable(caption, make_shared<TemporaryInspectable>(inspectFunction), ownInspectable, hotKey)
 		{
 		}
 	}
