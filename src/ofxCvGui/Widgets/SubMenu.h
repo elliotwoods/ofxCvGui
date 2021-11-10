@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ofParameterGroup.h"
+
 #include "Button.h"
 
 namespace ofxCvGui {
@@ -19,7 +21,9 @@ namespace ofxCvGui {
 		public:
 			SubMenuFunctional(const std::string& caption
 				, const std::function<void(InspectArguments&)>&
-				, bool ownInspectable = false
+				, char hotKey = 0);
+
+			SubMenuFunctional(ofParameterGroup&
 				, char hotKey = 0);
 		};
 	}

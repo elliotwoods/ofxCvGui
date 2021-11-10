@@ -102,7 +102,13 @@ namespace ofxCvGui {
 			, char hotKey) {
 			return this->add(new ofxCvGui::Widgets::SubMenuFunctional(caption
 				, inspectFunction
-				, ownInspectable
+				, hotKey));
+		}
+
+		//----------
+		shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> Widgets::addSubMenu(ofParameterGroup& parameterGroup
+			, char hotKey) {
+			return this->add(new ofxCvGui::Widgets::SubMenuFunctional(parameterGroup
 				, hotKey));
 		}
 

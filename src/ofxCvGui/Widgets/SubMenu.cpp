@@ -46,9 +46,18 @@ namespace ofxCvGui {
 		//--------
 		SubMenuFunctional::SubMenuFunctional(const std::string& caption
 			, const std::function<void(InspectArguments&)>& inspectFunction
-			, bool ownInspectable
 			, char hotKey)
-			: SubMenuInspectable(caption, make_shared<TemporaryInspectable>(inspectFunction), ownInspectable, hotKey)
+			: SubMenuInspectable(caption, make_shared<TemporaryInspectable>(inspectFunction), true, hotKey)
+		{
+		}
+
+		//--------
+		SubMenuFunctional::SubMenuFunctional(ofParameterGroup& parameterGroup
+			, char hotKey)
+			: SubMenuFunctional(parameterGroup.getName(), [&parameterGroup](InspectArguments& args) {
+			auto inspector = args.inspector;
+			inspector->addParameterGroup(parameterGroup);
+				}, hotKey)
 		{
 		}
 	}

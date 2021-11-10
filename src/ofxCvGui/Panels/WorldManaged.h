@@ -58,14 +58,14 @@ namespace ofxCvGui {
 				PARAM_DECLARE("WorldManaged", grid, reflections, showCursor);
 			} parameters;
 
+			void saveCamera(string filepath = "") const;
+			void loadCamera(string filepath = "");
+
 		protected:
 			void update();
 			void drawContent(const ofRectangle& bounds);
 			void drawGrid(bool forReflection);
 			void showCursorCallback(bool&);
-
-			void save();
-			void load();
 
 			bool cachedDark = false;
 			CameraType camera;

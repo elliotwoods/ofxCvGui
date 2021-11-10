@@ -86,10 +86,10 @@ namespace ofxCvGui {
 			// Setup the toolbar
 			{
 				this->addToolBarElement("ofxCvGui::save", [this]() {
-					this->save();
+					this->saveCamera();
 					});
 				this->addToolBarElement("ofxCvGui::load", [this]() {
-					this->load();
+					this->loadCamera();
 					});
 			}
 		}
@@ -448,48 +448,58 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		void WorldManaged::save()
+		void WorldManaged::saveCamera(string filepath) const
 		{
-			auto result = ofSystemSaveDialog(this->getCaption() + "camera.txt", "Save camera");
-			if (result.bSuccess) {
-				ofFile file(result.filePath, ofFile::WriteOnly, false);
-				file << this->camera.getOrientationQuat();
-				file << this->camera.getPosition();
-				file << this->camera.getNearClip();
-				file << this->camera.getFarClip();
+			if (filepath.empty()) {
+				auto result = ofSystemSaveDialog(this->getCaption() + "camera.txt", "Save camera");
+				if (!result.bSuccess) {
+					return;
+				}
+				filepath = result.filePath;
 			}
+
+			ofFile file(filepath, ofFile::WriteOnly, false);
+			file << this->camera.getOrientationQuat();
+			file << this->camera.getPosition();
+			file << this->camera.getNearClip();
+			file << this->camera.getFarClip();
 		}
 
 		//----------
-		void WorldManaged::load()
+		void WorldManaged::loadCamera(string filepath)
 		{
-			auto result = ofSystemLoadDialog("Load camera");
-			if (result.bSuccess) {
-				ofFile file(result.filePath, ofFile::ReadOnly, false);
-
-				{
-					glm::quat value;
-					file >> value;
-					this->camera.setOrientation(value);
+			if (filepath.empty()) {
+				auto result = ofSystemSaveDialog(this->getCaption() + "camera.txt", "Save camera");
+				if (!result.bSuccess) {
+					return;
 				}
+				filepath = result.filePath;
+			}
 
-				{
-					glm::vec3 value;
-					file >> value;
-					this->camera.setPosition(value);
-				}
+			ofFile file(filepath, ofFile::ReadOnly, false);
 
-				{
-					float value;
-					file >> value;
-					this->camera.setNearClip(value);
-				}
+			{
+				glm::quat value;
+				file >> value;
+				this->camera.setOrientation(value);
+			}
 
-				{
-					float value;
-					file >> value;
-					this->camera.setFarClip(value);
-				}
+			{
+				glm::vec3 value;
+				file >> value;
+				this->camera.setPosition(value);
+			}
+
+			{
+				float value;
+				file >> value;
+				this->camera.setNearClip(value);
+			}
+
+			{
+				float value;
+				file >> value;
+				this->camera.setFarClip(value);
 			}
 		}
 	}

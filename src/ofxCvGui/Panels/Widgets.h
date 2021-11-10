@@ -93,6 +93,8 @@ namespace ofxCvGui {
 				, const std::function<void(InspectArguments&)>&
 				, bool ownInspectable = false
 				, char hotKey = 0);
+			shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> addSubMenu(ofParameterGroup&
+				, char hotKey = 0);
 
 			// Widgets::Title
 			shared_ptr<ofxCvGui::Widgets::Title> addTitle(const string & caption, ofxCvGui::Widgets::Title::Level level = ofxCvGui::Widgets::Title::Level::H1);

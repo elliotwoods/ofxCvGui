@@ -42,6 +42,12 @@ namespace ofxCvGui {
 
 			template<typename ManagedEnumType>
 			void entangleManagedEnum(ofParameter<ManagedEnumType>& parameter) {
+				// set the options
+				this->clearOptions();
+				auto options = parameter.get().getOptionStrings();
+				for (const auto& option : options) {
+					this->addOption(option);
+				}
 				// on widget value change
 				this->onValueChange += [&parameter](const int& selection) {
 					auto enumValue = parameter.get();

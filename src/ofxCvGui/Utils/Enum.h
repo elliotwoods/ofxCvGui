@@ -25,9 +25,6 @@ namespace ofxCvGui {
 class NAME : public ofxCvGui::BaseEnum { \
 public: \
 	enum Options : uint32_t { OFXCVGUI_UNWRAP OPTIONS } ;\
-	const vector<string> & getOptionStrings() const override { \
-		return this->optionStrings; \
-	} \
 	NAME() { this->innerValue = (Options) 0; this->registerBuilder(); } \
 	NAME(Options value) { this->innerValue = value; this->registerBuilder(); } \
 	void operator()(const NAME & other) { \
@@ -47,6 +44,9 @@ public: \
 	} \
 	operator Options &() { \
 		return this->innerValue; \
+	} \
+	const vector<string> & getOptionStrings() const override { \
+		return this->optionStrings; \
 	} \
 	string toString() const override { \
 		return this->optionStrings.at(this->innerValue); \
