@@ -18,6 +18,8 @@ namespace ofxCvGui {
 
 			void setHotKey(char);
 			char getHotKey() const;
+
+			void setDrawGlyph(const string&);
 		protected:
 			void init();
 			void update(UpdateArguments &);

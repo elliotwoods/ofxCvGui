@@ -92,6 +92,13 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		void Toggle::setDrawGlyph(const string& glyph) {
+			this->onDraw += [glyph](DrawArguments& args) {
+				Utils::drawGlyph(glyph, args.localBounds);
+			};
+		}
+
+		//----------
 		void Toggle::update(UpdateArguments &) {
 
 		}
