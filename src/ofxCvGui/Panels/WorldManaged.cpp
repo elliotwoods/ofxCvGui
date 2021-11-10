@@ -459,10 +459,10 @@ namespace ofxCvGui {
 			}
 
 			ofFile file(filepath, ofFile::WriteOnly, false);
-			file << this->camera.getOrientationQuat();
-			file << this->camera.getPosition();
-			file << this->camera.getNearClip();
-			file << this->camera.getFarClip();
+			file << this->camera.getOrientationQuat() << std::endl;
+			file << this->camera.getPosition() << std::endl;
+			file << this->camera.getNearClip() << std::endl;
+			file << this->camera.getFarClip() << std::endl;
 		}
 
 		//----------
@@ -477,29 +477,40 @@ namespace ofxCvGui {
 			}
 
 			ofFile file(filepath, ofFile::ReadOnly, false);
+			if (!file.exists()) {
+				return;
+			}
 
 			{
 				glm::quat value;
 				file >> value;
-				this->camera.setOrientation(value);
+				if (value != glm::quat {0, 0, 0, 0}) {
+					this->camera.setOrientation(value);
+				}
 			}
 
 			{
 				glm::vec3 value;
 				file >> value;
-				this->camera.setPosition(value);
+				if (value != glm::vec3 {0, 0, 0}) {
+					this->camera.setPosition(value);
+				}
 			}
 
 			{
 				float value;
 				file >> value;
-				this->camera.setNearClip(value);
+				if (value != 0) {
+					this->camera.setNearClip(value);
+				}
 			}
 
 			{
 				float value;
 				file >> value;
-				this->camera.setFarClip(value);
+				if (value != 0) {
+					this->camera.setFarClip(value);
+				}
 			}
 		}
 	}
