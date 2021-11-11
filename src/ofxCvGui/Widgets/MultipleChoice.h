@@ -44,6 +44,7 @@ namespace ofxCvGui {
 			void entangleManagedEnum(ofParameter<ManagedEnumType>& parameter) {
 				// set the options
 				this->clearOptions();
+				this->setCaption(parameter.getName());
 				auto options = parameter.get().getOptionStrings();
 				for (const auto& option : options) {
 					this->addOption(option);
