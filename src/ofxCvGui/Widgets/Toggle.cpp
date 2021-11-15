@@ -93,9 +93,13 @@ namespace ofxCvGui {
 
 		//----------
 		void Toggle::setDrawGlyph(const string& glyph) {
+			// Bit of a hacky approach here to achieve the result we want
+			// Alternative is to have switch code in the draw function
 			this->onDraw += [glyph](DrawArguments& args) {
 				Utils::drawGlyph(glyph, args.localBounds);
 			};
+			this->addToolTip(this->caption);
+			this->setCaption("");
 		}
 
 		//----------
