@@ -27,7 +27,7 @@ namespace ofxCvGui {
 			, float minWidth = 0
 			, bool scissor = false
 			, const ofColor backgroundColor = ofColor(OFXCVGUI_TEXT_BACKGROUND)
-			, string typeface = ofxCvGui::getDefaultTypeface()
+			, std::string typeface = ofxCvGui::getDefaultTypeface()
 			, bool dontActuallyDrawAnything = false);
 
 		ofRectangle OFXCVGUI_API_ENTRY drawText(const std::string& text
