@@ -8,7 +8,9 @@ namespace ofxCvGui {
 			this->asset = 0;
 			this->setImage(asset);
 			this->onDraw.addListener([this] (DrawArguments& args) {
-				this->drawInfo(args);
+				if (args.chromeEnabled) {
+					this->drawInfo(args);
+				}
 			}, this);
 			
 			this->addToolBarElement("ofxCvGui::load", [this]() {

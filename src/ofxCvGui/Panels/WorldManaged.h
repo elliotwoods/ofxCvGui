@@ -30,6 +30,9 @@ namespace ofxCvGui {
 			//camera
 			CameraType& getCamera();
 
+			// Utility if somebody else wants to draw our grid (e.g. VR)
+			void drawGridFromOther();
+
 			ofxLiquidEvent<ofCamera> onDrawWorld;
 
 			struct Parameters : ofParameterGroup{
@@ -64,7 +67,7 @@ namespace ofxCvGui {
 		protected:
 			void update();
 			void drawContent(const ofRectangle& bounds);
-			void drawGrid(bool forReflection);
+			void drawGrid(bool forReflection, bool enableReflection);
 			void showCursorCallback(bool&);
 
 			bool cachedDark = false;

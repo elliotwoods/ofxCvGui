@@ -108,6 +108,13 @@ namespace ofxCvGui {
 
 		//---------
 		void
+			WorldManaged::drawGridFromOther()
+		{
+			this->drawGrid(false, false);
+		}
+
+		//---------
+		void
 			WorldManaged::update()
 		{
 			ofEventArgs dummyArgs;
@@ -172,7 +179,7 @@ namespace ofxCvGui {
 						}
 
 						this->onDrawWorld.notifyListeners();
-						this->drawGrid(false);
+						this->drawGrid(false, false);
 					}
 					ofPopView();
 					Utils::AnnotationManager::X().setEnabled(true);
@@ -217,7 +224,7 @@ namespace ofxCvGui {
 			this->camera.begin(bounds);
 			{
 				if (this->parameters.grid.enabled) {
-					this->drawGrid(false);
+					this->drawGrid(false, this->parameters.reflections.enabled);
 				}
 
 				this->onDrawWorld.notifyListeners(this->camera);
@@ -230,7 +237,7 @@ namespace ofxCvGui {
 
 		//----------
 		void
-			WorldManaged::drawGrid(bool forReflection)
+			WorldManaged::drawGrid(bool forReflection, bool enableReflections)
 		{
 			const auto& roomMinimum = this->parameters.grid.roomMin.get();
 			const auto& roomMaximum = this->parameters.grid.roomMax.get();
@@ -366,7 +373,9 @@ namespace ofxCvGui {
 					//ceiling
 					glCullFace(back);
 					ofTranslate(0, roomSpan.z * 0.5 - roomMaximum.z, 0);
-					if (this->parameters.reflections.enabled && this->parameters.reflections.flipFloor.get() && !forReflection) {
+					if (enableReflections
+						&& this->parameters.reflections.flipFloor.get()
+						&& !forReflection) {
 						auto& shader = ofxAssets::shader("ofxCvGui::reflection");
 						auto& reflectionTexture = this->reflection[0].getTexture();
 						shader.begin();
@@ -386,7 +395,9 @@ namespace ofxCvGui {
 					//floor
 					glCullFace(front);
 					ofTranslate(0, 0, -roomSpan.y);
-					if (this->parameters.reflections.enabled && !this->parameters.reflections.flipFloor.get() && !forReflection) {
+					if (enableReflections
+						&& !this->parameters.reflections.flipFloor.get()
+						&& !forReflection) {
 						auto& shader = ofxAssets::shader("ofxCvGui::reflection");
 						auto& reflectionTexture = this->reflection[0].getTexture();
 						shader.begin();

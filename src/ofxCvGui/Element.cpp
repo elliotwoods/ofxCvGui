@@ -1,5 +1,6 @@
 #include "pch_ofxCvGui.h"
 #include "ofxCvGui/Utils/Debugger.h"
+#include "Panels/Base.h"
 
 using namespace std;
 
@@ -67,6 +68,14 @@ namespace ofxCvGui {
 			localArguments.globalScale = parentArguments.globalScale * this->zoomFactor;
 			localArguments.localBounds = ofRectangle(0, 0, localArguments.naturalBounds.width, localArguments.naturalBounds.height);
 			localArguments.globalBounds = Utils::operator*(localArguments.localBounds, localArguments.globalTransform);
+
+			// Apply chromeEnabled if we are a panel
+			{
+				auto panel = dynamic_cast<Panels::Base*>(this);
+				if (panel) {
+					localArguments.chromeEnabled &= panel->getChromeEnabled();
+				}
+			}
 
 			//only draw if this Element will be shown on the screen (not outside, not scissored out)
 			if (Utils::ScissorManager::X().getScissor().intersects(localArguments.globalBounds)) {

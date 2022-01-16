@@ -38,6 +38,10 @@ namespace ofxCvGui {
 				}
 				titleElement->setBounds(ofRectangle(x, y, 30, 30)); //title has no scissor so width is fine
 			};
+
+			this->onUpdate += [this](ofxCvGui::UpdateArguments&) {
+				this->toolBar->setEnabled(this->chromeEnabled);
+			};
 		}
 
 		//----------
@@ -51,6 +55,16 @@ namespace ofxCvGui {
 			};
 			this->toolBar->add(element);
 			return element;
+		}
+
+		//----------
+		void Base::setChromeEnabled(bool chromeEnabled) {
+			this->chromeEnabled = chromeEnabled;
+		}
+
+		//----------
+		bool Base::getChromeEnabled() const {
+			return this->chromeEnabled;
 		}
 		
 		//----------

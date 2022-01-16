@@ -13,9 +13,14 @@ namespace ofxCvGui {
 	
 	namespace Panels {
 		class OFXCVGUI_API_ENTRY BaseImage : public Base {
+		protected:
+			BaseImage();
+			virtual ~BaseImage();
 		public:
 			ofxLiquidEvent<DrawImageArguments> onDrawImage;
 			
+			void update();
+
 			ImageZoomState getImageZoomState() const;
 			void setImageZoomState(ImageZoomState);
 
@@ -29,8 +34,7 @@ namespace ofxCvGui {
 			const glm::vec2& getScroll() const;
 			void setScroll(const glm::vec2&);
 		protected:
-            BaseImage();
-            virtual ~BaseImage();
+            
 			virtual void drawImage(float width, float height) = 0;
             virtual float getImageWidth() const = 0;
             virtual float getImageHeight() const = 0;
@@ -40,6 +44,7 @@ namespace ofxCvGui {
 			glm::vec2 scroll; // in image pixel coordinates
 			ImageZoomState zoomState = ImageZoomState::Fit;
 			bool mirror = false;
+			ElementPtr zoomBox;
 		};
 	}
 }

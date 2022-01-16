@@ -24,8 +24,12 @@ namespace ofxCvGui {
 			ofxLiquidEvent<FilesDraggedArguments> onFilesDragged;
 			
 			ElementPtr addToolBarElement(const std::string & imageAssetName, function<void()> && action);
+
+			void setChromeEnabled(bool);
+			bool getChromeEnabled() const;
 		protected:
 			ElementGroupPtr toolBar;
+			bool chromeEnabled = true; // can be overriden by global setting
 		};
 
 		PanelPtr makeBlank(std::string caption = "");
