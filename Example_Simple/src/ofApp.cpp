@@ -5,6 +5,7 @@ void ofApp::setup(){
 	this->camera.initGrabber(1280, 720);
 
 	// Must be called before using the gui
+	// This adds event handlers onto draw, keyboard, mouse, etc so the GUI will handle them
 	this->gui.init();
 
 	// The gui accepts a range of object types, in this case we rely on the fact that ofVideoGrabber inherits from ofBaseDraws
@@ -18,18 +19,21 @@ void ofApp::setup(){
 void ofApp::update(){
 	this->camera.update();
 
-	//copy the pixels across
-	this->inverse.getPixels() = this->camera.getPixels();
+	if (this->camera.isFrameNew()) {
+		//copy the pixels across
+		this->inverse.getPixels() = this->camera.getPixels();
 
-	//invert
-	for (auto & pixel : this->inverse.getPixels()) {
-		pixel = 255 - pixel;
+		//invert
+		for (auto& pixel : this->inverse.getPixels()) {
+			pixel = 255 - pixel;
+		}
+
+		//update the texture inside the ofImage
+		this->inverse.update();
+
+		// NB : It would be slightly slightly quicker to invert whilst copying, but the code would be much longer, and for this case it doesn't matter :)
 	}
-
-	//update the texture inside the ofImage
-	this->inverse.update();
-
-	// NB : It would be slightly slightly quicker to invert whilst copying, but the code would be much longer, and for this case it doesn't matter :)
+	
 }
 
 //--------------------------------------------------------------

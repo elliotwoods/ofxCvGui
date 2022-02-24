@@ -56,8 +56,8 @@ namespace ofxCvGui {
 	}
 
 	//----------
-	shared_ptr<Panels::World> Builder::addWorld(string caption) {
-		auto newPanel = Panels::makeWorld(caption);
+	shared_ptr<Panels::WorldManaged> Builder::addWorld(string caption) {
+		auto newPanel = Panels::makeWorldManaged(caption);
 		Controller::X().add(newPanel);
 		return newPanel;
 	}

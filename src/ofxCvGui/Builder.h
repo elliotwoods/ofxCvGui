@@ -15,6 +15,7 @@
 #include "ofxCvGui/Panels/Text.h"
 #include "ofxCvGui/Panels/Instructions.h"
 #include "ofxCvGui/Panels/World.h"
+#include "ofxCvGui/Panels/WorldManaged.h"
 #include "ofxCvGui/Panels/ElementHost.h"
 #include "ofxCvGui/Panels/Widgets.h"
 #include "ofxCvGui/Panels/Inspector.h"
@@ -40,7 +41,7 @@ namespace ofxCvGui {
 		
 		PanelPtr addBlank(string caption = "");
 
-		shared_ptr<Panels::World> addWorld(string caption = "");
+		shared_ptr<Panels::WorldManaged> addWorld(string caption = "");
 		shared_ptr<Panels::ElementHost> addElementHost(string caption = "");
 		shared_ptr<Panels::ElementCanvas> addElementCanvas(string caption = "");
 		shared_ptr<Panels::Widgets> addWidgets(string caption = "");

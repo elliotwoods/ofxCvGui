@@ -1,5 +1,6 @@
 #pragma once
 #include "ofxCvGui/Panels/Base.h"
+#include "ofxCvGui/Utils/Sugar.h"
 
 #include "ofNode.h"
 
@@ -50,7 +51,7 @@ namespace ofxCvGui {
 					ofParameter<int> resolution{ "Resolution/x", 2 };
 					ofParameter<float> blur{ "Blur", 1.5, 0, 4 };
 					ofParameter<int> blurIterations{ "Blur iterations", 2};
-					ofParameter<float> brightness{ "Brightness", 0.5f };
+					ofParameter<float> brightness{ "Brightness", 0.5f, 0.0f, 1.0f };
 					ofParameter<bool> flipFloor{ "Flip floor", false };
 					PARAM_DECLARE("Reflections", enabled, resolution, blur, blurIterations, brightness, flipFloor);
 					ofEventListener resolutionListener;
