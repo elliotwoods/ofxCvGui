@@ -4,3 +4,4 @@
 * ofxTextInputField https://github.com/elliotwoods/ofxTextInputField
 * ofxAudioDecoder https://github.com/elliotwoods/ofxAudioDecoder
 * ofxSingleton https://github.com/elliotwoods/ofxSingleton
+* ofxAddonLib https://github.com/elliotwoods/ofxAddonLib
