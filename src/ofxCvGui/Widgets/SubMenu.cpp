@@ -22,14 +22,16 @@ namespace ofxCvGui {
 			, char hotKey)
 			: Button(caption, hotKey)
 		{
+			this->inspectable = inspectable;
+
 			if (ownInspectable) {
-				this->onHit += [inspectable]() {
-					ofxCvGui::inspectWithOwnership(inspectable);
+				this->onHit += [this]() {
+					ofxCvGui::inspectWithOwnership(this->inspectable);
 				};
 			}
 			else {
-				this->onHit += [inspectable]() {
-					ofxCvGui::inspect(inspectable);
+				this->onHit += [this]() {
+					ofxCvGui::inspect(this->inspectable);
 				};
 			}
 			
@@ -41,6 +43,13 @@ namespace ofxCvGui {
 				bounds.x = args.localBounds.getRight() - bounds.width;
 				Utils::drawGlyph(u8"\uf105", bounds);
 			};
+		}
+
+		//--------
+		std::shared_ptr<IInspectable>
+			SubMenuInspectable::getInspectable()
+		{
+			return this->inspectable;
 		}
 
 		//--------

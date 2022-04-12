@@ -15,6 +15,10 @@ namespace ofxCvGui {
 				, std::shared_ptr<IInspectable>
 				, bool ownInspectable = false
 				, char hotKey = 0);
+
+			shared_ptr<IInspectable> getInspectable();
+		protected:
+			shared_ptr<IInspectable> inspectable;
 		};
 
 		class OFXCVGUI_API_ENTRY SubMenuFunctional : public SubMenuInspectable {
