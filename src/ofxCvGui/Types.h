@@ -80,7 +80,12 @@ namespace ofxCvGui {
 		int button;
 		glm::vec2 global;
 		glm::vec2 local;
-		glm::vec2 localNormalized; ///<Texture coordinates
+
+		/// <summary>
+		///  Normalised 0...1 in x (right) and y (down)
+		/// </summary>
+		glm::vec2 localNormalized;
+
 		glm::vec2 movement;
 		glm::vec2 scroll;
 
