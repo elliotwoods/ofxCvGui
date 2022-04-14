@@ -26,7 +26,7 @@ namespace ofxCvGui {
 					auto text = this->caption + " : ";
 					auto naturalBounds = font.getStringBoundingBox(text, 0, 0);
 					font.drawString(text
-						, args.localBounds.width - 20 - 20 - naturalBounds.getWidth()
+						, args.localBounds.width - 20 - 5 - naturalBounds.getWidth()
 						, 15);
 				}
 
@@ -59,13 +59,14 @@ namespace ofxCvGui {
 				ofPopStyle();
 
 				// Draw the time
-				if (this->isMouseOver()) {
+				if (this->isMouseOver() && timeInSeconds < ofGetElapsedTimef()) {
 					ofPushStyle();
 					{
 						ofSetColor(150);
 						auto& font = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 14);
 						auto text = ofToString(timeInSeconds, 1) + "s";
-						font.drawString(text, 0, 35);
+						auto naturalBounds = font.getStringBoundingBox(text, 0, 0);
+						font.drawString(text, args.localBounds.width - naturalBounds.width, 35);
 					}
 					ofPopStyle();
 				}
