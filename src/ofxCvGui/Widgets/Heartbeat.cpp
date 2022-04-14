@@ -34,29 +34,31 @@ namespace ofxCvGui {
 				auto timeSinceLastHeartbeat = std::chrono::system_clock::now() - this->lastHeartbeat;
 				auto timeInSeconds = (float) std::chrono::duration_cast<std::chrono::milliseconds>(timeSinceLastHeartbeat).count() / 1000.0f;
 
-				//draw indicator
-				ofPushStyle();
-				{
-					// too long ago
-					if (timeInSeconds > this->coolOffPeriod) {
-						ofSetLineWidth(1);
-						ofNoFill();
-						ofSetColor(100);
-					}
+				//draw indicator if it ever happened
+				if (timeInSeconds < ofGetElapsedTimef()) {
+					ofPushStyle();
+					{
+						// too long ago
+						if (timeInSeconds > this->coolOffPeriod) {
+							ofSetLineWidth(1);
+							ofNoFill();
+							ofSetColor(100);
+						}
 
-					// fading
-					else {
-						ofFill();
-						ofSetColor(
-							ofMap(timeInSeconds
-								, 0, this->coolOffPeriod
-								, 255, 0)
-						);
+						// fading
+						else {
+							ofFill();
+							ofSetColor(
+								ofMap(timeInSeconds
+									, 0, this->coolOffPeriod
+									, 255, 80)
+							);
+						}
+
+						ofDrawCircle(this->getWidth() - 20, 10, 5);
 					}
-					
-					ofDrawCircle(this->getWidth() - 20, 10, 5);
+					ofPopStyle();
 				}
-				ofPopStyle();
 
 				// Draw the time
 				if (this->isMouseOver() && timeInSeconds < ofGetElapsedTimef()) {
