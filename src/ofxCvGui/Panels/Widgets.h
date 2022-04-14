@@ -12,6 +12,8 @@
 #include "../Widgets/SelectFile.h"
 #include "../Widgets/SubMenu.h"
 #include "../Widgets/Toggle.h"
+#include "../Widgets/Heartbeat.h"
+#include "../Widgets/HorizontalStack.h"
 
 #include "ofParameterGroup.h"
 #include "ofxSingleton.h"
@@ -47,6 +49,16 @@ namespace ofxCvGui {
 				ofParameter<ValueType> & parameter) {
 				return this->add(new ofxCvGui::Widgets::EditableValue<ValueType>(parameter));
 			}
+
+			// Widgets::Heartbeat
+			shared_ptr<ofxCvGui::Widgets::Heartbeat> addHeartbeat(
+				const string & caption
+				, const ofxCvGui::Widgets::Heartbeat::GetFunction&
+				, float coolOffPeriod = 2.0f
+			);
+
+			// Widgets::HorizontalStack
+			shared_ptr<ofxCvGui::Widgets::HorizontalStack> addHorizontalStack();
 
 			// Widgets::Indicator
 			shared_ptr<ofxCvGui::Widgets::Indicator> addIndicatorBool(const string & caption, const function<bool()> & get);

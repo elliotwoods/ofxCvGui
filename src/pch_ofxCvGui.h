@@ -29,6 +29,8 @@
 #include "ofxCvGui/Widgets/Toggle.h"
 #include "ofxCvGui/Widgets/Button.h"
 #include "ofxCvGui/Widgets/TextField.h"
+#include "ofxCvGui/Widgets/Heartbeat.h"
+#include "ofxCvGui/Widgets/HorizontalStack.h"
 
 #include "ofxCvGui/Panels/Base.h"
 #include "ofxCvGui/Panels/BaseImage.h"

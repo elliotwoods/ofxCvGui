@@ -82,6 +82,8 @@
     <ClInclude Include="..\src\ofxCvGui\Utils\Utils.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Button.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\EditableValue.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\Heartbeat.h" />
+    <ClInclude Include="..\src\ofxCvGui\Widgets\HorizontalStack.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\Indicator.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\MultipleChoice.h" />
     <ClInclude Include="..\src\ofxCvGui\Widgets\SelectFile.h" />
@@ -222,6 +224,8 @@
     <ClCompile Include="..\src\ofxCvGui\Utils\Utils.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Button.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\EditableValue.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\Heartbeat.cpp" />
+    <ClCompile Include="..\src\ofxCvGui\Widgets\HorizontalStack.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\Indicator.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\LiveValue.cpp" />
     <ClCompile Include="..\src\ofxCvGui\Widgets\MultipleChoice.cpp" />

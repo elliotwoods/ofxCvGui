@@ -1,6 +1,5 @@
 #include "pch_ofxCvGui.h"
 
-
 using namespace ofxCvGui::Widgets;
 
 namespace ofxCvGui {
@@ -30,6 +29,21 @@ namespace ofxCvGui {
 		//----------
 		shared_ptr<ofxCvGui::Widgets::Button> Widgets::addButton(const string & caption, const function<void()> & action, char hotKey) {
 			return this->add(new ofxCvGui::Widgets::Button(caption, action, hotKey));
+		}
+
+		//----------
+		shared_ptr<ofxCvGui::Widgets::Heartbeat> Widgets::addHeartbeat(
+			const string& caption
+			, const ofxCvGui::Widgets::Heartbeat::GetFunction& getFunction
+			, float coolOffPeriod
+		)
+		{
+			return this->add(new ofxCvGui::Widgets::Heartbeat(caption, getFunction, coolOffPeriod));
+		}
+
+		//----------
+		shared_ptr<ofxCvGui::Widgets::HorizontalStack> Widgets::addHorizontalStack() {
+			return this->add(new ofxCvGui::Widgets::HorizontalStack());
 		}
 
 		//----------
