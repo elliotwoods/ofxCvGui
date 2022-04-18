@@ -43,6 +43,9 @@ namespace ofxCvGui {
 				bounds.x = args.localBounds.getRight() - bounds.width;
 				Utils::drawGlyph(u8"\uf105", bounds);
 			};
+
+			// Little taller than usual
+			this->setHeight(80.0f);
 		}
 
 		//--------
