@@ -37,7 +37,7 @@ namespace ofxCvGui {
 				for (const auto & element : this->elements) {
 					element->setBounds({
 						x, 0
-						, widthPerElement, args.localBounds.height
+						, widthPerElement - 10, args.localBounds.height
 						});
 					x += widthPerElement;
 				}

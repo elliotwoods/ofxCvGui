@@ -27,6 +27,7 @@ namespace ofxCvGui {
 			}, this);
 
 			this->titleEnabled = true;
+			this->setCaption("Inspector");
 		
 			this->clear(false);
 		}
@@ -42,7 +43,7 @@ namespace ofxCvGui {
 		void Inspector::clear(bool notifyListeners) {
 			Scroll::clear();
 			if (this->titleEnabled) {
-				this->elements->add(shared_ptr<Title>(new Title("Inspector", Title::Level::H1)));
+				this->elements->add(shared_ptr<Title>(new Title(this->getCaption(), Title::Level::H1)));
 			}
 			if(notifyListeners) {
 				InspectArguments inspectArguments = { this->shared_from_this() };
