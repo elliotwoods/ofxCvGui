@@ -27,7 +27,7 @@ namespace ofxCvGui {
 		}
 
 		//----------
-		shared_ptr<ofxCvGui::Widgets::Button> Widgets::addButton(const string & caption, const function<void()> & action, char hotKey) {
+		shared_ptr<ofxCvGui::Widgets::Button> Widgets::addButton(const string & caption, const function<void()> & action, int hotKey) {
 			return this->add(new ofxCvGui::Widgets::Button(caption, action, hotKey));
 		}
 
@@ -102,7 +102,7 @@ namespace ofxCvGui {
 		shared_ptr<ofxCvGui::Widgets::SubMenuInspectable> Widgets::addSubMenu(const string& caption
 			, std::shared_ptr<IInspectable> inspectable
 			, bool ownInspectable
-			, char hotKey) {
+			, int hotKey) {
 			return this->add(new ofxCvGui::Widgets::SubMenuInspectable(caption
 				, inspectable
 				, ownInspectable
@@ -113,7 +113,7 @@ namespace ofxCvGui {
 		shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> Widgets::addSubMenu(const string& caption
 			, const std::function<void(InspectArguments&)>& inspectFunction
 			, bool ownInspectable
-			, char hotKey) {
+			, int hotKey) {
 			return this->add(new ofxCvGui::Widgets::SubMenuFunctional(caption
 				, inspectFunction
 				, hotKey));
@@ -121,7 +121,7 @@ namespace ofxCvGui {
 
 		//----------
 		shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> Widgets::addSubMenu(ofParameterGroup& parameterGroup
-			, char hotKey) {
+			, int hotKey) {
 			return this->add(new ofxCvGui::Widgets::SubMenuFunctional(parameterGroup
 				, hotKey));
 		}

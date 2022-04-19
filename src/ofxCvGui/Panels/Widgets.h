@@ -32,7 +32,9 @@ namespace ofxCvGui {
 			shared_ptr<ofxCvGui::Widgets::LiveValueHistory> addMemoryUsage();
 
 			// Widgets::Button
-			shared_ptr<ofxCvGui::Widgets::Button> addButton(const string & caption, const function<void()> & action, char hotKey = 0);
+			shared_ptr<ofxCvGui::Widgets::Button> addButton(const string & caption
+				, const function<void()> & action
+				, int hotKey = 0);
 
 			// Widgets::EditableValue<ValueType>
 			template<typename ValueType>
@@ -100,13 +102,13 @@ namespace ofxCvGui {
 			shared_ptr<ofxCvGui::Widgets::SubMenuInspectable> addSubMenu(const string& caption
 				, std::shared_ptr<IInspectable>
 				, bool ownInspectable = false
-				, char hotKey = 0);
+				, int hotKey = 0);
 			shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> addSubMenu(const string& caption
 				, const std::function<void(InspectArguments&)>&
 				, bool ownInspectable = false
-				, char hotKey = 0);
-			shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> addSubMenu(ofParameterGroup&
-				, char hotKey = 0);
+				, int hotKey = 0);
+			shared_ptr<ofxCvGui::Widgets::SubMenuFunctional> addSubMenu(ofParameterGroup&,
+				int hotKey = 0);
 
 			// Widgets::Title
 			shared_ptr<ofxCvGui::Widgets::Title> addTitle(const string & caption, ofxCvGui::Widgets::Title::Level level = ofxCvGui::Widgets::Title::Level::H1);

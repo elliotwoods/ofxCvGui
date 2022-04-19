@@ -1,5 +1,10 @@
 #pragma once
 
+#if defined (Status)
+# undef Status
+typedef int Status;
+#endif
+
 #include "ofxCvGui/Controller.h"
 #include "ofxCvGui/Builder.h"
 

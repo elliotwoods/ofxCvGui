@@ -40,7 +40,7 @@ namespace ofxCvGui {
 
 		void OFXCVGUI_API_ENTRY drawProcessingNotice(std::string message);
 		void OFXCVGUI_API_ENTRY drawToolTip(const std::string & text, const glm::vec2 & position);
-		std::string OFXCVGUI_API_ENTRY makeString(char key);
+		std::string OFXCVGUI_API_ENTRY makeString(int key);
 
 		void OFXCVGUI_API_ENTRY drawTextAnnotation(const std::string& text
 			, const glm::vec3& position

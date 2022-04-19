@@ -196,7 +196,7 @@ namespace ofxCvGui {
 		}
 
 		//---------
-		string makeString(char key) {
+		string makeString(int key) {
 			switch(key) {
 			case ' ':
 				return "SPACE";
@@ -220,7 +220,7 @@ namespace ofxCvGui {
 				return "RIGHT";
 				break;
 			default:
-				return string("") + key;
+				return string("") + char(key);
 			}
 		}
 

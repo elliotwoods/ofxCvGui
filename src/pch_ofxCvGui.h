@@ -3,6 +3,12 @@
 #include "ofMain.h"
 #include "ofxAssets.h"
 
+// For X11
+#if defined(Status)
+# undef Status
+typedef int Status;
+#endif
+
 #include "ofxCvGui/Builder.h"
 #include "ofxCvGui/Controller.h"
 #include "ofxCvGui/Element.h"
