@@ -20,6 +20,7 @@ namespace ofxCvGui {
 			char getHotKey() const;
 
 			void setDrawGlyph(const string&);
+			void setDrawable(const std::function<void(ofxCvGui::DrawArguments&)> &);
 		protected:
 			void init();
 			void update(UpdateArguments &);
