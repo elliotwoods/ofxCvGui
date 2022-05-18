@@ -37,6 +37,7 @@ typedef int Status;
 #include "ofxCvGui/Widgets/TextField.h"
 #include "ofxCvGui/Widgets/Heartbeat.h"
 #include "ofxCvGui/Widgets/HorizontalStack.h"
+#include "ofxCvGui/Widgets/VerticalStack.h"
 
 #include "ofxCvGui/Panels/Base.h"
 #include "ofxCvGui/Panels/BaseImage.h"

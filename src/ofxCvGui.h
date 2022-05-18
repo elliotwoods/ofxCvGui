@@ -49,6 +49,7 @@ typedef int Status;
 #include "ofxCvGui/Widgets/SubMenu.h"
 #include "ofxCvGui/Widgets/Heartbeat.h"
 #include "ofxCvGui/Widgets/HorizontalStack.h"
+#include "ofxCvGui/Widgets/VerticalStack.h"
 
 #include "ofxCvGui/InspectController.h"
 

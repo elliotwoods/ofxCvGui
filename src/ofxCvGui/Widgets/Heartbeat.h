@@ -16,6 +16,7 @@ namespace ofxCvGui {
 			const GetFunction getFunction;
 			float coolOffPeriod;
 			std::chrono::system_clock::time_point lastHeartbeat;
+			bool stateThisFrame = false;
 		};
 	}
 }
