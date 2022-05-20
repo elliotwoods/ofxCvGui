@@ -261,18 +261,42 @@ namespace ofxCvGui {
 				//
 				//x
 				ofSetColor(200, 100, 100);
-				ofPushMatrix();
-				ofTranslate(0, roomMaximum.y, roomMaximum.z);
-				ofDrawLine(roomMinimum.x, 0, roomMaximum.x, 0);
-				ofPopMatrix();
+				{
+					ofMesh mesh;
+					mesh.setMode(ofPrimitiveMode::OF_PRIMITIVE_LINE_STRIP);
+					mesh.addVertex({ 0, roomMinimum.y, roomMinimum.z });
+					mesh.addVertex({ 0, roomMaximum.y, roomMinimum.z });
+					mesh.addVertex({ 0, roomMaximum.y, roomMaximum.z });
+					mesh.addVertex({ 0, roomMinimum.y, roomMaximum.z });
+					mesh.addVertex({ 0, roomMinimum.y, roomMinimum.z });
+					mesh.draw();
+				}
 				//
 				//y
 				ofSetColor(100, 200, 100);
-				ofDrawLine(0, roomMaximum.y, roomMaximum.z, 0, roomMinimum.y, roomMaximum.z);
+				{
+					ofMesh mesh;
+					mesh.setMode(ofPrimitiveMode::OF_PRIMITIVE_LINE_STRIP);
+					mesh.addVertex({ roomMinimum.x, 0, roomMinimum.z });
+					mesh.addVertex({ roomMaximum.x, 0, roomMinimum.z });
+					mesh.addVertex({ roomMaximum.x, 0, roomMaximum.z });
+					mesh.addVertex({ roomMinimum.x, 0, roomMaximum.z });
+					mesh.addVertex({ roomMinimum.x, 0, roomMinimum.z });
+					mesh.draw();
+				}
 				//
 				//z
-				ofSetColor(100, 200, 100);
-				ofDrawLine(0, roomMaximum.y, roomMaximum.z, 0, roomMaximum.y, roomMinimum.z);
+				ofSetColor(100, 100, 200);
+				{
+					ofMesh mesh;
+					mesh.setMode(ofPrimitiveMode::OF_PRIMITIVE_LINE_STRIP);
+					mesh.addVertex({ roomMinimum.x, roomMinimum.y, 0 });
+					mesh.addVertex({ roomMaximum.x, roomMinimum.y, 0 });
+					mesh.addVertex({ roomMaximum.x, roomMaximum.y, 0 });
+					mesh.addVertex({ roomMinimum.x, roomMaximum.y, 0 });
+					mesh.addVertex({ roomMinimum.x, roomMinimum.y, 0 });
+					mesh.draw();
+				}
 				//
 				ofPopStyle();
 				//
@@ -340,12 +364,17 @@ namespace ofxCvGui {
 			}
 
 			{
+				const auto& gridScale = this->parameters.grid.scale;
+
 				//
 				//front/back walls
 				ofPushMatrix();
 				{
 					auto planeXY = ofPlanePrimitive(roomSpan.x, roomSpan.y, 2, 2);
-					planeXY.mapTexCoords(roomMinimum.x, roomSpan.y, roomMaximum.x, 0);
+					planeXY.mapTexCoords(roomMinimum.x / gridScale
+						, roomSpan.y / gridScale
+						, roomMaximum.x / gridScale
+						, 0);
 
 					//front
 					glCullFace(front);
@@ -365,7 +394,10 @@ namespace ofxCvGui {
 				ofPushMatrix();
 				{
 					auto planeXZ = ofPlanePrimitive(roomSpan.x, roomSpan.z, 2, 2);
-					planeXZ.mapTexCoords(roomMinimum.x, roomSpan.z, roomMaximum.x, 0);
+					planeXZ.mapTexCoords(roomMinimum.x / gridScale
+						, roomSpan.z / gridScale
+						, roomMaximum.x / gridScale
+						, 0);
 
 					ofTranslate(roomMinimum.x + roomSpan.x * 0.5, roomMaximum.y, 0);
 					ofRotateDeg(90, -1, 0, 0);
@@ -420,7 +452,10 @@ namespace ofxCvGui {
 				ofPushMatrix();
 				{
 					auto planeYZ = ofPlanePrimitive(roomSpan.z, roomSpan.y, 2, 2);
-					planeYZ.mapTexCoords(roomMinimum.z, roomSpan.y, roomMaximum.z, 0);
+					planeYZ.mapTexCoords(roomMinimum.z / gridScale
+						, roomSpan.y / gridScale
+						, roomMaximum.z
+						, 0);
 
 					ofTranslate(0, roomMaximum.y - roomSpan.y * 0.5, roomMaximum.z - roomSpan.z * 0.5);
 					ofRotateDeg(-90, 0, 1, 0);

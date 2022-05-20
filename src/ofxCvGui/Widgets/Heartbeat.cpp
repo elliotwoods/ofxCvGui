@@ -48,11 +48,17 @@ namespace ofxCvGui {
 						// fading
 						else {
 							ofFill();
-							ofSetColor(
-								ofMap(timeInSeconds
-									, 0, this->coolOffPeriod
-									, 255, 80)
-							);
+
+							if (this->stateThisFrame) {
+								ofSetColor(255);
+							}
+							else {
+								ofSetColor(
+									ofMap(timeInSeconds
+										, 0, this->coolOffPeriod
+										, 200, 80)
+								);
+							}
 						}
 
 						ofDrawCircle(this->getWidth() - 20, 10, 5);
@@ -80,7 +86,8 @@ namespace ofxCvGui {
 		void
 		Heartbeat::update()
 		{
-			if (this->getFunction()) {
+			this->stateThisFrame = this->getFunction();
+			if(this->stateThisFrame) {
 				this->lastHeartbeat = std::chrono::system_clock::now();
 			}
 		}

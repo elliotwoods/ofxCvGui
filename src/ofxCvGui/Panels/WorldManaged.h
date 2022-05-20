@@ -42,8 +42,9 @@ namespace ofxCvGui {
 					ofParameter<bool> dark{ "Dark", true };
 					ofParameter<glm::vec3> roomMin{ "Room min", {-1, -1, -1} };
 					ofParameter<glm::vec3> roomMax{ "Room max", {1, 1, 1} };
+					ofParameter<float> scale { "Scale", 1, 0.1, 10 };
 
-					PARAM_DECLARE("Grid", enabled, dark, roomMin, roomMax);
+					PARAM_DECLARE("Grid", enabled, dark, roomMin, roomMax, scale);
 				} grid;
 
 				struct : ofParameterGroup {
