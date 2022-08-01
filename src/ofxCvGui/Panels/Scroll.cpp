@@ -63,6 +63,20 @@ namespace ofxCvGui {
 		//----------
 		OFXCVGUI_API_ENTRY
 		void Scroll::setScroll(float position) {
+            constexpr float minPos = -20;
+            if(position < minPos){
+                position = minPos;
+            }else{
+                if(this->length > this->getHeight()){
+                    float overflow = this->length - this->getHeight();
+                    if (position > overflow) {
+                        position = overflow;
+                    }
+                }
+                else{
+                    position = minPos;
+                }
+            }
 			this->position = position;
 			position = floor(position);
 			if (this->elements->getBounds().y != -position) {
@@ -105,31 +119,32 @@ namespace ofxCvGui {
 		OFXCVGUI_API_ENTRY
 		void Scroll::update() {
 			if (this->localMouseState == LocalMouseState::Waiting) {
-				float decay = ofClamp(1.0f - 2.0f * ofGetLastFrameTime(), 0, 1);
-				if (decay < 0.0f) {
-					decay = 0.0f;
-				}
+                this->setScroll(this->position);
+//				float decay = ofClamp(1.0f - 2.0f * ofGetLastFrameTime(), 0, 1);
+//				if (decay < 0.0f) {
+//					decay = 0.0f;
+//				}
 
-				if (this->position < 0.0f) {
-					this->setScroll(this->position * decay);
-				} else {
-					float overflow = this->length - this->getHeight();
-					if (overflow < 0) {
-						//less content than screen space
-						if (this->position > 0.0f) {
-							// Only damp one way (don't bounce)
-							this->setScroll(this->position * decay);
-						}
-					} else 
-					{
-						//more content than screen space
-						if (this->position > overflow) {
-							float position = this->position - overflow;
-							position *= decay;
-							this->setScroll(position + overflow);
-						}
-					}
-				}
+//				if (this->position < 0.0f) {
+//					this->setScroll(this->position * decay);
+//				} else {
+//					float overflow = this->length - this->getHeight();
+//					if (overflow < 0) {
+//						//less content than screen space
+//						if (this->position > 0.0f) {
+//							// Only damp one way (don't bounce)
+//							this->setScroll(this->position * decay);
+//						}
+//					} else
+//					{
+//						//more content than screen space
+//						if (this->position > overflow) {
+//							float position = this->position - overflow;
+//							position *= decay;
+//							this->setScroll(position + overflow);
+//						}
+//					}
+//				}
 			}
 		}
 
