@@ -54,7 +54,7 @@ public: \
 	uint32_t toIndex() const override { \
 		return (uint32_t) this->innerValue; \
 	} \
-	bool fromString(const string & valueString) { \
+	virtual bool fromString(const string & valueString) override { \
 		for (uint32_t optionIndex = 0; optionIndex < this->optionStrings.size(); optionIndex++) { \
 			const auto & optionString = this->optionStrings[optionIndex]; \
 			if (optionString == valueString) { \
@@ -64,7 +64,7 @@ public: \
 		} \
 		return false; \
 	} \
-	bool fromIndex(const uint32_t& index) { \
+	virtual bool fromIndex(const uint32_t& index) override{ \
 		if(index < this->optionStrings.size()) { \
 			this->set((Options)index); \
 			return true; \
