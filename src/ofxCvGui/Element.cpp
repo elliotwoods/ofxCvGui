@@ -587,10 +587,10 @@ namespace ofxCvGui {
 
 	//-----------
 	void Element::updateParentToLocalTransform() {
+		// WE NEED TO CHECK THIS!
 		this->parentToLocalTransform = glm::scale(glm::vec3(this->zoomFactor
 			, this->zoomFactor
 			, 1.0f))
-			
 			* glm::translate(this->getBounds().getTopLeft());
 	}
 

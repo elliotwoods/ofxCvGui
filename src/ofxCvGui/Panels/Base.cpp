@@ -58,6 +58,11 @@ namespace ofxCvGui {
 		}
 
 		//----------
+		void Base::addToolBarElement(ElementPtr element) {
+			this->toolBar->add(element);
+		}
+
+		//----------
 		void Base::setChromeEnabled(bool chromeEnabled) {
 			this->chromeEnabled = chromeEnabled;
 		}

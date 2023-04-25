@@ -23,7 +23,8 @@ namespace ofxCvGui {
 			
 			ofxLiquidEvent<FilesDraggedArguments> onFilesDragged;
 			
-			ElementPtr addToolBarElement(const std::string & imageAssetName, function<void()> && action);
+			ElementPtr addToolBarElement(const std::string& imageAssetName, function<void()>&& action);
+			void addToolBarElement(ElementPtr);
 
 			void setChromeEnabled(bool);
 			bool getChromeEnabled() const;
