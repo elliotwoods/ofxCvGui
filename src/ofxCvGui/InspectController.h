@@ -13,6 +13,7 @@ namespace ofxCvGui {
 	/// inherit this class if your object is inspectable
 	class OFXCVGUI_API_ENTRY IInspectable {
 	public:
+		virtual ~IInspectable() { }
 		/// Listen to this event if you want to populate the insspector when selected 
 		ofxLiquidEvent<InspectArguments> onPopulateInspector;
 		bool isBeingInspected() const;

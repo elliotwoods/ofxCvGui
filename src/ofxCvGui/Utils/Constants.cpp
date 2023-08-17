@@ -8,6 +8,6 @@ namespace ofxCvGui {
 
 	//----------
 	std::string getGlyphTypeface() {
-		return "ofxCvGui::fa-solid-900";
+		return "ofxCvGui::Font-Awesome-6-Free-Solid-900";
 	}
 }
