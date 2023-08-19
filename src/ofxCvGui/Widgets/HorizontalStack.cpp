@@ -43,5 +43,14 @@ namespace ofxCvGui {
 				}
 			};
 		}
+
+		//----------
+		shared_ptr<Widgets::Button>
+			HorizontalStack::addButton(const string& caption, const std::function<void()>& action)
+		{
+			auto button = make_shared<Widgets::Button>(caption, action);
+			this->add(button);
+			return button;
+		}
 	}
 }
