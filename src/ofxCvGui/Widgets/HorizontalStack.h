@@ -10,6 +10,7 @@ namespace ofxCvGui {
 		public:
 			HorizontalStack();
 			shared_ptr<Widgets::Button> addButton(const string&, const std::function<void()>&);
+			shared_ptr<Widgets::Button> addButton(const string&, const std::function<void()>&, char);
 		protected:
 			bool needsNewHeight = false;
 		};
