@@ -6,9 +6,15 @@ namespace ofxCvGui {
 	namespace Widgets {
 		class OFXCVGUI_API_ENTRY VerticalStack : public ElementGroup {
 		public:
-			VerticalStack();
+			enum Layout {
+				DistributeEvenly
+				, UseElementHeight
+			};
+
+			VerticalStack(const Layout& layout = Layout::DistributeEvenly);
 		protected:
 			bool needsNewWidth = false;
+			Layout layout;
 		};
 	}
 }
