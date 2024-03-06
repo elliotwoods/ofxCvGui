@@ -75,9 +75,9 @@ namespace ofxCvGui {
 		bool isDoubleClicked(std::shared_ptr<Element>) const;
 
 		void * getOwner() const;
-
+		
 		Action action;
-		int button;
+		int button; // 0 = left, 1 = middle, 2 = right, or check OF_MOUSE_BUTTON_LEFT, etc
 		glm::vec2 global;
 		glm::vec2 local;
 
