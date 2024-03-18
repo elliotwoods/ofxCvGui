@@ -219,6 +219,9 @@ namespace ofxCvGui {
 			case OF_KEY_RIGHT:
 				return "RIGHT";
 				break;
+			case OF_KEY_ESC:
+				return "ESC";
+				break;
 			default:
 				return string("") + char(key);
 			}
