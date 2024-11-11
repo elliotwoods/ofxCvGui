@@ -26,6 +26,25 @@ namespace ofxCvGui {
 				ofxCvGui::Controller::X().setMaximised(this->shared_from_this());
 			}, this);
 
+			// Mouse button goes back
+			{
+				this->onMouse += [this](MouseArguments& args) {
+					switch (args.action) {
+					case MouseArguments::Action::Pressed:
+						if (args.button == 3) {
+							args.takeMousePress(this);
+						}
+						break;
+					case MouseArguments::Action::Released:
+						if (args.button == 3) {
+							InspectController::X().back();
+						}
+					default:
+						break;
+					}
+					};
+			}
+
 			this->titleEnabled = true;
 			this->setCaption("Inspector");
 		
@@ -42,7 +61,7 @@ namespace ofxCvGui {
 		//---------
 		void Inspector::clear(bool notifyListeners) {
 			Scroll::clear();
-			if (this->titleEnabled) {
+			if (this->titleEnabled && ! this->getCaption().empty()) {
 				this->elements->add(shared_ptr<Title>(new Title(this->getCaption(), Title::Level::H1)));
 			}
 			if(notifyListeners) {

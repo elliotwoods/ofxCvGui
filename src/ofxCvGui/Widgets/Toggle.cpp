@@ -148,8 +148,7 @@ namespace ofxCvGui {
 
 		//----------
 		void Toggle::mouseAction(MouseArguments & args) {
-			args.takeMousePress(this);
-			if (args.action == MouseArguments::Released && this->isMouseDown()) {
+			if(args.isClicked(this, 0)) {
 				this->toggle();
 			}
 		}

@@ -43,7 +43,7 @@ namespace ofxCvGui {
 			}
 
 			//----------
-			void Strip::setCellSizes(const initializer_list<int> & cellSizes) {
+			void Strip::setCellSizes(const vector<int> & cellSizes) {
 				this->programmaticCellSizes = vector<int>(cellSizes.begin(), cellSizes.end());
 				this->resetUserCellSizes();
 			}

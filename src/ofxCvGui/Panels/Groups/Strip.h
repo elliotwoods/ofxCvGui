@@ -20,7 +20,7 @@ namespace ofxCvGui {
 
 				/// Usage: setSizes({ 50, 10, 100});
 				/// Notes : size of -1 denotes auto-fill
-				void setCellSizes(const initializer_list<int> &);
+				void setCellSizes(const vector<int> &);
 				
 				void setUserCellSize(size_t index, int size);
 				int getCellSize(size_t index) const;

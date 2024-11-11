@@ -69,6 +69,9 @@ namespace ofxCvGui {
 		/// Only use this is you know what you're doing. This is for manually marking a mouse take
 		void forceMouseTake(void * element);
 
+		// Call this to take the mouse press and to check if it's released locally
+		bool isClicked(void* element, int button);
+
 		bool isDragging(void * element) const;
 		bool isDragging(std::shared_ptr<Element>) const;
 		bool isDoubleClicked(void * element) const;

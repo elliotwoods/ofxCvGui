@@ -59,6 +59,23 @@ namespace ofxCvGui {
 	}
 
 	//----------
+	bool MouseArguments::isClicked(void* element, int button) {
+		if (this->button != button) {
+			return false;
+		}
+
+		if (this->action == MouseArguments::Action::Pressed) {
+			this->takeMousePress(element);
+		}
+		else if (this->action == MouseArguments::Action::Released) {
+			if (this->isLocal() && this->getOwner() == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//----------
 	bool MouseArguments::isDragging(void * element) const {
 		return this->getOwner() == element && this->action == MouseArguments::Action::Dragged;
 	}
