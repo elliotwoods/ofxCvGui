@@ -160,14 +160,33 @@ namespace ofxCvGui {
 			}
 		}
 		void Widgets::addParameterGroup(ofParameterGroup & parameters, int titleLevel) {
+			auto priorElement = this->getElementGroup()->getElements().empty()
+				? nullptr
+				: * this->getElementGroup()->getElements().rbegin();
+
+			// Add a spacer if last element
 			if (!this->getElementGroup()->isLastElementOfType<ofxCvGui::Widgets::Title>()) {
 				this->addSpacer();
 			}
 
 			if (!parameters.getName().empty()) {
-				titleLevel = min(titleLevel, (int)ofxCvGui::Widgets::Title::Level::MaxLevel);
-				auto titleLevelTyped = static_cast<ofxCvGui::Widgets::Title::Level>(titleLevel);
-				this->addTitle(parameters.getName(), titleLevelTyped);
+				// first check if we haven't already added a matching title (e.g. this happens when a module and parameter group have the same name)
+				bool alreadyHasTitle = false;
+				if (priorElement) {
+					auto priorTitle = dynamic_pointer_cast<ofxCvGui::Widgets::Title>(priorElement);
+					if (priorTitle) {
+						if (priorTitle->getCaption() == parameters.getName()) {
+							// we already have a title with this name
+							alreadyHasTitle = true;
+						}
+					}
+				}
+
+				if (!alreadyHasTitle) {
+					titleLevel = min(titleLevel, (int)ofxCvGui::Widgets::Title::Level::MaxLevel);
+					auto titleLevelTyped = static_cast<ofxCvGui::Widgets::Title::Level>(titleLevel);
+					this->addTitle(parameters.getName(), titleLevelTyped);
+				}
 			}
 
 			for (auto & parameter : parameters) {
