@@ -87,14 +87,17 @@ namespace ofxCvGui {
 		void Slider::update(UpdateArguments &) {
 
 			//Perform the zoom;
-			if(this->getMouseState() == LocalMouseState::Down && this->mouseWentDownOnSlider) {
+			if(this->getMouseState() == LocalMouseState::Down && this->mouseWentDownOnSlider && this->allowZoomIn) {
+				// Zoom in whilst holding the mouse down
 				const auto mouseHoldTime = float(ofGetElapsedTimeMillis() - startMouseHoldTime) / 1000.0f;
 				if (mouseHoldTime > 1.0f) {
 					this->zoom = exp(mouseHoldTime - 1.0f);
 				}
 			} else if (this->getMouseState() == LocalMouseState::Waiting) {
+				// Spring back to normal zoom
 				this->zoom = (this->zoom - 1.0f) * 0.9f + 1.0f;
 			}
+
 			if(abs(this->zoom - 1.0f) > 1E-2) {
 				this->markViewDirty();
 			} else {
@@ -235,6 +238,7 @@ namespace ofxCvGui {
 						this->startMouseHoldTime = ofGetElapsedTimeMillis();
 						this->startMouseHoldValue = this->value->get();
 						this->startMouseHoldMouseX = args.local.x;
+						this->allowZoomIn = true;
 					}
 				} else if (this->editBounds.inside(args.local)) {
 					if (args.takeMousePress(this)) {
@@ -258,6 +262,7 @@ namespace ofxCvGui {
 					float dNormX = (args.local.x - this->startMouseHoldMouseX) / (this->getWidth() * zoom);
 					this->value->set(dNormX * this->getRangeScale() + startMouseHoldValue);
 					this->checkValueAndNotifyListeners();
+					this->allowZoomIn = false;
 				}
 				break;
 			case MouseArguments::Moved:
@@ -267,6 +272,14 @@ namespace ofxCvGui {
 						this->mouseHover = newMouseHover;
 						this->markViewDirty();
 					}
+					this->allowZoomIn = false;
+			}
+				break;
+			case MouseArguments::Scrolled:
+				if (this->mouseWentDownOnSlider) {
+					zoom += args.scroll.y;
+					zoom = roundf(zoom);
+					this->allowZoomIn = false;
 				}
 				break;
 			default:

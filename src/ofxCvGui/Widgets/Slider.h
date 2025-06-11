@@ -32,6 +32,7 @@ namespace ofxCvGui {
 			ofParameter<float> * value;
 
 			float zoom;
+			bool allowZoomIn = false;
 			unsigned long startMouseHoldTime;
 			float startMouseHoldValue;
 			float startMouseHoldMouseX;
