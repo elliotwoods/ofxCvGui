@@ -43,6 +43,17 @@ namespace ofxCvGui {
 			}
 
 			//----------
+			void Strip::toggleDirection() {
+				if (this->direction == Vertical) {
+					this->setDirection(Horizontal);
+				}
+				else {
+					this->setDirection(Vertical);
+				}
+				this->arrange();
+			}
+
+			//----------
 			void Strip::setCellSizes(const vector<int> & cellSizes) {
 				this->programmaticCellSizes = vector<int>(cellSizes.begin(), cellSizes.end());
 				this->resetUserCellSizes();
@@ -221,17 +232,18 @@ namespace ofxCvGui {
 										this->setUserCellSize(i + 1, nextCellHeight);
 									}
 								}
+								if (mouseArgs.isDoubleClicked(border)) {
+									this->toggleDirection();
+								}
 							};
-							if (this->direction == Direction::Horizontal) {
-								border->onMouse += [action](MouseArguments & args) {
+							border->onMouse += [action, this](MouseArguments& args) {
+								if (this->direction == Direction::Horizontal) {
 									action(args.movement.x, args);
-								};
-							}
-							else {
-								border->onMouse += [action](MouseArguments & args) {
+								}
+								else {
 									action(args.movement.y, args);
+								}
 								};
-							}
 						}
 
 						//generic action (reset)

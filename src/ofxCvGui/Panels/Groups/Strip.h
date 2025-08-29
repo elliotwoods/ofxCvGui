@@ -17,6 +17,7 @@ namespace ofxCvGui {
 
 				void setDirection(Direction);
 				Direction getDirection() const;
+				void toggleDirection();
 
 				/// Usage: setSizes({ 50, 10, 100});
 				/// Notes : size of -1 denotes auto-fill
