@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ofParameterGroup.h"
+#include "ofParameter.h"
 
 #include "Button.h"
 

@@ -457,7 +457,9 @@ namespace ofxCvGui {
 		if (panel != PanelPtr()) {
 			auto panelBounds = panel->getBounds();
 			auto panelTopLeft = panelBounds.getTopLeft();
-			auto newArgs = FilesDraggedArguments((glm::vec2) args.position - panelTopLeft, (glm::vec2) args.position, args.files);
+			vector<string> files;
+			for (const auto & path : args.files) { files.push_back(filesystem::path(path).string()); }
+			auto newArgs = FilesDraggedArguments((glm::vec2) args.position - panelTopLeft, (glm::vec2) args.position, files);
 			panel->onFilesDragged(newArgs);
 		}
 	}

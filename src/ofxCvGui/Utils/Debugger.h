@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofxSingleton.h"
-#include "ofParameterGroup.h"
+#include "ofParameter.h"
 #include "Sugar.h"
 
 namespace ofxCvGui {

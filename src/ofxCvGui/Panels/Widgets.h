@@ -15,7 +15,7 @@
 #include "../Widgets/Heartbeat.h"
 #include "../Widgets/HorizontalStack.h"
 
-#include "ofParameterGroup.h"
+#include "ofParameter.h"
 #include "ofxSingleton.h"
 
 namespace ofxCvGui {

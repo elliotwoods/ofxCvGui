@@ -1,4 +1,7 @@
 #include "pch_ofxCvGui.h"
+#ifdef TARGET_OSX
+#include <mach/mach.h>
+#endif
 
 #ifdef TARGET_WIN32
 	#include "psapi.h"

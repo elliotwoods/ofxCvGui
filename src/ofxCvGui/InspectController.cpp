@@ -21,7 +21,7 @@ namespace ofxCvGui {
 					}, OF_KEY_BACKSPACE);
 				button->onDraw += [](ofxCvGui::DrawArguments& args) {
 					ofRectangle bounds(0, 0, 30, args.localBounds.height);
-					Utils::drawGlyph(u8"\uf104", bounds);
+					Utils::drawGlyph("\uf104", bounds);
 				};
 				inspector->addSpacer();
 			}
