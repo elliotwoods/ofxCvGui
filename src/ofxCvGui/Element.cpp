@@ -64,7 +64,7 @@ namespace ofxCvGui {
 			DrawArguments localArguments;
 			localArguments.chromeEnabled = parentArguments.chromeEnabled;
 			localArguments.naturalBounds = this->getBounds();
-			localArguments.globalTransform = this->getParentToLocalTransform() * parentArguments.globalTransform;
+			localArguments.globalTransform = parentArguments.globalTransform * this->getParentToLocalTransform();
 			localArguments.globalScale = parentArguments.globalScale * this->zoomFactor;
 			localArguments.localBounds = ofRectangle(0, 0, localArguments.naturalBounds.width, localArguments.naturalBounds.height);
 			localArguments.globalBounds = Utils::operator*(localArguments.localBounds, localArguments.globalTransform);
@@ -587,11 +587,10 @@ namespace ofxCvGui {
 
 	//-----------
 	void Element::updateParentToLocalTransform() {
-		this->parentToLocalTransform = glm::scale(glm::vec3(this->zoomFactor
+		this->parentToLocalTransform = glm::translate(this->getBounds().getTopLeft())
+			* glm::scale(glm::vec3(this->zoomFactor
 			, this->zoomFactor
-			, 1.0f))
-			
-			* glm::translate(this->getBounds().getTopLeft());
+			, 1.0f));
 	}
 
 	//-----------
