@@ -288,7 +288,7 @@ namespace ofxCvGui {
 
 			case MouseArguments::Action::Scrolled:
 				{
-					if(this->getBounds().inside(parentMouseArguments.local)) {
+					if (localMouseArguments.isLocal()) {
 						for (auto it = this->children.rbegin(); it != this->children.rend(); ++it) {
 							(*it)->mouseAction(localMouseArguments);
 						}

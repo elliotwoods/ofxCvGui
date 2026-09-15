@@ -57,6 +57,14 @@ namespace ofxCvGui {
 					ofArgs.type = ofMouseEventArgs::Type::Dragged;
 					this->camera.mouseDragged(ofArgs);
 					break;
+				case MouseArguments::Action::Scrolled:
+					if (args.checkCurrentPanel(this) && args.isLocal()) {
+						ofArgs.type = ofMouseEventArgs::Type::Scrolled;
+						ofArgs.scrollX = args.scroll.x;
+						ofArgs.scrollY = args.scroll.y;
+						this->camera.mouseScrolled(ofArgs);
+					}
+					break;
 				default:
 					break;
 				}

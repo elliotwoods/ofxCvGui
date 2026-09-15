@@ -12,6 +12,16 @@ namespace ofxCvGui {
 			};
 
 			this->onMouse += [this](ofxCvGui::MouseArguments & args) {
+				if (args.action == MouseArguments::Action::Scrolled
+					&& args.checkCurrentPanel(this) && args.isLocal()
+					&& std::isfinite(args.scroll.y) && args.scroll.y != 0) {
+					const auto oldZoom = this->canvasElements->getZoom();
+					const auto oldScroll = this->scrollPosition;
+					this->zoom = ofClamp(this->zoom + args.scroll.y * 0.1f, this->zoom.getMin(), this->zoom.getMax());
+					const auto ratio = this->canvasElements->getZoom() / oldZoom;
+					this->setScrollPosition((oldScroll + args.local) * ratio - args.local);
+					this->canvasElements->setPosition(-this->scrollPosition);
+				}
 				args.takeMousePress(this);
 				if (args.isDragging(this)) {
 					this->scrollPosition -= args.movement;
