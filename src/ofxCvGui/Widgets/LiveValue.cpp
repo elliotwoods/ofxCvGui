@@ -16,17 +16,6 @@
 
 namespace ofxCvGui {
 	namespace Widgets {
-		bool isFinite(float number) {
-			if (number != number) {
-				//NaN case
-				return false;
-			}
-			if (number + 1 == number){
-				//infinite case
-				return false;
-			}
-			return true;
-		}
 
 		//----------
 		LiveValueHistory::LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum) :
@@ -44,9 +33,11 @@ namespace ofxCvGui {
 					return;
 				}
 
-				this->history.push_back(this->liveValue());
+				if (std::isfinite(this->currentValue)) {
+					this->history.push_back(this->currentValue);
+				}
 				auto size = this->history.size();
-				while (size > this->getWidth()) {
+				while (size > std::max(0.0f, this->getWidth())) {
 					this->history.pop_front();
 					size--;
 				}
@@ -57,7 +48,7 @@ namespace ofxCvGui {
 					return;
 				}
 				float newMin = std::numeric_limits<float>::max();
-				float newMax = std::numeric_limits<float>::min();
+				float newMax = std::numeric_limits<float>::lowest();
 				for(auto & point : history) {
 					if (!this->keepZeroAsMinimum) {
 						if (point < newMin) {
@@ -71,14 +62,14 @@ namespace ofxCvGui {
 
 				//damp towards new bounds
 				if (!this->keepZeroAsMinimum) {
-					if (isFinite(this->minimum)) {
+					if (std::isfinite(this->minimum)) {
 						this->minimum = this->minimum * 0.8 + newMin * 0.2;
 					}
 					else {
 						this->minimum = newMin;
 					}
 				}
-				if (isFinite(this->maximum)) {
+				if (std::isfinite(this->maximum)) {
 					this->maximum = this->maximum * 0.8 + newMax * 0.2;
 				}
 				else {
@@ -86,7 +77,7 @@ namespace ofxCvGui {
 				}
 
 				//check we have valid min and max
-				if (this->minimum != this->minimum || this->maximum != this->maximum) {
+				if (!std::isfinite(this->minimum) || !std::isfinite(this->maximum)) {
 					this->minimum = 0.0f;
 					this->maximum = 1.0f;
 				}
@@ -96,16 +87,12 @@ namespace ofxCvGui {
 					return;
 				}
 
-				this->graphFill.setFillColor(50);
+				this->graphFill.setFillColor(ofColor(50));
 				this->graphFill.lineTo(this->getWidth() - size, 40.0f);
 				int x = 0;
 				for(auto & point : this->history) {
-					float y = ofMap(point, this->minimum, this->maximum, 40.0f, 0.0f, false);
-
-					//check valid number
-					if (y != y || y <= std::numeric_limits<float>::min() || y >= std::numeric_limits<float>::max()) {
-						continue;
-					}
+					// Keep saturated samples at the edge instead of dropping them and shifting time.
+					float y = ofMap(point, this->minimum, this->maximum, 40.0f, 0.0f, true);
 					
 					this->graphFill.lineTo(this->getWidth() - size + x, y);
 					this->graphLine.lineTo(this->getWidth() - size + x, y);
@@ -153,7 +140,7 @@ namespace ofxCvGui {
 							this->pause ^= true;
 							if (this->pause) {
 								this->graphLine.clear();
-								this->graphFill.setFillColor(80);
+								this->graphFill.setFillColor(ofColor(80));
 							}
 							break;
 						case 2:
@@ -174,6 +161,12 @@ namespace ofxCvGui {
 			};
 		}
 		
+		//----------
+		void LiveValueHistory::updateValue(const float & value) {
+			LiveValue<float>::updateValue(value);
+			this->currentValue = value;
+		}
+
 		//----------
 		shared_ptr<LiveValueHistory> makeFps() {
 			return shared_ptr<LiveValueHistory>(new LiveValueHistory("Framerate", [] () {

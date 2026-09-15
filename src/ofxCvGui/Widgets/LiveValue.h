@@ -31,9 +31,7 @@ namespace ofxCvGui {
 				this->setBounds(ofRectangle(0, 0, 100, 40));
 
 				this->onUpdate += [this](UpdateArguments &) {
-					stringstream ss;
-					ss << this->liveValue();
-					this->cachedValue = ss.str();
+					this->updateValue(this->liveValue());
 				};
 				this->onDraw += [this](DrawArguments & args) {
 					auto & captionFont = ofxAssets::font(ofxCvGui::getDefaultTypeface(), 12);
@@ -77,6 +75,12 @@ namespace ofxCvGui {
 			ofxLiquidEvent<string> onEditValue;
 
 		protected:
+			virtual void updateValue(const T & value) {
+				stringstream ss;
+				ss << value;
+				this->cachedValue = ss.str();
+			}
+
 			function<T()> liveValue;
 			string cachedValue;
 			
@@ -93,6 +97,8 @@ namespace ofxCvGui {
 		public:
 			LiveValueHistory(string caption, function<float()> liveValue, bool keepZeroAsMinimum = true);
 		protected:
+			void updateValue(const float & value) override;
+			float currentValue = 0.0f;
 			deque<float> history;
 			bool keepZeroAsMinimum;
 			float minimum;
