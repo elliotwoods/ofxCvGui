@@ -41,7 +41,7 @@ namespace ofxCvGui {
 				auto bounds = args.localBounds;
 				bounds.width = 30;
 				bounds.x = args.localBounds.getRight() - bounds.width;
-				Utils::drawGlyph("\uf105", bounds);
+				Utils::drawGlyph("\xef\x84\x85", bounds);
 			};
 
 			// Little taller than usual

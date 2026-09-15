@@ -1,6 +1,8 @@
 #pragma once
 #include "../Element.h"
 #include "ofParameter.h"
+#include "ofPath.h"
+#include "ofPolyline.h"
 #include "ofSystemUtils.h"
 #include "ofxAssets.h"
 
